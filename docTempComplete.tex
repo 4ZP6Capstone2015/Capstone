@@ -1,0 +1,70 @@
+\documentclass[12,titlepic]{article}
+
+\usepackage{xcolor} % for different colour comments
+
+%%%%%%% PACKAGES %%%%%%%
+\usepackage{graphicx}
+\usepackage[cc]{titlepic}
+
+%% Comments
+\newif\ifcomments\commentsfalse
+
+\ifcomments
+\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\else
+\newcommand{\authornote}[3]{}
+\newcommand{\todo}[1]{}
+\fi
+% wss = Dr. Smith ; ds = Dr. Szymczak
+\newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
+\newcommand{\ds}[1]{\authornote{blue}{ND}{#1}}
+
+
+\wss{This is an example comment.  You can turn comments off by replacing
+		commentstrue by commentsfalse.}
+	
+%%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+	
+%%%%%%%%%%%%%%%	TITLE PAGE (OPTIONAL) %%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{titlepage}
+	
+		\title{\vspace{3.5cm}Template for Documents\vspace{9cm} } 
+		
+		\author{Carolyn Chong,\ Yash Sapra,\ Anmoi Sharma,\ Jaeden Guo}
+		
+		\maketitle
+		\centering\includegraphics[width=3cm]{mcmaster}
+		\thispagestyle{headings}
+		
+		
+		
+	\end{titlepage}
+%%%%%%%%%%%%%%%	START OF FIRST PAGE %%%%%%%%%%%%%%%%%%%%
+
+% \title{Template for Documents} 
+% \author{Carolyn Chong,\ Yash Sapra,\ Anmoi Sharma,\ Jaeden Guo}
+%\date{\today}
+
+% \newpage %Optional of course
+\paragraph*{Abstract} %Optional
+Put your problem statement here.\\ \\
+%Start project elaboration here
+\indent something something something something somethingsomething something something something somethingsomething something something something something.\\ 
+\indent something something something something something somethingsomething something something something somethingsomething something
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
