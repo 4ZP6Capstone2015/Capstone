@@ -1,0 +1,17 @@
+Ampersand Resources:
+
+http://wiki.tarski.nl/
+
+--installation: 
+http://wiki.tarski.nl/index.php/Installation_Guide
+
+--documentation:
+https://ampersandtarski.gitbooks.io/documentation/content/
+
+Ampersand Github:
+https://github.com/AmpersandTarski
+
+Cabal Resources:
+http://www.vex.net/~trebla/haskell/cabal-cabal.xhtml
+http://www.vex.net/~trebla/haskell/sicp.xhtml
+
