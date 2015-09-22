@@ -8,5 +8,19 @@ Project Description: In Ampersand, information systems are specified by modellin
 
 Initial Goal: To create a parser in Haskell to generate SQL ASTs in accordance to ECA Rules
 
+------------------------------------------------------------------
+Example of Proof (Created by Dr. Joosten)
+
+              // Normalization steps:
+              //     -((-(cod~;lhsTerm~;rhsTerm;cod) /\ -(cod~;rhsTerm~;lhsTerm;cod)) \/ sub)
+              // <=> { De Morgan }
+              //     -(-(cod~;lhsTerm~;rhsTerm;cod) /\ -(cod~;rhsTerm~;lhsTerm;cod)) /\ -sub
+              // <=> { De Morgan }
+              //     (cod~;lhsTerm~;rhsTerm;cod \/ cod~;rhsTerm~;lhsTerm;cod) /\ -sub
+              // <=> { distribute /\ over \/ }
+              //     (cod~;lhsTerm~;rhsTerm;cod /\ -sub) \/ (cod~;rhsTerm~;lhsTerm;cod /\ -sub)
+              // <=> { Avoid complements, using law x/\-y = x-y and Avoid complements, using law x/\-y = x-y }
+              //     cod~;lhsTerm~;rhsTerm;cod - sub \/ cod~;rhsTerm~;lhsTerm;cod - sub
+
 
 
