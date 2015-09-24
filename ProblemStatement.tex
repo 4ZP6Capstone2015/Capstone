@@ -1,7 +1,11 @@
 \documentclass[12pt]{article}
 \usepackage{nopageno}
 \usepackage{xcolor} % for different colour comments
+\usepackage{parskip} % Space between each paragraph.
 %\usepackage{hardwrap} % for text length of 80 pts
+\usepackage[margin=1.2in]{geometry}
+
+\setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
 
 %% Comments
 \newif\ifcomments\commentsfalse
@@ -25,8 +29,14 @@
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\title{Problem Statement for E.F.A. (E.C.A for Ampersand)} 
+\title{CS4ZP6 Problem Statement \\ Ampersand Tarski Event-Condition-Action Rules } 
+%% YT: What is EFA? What is ECA? These should be defined before they are used;
+%% so, they shouldn't appear in the title. In fact we should only mention it in
+%% passing; overuse of acronyms can make a text undecipherable. I know what ECA
+%% is, but I don't know what EFA is and it is never defined in this document, at
+%% all.
 \author{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
+<<<<<<< HEAD
 \date{September 24, 2015}
 \thispagestyle{empty}
 \maketitle
@@ -59,6 +69,47 @@ system, in addition to boosting its efficiency.
 
 
 
+=======
+\date{September 25, 2015}
+\thispagestyle{empty}
+\maketitle
+
+%% Note: You don't need to put \indent before every paragraph. Latex inserts
+%% that automatically. You can change the amount by changing the value of
+%% \parindent.  Also instead of manually adding a line break after every
+%% paragraph, just use parskip (see above).
+
+The Ampersand Project translates the non-functional requirements of a
+business into the functional specifications required by software engineers. It
+also provides engineers with a variety of aids which help them to design
+products that fulfill all of the needs of their clients and the end-users; for
+example, by generating prototype software from the requirements.
+%% such as data models and service catalogues.
+%% YT: What does this mean? If I don't understand it it, the prof won't
+Business requirements are not universal and often vary from one country or
+culture to the next. Additional difficulty arises from the fact that business
+requirements are not easily translatable into design requirements. 
+
+The Ampersand Project has proven reliable at translating natural
+language into technical specifications so that they could be incorporated into
+the overall design. Business transactions input by the user are translated into
+``process rules''; and requirements are translated into ``Event-Condition
+Action'' (ECA) rules. Both of these rules are combined into a single SQL
+program. Currently, a programmer using Ampersand must manually ensure that each
+requirement is satisfied after each transaction, by telling Ampersand how each
+violation must be fixed. Not only is this process error prone, it is
+unmaintainable; when new requirements are added, the already-existing system may
+violate the new restrictions. In many scenarios, the requirements may be safety
+and security critical. To this end, Ampersand must also generate relational
+algebra proofs to show that the SQL generated from ECA rules is sound. 
+
+This project will focus primarily on modifying Ampersand to include the
+translation from requirements to ECA rules to SQL commands (whereas the pipeline
+for process rules is already in place). This will ameliorate Ampersand in two
+ways; by automating part of the programmers job, namely writing code to preserve
+requirements throughout a transaction; and by generating SQL code which is
+proven to not violate any system requirements. 
+>>>>>>> 0338a2e6b91e8d3bae5d34fef41b391d5e25e19f
 
 \end{document}
 
