@@ -1,10 +1,19 @@
 Hello teammates,
 
 I will repeat this point MANY times so that it is not missed. DO NOT insert changes to the Problem Statement once I upload it, 
-if you want something added or changed please TRACK your changes and save it into another copy or email me about the changes you wnat made
-or upload a different version with the name ProblemStatement_editedby<insertname>. 
+if you want something added or changed please TRACK your changes and save it into another copy or email me about the changes you 
+want/need/think should be made or upload a different version with the name ProblemStatement_editedby<insertname>. 
 
-PLEASE DO NOT DIRECTLY MAKE CHANGES TO THE VERSION THAT IS UPLOADED!
+If I ever upload anything that has (incomp) in the title, feel free to add changes directly to it. BUT DO NOT DO IT TO THE EDITED VERSION!
+If a file has <title> without (incomp) it means it IS the edited version.
+
+E.g., ProblemStatement(incomp).tex 
+-- feel free to make changes and replace the file with the one you've made changes to
+
+E.g., ProblemStatement.tex
+-- DO NOT SAVE OVER THIS FILE WITH YOUR CHANGES
+
+PLEASE DO NOT MAKE CHANGES DIRECTLY ON THE VERSION THAT IS UPLOADED!
 
 Thank you,
 J
