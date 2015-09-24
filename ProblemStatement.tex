@@ -1,0 +1,74 @@
+\documentclass[12pt]{article}
+\usepackage{nopageno}
+\usepackage{xcolor} % for different colour comments
+%\usepackage{hardwrap} % for text length of 80 pts
+
+%% Comments
+\newif\ifcomments\commentsfalse
+
+\ifcomments
+\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\else
+\newcommand{\authornote}[3]{}
+\newcommand{\todo}[1]{}
+\fi
+
+% wss = Dr. Smith ; ds = Dr. Szymczak
+\newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
+\newcommand{\ds}[1]{\authornote{blue}{ND}{#1}}
+\newcommand{\jg}[1]{\authornote{green}{JG}{#1}}
+
+
+\wss{This is an example comment.  You can turn comments off by replacing
+		commentstrue by commentsfalse.}
+%%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\title{Problem Statement for E.F.A. (E.C.A for Ampersand)} 
+\author{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
+\date{\today}
+\thispagestyle{empty}
+\maketitle
+
+\indent The Ampersand Project translates the non-functional requirements of a 
+business into the functional specifications required by engineers. It provides 
+engineers with a variety of aids, such as data models and service catalogues, 
+which help them to design products that fulfill all of the needs of their 
+clients and the end-users.Business requirements are not universal and often 
+vary from one country or culture to the next. The difficulty is that business 
+requirements are not easily translatable into design requirements.\\
+\indent The Ampersand Project is important because it has proven reliable at 
+translating natural language into technical specifications so that they could 
+be incorporated into the overall design. E.F.A. will translate user 
+instructions into ECA (Event-Condition Action) rules so that Ampersand can 
+restructure existing data. It is crucial that these rules be absolute; although 
+the user will be able to alter the rules, it must not be possible for the data 
+within the system to bypass or break these rules. \\
+\indent The E.F.A. project will boost the efficiency of Ampersand by reducing 
+the need for manual adjustments by restructuring data in accordance with the 
+new rules. The E.F.A project will create an extension to Ampersand that 
+restores the validity of data in accordance with any alterations made by the 
+user. \\ 
+\indent Currently, there is no system to check the correctness of the data 
+once 
+new rules are added, and thus previously-existing system data may violate the 
+new restrictions. E.F.A will compensate for these violations by automating the 
+restructuring of data sets in accordance with the new regulations. Thus the 
+successfully completed project will act as a correctness test for the Ampersand 
+system, in addition to boosting its efficiency. 
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
