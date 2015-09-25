@@ -4,11 +4,15 @@
 \usepackage{parskip} % Space between each paragraph.
 %\usepackage{hardwrap} % for text length of 80 pts
 \usepackage[margin=1.2in]{geometry}
+\usepackage{ltx/edcomms}
 
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
 
 %% Comments
 \newif\ifcomments\commentsfalse
+
+%% Dr. Kahl's comment package. Uncomment the following line to hide comments.
+\edcommsfalse
 
 \ifcomments
 \newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
@@ -30,30 +34,32 @@
 
 \begin{document}
 \title{CS4ZP6 Problem Statement \\ Ampersand Tarski Event-Condition-Action Rules } 
-%% YT: What is EFA? What is ECA? These should be defined before they are used;
-%% so, they shouldn't appear in the title. In fact we should only mention it in
-%% passing; overuse of acronyms can make a text undecipherable. I know what ECA
-%% is, but I don't know what EFA is and it is never defined in this document, at
-%% all.
 \author{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
 \date{September 25, 2015}
 \thispagestyle{empty}
 \maketitle
-%% Note: You don't need to put \indent before every paragraph. Latex inserts
-%% that automatically. You can change the amount by changing the value of
-%% \parindent.  Also instead of manually adding a line break after every
-%% paragraph, just use parskip (see above).
+\edcomm{YT}{
+What is EFA? What is ECA? These should be defined before they are used;
+so, they shouldn't appear in the title. In fact we should only mention it in
+passing; overuse of acronyms can make a text undecipherable. I know what ECA
+is, but I don't know what EFA is and it is never defined in this document, at
+all.}
+
+\edcomm{Note}{You don't need to put /indent before every paragraph. Latex inserts
+that automatically. You can change the amount by changing the value of
+/parindent.  Also instead of manually adding a line break after every
+paragraph, just use parskip (see above).}
 
 The Ampersand Project translates the non-functional requirements of a
 business into the functional specifications required by software engineers. It
 also provides engineers with a variety of aids which help them to design
 products that fulfill all of the needs of their clients and the end-users; for
 example, by generating prototype software from the requirements.
-%% such as data models and service catalogues.
-%% YT: What does this mean? If I don't understand it it, the prof won't
+\edcomm{YT}{What does ``such as data models and service catalogues'' mean? If I
+  don't understand it it, the prof won't}
 Business requirements are not universal and often vary from one country or
 culture to the next. Additional difficulty arises from the fact that business
-requirements are not easily translatable into design requirements. 
+requirements are not easily translatable into design requirements.
 
 The Ampersand Project has proven reliable at translating natural
 language into technical specifications so that they could be incorporated into
