@@ -1,0 +1,106 @@
+\documentclass[12pt]{report}
+\usepackage{nopageno}
+\usepackage{xcolor} % for different colour comments
+\usepackage{parskip} % Space between each paragraph.
+%\usepackage{hardwrap} % for text length of 80 pts
+\usepackage[margin=1.2in]{geometry}
+\usepackage{../ltx/edcomms}
+\usepackage{hyperref}
+
+\setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
+
+%% Comments
+\newif\ifcomments\commentsfalse
+
+%% Dr. Kahl's comment package. Uncomment the following line to hide comments.
+\edcommsfalse
+
+\ifcomments
+\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\else
+\newcommand{\authornote}[3]{}
+\newcommand{\todo}[1]{}
+\fi
+
+% wss = Dr. Smith ; ds = Dr. Szymczak
+\newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
+\newcommand{\ds}[1]{\authornote{blue}{ND}{#1}}
+
+%%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{titlepage}\begin{center}
+\vspace*{1cm}
+
+{\Huge\textbf{Ampersand Event-Condition-Action Rules}}
+
+\vspace{0.5cm}
+{\Large Software Requirement Specification 
+
+\vspace{1.5cm}
+Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
+\vfill
+
+\todo{Reference to template}
+
+\vspace{0.8cm}
+\end{center}
+CS 4ZP6 \\
+October 9th, 2015 \\ 
+Fall 2015 / Winter 2016 
+\end{titlepage}
+
+\tableofcontents
+\listoffigures
+\listoftables
+%% \clearpage
+
+\chapter{Project Drivers}\label{ch:Drivers}
+\section{The Purpose of the Project}\label{sec:Purpose}
+\section{The Stakeholders}\label{sec:Client}
+
+\chapter{Project Constraints}\label{ch:Constraints}
+\section{Mandated Constraints}\label{sec:Constraints}
+\section{Naming Conventions and Terminology}\label{sec:Naming} 
+\section{Relevant Facts and Assumptions}\label{sec:Assumptions}
+
+\chapter{Functional Requirements}\label{ch:Functional}
+\section{The Scope of the Work}\label{sec:ScopeOfWork}
+\section{Business Data Model and Data Dictionary}\label{sec:DataModel}
+\section{The Scope of the Product}\label{sec:ScopeOfProduct}
+\section{Functional Requirements}\label{sec:Functional}
+\chapter{Non-functional Requirements}\label{ch:NonFunc}
+\section{Look and Feel Requirements}\label{sec:LookAndFeel} 
+\section{Usability and Humanity Requirements}\label{sec:Usability}
+\section{Performance Requirements}\label{sec:Performance}
+\section{Operational and Environmental Requirements}\label{sec:Operational}
+\section{Maintainability and Support Requirements}\label{sec:Support}
+\section{Security Requirements}\label{sec:Security}
+\section{Cultural Requirements}\label{sec:Cultural}
+\section{Legal Requirements}\label{sec:Legal}
+
+\chapter{Project Issues}\label{ch:issues}
+\section{Open Issues}\label{sec:issues}
+\section{Off-the-Shelf Solutions}\label{sec:solutions}
+\section{New Problems}\label{sec:NewProblems}
+\section{Tasks}\label{sec:Tasks}
+\section{Migration to the New Product}\label{sec:Migration}
+\section{Risks}\label{sec:Risks}
+\section{Costs}\label{sec:Costs}
+\section{User Documentation and Training}\label{sec:UserDoc}
+\section{Waiting Room}\label{sec:Waiting}
+\section{Ideas for Solutions}\label{sec:Solutions}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
