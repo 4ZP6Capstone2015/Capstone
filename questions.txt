@@ -1,0 +1,35 @@
+1.  What is the meaning of the Declaration type (AbstractSyntaxTree, line 214)?
+What is the meaning of each constructor?
+
+decMean :: AMeaning, but this type is just a list of [A_Markup], which is just
+Pandoc markup? How does this represent the meaning? 
+
+2.  What is the meaning of PlainConcept (AbstractSyntaxTree, line 782)? What
+does `the set of instances Cs by name Nm' mean?
+
+3. What are 'properties' and 'identities'? (AbstractSyntaxTree, line 149)?  In
+the context of ' This rule follows implicitly from the Ampersand script (Because
+of a property/identity) ' ?
+
+4. What is PairView? 
+
+data PairViewSegment a = 
+    PairViewText{ pvsOrg :: Origin
+                , pvsStr :: String
+                }
+  | PairViewExp { pvsOrg :: Origin
+                , pvsSoT :: SrcOrTgt
+                , pvsExp :: a
+                } deriving (Show, Typeable, Eq, Generic)
+
+data PairView a = PairView { ppv_segs :: [PairViewSegment a] } 
+
+
+5. Algebra; What is 'POP' (relation elements)?
+
+Ampersand script contains:
+  - RUL: rule statements (relational algebra) 
+  - REL: relations 
+  - POP: ????
+
+
