@@ -9,7 +9,7 @@
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
 
 %% Comments
-\newif\ifcomments\commentsfalse
+\newif\ifcomments\commentstrue
 
 %% Dr. Kahl's comment package. Uncomment the following line to hide comments.
 \edcommsfalse
@@ -24,7 +24,7 @@
 
 % wss = Dr. Smith ; ds = Dr. Szymczak
 \newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
-\newcommand{\ds}[1]{\authornote{blue}{ND}{#1}}
+\newcommand{\ds}[1]{\authornote{blue}{DS}{#1}}
 
 
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
@@ -35,8 +35,7 @@
 \date{September 25, 2015}
 \thispagestyle{empty}
 \maketitle
-\wss{This is an example comment.  You can turn comments off by replacing
-		commentstrue by commentsfalse.}
+
 \edcomm{YT}{
 What is EFA? What is ECA? These should be defined before they are used;
 so, they shouldn't appear in the title. In fact we should only mention it in
@@ -83,9 +82,20 @@ algebra proofs to show that the SQL generated from ECA rules is sound.
 This project will focus primarily on modifying Ampersand to include the
 translation from requirements to ECA rules to SQL commands (whereas the pipeline
 for process rules is already in place). This will ameliorate Ampersand in two
-ways; by automating part of the programmers job, namely writing code to preserve
+ways; by automating part of the programmers \ds{Sp. Should be ``programmer's" or
+``programmers' "} job, namely writing code to preserve
 requirements throughout a transaction; and by generating SQL code which is
 proven to not violate any system requirements. 
+
+\ds{I understand what you'll be doing for this project, but what is the problem
+you will be solving?}
+
+\ds{Who exactly are the stakeholders? Programmers? Software Engineers? Why
+should they care about Ampersand (or your modifications to Ampersand)?}
+
+\ds{Your problem statement is not abstract enough. It is very focused on the 
+implementation (which, while important in this case, still clouds the problem
+being solved)}
 
 \end{document}
 
