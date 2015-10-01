@@ -4,28 +4,12 @@
 \usepackage{parskip} % Space between each paragraph.
 %\usepackage{hardwrap} % for text length of 80 pts
 \usepackage[margin=1.2in]{geometry}
-\usepackage{../ltx/edcomms}
 \usepackage{hyperref}
+\usepackage{../ltx/edcomms}
+
+\input{../ltx/setupComments}
 
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
-
-%% Comments
-\newif\ifcomments\commentstrue
-
-%% Dr. Kahl's comment package. Uncomment the following line to hide comments.
-\edcommsfalse
-
-\ifcomments
-\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
-\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
-\else
-\newcommand{\authornote}[3]{}
-\newcommand{\todo}[1]{}
-\fi
-
-% wss = Dr. Smith ; ds = Dr. Szymczak
-\newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
-\newcommand{\ds}[1]{\authornote{blue}{ND}{#1}}
 
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
 
