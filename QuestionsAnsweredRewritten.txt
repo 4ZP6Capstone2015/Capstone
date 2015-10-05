@@ -1,0 +1,139 @@
+1.  What is the meaning of the Declaration type (AbstractSyntaxTree, line 214)?
+    What is the meaning of each constructor?
+
+List was mentioned quickly yesterday in an email the declaration type is like a java doc and it is meant to mimic natural language the natural language as it is said. Things in the Declaration type are like java docs but for natural language, it is used to convey the meaning in natural languages that is often over looked in system specifications. The effect of the declaration type is mostly to urge the ampersand user to provide definitions and meanings as they would be used through normal conversations the user may have with other individuals. 
+
+The declaration type helps in two ways: 
+1. it hooks into tracability 
+2. it makes the code produced very readable if the user does a good job of filling in the pieces
+
+Basically we're making a mad lip of ECA rules, that users can easily fill in pieces of what they want and apply it. 
+
+There was a question concering what AMeaning was because decMean is of type AMeaning, essentially A meaning is a list of type A_Markup which is simliar to how mark up is used in Pandoc.
+
+Pandoc is used for documentation, we wont necessary need it or use it. 
+
+decMean is just a name; its a concept that represents an inital concept. It's a placeholder of sorts for initiation to notify the system that something is there. It is like how like init is used in c, it is a center of mass, it needs to exist for the system to come to life. 
+
+Names are simply identifiers for the concep; decMean is more than a string, its meaning for a name?(I don't quite understand what was said here -- you may want to email Kahl about this part). 
+
+but dec markup is similiar to latex mark up, and it has all the functional capabilities that pan doc does. The parser is simliar to the pandoc parser which is used for the dec mark up. I think dec mark up is like alternate of pandoc used to label and mark documents as necessary. We won't need to touch this at all. 
+
+-----------------------------------------------------------------------------------------
+
+2.  What is the meaning of PlainConcept (AbstractSyntaxTree, line 782)? What
+does `the set of instances Cs by name Nm' mean?
+
+This was answers in Kahl's email... to you (Yuriy?); I haven't found this email so far. 
+----------------------------------------------------------------------------------
+
+3. What are 'properties' and 'identities'? (AbstractSyntaxTree, line 149)?  In
+the context of ' This rule follows implicitly from the Ampersand script (Because
+of a property/identity) ' ?
+
+The rule represents an origin/starting point/original reference point for meaning/ground zero which the properties and identifies refer back to when needed. The reference back the origin is typically a reference number to the location of where data is (like pointer reference to data/data location storage).
+
+The identity refers to the set of identity relations, and property is a subset of identity relations. These relations are defined by annotation declaration.
+
+An example of this: 
+ if a relation satisfies [t of E], it means the relation it total for that subset/element in a set, else it can be partial. These relations are not user defined, there are annotations concerning Cardinality and multiplicity and how they are defined through rule origin
+-------------------------------------------------------------------------------------------
+
+4. What is PairView? 
+
+data PairViewSegment a = 
+    PairViewText{ pvsOrg :: Origin
+                , pvsStr :: String
+                }
+  | PairViewExp { pvsOrg :: Origin
+                , pvsSoT :: SrcOrTgt
+                , pvsExp :: a
+                } deriving (Show, Typeable, Eq, Generic)
+
+data PairView a = PairView { ppv_segs :: [PairViewSegment a] } 
+ppv_segs ....
+
+this is a technically a field label, and PairView is a constructor which takes a list of PairViewSegments. PairViewSegments are like single record fields; they can only retain one record per field and thus can be thought of as analgous to a record field in java. There is similiar structure and process between the old record and types and the new ones (i.e., isomorphism between the old and new types)
+
+Part of P structure (in our diagram and in the slides that Dr. & Dr Joosten and Dr. Kahl were going to send us), part of this P structure is used to show what violations would look like on your screen; an visual companion of sorts to provide a broader perspective; These violations are part of the rule syntax in place.
+
+Another component that is part of the P structure is that it provides readable and easy to understand error messages; what is normally a violation will show up as a PairView; text can also be added to the pairview to provide a more explicit or concise error message. 
+
+---------------------------------------------------------------------------------------------------
+
+5. Algebra; What is 'POP' (relation elements)?
+
+Ampersand script contains:
+  - RUL: rule statements (relational algebra) 
+  - REL: relations 
+  - POP: ????
+
+This was also answer in the email that Kahl sent the day before we missed our meeting. So I think Tuesday?
+
+------------------------------------
+Additional Notes I took because I thought it would help.
+------------------------------------
+-	Structure P to Structure A on the diagram is fairly straight forward, and A to F is fairly straight forward
+-	F spec is very redundant because of the complications that are necessary to generated theprototype, this way the analysis can work afterwards on the same data structure without discrepancies 
+-	Rendering is done behind f spec. such as generating documents and such 
+-	the generated elements are meant to be robust, Haskell code that is generated is very readable
+
+------------------------------
+NOTES FOR ME ON AMPERSAND
+-------------------------------
+Compile ampersand with –haskell to get the source code of that structure; can be used for debugging purposes
+
+------------------------------
+MORE NOTES FOR YOU
+------------------------------
+The F structure is able to consolidate separate elements and there is also the meat grinder which we can largely ignore. We might see i in the source code and what it does is : take the ampersand script, puts it into the relational structure to form data table relations; it formats it so it can be compiled into data table rules and then drops these sets ito the databse tables; Meat grinder is used in RAP (online compiler for Ampersand); it uses quasy higher order.
+
+-----------------------------
+WHAT WE NEED TO DO IS NOT WHAT WE THOUGHT WE WERE DOING
+-----------------------------
+we are translating from expression to ECA rules ( which has a different data structure) and we are not translating it back into expression but feeding it directing into the next large structure in our diagram which I think is the A structure? 
+
+-------------------------------
+WHAT WE HAVE:
+-------------------------------
+SQL generator already – generate SQL syntax from expression; process algebra = PA Claus; all clauses in need to be generated as PA_Claus which is a data type I believe
+
+PAClaus is not finished, Dr. Joosten will look after the pieces which are kind of missing since our last conversation which is the middle and end. We just need to be able to use it.
+
+We should be able to take the expression and generate a corresponding intermediate data structure using null algebra and have it translated to SQL ( I imagine we can find a way to feed it into the SQL parser).
+
+----------------------------
+I DIDN UNDERSTAND WHAT PA_CLAUS WAS, MAYBE YOU ALREADY HAVE A GOOD IDEA, IF SO, SKIP THIS
+----------------------------
+PA Claus is like the flavor of language, not too far away from the way it is expressed; like java is a flavor of imperative programming; but its a flavor of data structure and theres no need to compile it;
+
+---------------------------
+WHAT WE NEED TO DO:
+---------------------------
+we need to look into PAClaus which is partially imperative code that needs to be trakslated into the front end, which is part of OUR JOB!!!
+
+We need to:
+1. restore invariance by translating the rules generated by PA_Claus (so we need to know everyhthing about this PA_Claus dealio <-- yes I realize that's not a word)
+2. Create default PA_Clauses that are automatically implemented if certain criteria is not specified by the user
+3. Create a user-friendly template like the "fill your pdf" files online and print them sort of template; In which if you fill in something such as your name, the system recognizes what is associated with that name like an address or telephone number that it can automatically fill in. It's kind of like how Chome and firefox have autofill for elements that it commonly sees together. This template needs to have something like a save button that saves the transaction; but this save button must also have restrictions which only allows the 
+information provided to be saved if it does not violate invariants/rules in place
+      WE NEED TO TEST FOR PASS/FAIL OF THESE RULES, MUST HAVE ALL PASSES TO SAVE TEMPLATE
+
+4. WE NEED TO FIT ECA RULES OPERATIONALLY INTO AMPERSAND SOURCE CODE
+
+
+ 
+
+Module CALC which does the generation of PA rules from relation expressions
+Only repository is Atlas. Patterns are a set of rules. Patterns stored in Tarski are only in text format.
+
+Switch called – proofs (attempts to omit textual proofs as we go along), debugging code and testing without the entire system; proofs 
+Translate RA expressions – from a C like specification language; generate understanding; 
+
+All steps need to be correctness preserving; by equality or preservation
+----------------------------------------------------
+
+CALC module generates PA rules from relational expressions and it is like Atlas, it is a repositry.
+
+Patterns are a set of rules, and Patterns are stored in Tarsky which is only available in text format, it's not plug and play yet.
+
