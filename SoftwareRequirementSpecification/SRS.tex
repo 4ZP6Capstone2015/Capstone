@@ -175,6 +175,48 @@ the code to fix violations.
 %% Chapter 2: Project Constraints 
 \chapter{Project Constraints}\label{ch:Constraints}
 \section{Mandated Constraints}\label{sec:Constraints}
+
+%%%%
+%% 4.1 Solution constraints. 
+%% We don't have that many, so 'solution constraints' isn't really appropriate.
+\subsection{Project philosophy}
+
+Ampersand is an existing software project with a very sizable code base. The
+cost of maintaining poorly-written code can be very high and can outweigh the
+benefit of the contribution. In order for our code to eventually be merged into
+Ampersand, it must be maintable: it must be written according to coding
+practices of Ampersand; it must be well documented, so it can be easily
+understood by other programmers. 
+
+Similarly, our code must not introduce any errors or performance regressions
+into Ampersand. Our code must satisfy existing tests and additional tests should
+be written for the new algorithm being implemented. Writing maintainable and
+well-documented code will help with this goal as well.
+
+
+%%3b.
+\subsection{Implementation environment}
+\subsubsection*{Haskell}
+The Ampersand code base is written almost entirely in Haskell. Part of the
+prototype software is written in php and javascript %Ref???  but we likely do
+not have to interact with this code base. Our code contribution must be entirely
+in Haskell.
+
+\subsubsection*{Haskell software}
+Ampersand is designed to be used with the Glasgow Haskell Compiler (from here on, GHC) %%REF
+and the associated cabal build system. %%Ref
+Ampersand also uses many open source Haskell packages, all available on the
+Hackage package archive. %% Ref. 
+We may not use additional packages. %% Or can we? Maybe if we really needed
+                                    %% something, we could ask. But probably not...
+
+
+\subsubsection*{GitHub}
+The Ampersand code base currently lives on GitHub. Our code contributions must
+also be on GitHub; this will facilitate easy integration of our code into
+Ampersand. This is especially useful if only parts of our code eventually become
+integrated into Ampersand - GitHub facilitates this especially. 
+
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
 \section{Relevant Facts and Assumptions}\label{sec:Assumptions}
 
