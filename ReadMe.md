@@ -4,9 +4,9 @@ Members: Yash Sapra (sapray@mcmaster.ca), Jaeden Guo (guoy34@mcmaster.ca), Yuriy
 
 UPDATES: Yuriy added intro to SRS, Jaeden added alt. Problem Statement and removed incomp PS.
 
-Deadlines: (I have 10 email reminds to myself, thought I'd share the love) 
+DEADLINES: (I have 10 email reminds to myself, thought I'd share the love) 
 
-Oct 9th - req doc rev. 0; 
-SRS peel eval Oct 19t; 
+Oct 9th - req doc rev. 0
+SRS peel eval Oct 19t ( REVIEW BY TEAM 3, REVIEW TEAM 5)
 Proof of concept Oct 23rd
 
