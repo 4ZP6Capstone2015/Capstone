@@ -55,6 +55,7 @@ Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
 
 %% \clearpage
 
+%% Chapter 1: ?? 
 \edchange{JG}
 {\chapter{Introduction}\label{ch:Intro}}
 {\chapter{Project Drivers}\label{ch:Drivers}}
@@ -63,20 +64,114 @@ Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
 {\section{Project Description}\label{sec:Intro}}
 {\section{The Purpose of the Project}\label{sec:Purpose}}
 
-\edinsert{JG}
-{\section{Scope of Project}\label{sec:ScopeProj}}
+%% 1a. The User Business or Background of the Project Effort
+A large part of designing software systems is requirements engineering. One
+of the greatest challenges of requirements engineering is translating from
+business requirements to a functional specification. Business requirements are
+informal, with the intention of being easily understood by humans; however,
+functional specifications are written in formal language to properly capture the
+attributes of the information system unambiguously. Typically, this translation
+of business requirements to a formal specification is done by a requirements
+engineer; this can be an error prone process. 
 
-\edchange{JG}
-{\section{The Stakeholders}\label{sec:Stakeholders}}
-{\section{Ampersand}\label{sec:AmpersandClient}}
+Ampersand is a tool which aims to address this problem in a different way; by
+translating business requirements written in natural language into a formal
+specification by means of a compilation process. %TODO:ref.
+Even though the business requirements and formal specification are written in
+entirely different languages, the ``compiler guarantees compliance between the two''. %Ref
 
-\edinsert{JG}{\subsection{Expression}\label{subsec:Expr}}
+Ampersand also provides engineers with a variety of aids which
+help them to design products that fulfill all of the needs of their clients and
+the end-users; including data models, service cataogues and their
+specifications. Requirements engineering is perhaps most important in
+safety-critical systems; to this end, Ampersand generates modelling aids and
+specifications which are provably correct. %Ref
 
-\edinsert{JG}{\section{Event-Condition Action (E.C.A.) Rules and Definitions}\label{sec:ECA}}
+%% 1b. Goals of the Project 
+Ampersand has proven reliable in practical situations, and there have been
+efforts to teach this approach to business analysts. A large portion of the
+Ampersand system is already in place; the primary focus of this project is to
+augment Ampersand with increased capabilities for automation. 
 
-\edinsert{JG}{\section{Users}\label{sec:Users}}
-\edinsert{JG}{\subsection{Background}\label{subsec:Backgnd}}
+For example, consider a system for ordering products online. Ampersand takes as
+an input statements of business requirements like
 
+\begin{quotation}
+\noindent{\emph{Every order must have a customer and a list of products; and the total price on
+the order must equal the sum of the prices of the products.}}
+\end{quotation}
+
+These are translated into, among other things, formal rules concerning how the
+information system must react to changes in its state. The information system
+may contain a function for manipulating orders. (Ampersand can also generate
+prototype software models, including functions types like these, from business
+requirements - but this is not the topic of our contribution). For example,
+
+\begin{verbatim}
+addToOrder : ( o : Ref Order, t : Product )
+\end{verbatim}
+\noindent{where \verb|Ref x| represenets the type of references to values of type
+\verb|x|; \verb|Order| and \verb|Product| the types of orders and products, respectively.  }
+
+Ampersand can generate pre- and post-conditions for this function, based on the
+business requirements. This constitutes a formal specification of the
+information system. For example, the above function may have the following specification:
+
+\begin{verbatim}
+{ PRE: o.totalCost = t0 } 
+addToOrder(o,t): ...
+{ POST: o.totalCost = t0 + t.cost } 
+\end{verbatim}
+
+It is proven \edcomm{YT}{This is 'proven' because someone told me we have a
+  proof/presentation of the algorithm, but not its implementation. Can anyone
+  find this? We absolutely need a reference to this.} that for the subset of
+processes which Ampersand can support, there is an algorithm which will generate
+the necessary code to satisfy the post-conditions (ie, formal specifications) of
+each function. However, Ampersand does not yet implement this
+algorithm. Currently, a user of Ampersand must manually indicate how each
+violation must be corrected.
+
+In the previous example, the implementation of the
+function could be as follows: 
+
+\begin{verbatim}
+{ PRE: o.totalCost = t0 } 
+addToOrder(o,t): 
+  o.orders.append(t);
+  o.totalCost = o.totalCost + t.cost;
+{ POST: o.totalCost = t0 + t.cost } 
+\end{verbatim}
+
+The first line includes the item in the order, and the second line fixes the
+violation of the post-condition which would occur without it. Currently this
+second line would have to be hand-written by the programmer, but the
+afformentioned \edcomm{YT}{Should have a name to refer to the algorithm
+  somehow?} algorithm can derive it from the business rules. The main
+contribution of this project will be to implement the algorithm which generates
+the code to fix violations.
+
+\section{The Stakeholders}\label{sec:Stakeholders}
+\edcomm{YT}{These are the only real stakeholders I can think of...}
+\subsection{Ampersand}\label{subsec:Ampersand}
+\subsection{Requirements engineers}\label{subsec:BusReq}
+
+%% YT: This can't all be in the intro...
+%% \edinsert{JG}
+%% {\section{Scope of Project}\label{sec:ScopeProj}}
+
+%% \edchange{JG}
+%% {\section{The Stakeholders}\label{sec:Stakeholders}}
+%% {\section{Ampersand}\label{sec:AmpersandClient}}
+
+%% \edinsert{JG}{\subsection{Expression}\label{subsec:Expr}}
+
+%% \edinsert{JG}{\section{Event-Condition Action (E.C.A.) Rules and Definitions}\label{sec:ECA}}
+
+%% \edinsert{JG}{\section{Users}\label{sec:Users}}
+%% \edinsert{JG}{\subsection{Background}\label{subsec:Backgnd}}
+
+%% Chapter 2: Project Constraints 
 \chapter{Project Constraints}\label{ch:Constraints}
 \section{Mandated Constraints}\label{sec:Constraints}
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
