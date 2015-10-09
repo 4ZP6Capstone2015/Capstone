@@ -6,6 +6,7 @@
 \usepackage[margin=1.2in]{geometry}
 \usepackage{hyperref}
 \usepackage{../ltx/edcomms}
+\usepackage{graphicx}
 
 \input{../ltx/setupComments}
 
@@ -97,10 +98,16 @@ entirely different languages, the ``compiler guarantees compliance between the t
 
 Ampersand also provides engineers with a variety of aids which
 help them to design products that fulfill all of the needs of their clients and
-the end-users; including data models, service cataogues and their
+the end-users (Figure 1.1); including data models, service catalogs and their
 specifications. Requirements engineering is perhaps most important in
-safety-critical systems; to this end, Ampersand generates modelling aids and
+safety-critical systems; to this end, Ampersand generates modeling aids and
 specifications which are provably correct. %Ref
+
+\begin{figure}
+  \centering
+    \includegraphics[width=0.7\textwidth]{../figures/ampersand_artifacts}
+\caption{Ampersand produces a set of artifacts based on user's requirements.}~\label{fig:figure1}
+\end{figure}
 
 %% 1b. Goals of the Project 
 Ampersand has proven reliable in practical situations, and there have been
@@ -130,7 +137,7 @@ it shouldn't be incomprehensible).}%
 the order must equal the sum of the prices of the products.}}
 \end{quotation}
 \edcomm{YS}{Attempt at defining ECA}%
-\edcomm{YS}{Should we remove some of the haskell code and define the scope of our project in terms of conserving these data rules instead? There's a good chance Dan hasn't read our new problem statement so he doesn't necessarily have a clear idea of Ampersand. Suggestions?}\edcomm{YT}{There is no Haskell code!}%
+\edcomm{YS}{Should we remove some of the haskell code and define the scope of our project in terms of conserving these data rules instead? There's a good chance Dan hasn't read our new problem statement so he doesn't necessarily have a clear idea of Ampersand. Suggestions?}\edcomm{YT}{There is no Haskell code!}\edcomm{YS}{Sorry, i meant the pre-post conditions pairs, I guess we'll let that stay.}%
 These are translated into, among other things, formal rules concerning how the
 information system must react to changes in its state. Ampersand describes these rules as
 a set of Event-Condition-Action Rules (referred to as the E.C.A rules hereafter)
@@ -142,7 +149,7 @@ requirements - but this is not the topic of our contribution). For example,
 \begin{verbatim}
 addToOrder : ( o : Ref Order, t : Product )
 \end{verbatim}
-\noindent{where \verb|Ref x| represenets the type of references to values of type
+\noindent{where \verb|Ref x| represents the type of references to values of type
 \verb|x|; \verb|Order| and \verb|Product| the types of orders and products, respectively.  }
 
 Ampersand can generate pre- and post-conditions for this function, based on the
