@@ -63,20 +63,27 @@ Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
 \edchange{JG}
 {\section{Project Description}\label{sec:Intro}}
 {\section{The Purpose of the Project}\label{sec:Purpose}}
-
+\edcomm{JG}{any comments I made, is a suggestion and its up to you which way 
+you prefer to write it. thanks for getting this to us early, I'm sorry we're so 
+unorganized}
 %% 1a. The User Business or Background of the Project Effort
 A large part of designing software systems is requirements engineering. One
 of the greatest challenges of requirements engineering is translating from
 business requirements to a functional specification. Business requirements are
 informal, with the intention of being easily understood by humans; however,
 functional specifications are written in formal language to properly capture the
-attributes of the information system unambiguously. Typically, this translation
+attributes of the information system unambiguously.\edcomm{JG}{Good job! what 
+do you think about saying "to unambiguously capture attributes of the 
+information system" ?} Typically, this translation
 of business requirements to a formal specification is done by a requirements
-engineer; this can be an error prone process. 
+engineer; this can be an error prone process. \edcomm{JG}{what do you think 
+about: "which can be prone to human error"?}
 
 Ampersand is a tool which aims to address this problem in a different way; by
 translating business requirements written in natural language into a formal
 specification by means of a compilation process. %TODO:ref.
+\edcomm{JG}{Maybe we should cut out how entirely, because there's a design 
+specification -- and solely focus on what? thoughts?}
 Even though the business requirements and formal specification are written in
 entirely different languages, the ``compiler guarantees compliance between the two''. %Ref
 
@@ -91,11 +98,12 @@ specifications which are provably correct. %Ref
 Ampersand has proven reliable in practical situations, and there have been
 efforts to teach this approach to business analysts. A large portion of the
 Ampersand system is already in place; the primary focus of this project is to
-augment Ampersand with increased capabilities for automation. 
+augment Ampersand with increased capabilities for automation.
 
 For example, consider a system for ordering products online. Ampersand takes as
 an input statements of business requirements like
-
+\edcomm{JG}{Good example, could we put something in here about restrictions of 
+of the real world?}
 \begin{quotation}
 \noindent{\emph{Every order must have a customer and a list of products; and the total price on
 the order must equal the sum of the prices of the products.}}
@@ -125,7 +133,10 @@ addToOrder(o,t): ...
 
 It is proven \edcomm{YT}{This is 'proven' because someone told me we have a
   proof/presentation of the algorithm, but not its implementation. Can anyone
-  find this? We absolutely need a reference to this.} that for the subset of
+  find this? We absolutely need a reference to this.} \edcomm{JG}{Can you give 
+  me more context as to what is proven? I found an article on ampersand 
+  subsets, I pushed it; look for "subsets" by Joosten(both)}that for the subset 
+  of
 processes which Ampersand can support, there is an algorithm which will generate
 the necessary code to satisfy the post-conditions (ie, formal specifications) of
 each function. However, Ampersand does not yet implement this
@@ -153,28 +164,106 @@ the code to fix violations.
 
 \section{The Stakeholders}\label{sec:Stakeholders}
 \edcomm{YT}{These are the only real stakeholders I can think of...}
-\subsection{Ampersand}\label{subsec:Ampersand}
+\subsection{Ampersand Designers}\label{subsec:Ampersand}
+Ampersand designers include Dr. Stef Joosten, Dr. Sebastian Joosten and Dr. 
+Wolfram Kahl, who in addition to supervising the development of E.F.A are also 
+Ampersand contributers. Dr. Stef Joosten is the designer of the Ampersand 
+method which have been successfully implemented in various public sectors. The 
+interest stemming from these three individuals are not only professional but 
+also personal. Ampersand has been nourtoured by a greal deal of patience and 
+dedication. The designers of E.F.A by extension are Ampersand contributors and 
+are affected by its outcome, the piece of Ampersand we will build is a 
+necessary component required for completion of undergraduate and is designed to 
+test the capabilities of an undergraduate team. 
+These individuals are the foundation of the belief system by which Ampersand is 
+built. The Ampersand model is built on the belief that technology is highly 
+incorporated in the use of business and affects the life of every individual. 
+It is the belief that informatoin system can and will be designed and built at 
+an affordable price and perfectly compliant with the functionalities that users 
+desire. This perspective treats information systems as a commodity of the real 
+world that can be traded, altered, and used by any individual who is willing to 
+learn how to use it.
 \subsection{Requirements engineers}\label{subsec:BusReq}
+Requirement engineers are responsible of translating business 
+requirements into project specifications. Ampersand provides requirement 
+engineers with the freedom to explore their creativity rather than be tried 
+down by technical minutea. The ability to deligate time consuming tasks such as 
+manually checking over technical specifications would increase the efficiency 
+of the task at hand as well as decrease the number of hours required for 
+completion. An added benefit which engineers recieve is the ability to confirm 
+that the system they have designed matching the specifications given to them by 
+the client. E.F.A provides the ability to ensure no contradictions are found 
+within the design by automatically fixing inconsistency that may arise. 
+\subsection{Architects \& Functional Specification Designers}
+System architects, simliar to functional specification designers are 
+responsible for various designs which affect procedure and processes in a place 
+of business. Ampersand has the ability to confirm that the design provided by 
+the Architect matches any building regulations that must be meet. Regardless of 
+whether the specification is for safety or esthetics, the product must meet the 
+client's requirements and minimal legal regulations. Ampersand is able to 
+compose rules and regulations for data which fully incorporates both without 
+contradiction. The addition of E.F.A allows Ampersand to automate correction  
+on data which may contradict rules specified for a project. Architects and 
+functional specification designers will be able to take advantage of the 
+numerous resources Ampersand can provide such as automatic generation of 
+databases within prototypes along with tables and relational schemas. 
+Furthermore, there is a full range of graphics that stakeholders can choose 
+from in order to provide visual display of their design which user may find 
+more friendly and easy to understand. 
+\subsection{Process Innovators}
+Process innovators covers a broad range of individuals that would not commonly 
+be considered stakeholders. This broad category includes anyone who provides 
+input for business processes which includes both sides of a business agreement, 
+in addition to individuals who play a role in seeing the completion of a 
+business process. Ampersand allows continuous input as a living system and has 
+the ability to reorganize requirements when new constraints are added, and 
+E.F.A has the ability to assure the correctness of system information relative 
+to the requirements it has been given. With E.F.A's ability to verify 
+inconsistencies and automate their correction, changes to design and 
+restrictions due to unforseen circumstances can be added without a system 
+overhaul. The efficiency in which Ampersand can provide has the potential to 
+dramatically decrease flaws that commonly litter information system.
 
-%% YT: This can't all be in the intro...
-%% \edinsert{JG}
-%% {\section{Scope of Project}\label{sec:ScopeProj}}
-
-%% \edchange{JG}
-%% {\section{The Stakeholders}\label{sec:Stakeholders}}
-%% {\section{Ampersand}\label{sec:AmpersandClient}}
-
-%% \edinsert{JG}{\subsection{Expression}\label{subsec:Expr}}
-
-%% \edinsert{JG}{\section{Event-Condition Action (E.C.A.) Rules and Definitions}\label{sec:ECA}}
-
-%% \edinsert{JG}{\section{Users}\label{sec:Users}}
-%% \edinsert{JG}{\subsection{Background}\label{subsec:Backgnd}}
-
-%% Chapter 2: Project Constraints 
 \chapter{Project Constraints}\label{ch:Constraints}
+The main constraint of this project is time; this is limited to the 8 month 
+period in which we have to build it. It is difficult to perfect an internal 
+struction without a large system in such a short amount of time. But time 
+restraint is an obstacle which all projects face, because it is not limitless. 
+Another major constrait that most project face that this project does not 
+require is the financial constraint where projects become difficult to maintain 
+and often halt in their progress due to monetary constraints. The lack of 
+montary constraints due to the open source software opens up a broad base of 
+opportunities for future improvements and limitless contributes from the 
+community.
 \section{Mandated Constraints}\label{sec:Constraints}
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
+E.C.A. \big( Event-Condition Action \big): Rule structure used for data bases 
+and commonly used in market ready business rule engines. %TODO: cite rule 
+%design.p:8-9
+\begin{verbatim}
+Event-Condition Action has the structure
+
+when <some event has happened> 
+and if <some condition is fulfilled> 
+    do <this activity>
+
+\end{verbatim} %TODO{JG}: bold or italicize words in definitions
+E.F.A.: stands for E.C.A for Ampersand, which is the name of this project. \\
+Graphviz: open source graph visualization software, has the ability to visually 
+represent information in the form of charts and features. It contains various 
+designs from which the user is able to select. This is used to take 
+descriptions of graphs in simple text and create diagrams. This is oe of the 
+basic components required to run Ampersand.\\
+XAMPP: stands for cross \big( i.e., X \big) platform Apache distribution 
+containing MySQL, PHP and Perl. XAMPP is the most convenient way to set up a 
+working database for Ampersand and access .php pages\\ XAMPP is easy to install 
+and can be accessed \\
+here: 
+\begin{verbatim}
+https://www.apachefriends.org/index.html
+\end{verbatim} 
+%TODO{JG}: add Expression as a data type? Find a better way of describing 
+%Expression without implementation details
 \section{Relevant Facts and Assumptions}\label{sec:Assumptions}
 
 \chapter{Functional Requirements}\label{ch:Functional}
@@ -182,6 +271,10 @@ the code to fix violations.
 \section{Business Data Model and Data Dictionary}\label{sec:DataModel}
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
 \section{Functional Requirements}\label{sec:Functional}
+\subsection{Input}
+\subsection{Correct Translation of Input}
+\subsection{Output}
+
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
 \section{Look and Feel Requirements}\label{sec:LookAndFeel} 
 \section{Usability and Humanity Requirements}\label{sec:Usability}
