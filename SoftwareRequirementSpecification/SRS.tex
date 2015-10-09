@@ -142,13 +142,13 @@ It is proven \edcomm{YT}{This is 'proven' because someone told me we have a
   proof/presentation of the algorithm, but not its implementation. Can anyone
   find this? We absolutely need a reference to this.} \edcomm{JG}{Can you give 
   me more context as to what is proven? I found an article on ampersand 
-  subsets, I pushed it; look for "subsets" by Joosten(both)}that for the subset 
-  of
-processes which Ampersand can support, there is an algorithm which will generate
-the necessary code to satisfy the post-conditions (ie, formal specifications) of
-each function. However, Ampersand does not yet implement this
-algorithm. Currently, a user of Ampersand must manually indicate how each
-violation must be corrected.
+  subsets, I pushed it; look for "subsets" by Joosten(both)}%
+\edcomm{YT}{There is no file in the repository with the word 'subset' in it?}%
+that for the subset of processes which Ampersand can support, there is an
+algorithm which will generate the necessary code to satisfy the post-conditions
+(ie, formal specifications) of each function. However, Ampersand does not yet
+implement this algorithm. Currently, a user of Ampersand must manually indicate
+how each violation must be corrected.
 
 In the previous example, the implementation of the
 function could be as follows: 
@@ -303,35 +303,46 @@ also be on GitHub; this will facilitate easy integration of our code into
 Ampersand. This is especially useful if only parts of our code eventually become
 integrated into Ampersand - GitHub facilitates this especially. 
 
+\subsubsection*{Graphviz}
+Graphiv is open source graph visualization software, which has the ability to
+visually represent information in the form of charts and features. It contains
+various designs from which the user is able to select. This is used to take
+descriptions of graphs in simple text and create diagrams. Ampersand generates
+reports about the input system using graphs and charts, so this is one of the
+basic components required to run Ampersand.
+
+\subsubsection*{XAMPP}
+Ampersand generates prototype websites based on business requirements; to run
+these, some web server software is needed. XAMPP stands for cross \big( i.e., X
+\big) platform Apache distribution containing MySQL, PHP and Perl. XAMPP is the
+most convenient way to set up a working database for Ampersand and access .php
+pages. %REF: https://www.apachefriends.org/index.html
+
+\edcomm{YT}{Be liberal with what you include in this section, but if it is a
+  'technology' then put it in the previous section. Any acronyms, or words that
+  the layman probably won't know, need to be here.}%
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
-E.C.A. \big( Event-Condition Action \big): Rule structure used for data bases 
-and commonly used in market ready business rule engines. %TODO: cite rule 
+\begin{description}
+\item[ECA] Stands for Event-Condition Action. The rule structure used for data
+  bases and commonly used in market ready business rule engines. ECA rules are
+  used in Ampersand to describe how a database should be modified in response to
+  a system constraint becoming untrue. Event-Condition Action rules have
+  the following structure:
+%TODO: cite rule 
 %design.p:8-9
 \begin{verbatim}
-Event-Condition Action has the structure
-
 when <some event has happened> 
 and if <some condition is fulfilled> 
     do <this activity>
-
 \end{verbatim} %TODO{JG}: bold or italicize words in definitions
-E.F.A.: stands for E.C.A for Ampersand, which is the name of this project. \\
-Graphviz: open source graph visualization software, has the ability to visually 
-represent information in the form of charts and features. It contains various 
-designs from which the user is able to select. This is used to take 
-descriptions of graphs in simple text and create diagrams. This is oe of the 
-basic components required to run Ampersand.\\
-XAMPP: stands for cross \big( i.e., X \big) platform Apache distribution 
-containing MySQL, PHP and Perl. XAMPP is the most convenient way to set up a 
-working database for Ampersand and access .php pages\\ XAMPP is easy to install 
-and can be accessed \\
-here: 
-\begin{verbatim}
-https://www.apachefriends.org/index.html
-\end{verbatim} 
+\item [EFA] Stands for ``ECA (see above) for Ampersand''.
+\end{description}
+
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
 %Expression without implementation details
 \section{Relevant Facts and Assumptions}\label{sec:Assumptions}
+
+
 
 \chapter{Functional Requirements}\label{ch:Functional}
 \section{The Scope of the Work}\label{sec:ScopeOfWork}
