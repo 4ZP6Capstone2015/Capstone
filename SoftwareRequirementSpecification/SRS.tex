@@ -12,10 +12,11 @@
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
 
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
-
+\edcommsfalse
 \begin{document}
 
 \begin{titlepage}\begin{center}
+
 \vspace*{1cm}
 
 {\Huge\textbf{Ampersand Event-Condition-Action Rules}}
@@ -111,14 +112,25 @@ an input statements of business requirements like
 of the real world?}%
 \edcomm{YT}{Business requirements *are* real world requirements. Do you mean something safety-related?
 This example isn't the best, I know, but I deliberately chose a simple example}%
+\edcomm{YS}{The example is easy to understand. I think we should keep it.} 
+\edcomm{YS}{I'm not too sure if the haskell implementation needs to be a part of the introduction.
+Rubrics indicate the following critera - - - - %%%%%%%%%%%%%%%%%
+ delineate purpose, specify intended audience), system scope, definitions, acronyms,
+abbreviations, references, system overview, roadmap of report - - - -
+%%%%%%%%%%%%%%%%%%%%%%%
+I believe we miss definition of E.F.A and E.C.A since it is being used a lot in the document
+}%
 \begin{quotation}
 \noindent{\emph{Every order must have a customer and a list of products; and the total price on
 the order must equal the sum of the prices of the products.}}
 \end{quotation}
-
+\edcomm{YS}{Attempt at defining ECA}%
+\edcomm{YS}{Should we remove some of the haskell code and define the scope of our project in terms of conserving these data rules instead? There's a good chance Dan hasn't read our new problem statement so he doesn't necessarily have a clear idea of Ampersand. Suggestions?}
 These are translated into, among other things, formal rules concerning how the
-information system must react to changes in its state. The information system
-may contain a function for manipulating orders. (Ampersand can also generate
+information system must react to changes in its state. Ampersand describes these rules as
+a set of Event-Condition-Action Rules (referred to as the E.C.A rules hereafter)
+that specify when an event takes place under a given condition, what Action the software must take. 
+The information system may contain a function for manipulating orders. (Ampersand can also generate
 prototype software models, including functions types like these, from business
 requirements - but this is not the topic of our contribution). For example,
 
