@@ -108,8 +108,8 @@ efforts to teach this approach to business analysts. A large portion of the
 Ampersand system is already in place; the primary focus of this project is to
 augment Ampersand with increased capabilities for automation.
 
-For example, consider a system for ordering products online. Ampersand takes as
-an input statements of business requirements like
+For example, consider a system for ordering products online. Ampersand takes, as
+an input, statements of business requirements like
 \edcomm{JG}{Good example, could we put something in here about restrictions of 
 of the real world?}%
 \edcomm{YT}{Business requirements *are* real world requirements. Do you mean something safety-related?
@@ -122,12 +122,15 @@ abbreviations, references, system overview, roadmap of report - - - -
 %%%%%%%%%%%%%%%%%%%%%%%
 I believe we miss definition of E.F.A and E.C.A since it is being used a lot in the document
 }%
+\edcomm{YT}{Haskell isn't mentioned at all the intro, ECA is mentioned but is also defined
+(it is really quite simple, we don't define it mathematically, just in natural language, so 
+it shouldn't be incomprehensible).}%
 \begin{quotation}
 \noindent{\emph{Every order must have a customer and a list of products; and the total price on
 the order must equal the sum of the prices of the products.}}
 \end{quotation}
 \edcomm{YS}{Attempt at defining ECA}%
-\edcomm{YS}{Should we remove some of the haskell code and define the scope of our project in terms of conserving these data rules instead? There's a good chance Dan hasn't read our new problem statement so he doesn't necessarily have a clear idea of Ampersand. Suggestions?}
+\edcomm{YS}{Should we remove some of the haskell code and define the scope of our project in terms of conserving these data rules instead? There's a good chance Dan hasn't read our new problem statement so he doesn't necessarily have a clear idea of Ampersand. Suggestions?}\edcomm{YT}{There is no Haskell code!}%
 These are translated into, among other things, formal rules concerning how the
 information system must react to changes in its state. Ampersand describes these rules as
 a set of Event-Condition-Action Rules (referred to as the E.C.A rules hereafter)
@@ -148,7 +151,7 @@ information system. For example, the above function may have the following speci
 
 \begin{verbatim}
 { PRE: o.totalCost = t0 } 
-addToOrder(o,t): ...
+addToOrder(o,t) = ...
 { POST: o.totalCost = t0 + t.cost } 
 \end{verbatim}
 
@@ -169,7 +172,7 @@ function could be as follows:
 
 \begin{verbatim}
 { PRE: o.totalCost = t0 } 
-addToOrder(o,t): 
+addToOrder(o,t) = 
   o.orders.append(t);
   o.totalCost = o.totalCost + t.cost;
 { POST: o.totalCost = t0 + t.cost } 
@@ -295,12 +298,15 @@ into Ampersand. Our code must satisfy existing tests and additional tests should
 be written for the new algorithm being implemented. Writing maintainable and
 well-documented code will help with this goal as well.
 
+These motivations are very important to Ampersand and are considered primary
+goals alongside the obvious goal of producing code implementing the desired
+feature.
 
 %%3b.
 \subsection{Implementation environment}
 \subsubsection*{Haskell}
 The Ampersand code base is written almost entirely in Haskell. Part of the
-prototype software is written in php and javascript %Ref???  
+prototype software is written in PHP and Javascript %Ref???  
 but we likely do not have to interact with this code base. Our code contribution
 must be entirely in Haskell.
 
@@ -321,7 +327,7 @@ integrated into Ampersand - GitHub facilitates this especially.
 
 \subsubsection*{Graphviz}
 Graphiv is open source graph visualization software, which has the ability to
-visually represent information in the form of charts and features. It contains
+visually represent information in the form of charts and graphs. It contains
 various designs from which the user is able to select. This is used to take
 descriptions of graphs in simple text and create diagrams. Ampersand generates
 reports about the input system using graphs and charts, so this is one of the
@@ -352,6 +358,15 @@ and if <some condition is fulfilled>
     do <this activity>
 \end{verbatim} %TODO{JG}: bold or italicize words in definitions
 \item [EFA] Stands for ``ECA (see above) for Ampersand''.
+\item [Functional specification] A \emph{formal} document which details the operation,
+  capabilities, and appearance of a software system. 
+\item [Requirements engineering] The process of translating business
+  requirements into a functional specification. 
+\item [Business requirements] Requirements which exist due to some real world constraints;
+  ie, financial, logistic, physical or safety constraints. 
+\item [Business rules] See \emph{Business Requirements}.
+\item [Natural language] Language written in a manner similair to that of human communication; 
+  language intended to be interpreted and understood by humans, as opposed to machines. 
 \end{description}
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
 %Expression without implementation details
