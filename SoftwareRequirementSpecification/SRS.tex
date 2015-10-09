@@ -71,19 +71,22 @@ A large part of designing software systems is requirements engineering. One
 of the greatest challenges of requirements engineering is translating from
 business requirements to a functional specification. Business requirements are
 informal, with the intention of being easily understood by humans; however,
-functional specifications are written in formal language to properly capture the
-attributes of the information system unambiguously.\edcomm{JG}{Good job! what 
-do you think about saying "to unambiguously capture attributes of the 
-information system" ?} Typically, this translation
+functional specifications are written in formal language to unambiguously capture attributes of the 
+information system. Typically, this translation
 of business requirements to a formal specification is done by a requirements
-engineer; this can be an error prone process. \edcomm{JG}{what do you think 
-about: "which can be prone to human error"?}
+engineer, which can be prone to human error.
 
 Ampersand is a tool which aims to address this problem in a different way; by
 translating business requirements written in natural language into a formal
 specification by means of a compilation process. %TODO:ref.
 \edcomm{JG}{Maybe we should cut out how entirely, because there's a design 
-specification -- and solely focus on what? thoughts?}%% NB: Put a tex comment at
+specification -- and solely focus on what? thoughts?}%
+\edcomm{YT}{The significance of Ampersand has to do with how it solves the
+  problem, or how it works. To speak to the purpose of the project means to
+  explain why the Ampersand solution is good and why we are spending our time
+  making it better. The rubric has a section titled 'General System
+  Description', so we need to say something about it}%
+%% NB: Put a tex comment at
 %% the end of the line after your 'in-line' comments, or latex inserts extra
 %% whitespace when rendering with comments off.
 Even though the business requirements and formal specification are written in
@@ -105,7 +108,9 @@ augment Ampersand with increased capabilities for automation.
 For example, consider a system for ordering products online. Ampersand takes as
 an input statements of business requirements like
 \edcomm{JG}{Good example, could we put something in here about restrictions of 
-of the real world?}
+of the real world?}%
+\edcomm{YT}{Business requirements *are* real world requirements. Do you mean something safety-related?
+This example isn't the best, I know, but I deliberately chose a simple example}%
 \begin{quotation}
 \noindent{\emph{Every order must have a customer and a list of products; and the total price on
 the order must equal the sum of the prices of the products.}}
@@ -279,9 +284,9 @@ well-documented code will help with this goal as well.
 \subsection{Implementation environment}
 \subsubsection*{Haskell}
 The Ampersand code base is written almost entirely in Haskell. Part of the
-prototype software is written in php and javascript %Ref???  but we likely do
-not have to interact with this code base. Our code contribution must be entirely
-in Haskell.
+prototype software is written in php and javascript %Ref???  
+but we likely do not have to interact with this code base. Our code contribution
+must be entirely in Haskell.
 
 \subsubsection*{Haskell software}
 Ampersand is designed to be used with the Glasgow Haskell Compiler (from here on, GHC) %%REF
