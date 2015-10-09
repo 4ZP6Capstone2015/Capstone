@@ -99,7 +99,7 @@ entirely different languages, the ``compiler guarantees compliance between the t
 
 Ampersand also provides engineers with a variety of aids which
 help them to design products that fulfill all of the needs of their clients and
-the end-users (~\ref{fig:figure1}); including data models, service catalogs and their
+the end-users (Figure~\ref{fig:figure1}); including data models, service catalogs and their
 specifications. Requirements engineering is perhaps most important in
 safety-critical systems; to this end, Ampersand generates modeling aids and
 specifications which are provably correct. %Ref
@@ -377,8 +377,11 @@ and if <some condition is fulfilled>
 \item [Business rules] See \emph{Business Requirements}.
 \item [Natural language] Language written in a manner similair to that of human communication; 
   language intended to be interpreted and understood by humans, as opposed to machines. 
-\item [ADL] Stand for ``A Data Language''. The language which is the input to Ampersand; contains
-  formal specification of requirements, processes, and entities involed in process.
+\item [ADL] Stand for ``Ampersand Definition Language''. From a given set of
+formally defined business requirements, ADL generates a functional specification
+consisting of a data model, a service catalog, a formal specification of the services,
+and a function point analysis. An ADL script acts as an input for Ampersand.
+\edcomm{YS}{ADL is probably not "A data Language".}
 \end{description}
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
 %Expression without implementation details
@@ -423,15 +426,31 @@ software system. The contribution of this project is denoted with dashed lines.
 \section{Security Requirements}\label{sec:Security}
 \section{Cultural Requirements}\label{sec:Cultural}
 \section{Legal Requirements}\label{sec:Legal}
-
+The implementation should be completely the work of the group
+ and should not copy from any existing software or open source code.\edcomm{YS}{Rephrase this one, I wanted to put forward the idea}%
 \chapter{Project Issues}\label{ch:issues}
 \section{Open Issues}\label{sec:issues}
 \section{Off-the-Shelf Solutions}\label{sec:solutions}
 \section{New Problems}\label{sec:NewProblems}
 \section{Tasks}\label{sec:Tasks}
 \section{Migration to the New Product}\label{sec:Migration}
+Upon final review by the client and intensive testing, if the client is satisfied
+by the quality of code and its maintainability, the implementation will be made part of the production stream.
+
 \section{Risks}\label{sec:Risks}
+\begin{itemize}
+\item The new code must not introduce any 
+errors or performance regressions
+into Ampersand.
+\item The code must satisfy existing tests and 
+additional tests written for the new algorithm being implemented.
+\end{itemize}
+
 \section{Costs}\label{sec:Costs}
+Currently the software is open source maintained by Tarski Systems.
+All the software used in Ampersand are also open source
+There will no change in cost as a result of our implementation. The client ( Tarski Systems)
+will be responsible for managing the cost of maintenance of the software in the future.
 \section{User Documentation and Training}\label{sec:UserDoc}
 \section{Waiting Room}\label{sec:Waiting}
 \section{Ideas for Solutions}\label{sec:Solutions}
