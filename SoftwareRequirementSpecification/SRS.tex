@@ -382,6 +382,9 @@ formally defined business requirements, ADL generates a functional specification
 consisting of a data model, a service catalog, a formal specification of the services,
 and a function point analysis. An ADL script acts as an input for Ampersand.
 \edcomm{YS}{ADL is probably not "A data Language".}
+\edcomm{YT}{I swear to god I read "A data Language" somewhere... maybe I was
+  delirious from lack of sleep... In any case, we should eventually find a
+  reference for ``ADL'', whatever it is...}
 \end{description}
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
 %Expression without implementation details
@@ -426,8 +429,17 @@ software system. The contribution of this project is denoted with dashed lines.
 \section{Security Requirements}\label{sec:Security}
 \section{Cultural Requirements}\label{sec:Cultural}
 \section{Legal Requirements}\label{sec:Legal}
-The implementation should be completely the work of the group
- and should not copy from any existing software or open source code.\edcomm{YS}{Rephrase this one, I wanted to put forward the idea}%
+The implementation must eventually be included in Ampersand, which is licensed
+under GPL3. To comply with this license, all of the implementation code must be
+either written by us so we may license it under GPL, or must already be licensed
+under GPL, or a compatible license, by its original author. We do not plan to
+use existing code, other than as a reference.
+\edcomm{YS}{Rephrase this one, I wanted to put forward the idea}%
+\edcomm{YT}{I rephrased it more concretely: we have to follow the license agreement of
+Ampersand, which appears to be GPL3. That means all the code we include must
+either be our own so we can place it under that license, or must already be
+under GPL. I don't see any reason we couldn't take code from somewhere if it was
+GPL. }%
 \chapter{Project Issues}\label{ch:issues}
 \section{Open Issues}\label{sec:issues}
 \section{Off-the-Shelf Solutions}\label{sec:solutions}
