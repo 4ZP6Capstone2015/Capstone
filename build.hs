@@ -10,6 +10,8 @@ import Control.Monad
 import Data.Char (toLower)
 import Data.List (intercalate)
 import Control.Exception hiding (assert)
+import Text.Read (readMaybe)
+import Text.Printf (printf)
 
 
 --------------------------
@@ -50,6 +52,11 @@ data PdfLatexOpts = Opts
   , rawPath :: FilePath 
   } 
 
+optsJobName :: PdfLatexOpts -> String 
+optsJobName Opts{..} = jobName' ++ if isDraft then "_draft" else "" where 
+  (_, fileName) = splitFileName rawPath 
+  (jobName', _) = splitExtension fileName 
+
 defOpts :: FilePath -> PdfLatexOpts
 defOpts rawPath = Opts { isDraft = False, hasBib = False, invocations = 2, ..}
 
@@ -79,4 +86,17 @@ pdflatex Opts{isDraft = isD, ..} = do
         [ "-interaction=nonstopmode", "-jobname="++jobName, texInput ] 
       bibCommand = standardCmd $ proc "bibtex" [ jobName ] 
 
-main = sequence_ [ pdflatex (target { isDraft = isD }) | isD <- [False, True], target <- targets] 
+runOneOf :: [(IO a,String)] -> IO a 
+runOneOf opts = do 
+  let len = length opts 
+  mapM_ (\(n,s) -> printf "%3d: %s\n" n s) (zip [(0 :: Int)..] (map snd opts)) 
+  n <- let f = putStrLn ("Pick a number between 0 and " ++ show (len-1)) >> 
+               getLine >>= 
+               maybe f (\x -> if x >= 0 && x < len then return x else f) . readMaybe
+           f :: IO Int in f 
+  fst (opts !! n)
+  
+main = runOneOf [ (pdflatex r, optsJobName r) 
+                | isD <- [False, True]
+                , target <- targets
+                , let r = target { isDraft = isD } ] 
