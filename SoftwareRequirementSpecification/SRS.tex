@@ -8,6 +8,7 @@
 \usepackage{../ltx/edcomms}
 \usepackage{graphicx}
 \usepackage[section]{placeins} % Prevents floats from floating across sections
+\usepackage{natbib}%Bibtex
 
 \input{../ltx/setupComments}
 
@@ -83,7 +84,7 @@ engineer, which can be prone to human error.
 
 Ampersand is a tool which aims to address this problem in a different way; by
 translating business requirements written in natural language into a formal
-specification by means of a compilation process. %TODO:ref.
+specification by means of a ``compilation process'' (\cite{derFun}). 
 \edcomm{JG}{Maybe we should cut out how entirely, because there's a design 
 specification -- and solely focus on what? thoughts?}%
 \edcomm{YT}{The significance of Ampersand has to do with how it solves the
@@ -95,14 +96,15 @@ specification -- and solely focus on what? thoughts?}%
 %% the end of the line after your 'in-line' comments, or latex inserts extra
 %% whitespace when rendering with comments off.
 Even though the business requirements and formal specification are written in
-entirely different languages, the ``compiler guarantees compliance between the two''. %Ref
+entirely different languages, the ``compiler guarantees compliance between the
+two'' (\cite[p.~2]{derFun}). 
 
 Ampersand also provides engineers with a variety of aids which
 help them to design products that fulfill all of the needs of their clients and
 the end-users (Figure~\ref{fig:figure1}); including data models, service catalogs and their
 specifications. Requirements engineering is perhaps most important in
 safety-critical systems; to this end, Ampersand generates modeling aids and
-specifications which are provably correct. %Ref
+specifications which are provably correct (\cite{derFun}). 
 
 \begin{figure}
   \centering
@@ -346,9 +348,9 @@ basic components required to run Ampersand.
 \subsubsection*{XAMPP}
 Ampersand generates prototype websites based on business requirements; to run
 these, some web server software is needed. XAMPP stands for cross \big( i.e., X
-\big) platform Apache distribution containing MySQL, PHP and Perl. XAMPP is the
+\big) platform Apache distribution containing MySQL, PHP and Perl. XAMPP \cite{xampp} is the
 most convenient way to set up a working database for Ampersand and access .php
-pages. %REF: https://www.apachefriends.org/index.html
+pages. 
 
 \edcomm{YT}{Be liberal with what you include in this section, but if it is a
   'technology' then put it in the previous section. Any acronyms, or words that
@@ -470,6 +472,9 @@ will be responsible for managing the cost of maintenance of the software in the 
 \section{Waiting Room}\label{sec:Waiting}
 \section{Ideas for Solutions}\label{sec:Solutions}
 
+
+\bibliographystyle{alpha}
+\bibliography{SRS}
 \end{document}
 
 
