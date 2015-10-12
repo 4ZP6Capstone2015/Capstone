@@ -1,7 +1,10 @@
 #! runhaskell
 
+{-# LANGUAGE RecordWildCards, LambdaCase #-}
+
 import System.Directory
-import qualified System.Process as Proc 
+import System.Process
+import System.Exit (ExitCode(..))
 import System.FilePath
 import Control.Monad 
 import Data.Char (toLower)
@@ -13,43 +16,67 @@ import Control.Exception hiding (assert)
 -------------------------- 
 
 targets = 
-  [ "ProblemStatement/ProblemStatement.tex"
-  , "SoftwareRequirementSpecification/SRS.tex"
+  [  defOpts "ProblemStatement/ProblemStatement.tex"
+  , (defOpts "SoftwareRequirementSpecification/SRS.tex") { hasBib = True }
   ]
 
 --------------------------
 --------------------------
 
-
-callCommand cmd = putStrLn ("Running: " ++ cmd) >> Proc.callCommand cmd 
-
-callProcess cmd args = 
-  putStrLn (intercalate " " $ "Running :" : cmd : args) >> 
-  Proc.callProcess cmd args 
+standardCmd :: CreateProcess -> IO () 
+standardCmd pr = do 
+  let cmdString = 
+        case cmdspec pr of 
+          ShellCommand c -> c
+          RawCommand x s -> showCommandForUser x s
+  (cd, out, err) <- readCreateProcessWithExitCode pr ""
+  case cd of 
+    ExitSuccess -> putStrLn $ "Command succeeded: " ++ cmdString
+    x -> putStrLn $ unlines 
+           ["An error occured while running: " 
+            ++ cmdString ++ "  -  " ++ show x
+           , out
+           , err
+           ]
 
 assert :: Bool -> String -> a -> a 
 assert True = const id 
 assert False = const . error 
 
-pdflatex :: Bool -> FilePath -> IO ()
-pdflatex isD rawPath = do 
+data PdfLatexOpts = Opts 
+  { isDraft :: Bool
+  , hasBib :: Bool
+  , invocations :: Int 
+  , rawPath :: FilePath 
+  } 
+
+defOpts :: FilePath -> PdfLatexOpts
+defOpts rawPath = Opts { isDraft = False, hasBib = False, invocations = 2, ..}
+
+pdflatex :: PdfLatexOpts -> IO ()
+pdflatex Opts{isDraft = isD, ..} = do 
   assert  (isValid rawPath) "Invalid file path" $ 
    assert (ext == ".tex") "Not a tex file" $ 
    return () 
           
-  bracket getCurrentDirectory setCurrentDirectory $ const $ 
-   setCurrentDirectory dir >>
-   replicateM_ (fromEnum isD + 1) texCommand 
-
+  putStrLn $ "Job starting... " ++ jobName 
+  bracket getCurrentDirectory setCurrentDirectory $ const $ do 
+   setCurrentDirectory dir 
+   if hasBib then texCommand >> bibCommand else return ()
+   texCommand >> texCommand 
+  putStrLn $ "Job finished.\n"
+   
     where 
       (dir, fileName) = splitFileName rawPath 
-      (jobName, ext) = splitExtension fileName 
-      jobName' = jobName ++ if isD then "_draft" else ""
+      (jobName', ext) = splitExtension fileName 
+      jobName = jobName' ++ if isD then "_draft" else ""
+
       texInput = concat 
         [ "\\providecommand{\\draftmode}{" 
         , map toLower (show isD)
         , "}\\input{", fileName, "}"]
-      texCommand = callProcess "pdflatex" 
-        [ "-interaction=nonstopmode", "-jobname="++jobName', texInput ] 
+      texCommand = standardCmd $ proc "pdflatex" 
+        [ "-interaction=nonstopmode", "-jobname="++jobName, texInput ] 
+      bibCommand = standardCmd $ proc "bibtex" [ jobName ] 
 
-main = sequence_ [ pdflatex isD target | isD <- [False, True], target <- targets] 
+main = sequence_ [ pdflatex (target { isDraft = isD }) | isD <- [False, True], target <- targets] 
