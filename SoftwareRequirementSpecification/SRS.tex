@@ -384,10 +384,15 @@ and if <some condition is fulfilled>
 \item [Business rules] See \emph{Business Requirements}.
 \item [Natural language] Language written in a manner similair to that of human communication; 
   language intended to be interpreted and understood by humans, as opposed to machines. 
-\item [ADL] Stand for ``Ampersand Definition Language''. From a given set of
-formally defined business requirements, ADL generates a functional specification
-consisting of a data model, a service catalog, a formal specification of the services,
-and a function point analysis. An ADL script acts as an input for Ampersand.
+\item [ADL] Stands for ``A Description Language'' (\cite[p.~13]{derFun}). From a
+  given set of formally defined business requirements, Ampersand generates a
+  functional specification consisting of a data model, a service catalog, a
+  formal specification of the services, and a function point analysis. An ADL
+  script acts as an input for Ampersand. An ADL file consists of a plain ASCII
+  text file. 
+\item [Ampersand] Ampersand is the name of this project. It is used to refer to
+  both the method of generating functional specification from formalized
+  business requirements, and the software tool which implements this method.
 \edcomm{YS}{ADL is probably not "A data Language".}
 \edcomm{YT}{I swear to god I read "A data Language" somewhere... maybe I was
   delirious from lack of sleep... In any case, we should eventually find a
@@ -408,7 +413,15 @@ specification of the services, and a function point analysis
 	They also specify the difference between requiement and specification: where specification is 
 	used to prescribe properties of a system to be built; and requirement describes an explicit or 
 	implicit need need of users}
+\edcomm{YT}{Stef's article describes ADL as 'an accompanying tool' but also as
+  the 'language which is input to Ampersand'. This is confusing and I feel like
+  the former definition is not that useful so I decided to omit it. Just refer
+  to 'Ampersand' as both the tool which is written in Haskell and this method of
+  generating functional consraints from business requirements. To this end, I
+  added a definiton of 'Ampersand'. But thanks for the reference to 'A
+  description language'}
 \end{description}
+
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
 %Expression without implementation details
 
