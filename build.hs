@@ -12,6 +12,8 @@ import Data.List (intercalate)
 import Control.Exception hiding (assert)
 import Text.Read (readMaybe)
 import Text.Printf (printf)
+import System.IO (hFlush, stdout)
+import System.IO.Unsafe (unsafeInterleaveIO)
 
 
 --------------------------
@@ -86,17 +88,41 @@ pdflatex Opts{isDraft = isD, ..} = do
         [ "-interaction=nonstopmode", "-jobname="++jobName, texInput ] 
       bibCommand = standardCmd $ proc "bibtex" [ jobName ] 
 
-runOneOf :: [(IO a,String)] -> IO a 
-runOneOf opts = do 
-  let len = length opts 
-  mapM_ (\(n,s) -> printf "%3d: %s\n" n s) (zip [(0 :: Int)..] (map snd opts)) 
-  n <- let f = putStrLn ("Pick a number between 0 and " ++ show (len-1)) >> 
-               getLine >>= 
-               maybe f (\x -> if x >= 0 && x < len then return x else f) . readMaybe
-           f :: IO Int in f 
-  fst (opts !! n)
-  
-main = runOneOf [ (pdflatex r, optsJobName r) 
-                | isD <- [False, True]
-                , target <- targets
-                , let r = target { isDraft = isD } ] 
+
+getOne :: String -> (String -> Maybe a) -> IO a 
+getOne prompt f = go where 
+  go = do
+    putStr prompt  
+    hFlush stdout 
+    getLine >>= maybe go return . f 
+
+getMany :: String -> (String -> Maybe a) -> IO [a]
+getMany prompt f = go where 
+  go = do 
+    putStr prompt 
+    hFlush stdout 
+    getLine >>= 
+     maybe (return []) (\x -> unsafeInterleaveIO go >>= return . (x:)) . f
+
+main = do 
+  let (opts, names) = unzip 
+        [ (pdflatex r, optsJobName r) 
+        | isD <- [False, True]
+        , target <- targets
+        , let r = target { isDraft = isD } ] 
+      len = length opts 
+      checkStr :: String -> Maybe Int
+      checkStr str = case readMaybe str of 
+                       Just x | x >= 0 && x < len -> Just x 
+                              | otherwise         -> Nothing 
+                       Nothing -> Nothing 
+  putStrLn "Enter a number to run a job. Enter any else to quit."
+  mapM_ (\(n,s) -> printf "%3d: %s\n" n s) (zip [(0 :: Int)..] names) 
+
+  -- Even though these operations *look* sequential, there is no reason that
+  -- each job can't be started as soon as the integer is entered. Lazy IO makes
+  -- this happen. Namely this is due to 'unsafeInterleaveIO' above. 
+  inputs <- getMany "> " checkStr
+  mapM_ (opts !!) inputs 
+
+  putStrLn "Exiting..."

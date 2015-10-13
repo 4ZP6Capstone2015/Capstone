@@ -1,5 +1,4 @@
 \documentclass[12pt]{report}
-\usepackage{nopageno}
 \usepackage{xcolor} % for different colour comments
 \usepackage{parskip} % Space between each paragraph.
 %\usepackage{hardwrap} % for text length of 80 pts
@@ -9,16 +8,22 @@
 \usepackage{graphicx}
 \usepackage[section]{placeins} % Prevents floats from floating across sections
 \usepackage{natbib}%Bibtex
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{ltablex} %% Multi page tables 
+\usepackage{booktabs}
+\usepackage{tabto}
 
 \input{../ltx/setupComments}
 
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
-
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
 \edcommsfalse
 \begin{document}
 
+\pagenumbering{roman} %% Roman numerals before actual document starts
 \begin{titlepage}\begin{center}
+\thispagestyle{empty} %% No page no. on title
 
 \vspace*{1cm}
 
@@ -45,6 +50,7 @@ Fall 2015 / Winter 2016
 \end{titlepage}
 
 %% Revision history
+
 \begin{table}[ht!]\begin{center}
 \caption{Revision History}  
 \begin{tabular}{|l|l|l|}\hline
@@ -57,7 +63,8 @@ Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
 \listoffigures
 \listoftables
 
-%% \clearpage
+\newpage
+\pagenumbering{arabic} %% Arabic numerals in actual document
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 1: ???                 %%
@@ -97,7 +104,7 @@ specification -- and solely focus on what? thoughts?}%
 %% whitespace when rendering with comments off.
 Even though the business requirements and formal specification are written in
 entirely different languages, the ``compiler guarantees compliance between the
-two'' (\cite[p.~2]{derFun}). 
+two'' (\cite[2]{derFun}). 
 
 Ampersand also provides engineers with a variety of aids which
 help them to design products that fulfill all of the needs of their clients and
@@ -364,9 +371,7 @@ pages.
   bases and commonly used in market ready business rule engines. ECA rules are
   used in Ampersand to describe how a database should be modified in response to
   a system constraint becoming untrue. Event-Condition Action rules have
-  the following structure:
-%TODO: cite rule 
-%design.p:8-9
+  the following structure (\cite[8--9]{RBD}):
 \begin{verbatim}
 when <some event has happened> 
 and if <some condition is fulfilled> 
@@ -382,10 +387,15 @@ and if <some condition is fulfilled>
 \item [Business rules] See \emph{Business Requirements}.
 \item [Natural language] Language written in a manner similair to that of human communication; 
   language intended to be interpreted and understood by humans, as opposed to machines. 
-\item [ADL] Stand for ``Ampersand Definition Language''. From a given set of
-formally defined business requirements, ADL generates a functional specification
-consisting of a data model, a service catalog, a formal specification of the services,
-and a function point analysis. An ADL script acts as an input for Ampersand.
+\item [ADL] Stands for ``A Description Language'' (\cite[13]{derFun}). From a
+  given set of formally defined business requirements, Ampersand generates a
+  functional specification consisting of a data model, a service catalog, a
+  formal specification of the services, and a function point analysis. An ADL
+  script acts as an input for Ampersand. An ADL file consists of a plain ASCII
+  text file. 
+\item [Ampersand] Ampersand is the name of this project. It is used to refer to
+  both the method of generating functional specification from formalized
+  business requirements, and the software tool which implements this method.
 \edcomm{YS}{ADL is probably not "A data Language".}
 \edcomm{YT}{I swear to god I read "A data Language" somewhere... maybe I was
   delirious from lack of sleep... In any case, we should eventually find a
@@ -406,7 +416,15 @@ specification of the services, and a function point analysis
 	They also specify the difference between requiement and specification: where specification is 
 	used to prescribe properties of a system to be built; and requirement describes an explicit or 
 	implicit need need of users}
+\edcomm{YT}{Stef's article describes ADL as 'an accompanying tool' but also as
+  the 'language which is input to Ampersand'. This is confusing and I feel like
+  the former definition is not that useful so I decided to omit it. Just refer
+  to 'Ampersand' as both the tool which is written in Haskell and this method of
+  generating functional consraints from business requirements. To this end, I
+  added a definiton of 'Ampersand'. But thanks for the reference to 'A
+  description language'}
 \end{description}
+
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
 %Expression without implementation details
 
@@ -422,24 +440,97 @@ specification of the services, and a function point analysis
 
 \begin{figure}[!htb]
 \begin{center}
-\includegraphics[width=0.6\textwidth]{../figures/business_process}
-\caption{The role of Ampersand in the software design cycle}~\label{fig:BusinessProcess}
+\includegraphics[width=\textwidth]{../figures/business_process}
+\caption{Business process diagram representing the role of Ampersand in the
+  software design cycle}~\label{fig:BusinessProcess}
 \end{center}
 \end{figure}
+
+\edcomm{YT}{The template has a bunch of stuff for this section. But I think this
+  diagram is a good summary. Let me know what you guys think. }%
 
 Figure \ref{fig:BusinessProcess} is a simplified view of the software design
 cycle, intended to highlight the role of Ampersand in this cycle. This view
 omits many of the uses of the design artifcats generated by Ampersand; instead
 it focuses mainly on the primary purpose, which is to help create a finished
-software system. The contribution of this project is denoted with dashed lines.
+software system. 
 
-\section{Business Data Model and Data Dictionary}\label{sec:DataModel}
+The contribution of this project is denoted with dashed lines. Note that it is
+isolated to a process completely internal to Ampersand. It should not affect the
+interface to Ampersand.
 
+%% http://tex.stackexchange.com/questions/165793/how-to-make-a-table-on-more-then-one-page-by-using-the-table-environment
+%% Make this table ultra wide so it doesn't take 10 pages...
+\begin{tabularx}{1.2\textwidth}{lcX}
+\caption{Description of entities present in figure \ref{fig:BusinessProcess}}\\
+\toprule
+\textbf{Entity} & \textbf{Type} & \textbf{Description} \\[6pt] 
+\midrule
+\endhead
+
+Real World & Actor & Everything outside of the software system \\[6pt]
+Requirements engineers & Actor & \\[6pt]
+Ampersand system & Actor & The Ampersand software tool (\ref{sec:Naming}) and
+  all of its associated resources. \\[6pt]
+Software engineers & Actor & \\[6pt]
+ADL File        & Object        & The input to Ampersand, see section \ref{sec:Naming} \\[6pt] 
+Real world constraints  & Object & Driving force for software system \\[6pt] 
+Finished product  & Object & The finished software system, including supporting documentation and training/services  \\[6pt] 
+Business requirements & Object & Important constraints seperated into logical units, see section \ref{sec:Naming} \\[6pt] 
+Internal representation & Object & The internal representation on which all
+  computations are done; this is never exposed to the outside world directly \\[6pt]
+Prototypes & Object & Resource generated by Ampersand \\[6pt]
+Data models & Object & Resource generated by Ampersand \\[6pt]
+Design documents & Object & Resource generated by Ampersand \\[6pt]
+Functional specification & Object & Resource generated by Ampersand \\[6pt]
+Distribute product & Process & Physical deployment of software and services \\[6pt]
+Reevaluate constraints & Process & Constraints deemed not valid and must be reevaluated \\[6pt]
+Interpret constraints & Process & Turn constraints into business requirements \\[6pt]
+Formalize & Process & Rewrite something in formal language, usually from natural language \\[6pt]
+Reevaluate requirements & Process & Requirements deemed not valid and must be reevaluated \\[6pt]
+Verify and compile & Process & Verification consists of typechecking (see \ref{sec:Naming}) \\[6pt]
+Automatically fix violations & Process & Insert the necessary code so that
+  generated code will not violated business constraints \\[6pt]
+Write software & Process & \\[6pt]
+Product  fulfills requirements? & Decision & Is the product deemed sufficient or accepted? \\[6pt]
+Software matches specification? & Decision & Does the software meet all of the
+  requirements set forth by the formal specification? \\[6pt]
+Design is feasible? & Decision & Does the software engineer think that the
+  design can be implemented in the desired timeframe? \\[6pt]
+
+\bottomrule 
+\end{tabularx}
+
+\edchange{YT}{
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
+}{%What do we do with this? It doesn't seem as relevant as the previous section.... 
+}%
+
 \section{Functional Requirements}\label{sec:Functional}
-\subsection{Input}
-\subsection{Correct Translation of Input}
-\subsection{Output}
+%%TODO: Formatting, elaboration? What else goes here?
+Our code contribution must provably implement the desired algorithm.
+
+Our implementation must accept its input in the existing ADL format.
+
+Our implementation must produce an output compatible with the existing pipeline. 
+
+Our implementation must be a pure function; it should not have side effects.  
+
+Our implementation must not introduce appreciable performance degredation. 
+
+Our implementation must provide diagnostic information about the algorithm to
+the user, if the user asks for such information.
+
+
+\edcomm{YS}{Second Approach}
+
+\textbf{Requirement \# : 1}
+\tab{\textbf{Priority:} 4} \\
+  \textbf{Description:} Users of Ampersand shall be able to insert and 
+modify ECA rules at any time. \\
+  \textbf{Rationale:} To allow user to change the requirements in accordance to the changing needs. \\
+  \textbf{Fit Criterion:} The Data in the database preserves these rules and maintains consistency. \\
+
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
 Non-functional requirements are fundamental to the success of any product on the market. This type 
@@ -450,18 +541,22 @@ project, it is motivated by a simple perspective. Tools should make a user’s j
 for that to happen the user must be able to under how to use it. 
 \edcomm{JG}{How do I pull the tree up to the first page of non-functional?? *facepalm* 
 \vspace{-finity} doesnt work}
-\begin{figure}
+\edcomm{YT}{LaTeX floats have 'position modifiers'. Generally you should use
+  !htb, this works in over 99 percent of case in my experience. Full details of floats and their positioning here:
+  https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions }
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
 	\caption{Tree of non-functional requirements as it relates to E.F.A.}~\label{fig:figure2}
 \end{figure}
 \section{Look and Feel Requirements}\label{sec:LookAndFeel} 
-Non-functional requirements are fundamental to the success of any product on the market. This type 
-of requirement is especially important to this project as it heavily relates the needs of the 
-clients to the changes that need to be made to the final product before it is ready for the public. 
-The human element guides the principals introduced in non-functional requirements, and for this 
-project, it is motivated by a simple perspective. Tools should make a user’s job easier to do, and 
-for that to happen the user must be able to under how to use it.  
+
+%% Non-functional requirements are fundamental to the success of any product on the market. This type 
+%% of requirement is especially important to this project as it heavily relates the needs of the 
+%% clients to the changes that need to be made to the final product before it is ready for the public. 
+%% The human element guides the principals introduced in non-functional requirements, and for this 
+%% project, it is motivated by a simple perspective. Tools should make a user’s job easier to do, and 
+%% for that to happen the user must be able to under how to use it.  
 
 
 
@@ -489,7 +584,7 @@ concerning Ampersand’s usability is that it’s limited to two languages: Engl
 who are not fluent in neither of these languages will have great difficulty learning the Ampersand 
 system.
 
-However, since Ampersand is a successor of CC, %TODO{JG}:cite Rule design (p.10) 
+However, since Ampersand is a successor of CC, \cite[p.10]{RBD}
 and similarly it could be used to create consensus between groups of stakeholders with strong 
 diverging opinions on the same matter. Once the prototype is generated, it can be presented to 
 different individuals who may wish to conduct their own investigation concerning the best course of 
@@ -544,7 +639,7 @@ products proceed into the production stage. However, Ampersand possess an intern
 detect inconsistencies and allows for manual correction. E.F.A. although important is not the last 
 line of defense, this secondary system greatly minimizes the chances of complete failure. The 
 likely if E.F.A. completely fails, is that the secondary system detects errors and compels users to 
-manually correct data. %TODO{JG}{CITE Rules Based Design p.153}
+manually correct data (\cite[153]{RBD}). 
 
 \begin{figure}
 	\centering
@@ -579,7 +674,7 @@ programmer who wishes to make additions or expand upon what is already there, ca
 without struggle. Well documented code creates a sense of cohesion among individual parties 
 participating on the same project. In order to meet the maintainability, E.F.A. must all 
 requirements, such that each specification is traceable back to the motivation for its existence 
-and the purpose it drives %TODO{JG:}{cite “ Deriving Functional Specification …” p. 2}. 
+and the purpose it drives (\cite[2]{derFun}).
 Although there are various groups, such as Dr. Joosten and his team who are available to assist 
 individuals and businesses with any part of Ampersand, our team believes that given a specific 
 enough error message, an individual may not require outside assistance. Moreover, E.F.A. will be 
@@ -634,9 +729,19 @@ under GPL. I don't see any reason we couldn't take code from somewhere if it was
 GPL. }%
 \chapter{Project Issues}\label{ch:issues}
 \section{Open Issues}\label{sec:issues}
+N/A\edcomm{YS}{Since we're not concerned with any problem or issues associated with Ampersand.}%
 \section{Off-the-Shelf Solutions}\label{sec:solutions}
+No off the shelf solutions exist for this project.
 \section{New Problems}\label{sec:NewProblems}
+N/A\edcomm{YS}{Since we're not concerned with any problem or issues associated with Ampersand.}%
 \section{Tasks}\label{sec:Tasks}
+\begin{itemize}
+\item Analyze and the existing software code base and do an impact analysis of our project on the existing software.
+\item Propose a solution to the supervisor and product owner.
+\item Implement the solution and provide the  annotated source code to the supervisor and the product owner for a review.
+\item Incorporate any changes suggested by them and create a pull request in the main Ampersand repository upon successful completion of the task.
+\end{itemize}
+\edcomm{YS}{Add in any significant task you feel is worth mentioning}%
 \section{Migration to the New Product}\label{sec:Migration}
 Upon final review by the client and intensive testing, if the client is
 satisfied by the quality of code and its maintainability, the implementation
