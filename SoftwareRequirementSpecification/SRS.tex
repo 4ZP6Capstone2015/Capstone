@@ -591,7 +591,35 @@ comes to E.F.A.
   
 
 \section{Security and Integrity Requirements}\label{sec:Security}
-\section{Validation and Verification Requirements}\label{sec:Cultural}
+\edcomm{JG}{this section includes access requirements: who is authorized to access the product. 
+Since its open source, anyone can access or change it, it just wont be part of the official source 
+code? We're not dealing with sensitive information (there's no confidentiality breach possible..) I 
+mean we could name system function name, and user roles but thats a rather short two sentences
+	
+	There also specificiation of  requried integrity of databases; this is partially applicable, it 
+	applies to Ampersand and how it requires a local database but E.F.A. doesn't.. however, it is 
+	part of Ampersand. 
+	
+	We dont have privacy issues.. do we? 
+	Audit requirements --- specification of what the product has to do (work?)
+	---- we might need audit requirements I mean we could say that if we fed it standard rules it 
+	should be able to recognize, translate and fix easily. like if A (subset) B and B (subset C) 
+	then A (subset) C. If a is need for b to function, and b is needed by c to function, then by 
+	<insert property name> a is required for c.
+	
+	Immunity requirements: we dont.. really have security, so immunity is confusing.
+	
+	
+}
+\section{Validation and Verification Requirements}\label{sec:Verification}
+
+\edcomm{JG}{ We can distinguish validation from verfication here, like Joosten did, and link how 
+validation is required for verification and validation must be done by the user.
+		As Joosten specifies that validation is only something that the user can do.. however, does 
+		E.F.A. in theory validate the state of the system by fixing inconsistent data? 
+		
+		Someone help a brother out?}
+	
 \section{Legal Requirements}\label{sec:Legal}
 The implementation must eventually be included in Ampersand, which is licensed
 under GPL3. To comply with this license, all of the implementation code must be
@@ -634,6 +662,7 @@ maintenance of the software in the future. All software used in the development
 of E.F.A (GHC, LaTeX, etc.) are open source as well; there is no cost
 requirement for any component used.
 \section{User Documentation and Training}\label{sec:UserDoc}
+
 \section{Waiting Room}\label{sec:Waiting}
 \section{Ideas for Solutions}\label{sec:Solutions}
 
