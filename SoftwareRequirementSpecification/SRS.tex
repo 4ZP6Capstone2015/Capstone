@@ -509,10 +509,7 @@ Design is feasible? & Decision & Does the software engineer think that the
 \bottomrule 
 \end{tabularx}
 
-we do with this? It doesn't seem as relevant as the previous section.... 
-%\edchange{YT}{
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
-%What do 
 \edcomm{JG}{Scope = work that needs to be done to delivery a product}
 E.F.A. require formal proofs and documentation that are provable in addition to its implementation; 
 the implementation requires the final product to be able to implement an algorithm in Haskell that 
@@ -538,44 +535,33 @@ implementation.
 	\caption{Diagram of how E.F.A. fits into Ampersand}~\label{fig:figure2}
 \end{figure}
 %TODO{JG}: Make diagram of E.F.A.
-Summary of Functional Requirements:
+Our functional requirements can be summarized as follows. Our implementation must
 \begin{itemize}
-\item Our code contribution must provably implement the desired algorithm.
-
-\item Our implementation must accept its input in the existing ADL format.
-
-\item Our implementation must produce an output compatible with the existing pipeline. 
-
-\item Our implementation must be a pure function; it should not have side effects.  
-
-\item Our implementation must not introduce appreciable performance degredation. 
-
-\item Our implementation must provide diagnostic information about the algorithm to
+\item provably implement the desired algorithm.
+\item accept its input in the existing ADL file format.
+\item produce an output compatible with the existing pipeline. 
+\item be a pure function; it should not have side effects.  
+\item not introduce appreciable performance degredation. 
+\item provide diagnostic information about the algorithm to
 the user, if the user asks for such information.
 \end{itemize}
 \edcomm{JG}{To YT: I'm sorry I used bullet points, but I needed more before writting this out and 
 its 4:30 in the morning, I'm not sure you're available}
+\edcomm{YT}{This seems to be a good use of bullet points, because we elaborate
+  on our functional requirements below. The above is just a summary.}
 
-\subsection{User Requirement}
-\edcomm{YS}{Second Approach}
-\edcomm{JG}{Are we choosing or combining?}
-
-\textbf{Requirement \# : U1}
-\tab{\textbf{Priority:} 4} \\
-  \textbf{Description:} Users of Ampersand shall be able to insert and 
-modify ECA rules at any time. \\
-  \textbf{Rationale:} To allow user to change the requirements in accordance to the changing needs. \\
-  \textbf{Fit Criterion:} The Data in the database preserves these rules and maintains consistency. 
-  \\ \newline
-
-\subsection{Product and System Requirement}
-\edcomm{JG}{maybe this note should go into glossary or something?}
-\textit{Note to reader:}\newline
+\subsubsection*{Explanation of functional requirements template}
+%%%%%%%%%%%%%%%%%%%%
+\edcomm{JG}{maybe this note should go into glossary or something?}%
+\edcomm{YT}{This seems like a good spot. Could you give a touch up this part a
+  bit? The first thing ranges from 1 to 5 but there are four named
+  'levels'. This is logical inconsistency that will make this document very
+  confusing.}%
 Customer Satisfaction/Dissatisfaction: 1 to 5 (low to high) \newline
 Conflicts: 
 	\begin {itemize} 
 	\item[$\rightarrow$] none: no existing conflict
-	\item[$\rightarrow$] minor: does not afffect functionality and can be remodeled to fit into 
+	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
 	current system 
 	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
 	\item[$\rightarrow$] major: severe system conflict with Ampersand and requires alternative 
@@ -592,46 +578,81 @@ Priority: 1 to 5 \big(low to high \big)
 
 
 
-\begin{tabular}{>{\bfseries}m{3cm} m{8.5cm} >{\bfseries}m{2cm} m{3cm}l}
-	Requirement:  & S1         & Type: & Functional \\ 
- Description:  & Cohesion of new product into existing system by using Haskell & &
-\\	Rationale: & Necessary for E.F.A. to be added to source code & &
-\\	Originator: & Client/Designers & &
-\\	Fit Criterion: & Able to compile using GHC or Ampersand --haskell function & &
-\\	Customer \\ Satisfaction: & 5 - Highest    \\ or&  \\ Dissatisfaction: & 5 - Highest
-\\	Priority: & 5 - Highest & Conflicts: & none
-\\	Supporting Materials: & Ampersand Documentation (Rule Based Design) &   & 
-\\	History: & N/A & &
-\end{tabular}
+\subsection{User Requirement}
+\edcomm{YS}{Second Approach}
+\edcomm{JG}{Are we choosing or combining?}
 
----------------------------------------------------------------------------------------------
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+Requirement & U1 \\ 
+\midrule
+\endhead
+Description  & Users of Ampersand shall be able to insert and 
+modify ECA rules at any time.  
+\\	Rationale & To allow user to change the requirements in accordance to the changing needs.
+\\	Originator & Users of Ampersand
+\\	Fit Criterion & The Data in the database preserves these rules and maintains consistency.   
+\\	Customer Satisfaction & 3 
+\\	Priority & 3 
+\\	Supporting Materials & --- 
+\vspace{12pt}
+\end{tabularx}
+}
 
-\begin{tabular}{>{\bfseries}m{3cm} m{8.5cm} >{\bfseries}m{2cm} m{3cm}l}
-	Requirement:  & S2         & Type: & Functional \\ 
-	Description:  & Able to recognize and parse input & &
-	\\	Rationale: & Necessary for E.C.A. rules to be added, system needs input & &
-	\\	Originator: & Client/Designers & &
-	\\	Fit Criterion: & Able to take input and passes it out as correct type & &
-	\\	Customer \\ Satisfaction: & 5 - Highest    \\ or&  \\ Dissatisfaction: & 5 - Highest
-	\\	Priority: & 5 - Highest & Conflicts: & none
-	\\	Supporting Materials: & Ampersand Documentation (Rule Based Design) &   & 
-	\\	History: & N/A & & 
-\end{tabular}
+\subsection{Product and System Requirement}
 
--------------------------------------------------------------------------------------------
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+Requirement & S1 \\ 
+\midrule
+\endhead
+Description  & Cohesion of new product into existing system by using Haskell  
+\\	Rationale & Necessary for E.F.A. to be added to source code 
+\\	Originator & Client/Designers 
+\\	Fit Criterion & Able to compile using GHC or Ampersand --haskell function  
+\\	Customer Satisfaction & 5 - Highest
+\\	Priority & 5 - Highest
+\\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
+\vspace{12pt}
+\end{tabularx}
+}
 
-\begin{tabular}{>{\bfseries}m{3cm} m{8.5cm} >{\bfseries}m{2cm} m{3cm}l}
-	Requirement:  & S3         & Type: & Functional \\ 
-	Description:  & Able to translate input into E.C.A. rules & &
-	\\	Rationale: & Major portion of project and E.F.A. is useless without & &
-	\\	Originator: & Client/Designers & &
-	\\	Fit Criterion: & Outputs E.C.A. rules in proper format for F-Spec (i.e., SQL 
-	translator) & &
-	\\	Customer \\ Satisfaction: & 5 - Highest    \\ or&  \\ Dissatisfaction: & 5 - Highest
-	\\	Priority: & 5 - Highest & Conflicts: & none
-	\\	Supporting Materials: & Rule Based Design \\ E.C.A. for Web Development &   & 
-	\\	History: & N/A & &
-\end{tabular}
+
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+Requirement & S2 \\ 
+\midrule
+\endhead
+	Description  & Able to recognize and parse input 
+	\\	Rationale & Necessary for E.C.A. rules to be added, system needs input 
+	\\	Originator & Client/Designers 
+	\\	Fit Criterion & Able to take input and passes it out as correct type 
+	\\	Customer Satisfaction & 5 - Highest
+	\\	Priority & 5 - Highest
+	\\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
+\vspace{12pt}
+\end{tabularx}
+}
+
+
+
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+Requirement & S3 \\ 
+\midrule
+\endhead
+	Description  & Able to translate input into E.C.A. rules 
+	\\	Rationale & Major portion of project and E.F.A. is useless without 
+	\\	Originator & Client/Designers 
+	\\	Fit Criterion & Outputs E.C.A. rules in proper format for F-Spec (i.e., SQL 
+	translator) 
+	\\	Customer Satisfaction & 5 - Highest 
+	\\	Priority & 5 - Highest 
+	\\	Supporting Materials & Rule Based Design; E.C.A. for Web Development %% TODO ref to this?
+\vspace{12pt}
+\end{tabularx}
+}
+
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
 Non-functional requirements are fundamental to the success of any product on the market. This type 
