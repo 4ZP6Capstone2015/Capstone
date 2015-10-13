@@ -58,12 +58,19 @@ Fall 2015 / Winter 2016
 \begin{tabular}{|l|l|l|}\hline
 \textbf{Author} & \textbf{Date} & \textbf{Comment} \\\hline 
 Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
-J Guo & 09 / 10 / 2015 & Update: Non-Functional first half \\\hline
-J Guo & 13 / 10 / 2015 & Update: Figures added for Non-Functional, Non-Functional \\ & & second 
-half, added Functional - System requirements  \\ & & and diagram figure \\\hline
+Yuriy Toporovskyy & 30 / 09 / 2015 & Project drivers, description and \\ & & 
+added project diagram and project flow chart \\\hline
+J Guo & 09 / 10 / 2015 & Update: Non-Functional first half 4.1-4.3, added to 
+1.2.2, \\ & & completed 2.2 \\\hline
+J Guo & 13 / 10 / 2015 & Update: Figures added for Non-Functional 4.1-4.7,  \\ 
+& & 
+Non-Functional second half 4.4-4.7 half, \\ & & added Functional 3.3 - System 
+requirements  and \\ 
+& & diagram figure, \& Section 5.8 \\\hline
 Yash Sapra &  12/ 09 / 2015 & Non-Functional - legal requirements, \\ & & Functional - User 
-Requirements 
+Requirements, tasks, risks \\ & & and chapter 5.
 \\\hline
+Yuriy Toporovskyy & 13 / 10 / 2015 & Initial round of editing \\\hline
 \end{tabular}
 \end{center}\end{table}
 
@@ -243,32 +250,39 @@ have been successfully implemented in various public sectors. These two individu
 Ampersand has been nurtured by a great deal of patience and
 dedication. The designers of EFA by extension are Ampersand contributors and
 are affected by its outcome; the piece of Ampersand we will build is a necessary
-component required for completion of our undergraduate degrees and is designed to test the
-capabilities of an undergraduate team. 
+component required for completion of our undergraduate degrees and is designed 
+to test the capabilities of an undergraduate team. 
 
 These individuals are the foundation of
 the belief system by which Ampersand is built. The Ampersand model is built on
 the belief that technology is highly incorporated in the use of business and
-affects the life of every individual.  It is the belief that information system
+affects the life of every individual .  It is the belief that information system
 can and will be designed and built at an affordable price and perfectly
 compliant with the functionalities that users desire. This perspective treats
 information systems as a commodity of the real world that can be traded,
 altered, and used by any individual who is willing to learn how to use it.
-\subsection{Requirements engineers}\label{subsec:BusReq}
-Requirement engineers are responsible of translating business 
+
+\subsection{Requirements engineers, Architects and Functional Specification 
+Designers}\label{subsec:BusReq}
+
+Requirement engineers similiar as Dr. Joosten, are responsible of translating 
+business 
 requirements into project specifications. Ampersand provides requirement 
-engineers with the freedom to explore their creativity rather than be tried 
-down by technical details. The ability to delegate time consuming tasks such as 
-manually checking over technical specifications would increase the efficiency 
+engineers with the freedom to explore their creativity rather than be tied down
+down by technical minutea (\cite{RBD}). The ability to delegate time consuming 
+tasks such as 
+manually checking over technical details would increase the efficiency 
 of the development cycle by decreasing the time required for 
 completion of a software requirements document. 
 An added benefit which engineers receive is the ability to confirm 
 that the system they have designed matching the specifications given to them by 
-the client -- in a fully automatic, provably correct way. 
+the client -- in a fully automatic, provably correct way (\cite{applyAlgebra}). 
 %% EFA provides the ability to ensure no contradictions are found 
 %% within the design by automatically fixing inconsistency that may arise. 
 %% Irrelevant.... 
-\subsection{Architects \& Functional Specification Designers}
+\edcomm{JG}{What is irrelevant? I welcome help when writing this.. but if im 
+not given criteria and I have no idea what you're saying is irrelevant; thats 
+not going to result in change}
 System architects, similar to functional specification designers are 
 responsible for various designs which affect procedure and processes in a place 
 of business. Ampersand has the ability to confirm that the design provided by 
@@ -284,7 +298,7 @@ databases within prototypes along with tables and relational schema's.
 Furthermore, there is a full range of graphics that stakeholders can choose 
 from in order to provide visual display of their design which user may find 
 more friendly and easy to understand. 
-\subsection{Process Innovators}
+\subsection{End Users: Process Innovators}
 Process innovators covers a broad range of individuals that would not commonly 
 be considered stakeholders. This broad category includes anyone who provides 
 input for business processes which includes both sides of a business agreement, 
@@ -309,7 +323,7 @@ construction without a large system in such a short amount of time. But time
 restraint is an obstacle which all projects face, because it is not limitless. 
 Another major constraint that most project face that this project does not 
 require is the financial constraint where projects become difficult to maintain 
-and often halt in their progress due to monetary constraints. The lack of 
+and often halt in their progress due to lack of funding. The lack of 
 monetary constraints due to the open source software opens up a broad base of 
 opportunities for future improvements and limitless contributions from the 
 community.
@@ -379,6 +393,7 @@ pages.
 \edcomm{YT}{Be liberal with what you include in this section, but if it is a
   'technology' then put it in the previous section. Any acronyms, or words that
   the layman probably won't know, need to be here.}%
+
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
 \begin{description}
 \item[ECA] Stands for Event-Condition Action. The rule structure used for data
@@ -434,8 +449,8 @@ specification of the services, and a function point analysis
 	software design processes (p.2)
 	
 	They also specify the difference between requiement and specification: where specification is 
-	used to prescribe properties of a system to be built; and requirement describes an explicit or 
-	implicit need need of users}
+	used to prescribe properties of a system to be built; and requirement 
+	describes an explicit or implicit need of users input}
 \edcomm{YT}{Stef's article describes ADL as 'an accompanying tool' but also as
   the 'language which is input to Ampersand'. This is confusing and I feel like
   the former definition is not that useful so I decided to omit it. Just refer
@@ -471,6 +486,7 @@ model or tool.. or all three? }
 
 \edcomm{YT}{The template has a bunch of stuff for this section. But I think this
   diagram is a good summary. Let me know what you guys think. }%
+\edcomm{JG}{looks good!}
 
 Figure \ref{fig:BusinessProcess} is a simplified view of the software design
 cycle, intended to highlight the role of Ampersand in this cycle. This view
@@ -532,10 +548,10 @@ restores rules made by the user (i.e., invariants) and correct any data which ha
 rules. A secondary component of this project is the implementation of ECA (Event-Condition 
 Action) Rules used for reactive rule-based systems which has the ability to discover and 
 systematically repond to triggers for events in a timely manner. 
-%TODO{JG}:citeBerstel p.184
+(\cite[p.182]{berstel})
 \edcomm{YT}{Who is Berstel? Is this reference in our repo?}
 Currently, implementation and architecture of ECA rules systems are intensively studied in Active 
-Database Management Systems. %TODO{JG}: cite Berstel p. 202
+Database Management Systems. (\cite[p.202]{berstel})
 There are various problems that may arise during implementation of the ECA rules translation, 
 what those problems may be are unforseeable at this stage of development. Although there may be an 
 algorithm for this implementation, we have no been able to find it much less an example of its 
@@ -561,7 +577,8 @@ Our functional requirements can be summarized as follows. Our implementation mus
 \item provide diagnostic information about the algorithm to
 the user, if the user asks for such information.
 \end{itemize}
-\edcomm{JG}{To YT: I'm sorry I used bullet points, but I needed more before writting this out and 
+\edcomm{JG}{To YT: I'm sorry I used bullet points, but I needed more before 
+writting this out and 
 its 4:30 in the morning, I'm not sure you're available}
 \edcomm{YT}{This seems to be a good use of bullet points, because we elaborate
   on our functional requirements below. The above is just a summary.}
@@ -573,25 +590,38 @@ its 4:30 in the morning, I'm not sure you're available}
   bit? The first thing ranges from 1 to 5 but there are four named
   'levels'. This is logical inconsistency that will make this document very
   confusing.}%
+
 Customer Satisfaction/Dissatisfaction: 1 to 5 (low to high) \newline
+This criteria represents how important a functional requirement is to the 
+customer, customer satisfaction indicates how satisfied our client would be if 
+we completed this requirement while customer dissatisfaction represents how 
+unhappy our client would be if the requirement is left unsatisfied.
+	\begin {itemize} 
+	\item[$\rightarrow$] low: the client cares very little if this requirement 
+	is satisfied and it is completely optional
+	\item[$\rightarrow$] medium-low: the client believes it would be useful to 
+	have but is not of any importance
+	\item[$\rightarrow$] medium: the client would be happy if it were fulfilled 
+	but is not fundamental
+	\item[$\rightarrow$] 4 - High: requirement is instrumental to meeting 
+	client's satisfaction, but not an absolute necessity
+		\item[$\rightarrow$] 5 - Highest: requirement is of the highest 
+		importance to the client and must be fulfilled, else the client will be 
+		very dissatisfied.
+\end{itemize} 
 Conflicts: 
 	\begin {itemize} 
 	\item[$\rightarrow$] none: no existing conflict
 	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
 	current system 
 	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
-	\item[$\rightarrow$] major: severe system conflict with Ampersand and requires alternative 
-	implementation
+	\item[$\rightarrow$] major: severe system conflict with Ampersand and 
+	requires alternative implementation
+	\item[$\rightarrow$] severe: requires immediate attention and product 
+	cannot function due to severe system conflict; needs over haul for proceed; 
+	this may constitute a dead end.
+	 
 	\end{itemize} 
-Priority: 1 to 5 \big(low to high \big)
-	\begin{itemize}
-	\item[$\rightarrow$] 1 is the lowest, and it can be left out if conflicting with a higher 
-	priority 
-	item
-	\item[$\rightarrow$] 5 is the highest, and it is not something that can be compromised or 
-	replaced at any point during product development
-	\end{itemize}
-
 
 
 \subsection{User Requirement}
@@ -651,17 +681,16 @@ Requirement & S2 \\
 }
 
 
-
 {\setlength{\tabcolsep}{12pt} %% Default is 6
 \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
 Requirement & S3 \\ 
 \midrule
 \endhead
 	Description  & Able to translate input into ECA rules 
-	\\	Rationale & Major portion of project and EFA is useless without 
+	\\	Rationale & Major portion of project and EFA is useless without it
 	\\	Originator & Client/Designers 
-	\\	Fit Criterion & Outputs ECA rules in proper format for F-Spec (i.e., SQL 
-	translator) 
+	\\	Fit Criterion & Outputs ECA rules in proper format for F-Spec (i.e., 
+	SQL translator)
 	\\	Customer Satisfaction & 5 - Highest 
 	\\	Priority & 5 - Highest 
 	\\	Supporting Materials & Rule Based Design; ECA for Web Development %% TODO ref to this?
@@ -677,11 +706,12 @@ clients to the changes that need to be made to the final product before it is re
 The human element guides the principals introduced in non-functional requirements, and for this 
 project, it is motivated by a simple perspective. Tools should make a user’s job easier to do, and 
 for that to happen the user must be able to under how to use it. 
-\edcomm{JG}{How do I pull the tree up to the first page of non-functional?? *facepalm* 
-\vspace{-finity} doesnt work}
+\edcomm{JG}{How do I pull the tree up to the first page of non-functional?? 
+*facepalm* \vspace{-infinity} doesnt work}
 \edcomm{YT}{LaTeX floats have 'position modifiers'. Generally you should use
   !htb, this works in over 99 percent of case in my experience. Full details of floats and their positioning here:
   https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions }
+
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
