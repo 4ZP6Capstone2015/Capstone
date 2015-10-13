@@ -583,6 +583,7 @@ its 4:30 in the morning, I'm not sure you're available}
 \edcomm{YT}{This seems to be a good use of bullet points, because we elaborate
   on our functional requirements below. The above is just a summary.}
 
+
 \subsubsection*{Explanation of functional requirements template}
 %%%%%%%%%%%%%%%%%%%%
 \edcomm{JG}{maybe this note should go into glossary or something?}%
@@ -590,25 +591,7 @@ its 4:30 in the morning, I'm not sure you're available}
   bit? The first thing ranges from 1 to 5 but there are four named
   'levels'. This is logical inconsistency that will make this document very
   confusing.}%
-
-Customer Satisfaction/Dissatisfaction: 1 to 5 (low to high) \newline
-This criteria represents how important a functional requirement is to the 
-customer, customer satisfaction indicates how satisfied our client would be if 
-we completed this requirement while customer dissatisfaction represents how 
-unhappy our client would be if the requirement is left unsatisfied.
-	\begin {itemize} 
-	\item[$\rightarrow$] low: the client cares very little if this requirement 
-	is satisfied and it is completely optional
-	\item[$\rightarrow$] medium-low: the client believes it would be useful to 
-	have but is not of any importance
-	\item[$\rightarrow$] medium: the client would be happy if it were fulfilled 
-	but is not fundamental
-	\item[$\rightarrow$] 4 - High: requirement is instrumental to meeting 
-	client's satisfaction, but not an absolute necessity
-		\item[$\rightarrow$] 5 - Highest: requirement is of the highest 
-		importance to the client and must be fulfilled, else the client will be 
-		very dissatisfied.
-\end{itemize} 
+ 
 Conflicts: 
 	\begin {itemize} 
 	\item[$\rightarrow$] none: no existing conflict
@@ -625,8 +608,6 @@ Conflicts:
 
 
 \subsection{User Requirement}
-\edcomm{YS}{Second Approach}
-\edcomm{JG}{Are we choosing or combining?}
 
 {\setlength{\tabcolsep}{12pt} %% Default is 6
 \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
@@ -638,8 +619,7 @@ modify ECA rules at any time.
 \\	Rationale & To allow user to change the requirements in accordance to the changing needs.
 \\	Originator & Users of Ampersand
 \\	Fit Criterion & The Data in the database preserves these rules and maintains consistency.   
-\\	Customer Satisfaction & 3 
-\\	Priority & 4
+\\	Priority & 4 - High
 \\	Supporting Materials & --- 
 \vspace{12pt}
 \end{tabularx}
@@ -656,7 +636,6 @@ Description  & Cohesion of new product into existing system by using Haskell
 \\	Rationale & Necessary for EFA to be added to source code 
 \\	Originator & Client/Designers 
 \\	Fit Criterion & Able to compile using GHC or Ampersand --haskell function  
-\\	Customer Satisfaction & 5 - Highest
 \\	Priority & 5 - Highest
 \\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
@@ -673,7 +652,6 @@ Requirement & S2 \\
 	\\	Rationale & Necessary for ECA rules to be added, system needs input 
 	\\	Originator & Client/Designers 
 	\\	Fit Criterion & Able to take input and passes it out as correct type 
-	\\	Customer Satisfaction & 5 - Highest
 	\\	Priority & 5 - Highest
 	\\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
@@ -689,11 +667,15 @@ Requirement & S3 \\
 	Description  & Able to translate input into ECA rules 
 	\\	Rationale & Major portion of project and EFA is useless without it
 	\\	Originator & Client/Designers 
+
 	\\	Fit Criterion & Outputs ECA rules in proper format for F-Spec (i.e., 
 	SQL translator)
 	\\	Customer Satisfaction & 5 - Highest 
+	\\	Fit Criterion & Outputs ECA rules in proper format for F-Spec (i.e., 
+	SQL translator) 
 	\\	Priority & 5 - Highest 
-	\\	Supporting Materials & Rule Based Design; ECA for Web Development %% TODO ref to this?
+	\\	Supporting Materials & Rule Based Design; ECA for Web Development %% 
+	%%TODO ref to this? JG: your choice?
 \vspace{12pt}
 \end{tabularx}
 }
