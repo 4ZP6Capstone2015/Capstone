@@ -377,25 +377,30 @@ when <some event has happened>
 and if <some condition is fulfilled> 
     do <this activity>
 \end{verbatim} %TODO{JG}: bold or italicize words in definitions
-\item [EFA] Stands for ``ECA (see above) for Ampersand''.
+\edcomm{JG}{Please keep this in alphabetical order, or order it by chapter or something, but it 
+needs to be in an order of some kind}
+\item [ADL] Stands for ``A Description Language'' (\cite[13]{derFun}). From a
+given set of formally defined business requirements, Ampersand generates a
+functional specification consisting of a data model, a service catalog, a
+formal specification of the services, and a function point analysis. An ADL
+script acts as an input for Ampersand. An ADL file consists of a plain ASCII
+text file.
+\item [Ampersand] Ampersand is the name of this project. It is used to refer to
+both the method of generating functional specification from formalized
+business requirements, and the software tool which implements this method.
+\item [Business requirements] Requirements which exist due to some real world constraints;
+ie, financial, logistic, physical or safety constraints. 
+\item [Business rules] See \emph{Business Requirements}.\item [EFA] Stands for ``ECA (see above) 
+for Ampersand''.
 \item [Functional specification] A \emph{formal} document which details the operation,
   capabilities, and appearance of a software system. 
-\item [Requirements engineering] The process of translating business
-  requirements into a functional specification. 
-\item [Business requirements] Requirements which exist due to some real world constraints;
-  ie, financial, logistic, physical or safety constraints. 
-\item [Business rules] See \emph{Business Requirements}.
+
 \item [Natural language] Language written in a manner similair to that of human communication; 
   language intended to be interpreted and understood by humans, as opposed to machines. 
-\item [ADL] Stands for ``A Description Language'' (\cite[13]{derFun}). From a
-  given set of formally defined business requirements, Ampersand generates a
-  functional specification consisting of a data model, a service catalog, a
-  formal specification of the services, and a function point analysis. An ADL
-  script acts as an input for Ampersand. An ADL file consists of a plain ASCII
-  text file. 
-\item [Ampersand] Ampersand is the name of this project. It is used to refer to
-  both the method of generating functional specification from formalized
-  business requirements, and the software tool which implements this method.
+\item [Requirements engineering] The process of translating business
+requirements into a functional specification. 
+ 
+
 \edcomm{YS}{ADL is probably not "A data Language".}
 \edcomm{YT}{I swear to god I read "A data Language" somewhere... maybe I was
   delirious from lack of sleep... In any case, we should eventually find a
@@ -423,6 +428,9 @@ specification of the services, and a function point analysis
   generating functional consraints from business requirements. To this end, I
   added a definiton of 'Ampersand'. But thanks for the reference to 'A
   description language'}
+\edcomm{JG}{I'm.. so confused lol the more we do this the more lost Ive become as to what is what 
+and how we're going to do what we're suppose to do -- I can't even tell if Ampersand is a system, 
+model or tool.. or all three? }
 \end{description}
 
 %TODO{JG}: add Expression as a data type? Find a better way of describing 
@@ -501,36 +509,129 @@ Design is feasible? & Decision & Does the software engineer think that the
 \bottomrule 
 \end{tabularx}
 
-\edchange{YT}{
+we do with this? It doesn't seem as relevant as the previous section.... 
+%\edchange{YT}{
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
-}{%What do we do with this? It doesn't seem as relevant as the previous section.... 
-}%
+%What do 
+\edcomm{JG}{Scope = work that needs to be done to delivery a product}
+E.F.A. require formal proofs and documentation that are provable in addition to its implementation; 
+the implementation requires the final product to be able to implement an algorithm in Haskell that 
+restores rules made by the user (i.e., invariants) and correct any data which have violated these 
+rules. A secondary component of this project is the implementation of E.C.A. (Event-Condition 
+Action) Rules used for reactive rule-based systems which has the ability to discover and 
+systematically repond to triggers for events in a timely manner. 
+%TODO{JG}:citeBerstel p.184
+Currently, implementation and architecture of ECA rules systems are intensively studied in Active 
+Database Management Systems. %TODO{JG}: cite Berstel p. 202
+There are various problems that may arise during implementation of the E.C.A. rules translation, 
+what those problems may be are unforseeable at this stage of development. Although there may be an 
+algorithm for this implementation, we have no been able to find it much less an example of its 
+implementation.
+
 
 \section{Functional Requirements}\label{sec:Functional}
 %%TODO: Formatting, elaboration? What else goes here?
-Our code contribution must provably implement the desired algorithm.
+%\Subse
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{../figures/functional}
+	\caption{Diagram of how E.F.A. fits into Ampersand}~\label{fig:figure2}
+\end{figure}
+%TODO{JG}: Make diagram of E.F.A.
+Summary of Functional Requirements:
+\begin{itemize}
+\item Our code contribution must provably implement the desired algorithm.
 
-Our implementation must accept its input in the existing ADL format.
+\item Our implementation must accept its input in the existing ADL format.
 
-Our implementation must produce an output compatible with the existing pipeline. 
+\item Our implementation must produce an output compatible with the existing pipeline. 
 
-Our implementation must be a pure function; it should not have side effects.  
+\item Our implementation must be a pure function; it should not have side effects.  
 
-Our implementation must not introduce appreciable performance degredation. 
+\item Our implementation must not introduce appreciable performance degredation. 
 
-Our implementation must provide diagnostic information about the algorithm to
+\item Our implementation must provide diagnostic information about the algorithm to
 the user, if the user asks for such information.
+\end{itemize}
+\edcomm{JG}{To YT: I'm sorry I used bullet points, but I needed more before writting this out and 
+its 4:30 in the morning, I'm not sure you're available}
 
-
+\subsection{User Requirement}
 \edcomm{YS}{Second Approach}
+\edcomm{JG}{Are we choosing or combining?}
 
-\textbf{Requirement \# : 1}
+\textbf{Requirement \# : U1}
 \tab{\textbf{Priority:} 4} \\
   \textbf{Description:} Users of Ampersand shall be able to insert and 
 modify ECA rules at any time. \\
   \textbf{Rationale:} To allow user to change the requirements in accordance to the changing needs. \\
-  \textbf{Fit Criterion:} The Data in the database preserves these rules and maintains consistency. \\
+  \textbf{Fit Criterion:} The Data in the database preserves these rules and maintains consistency. 
+  \\ \newline
 
+\subsection{Product and System Requirement}
+\edcomm{JG}{maybe this note should go into glossary or something?}
+\textit{Note to reader:}\newline
+Customer Satisfaction/Dissatisfaction: 1 to 5 (low to high) \newline
+Conflicts: 
+	\begin {itemize} 
+	\item[$\rightarrow$] none: no existing conflict
+	\item[$\rightarrow$] minor: does not afffect functionality and can be remodeled to fit into 
+	current system 
+	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
+	\item[$\rightarrow$] major: severe system conflict with Ampersand and requires alternative 
+	implementation
+	\end{itemize} 
+Priority: 1 to 5 \big(low to high \big)
+	\begin{itemize}
+	\item[$\rightarrow$] 1 is the lowest, and it can be left out if conflicting with a higher 
+	priority 
+	item
+	\item[$\rightarrow$] 5 is the highest, and it is not something that can be compromised or 
+	replaced at any point during product development
+	\end{itemize}
+
+
+
+\begin{tabular}{>{\bfseries}m{3cm} m{8.5cm} >{\bfseries}m{2cm} m{3cm}l}
+	Requirement:  & S1         & Type: & Functional \\ 
+ Description:  & Cohesion of new product into existing system by using Haskell & &
+\\	Rationale: & Necessary for E.F.A. to be added to source code & &
+\\	Originator: & Client/Designers & &
+\\	Fit Criterion: & Able to compile using GHC or Ampersand --haskell function & &
+\\	Customer \\ Satisfaction: & 5 - Highest    \\ or&  \\ Dissatisfaction: & 5 - Highest
+\\	Priority: & 5 - Highest & Conflicts: & none
+\\	Supporting Materials: & Ampersand Documentation (Rule Based Design) &   & 
+\\	History: & N/A & &
+\end{tabular}
+
+---------------------------------------------------------------------------------------------
+
+\begin{tabular}{>{\bfseries}m{3cm} m{8.5cm} >{\bfseries}m{2cm} m{3cm}l}
+	Requirement:  & S2         & Type: & Functional \\ 
+	Description:  & Able to recognize and parse input & &
+	\\	Rationale: & Necessary for E.C.A. rules to be added, system needs input & &
+	\\	Originator: & Client/Designers & &
+	\\	Fit Criterion: & Able to take input and passes it out as correct type & &
+	\\	Customer \\ Satisfaction: & 5 - Highest    \\ or&  \\ Dissatisfaction: & 5 - Highest
+	\\	Priority: & 5 - Highest & Conflicts: & none
+	\\	Supporting Materials: & Ampersand Documentation (Rule Based Design) &   & 
+	\\	History: & N/A & & 
+\end{tabular}
+
+-------------------------------------------------------------------------------------------
+
+\begin{tabular}{>{\bfseries}m{3cm} m{8.5cm} >{\bfseries}m{2cm} m{3cm}l}
+	Requirement:  & S3         & Type: & Functional \\ 
+	Description:  & Able to translate input into E.C.A. rules & &
+	\\	Rationale: & Major portion of project and E.F.A. is useless without & &
+	\\	Originator: & Client/Designers & &
+	\\	Fit Criterion: & Outputs E.C.A. rules in proper format for F-Spec (i.e., SQL 
+	translator) & &
+	\\	Customer \\ Satisfaction: & 5 - Highest    \\ or&  \\ Dissatisfaction: & 5 - Highest
+	\\	Priority: & 5 - Highest & Conflicts: & none
+	\\	Supporting Materials: & Rule Based Design \\ E.C.A. for Web Development &   & 
+	\\	History: & N/A & &
+\end{tabular}
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
 Non-functional requirements are fundamental to the success of any product on the market. This type 
@@ -549,18 +650,8 @@ for that to happen the user must be able to under how to use it.
 	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
 	\caption{Tree of non-functional requirements as it relates to E.F.A.}~\label{fig:figure2}
 \end{figure}
-\section{Look and Feel Requirements}\label{sec:LookAndFeel} 
-
-%% Non-functional requirements are fundamental to the success of any product on the market. This type 
-%% of requirement is especially important to this project as it heavily relates the needs of the 
-%% clients to the changes that need to be made to the final product before it is ready for the public. 
-%% The human element guides the principals introduced in non-functional requirements, and for this 
-%% project, it is motivated by a simple perspective. Tools should make a user’s job easier to do, and 
-%% for that to happen the user must be able to under how to use it.  
-
-
-
 \section{Usability and Humanity Requirements}\label{sec:Usability}
+\paragraph*{}
 E.F.A. is built as an internal structure of Ampersand and does not have a graphical interface for 
 users. Ampersand uses the command prompt to compile user prototypes which includes various 
 graphical representations and webpages. It is very unlikely that users will be able to distinguish 
@@ -598,6 +689,7 @@ a project due to an autofill feature.
 \end{figure}
 
 \section{Understandability}
+\paragraph*{}
 What E.F.A. does is simple to understand, it fixes logical inconsistencies with minimal if any 
 input from the user. It looks for contradictions and violations, an overly simplistic but accurate 
 example would be: a chair is red, a chair is blue, and there is only one chair. That chair cannot 
@@ -617,6 +709,7 @@ That may be an external condition that Ampersand has been programmed to keep in 
 \end{figure}
 
 \section{Performance Requirements}\label{sec:Performance}
+\paragraph*{}
 Ampersand can efficiently process a large amount of information in a short amount of time, the 
 process that E.F.A. requires will be added onto Ampersand’s process time. The duration of time it 
 would take to verify data inconsistencies would depend on the complexity of the system design and 
@@ -648,6 +741,7 @@ manually correct data (\cite[153]{RBD}).
 	Design}~\label{fig:figure5}
 \end{figure}
 \section{Operational and Environmental Requirements}\label{sec:Operational}
+\paragraph*{}
 It is not feasible to predict an accurate workload capacity for E.F.A. for its state, however, 
 E.F.A. is made to handle Ampersand loads interactively and is not designed to accumulate stored 
 data but rather return the user a modified version of the input they submitted. E.F.A. is meant to 
@@ -663,11 +757,12 @@ those system are limited to Windows OS 7 and up. There are very few physical con
 maintain E.F.A. and they are the basic conditions required to keep most computer system running. 
 This includes minimal moisture, and temperatures no lower than 35 (degree farenheight) or 1.7 
 (degree celcius) %TODO{JG}:insert appropriate symbols for temperature.
-as computer hardware of 
-%change by flexing \edcomm{JG}{Is this common knowledge or does this need a citation?} and 
-%temperatures preferably no higher than 90 (degree Farenheight) or 32.2 (degree celcius)
+as computer hardware of change by flexing 
+\edcomm{JG}{Is this common knowledge or does this need a citation?} and 
+temperatures preferably no higher than 90 (degree Farenheight) or 32.2 (degree celcius)
 
 \section{Maintainability and Support Requirements}\label{sec:Support}
+\paragraph*{}
 Maintenance is a key requirement from our clients as non-maintainable code takes far too long to 
 decipher and upgrade. The code is required to be well documented and easy to understand so that any 
 programmer who wishes to make additions or expand upon what is already there, can do so easily 
@@ -706,6 +801,14 @@ mean we could name system function name, and user roles but thats a rather short
 	
 	
 }
+\paragraph*{}
+As an open source project any individual who clones the Ampersand Github has access to source code 
+and can manipulate it as they wish. Irrelevant of what changes the user makes locally, it does not 
+effect the Github respository, as only developers of Ampersand \big(i.e., our client \big) has 
+permission to change source code in the respository. Access to the database and software which 
+supports the various functions of Ampersand are run locally and subjected to the security system 
+the user has in place on his or her work station.
+
 \section{Validation and Verification Requirements}\label{sec:Verification}
 
 \edcomm{JG}{ We can distinguish validation from verfication here, like Joosten did, and link how 
@@ -713,8 +816,22 @@ validation is required for verification and validation must be done by the user.
 		As Joosten specifies that validation is only something that the user can do.. however, does 
 		E.F.A. in theory validate the state of the system by fixing inconsistent data? 
 		
-		Someone help a brother out?}
-	
+		Someone help a brother out?What's below cant be all there is}
+\paragraph*{}
+Validation and verification are important parts of non-functional requirements used to test the 
+quality of the final product. Validation is a human activity and requires user input; the rules for 
+the software system to follow are provided by the user, and only the user can judge if the rules 
+are correct for the system that they are attempting to create. The validation that E.F.A. offers is 
+a logical test to confirm that all data sets do not violate the rules that the system follow for 
+the model to properly mimic realistic conditions. 
+
+Verification test the accuracy of E.F.A., and how well it can replicate what the use has in mind 
+according to an E.C.A. rule system. Verification is an automated process that confirms correctness 
+of the project in accordance to previously validated rules. Furthermore, verification confirms the 
+success of E.C.A. rule adoption, and is able to quantify the level of success or failure 
+encountered by E.F.A.. 
+%TODO{JG}: cite Rule Design (section on verification and validation); then confirm that we can meet 
+%these principles or else we need to redefine what these terms are in our project
 \section{Legal Requirements}\label{sec:Legal}
 The implementation must eventually be included in Ampersand, which is licensed
 under GPL3. To comply with this license, all of the implementation code must be
@@ -743,6 +860,7 @@ N/A\edcomm{YS}{Since we're not concerned with any problem or issues associated w
 \end{itemize}
 \edcomm{YS}{Add in any significant task you feel is worth mentioning}%
 \section{Migration to the New Product}\label{sec:Migration}
+\paragraph*{}
 Upon final review by the client and intensive testing, if the client is
 satisfied by the quality of code and its maintainability, the implementation
 will be made part of the production stream.  This process is quite simple due to
@@ -759,6 +877,7 @@ additional tests written for the new algorithm being implemented.
 \end{itemize}
 
 \section{Costs}\label{sec:Costs}
+\paragraph*{}
 Currently the Ampersand software system is open source and maintained by Tarski
 Systems.  All the software subsystems used in Ampersand are also open
 source. There will no change in cost as a result of our implementation. The
@@ -767,6 +886,16 @@ maintenance of the software in the future. All software used in the development
 of E.F.A (GHC, LaTeX, etc.) are open source as well; there is no cost
 requirement for any component used.
 \section{User Documentation and Training}\label{sec:UserDoc}
+\paragraph*{}
+ User documentation will accompany E.F.A. which will give a brief explaination concerning 
+how E.F.A. works and how users can use E.F.A. to maximize their efficiency. E.F.A. requires minimal 
+input from user, but each possible input will be explained thoroughly and various examples will be 
+provided in a step by step tutorial to help familiarze the user with E.F.A.. Furthermore, a 
+practice simulation will be in place for the user. The test will include a well documented default 
+script which the user can compile to try out different priority options. The manual will include 
+pictures as a type of visual guide concerning what the screen should look like from beginning to 
+end. The documentation will likely be part of the Ampersand documentation, but for the purposes of 
+this project, it will be submitted independently. 
 
 \section{Waiting Room}\label{sec:Waiting}
 \section{Ideas for Solutions}\label{sec:Solutions}
