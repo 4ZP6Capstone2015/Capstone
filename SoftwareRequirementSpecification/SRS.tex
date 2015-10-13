@@ -560,37 +560,35 @@ its 4:30 in the morning, I'm not sure you're available}
 \edcomm{YT}{This seems to be a good use of bullet points, because we elaborate
   on our functional requirements below. The above is just a summary.}
 
-\subsubsection*{Explanation of functional requirements template}
-%%%%%%%%%%%%%%%%%%%%
-\edcomm{JG}{maybe this note should go into glossary or something?}%
-\edcomm{YT}{This seems like a good spot. Could you give a touch up this part a
-  bit? The first thing ranges from 1 to 5 but there are four named
-  'levels'. This is logical inconsistency that will make this document very
-  confusing.}%
-Customer Satisfaction/Dissatisfaction: 1 to 5 (low to high) \newline
-Conflicts: 
-	\begin {itemize} 
-	\item[$\rightarrow$] none: no existing conflict
-	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
-	current system 
-	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
-	\item[$\rightarrow$] major: severe system conflict with Ampersand and requires alternative 
-	implementation
-	\end{itemize} 
-Priority: 1 to 5 \big(low to high \big)
-	\begin{itemize}
-	\item[$\rightarrow$] 1 is the lowest, and it can be left out if conflicting with a higher 
-	priority 
-	item
-	\item[$\rightarrow$] 5 is the highest, and it is not something that can be compromised or 
-	replaced at any point during product development
-	\end{itemize}
+%% \subsubsection*{Explanation of functional requirements template}
+%% %%%%%%%%%%%%%%%%%%%%
+%% \edcomm{JG}{maybe this note should go into glossary or something?}%
+%% \edcomm{YT}{This seems like a good spot. Could you give a touch up this part a
+%%   bit? The first thing ranges from 1 to 5 but there are four named
+%%   'levels'. This is logical inconsistency that will make this document very
+%%   confusing.}%
+%% Customer Satisfaction/Dissatisfaction: 1 to 5 (low to high) \newline
+%% Conflicts: 
+%% 	\begin {itemize} 
+%% 	\item[$\rightarrow$] none: no existing conflict
+%% 	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
+%% 	current system 
+%% 	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
+%% 	\item[$\rightarrow$] major: severe system conflict with Ampersand and requires alternative 
+%% 	implementation
+%% 	\end{itemize} 
+%% Priority: 1 to 5 \big(low to high \big)
+%% 	\begin{itemize}
+%% 	\item[$\rightarrow$] 1 is the lowest, and it can be left out if conflicting with a higher 
+%% 	priority 
+%% 	item
+%% 	\item[$\rightarrow$] 5 is the highest, and it is not something that can be compromised or 
+%% 	replaced at any point during product development
+%% 	\end{itemize}
 
 
 
 \subsection{User Requirement}
-\edcomm{YS}{Second Approach}
-\edcomm{JG}{Are we choosing or combining?}
 
 {\setlength{\tabcolsep}{12pt} %% Default is 6
 \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
@@ -602,8 +600,7 @@ modify ECA rules at any time.
 \\	Rationale & To allow user to change the requirements in accordance to the changing needs.
 \\	Originator & Users of Ampersand
 \\	Fit Criterion & The Data in the database preserves these rules and maintains consistency.   
-\\	Customer Satisfaction & 3 
-\\	Priority & 4
+\\	Priority & 4 - High
 \\	Supporting Materials & --- 
 \vspace{12pt}
 \end{tabularx}
@@ -620,7 +617,6 @@ Description  & Cohesion of new product into existing system by using Haskell
 \\	Rationale & Necessary for EFA to be added to source code 
 \\	Originator & Client/Designers 
 \\	Fit Criterion & Able to compile using GHC or Ampersand --haskell function  
-\\	Customer Satisfaction & 5 - Highest
 \\	Priority & 5 - Highest
 \\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
@@ -637,7 +633,6 @@ Requirement & S2 \\
 	\\	Rationale & Necessary for ECA rules to be added, system needs input 
 	\\	Originator & Client/Designers 
 	\\	Fit Criterion & Able to take input and passes it out as correct type 
-	\\	Customer Satisfaction & 5 - Highest
 	\\	Priority & 5 - Highest
 	\\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
@@ -656,7 +651,6 @@ Requirement & S3 \\
 	\\	Originator & Client/Designers 
 	\\	Fit Criterion & Outputs ECA rules in proper format for F-Spec (i.e., SQL 
 	translator) 
-	\\	Customer Satisfaction & 5 - Highest 
 	\\	Priority & 5 - Highest 
 	\\	Supporting Materials & Rule Based Design; ECA for Web Development %% TODO ref to this?
 \vspace{12pt}
