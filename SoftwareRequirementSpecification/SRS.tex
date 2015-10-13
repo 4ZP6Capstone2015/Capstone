@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage[section]{placeins} % Prevents floats from floating across sections
 \usepackage{natbib}%Bibtex
+\usepackage{float}
 
 \input{../ltx/setupComments}
 
@@ -99,7 +100,7 @@ specification -- and solely focus on what? thoughts?}%
 %% whitespace when rendering with comments off.
 Even though the business requirements and formal specification are written in
 entirely different languages, the ``compiler guarantees compliance between the
-two'' (\cite[p.~2]{derFun}). 
+two'' (\cite[2]{derFun}). 
 
 Ampersand also provides engineers with a variety of aids which
 help them to design products that fulfill all of the needs of their clients and
@@ -366,9 +367,7 @@ pages.
   bases and commonly used in market ready business rule engines. ECA rules are
   used in Ampersand to describe how a database should be modified in response to
   a system constraint becoming untrue. Event-Condition Action rules have
-  the following structure:
-%TODO: cite rule 
-%design.p:8-9
+  the following structure (\cite[8--9]{RBD}):
 \begin{verbatim}
 when <some event has happened> 
 and if <some condition is fulfilled> 
@@ -384,7 +383,7 @@ and if <some condition is fulfilled>
 \item [Business rules] See \emph{Business Requirements}.
 \item [Natural language] Language written in a manner similair to that of human communication; 
   language intended to be interpreted and understood by humans, as opposed to machines. 
-\item [ADL] Stands for ``A Description Language'' (\cite[p.~13]{derFun}). From a
+\item [ADL] Stands for ``A Description Language'' (\cite[13]{derFun}). From a
   given set of formally defined business requirements, Ampersand generates a
   functional specification consisting of a data model, a service catalog, a
   formal specification of the services, and a function point analysis. An ADL
@@ -465,7 +464,10 @@ project, it is motivated by a simple perspective. Tools should make a user’s j
 for that to happen the user must be able to under how to use it. 
 \edcomm{JG}{How do I pull the tree up to the first page of non-functional?? *facepalm* 
 \vspace{-finity} doesnt work}
-\begin{figure}
+\edcomm{YT}{LaTeX floats have 'position modifiers'. Generally you should use
+  !htb, this works in over 99 percent of case in my experience. Full details of floats and their positioning here:
+  https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions }
+\begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
 	\caption{Tree of non-functional requirements as it relates to E.F.A.}~\label{fig:figure2}
@@ -504,7 +506,7 @@ concerning Ampersand’s usability is that it’s limited to two languages: Engl
 who are not fluent in neither of these languages will have great difficulty learning the Ampersand 
 system.
 
-However, since Ampersand is a successor of CC, %TODO{JG}:cite Rule design (p.10) 
+However, since Ampersand is a successor of CC, \cite[p.10]{RBD}
 and similarly it could be used to create consensus between groups of stakeholders with strong 
 diverging opinions on the same matter. Once the prototype is generated, it can be presented to 
 different individuals who may wish to conduct their own investigation concerning the best course of 
@@ -559,7 +561,7 @@ products proceed into the production stage. However, Ampersand possess an intern
 detect inconsistencies and allows for manual correction. E.F.A. although important is not the last 
 line of defense, this secondary system greatly minimizes the chances of complete failure. The 
 likely if E.F.A. completely fails, is that the secondary system detects errors and compels users to 
-manually correct data. %TODO{JG}{CITE Rules Based Design p.153}
+manually correct data (\cite[153]{RBD}). 
 
 \begin{figure}
 	\centering
@@ -594,7 +596,7 @@ programmer who wishes to make additions or expand upon what is already there, ca
 without struggle. Well documented code creates a sense of cohesion among individual parties 
 participating on the same project. In order to meet the maintainability, E.F.A. must all 
 requirements, such that each specification is traceable back to the motivation for its existence 
-and the purpose it drives %TODO{JG:}{cite “ Deriving Functional Specification …” p. 2}. 
+and the purpose it drives (\cite[2]{derFun}).
 Although there are various groups, such as Dr. Joosten and his team who are available to assist 
 individuals and businesses with any part of Ampersand, our team believes that given a specific 
 enough error message, an individual may not require outside assistance. Moreover, E.F.A. will be 
