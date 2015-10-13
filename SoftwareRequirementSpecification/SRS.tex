@@ -1,5 +1,4 @@
 \documentclass[12pt]{report}
-\usepackage{nopageno}
 \usepackage{xcolor} % for different colour comments
 \usepackage{parskip} % Space between each paragraph.
 %\usepackage{hardwrap} % for text length of 80 pts
@@ -13,12 +12,13 @@
 \input{../ltx/setupComments}
 
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
-
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
 \edcommsfalse
 \begin{document}
 
+\pagenumbering{roman} %% Roman numerals before actual document starts
 \begin{titlepage}\begin{center}
+\thispagestyle{empty} %% No page no. on title
 
 \vspace*{1cm}
 
@@ -45,6 +45,7 @@ Fall 2015 / Winter 2016
 \end{titlepage}
 
 %% Revision history
+
 \begin{table}[ht!]\begin{center}
 \caption{Revision History}  
 \begin{tabular}{|l|l|l|}\hline
@@ -57,7 +58,8 @@ Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
 \listoffigures
 \listoftables
 
-%% \clearpage
+\newpage
+\pagenumbering{arabic} %% Arabic numerals in actual document
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 1: ???                 %%
