@@ -13,6 +13,8 @@
 \usepackage{ltablex} %% Multi page tables 
 \usepackage{booktabs}
 \usepackage{tabto}
+\usepackage{tocloft} %% This package prevents table of contents from generating a page break
+\usepackage{caption}
 
 \input{../ltx/setupComments}
 
@@ -58,6 +60,8 @@ Fall 2015 / Winter 2016
 Yuriy Toporovskyy & 26 / 09 / 2015 & Initial skeleton version \\\hline
 \end{tabular}
 \end{center}\end{table}
+
+\newpage
 
 \tableofcontents
 \listoffigures
@@ -707,8 +711,10 @@ a project due to an autofill feature.
 \begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{../figures/Ampersandmodel}
-	\caption{An example of what Ampersand users see when they compile a prototype, each tab and 
-	figure they have created can be modified.}~\label{fig:figure3}
+	\caption{An example of what Ampersand users see when they compile a prototype}
+        {\captionsetup{font=small}\caption*{Note: each tab and 
+	figure the user has created can be modified.}}
+ ~\label{fig:figure3}
 \end{figure}
 
 \section{Understandability}
@@ -727,8 +733,9 @@ That may be an external condition that Ampersand has been programmed to keep in 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{../figures/blueorredchair}
-	\caption{Simplistic diagram of decision making process, for full example of decision making 
-	process see. Figure 5.}~\label{fig:figure4}
+	\caption{Simplistic diagram of decision making process}
+  {\captionsetup{font=small}\caption*{Note: for full example of decision making 
+	process see Figure \ref{fig:figure5}}}~\label{fig:figure4}
 \end{figure}
 
 \section{Performance Requirements}\label{sec:Performance}
@@ -760,8 +767,9 @@ manually correct data (\cite[153]{RBD}).
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{../figures/Ampersanddecision}
-	\caption{This is an example of Ampersand's complete decision process. Source : Rule Based 
-	Design}~\label{fig:figure5}
+	\caption{This is an example of Ampersand's complete decision process}
+  {\captionsetup{font=small}\caption*{Source : Rule Based Design \cite{RBD}}}
+	~\label{fig:figure5}
 \end{figure}
 \section{Operational and Environmental Requirements}\label{sec:Operational}
 \paragraph*{}
