@@ -506,7 +506,19 @@ Design is feasible? & Decision & Does the software engineer think that the
 }%
 
 \section{Functional Requirements}\label{sec:Functional}
+%%TODO: Formatting, elaboration? What else goes here?
+Our code contribution must provably implement the desired algorithm.
 
+Our implementation must accept its input in the existing ADL format.
+
+Our implementation must produce an output compatible with the existing pipeline. 
+
+Our implementation must be a pure function; it should not have side effects.  
+
+Our implementation must not introduce appreciable performance degredation. 
+
+Our implementation must provide diagnostic information about the algorithm to
+the user, if the user asks for such information.
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
 Non-functional requirements are fundamental to the success of any product on the market. This type 
