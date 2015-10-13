@@ -19,6 +19,8 @@
 \input{../ltx/setupComments}
 
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
+
+\newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
 \edcommsfalse
 \begin{document}
@@ -597,7 +599,7 @@ its 4:30 in the morning, I'm not sure you're available}
 \subsection{User Requirement}
 
 {\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
 Requirement & U1 \\ 
 \midrule
 \endhead
@@ -615,7 +617,7 @@ modify ECA rules at any time.
 \subsection{Product and System Requirement}
 
 {\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
 Requirement & S1 \\ 
 \midrule
 \endhead
@@ -627,26 +629,24 @@ Description  & Cohesion of new product into existing system by using Haskell
 \\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
 \end{tabularx}
-}
-
-
+}%
+\pagebreak
 {\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
 Requirement & S2 \\ 
 \midrule
 \endhead
-	Description  & Able to recognize and parse input 
-	\\	Rationale & Necessary for ECA rules to be added, system needs input 
+	Description  & Able to recognize input in the existing Ampersand format
+	\\	Rationale & Necessary for ECA rules to be added; the algorithm needs 
+  an input, which must take the form of existing Ampersand datatypes 
 	\\	Originator & Client/Designers 
-	\\	Fit Criterion & Able to take input and passes it out as correct type 
-	\\	Priority & 5 - Highest
+	\\	Fit Criterion & Able to take input from existing Ampersand datatypes 
+  and return a value
+	\\	Priority & 5 - Highest 
 	\\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
 \end{tabularx}
-}
-
-
-
+}%
 {\setlength{\tabcolsep}{12pt} %% Default is 6
 \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
 Requirement & S3 \\ 
