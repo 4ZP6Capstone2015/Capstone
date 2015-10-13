@@ -12,6 +12,7 @@
 \usepackage{tabularx}
 \usepackage{ltablex} %% Multi page tables 
 \usepackage{booktabs}
+\usepackage{tabto}
 
 \input{../ltx/setupComments}
 
@@ -519,6 +520,17 @@ Our implementation must not introduce appreciable performance degredation.
 
 Our implementation must provide diagnostic information about the algorithm to
 the user, if the user asks for such information.
+
+
+\edcomm{YS}{Second Approach}
+
+\textbf{Requirement \# : 1}
+\tab{\textbf{Priority:} 4} \\
+  \textbf{Description:} Users of Ampersand shall be able to insert and 
+modify ECA rules at any time. \\
+  \textbf{Rationale:} To allow user to change the requirements in accordance to the changing needs. \\
+  \textbf{Fit Criterion:} The Data in the database preserves these rules and maintains consistency. \\
+
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
 Non-functional requirements are fundamental to the success of any product on the market. This type 
