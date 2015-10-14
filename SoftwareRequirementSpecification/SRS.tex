@@ -568,6 +568,18 @@ implementation.
 	\caption{Diagram of how EFA fits into Ampersand}~\label{fig:figure2}
 \end{figure}
 %TODO{JG}: Make diagram of EFA
+
+Ampersand as a whole is a large system with many moving parts. However, for the
+most part, these different subsystems have little influence on our contribution. 
+As highlighted in figure \ref{fig:figure2}, our contribution will be implemented 
+as a program transformation on the internal data structures of Ampersand. Our contribution
+will not interact with the parsing of input; or with the generation of design artifacts.
+ 
+Therefore, we omit functional requirements that are not related to our
+contribution from this section; that is, those requirements which are related
+only to subsystems with which we will not be interacting. These requirements are
+included in section \ref{sec:Waiting}. 
+
 Our functional requirements can be summarized as follows. Our implementation must
 \begin{itemize}
 \item provably implement the desired algorithm.
@@ -585,27 +597,28 @@ its 4:30 in the morning, I'm not sure you're available}
   on our functional requirements below. The above is just a summary.}
 
 
-\subsubsection*{Explanation of functional requirements template}
-%%%%%%%%%%%%%%%%%%%%
-\edcomm{JG}{maybe this note should go into glossary or something?}%
-\edcomm{YT}{This seems like a good spot. Could you give a touch up this part a
-  bit? The first thing ranges from 1 to 5 but there are four named
-  'levels'. This is logical inconsistency that will make this document very
-  confusing.}%
+%% YT: I got rid of 'Conflict' altogether from all the reqs. 
+%% \subsubsection*{Explanation of functional requirements template}
+%% %%%%%%%%%%%%%%%%%%%%
+%% \edcomm{JG}{maybe this note should go into glossary or something?}%
+%% \edcomm{YT}{This seems like a good spot. Could you give a touch up this part a
+%%   bit? The first thing ranges from 1 to 5 but there are four named
+%%   'levels'. This is logical inconsistency that will make this document very
+%%   confusing.}%
  
-Conflicts: 
-	\begin {itemize} 
-	\item[$\rightarrow$] none: no existing conflict
-	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
-	current system 
-	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
-	\item[$\rightarrow$] major: severe system conflict with Ampersand and 
-	requires alternative implementation
-	\item[$\rightarrow$] severe: requires immediate attention and product 
-	cannot function due to severe system conflict; needs over haul for proceed; 
-	this may constitute a dead end.
+%% Conflicts: 
+%% 	\begin {itemize} 
+%% 	\item[$\rightarrow$] none: no existing conflict
+%% 	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
+%% 	current system 
+%% 	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
+%% 	\item[$\rightarrow$] major: severe system conflict with Ampersand and 
+%% 	requires alternative implementation
+%% 	\item[$\rightarrow$] severe: requires immediate attention and product 
+%% 	cannot function due to severe system conflict; needs over haul for proceed; 
+%% 	this may constitute a dead end.
 	 
-	\end{itemize} 
+%% 	\end{itemize} 
 
 
 \subsection{User Requirement}
@@ -633,19 +646,34 @@ modify ECA rules at any time.
 Requirement & S1 \\ 
 \midrule
 \endhead
-Description  & Cohesion of new product into existing system by using Haskell  
-\\	Rationale & Necessary for EFA to be added to source code 
+Description  & The code contribution must use Haskell  
+\\	Rationale & Cohesion of new product into existing system by using the same language; 
+                    necessary for EFA to be added to source code of Ampersand 
 \\	Originator & Client/Designers 
-\\	Fit Criterion & Able to compile using GHC or Ampersand --haskell function  
+\\	Fit Criterion & Able to compile using GHC %% --haskell function  
 \\	Priority & 5 - Highest
 \\	Supporting Materials & Ampersand Documentation (Rule Based Design) 
 \vspace{12pt}
 \end{tabularx}
 }%
-\pagebreak
 {\setlength{\tabcolsep}{12pt} %% Default is 6
 \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
 Requirement & S2 \\ 
+\midrule
+\endhead
+Description  & The code contribution must be a patch to the existing Ampersand system 
+\\	Rationale & Cohesion of new product into existing system; 
+                    necessary for EFA to be added to source code of Ampersand 
+\\	Originator & Client/Designers 
+\\	Fit Criterion & Able to submit pull request on GitHub %% --haskell function  
+\\	Priority & 5 - Highest
+\\	Supporting Materials & --- %% Ampersand Documentation (Rule Based Design) 
+\vspace{12pt}
+\end{tabularx}
+}%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+Requirement & S3 \\ 
 \midrule
 \endhead
 	Description  & Able to recognize input in the existing Ampersand format
@@ -661,7 +689,7 @@ Requirement & S2 \\
 }%
 {\setlength{\tabcolsep}{12pt} %% Default is 6
 \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
-Requirement & S3 \\ 
+Requirement & S4 \\ 
 \midrule
 \endhead
 	Description  & Able to translate input into ECA rules 
