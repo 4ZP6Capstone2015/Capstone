@@ -748,29 +748,56 @@ for that to happen the user must be able to under how to use it.
 EFA is built as an internal structure of Ampersand and does not have a graphical interface for 
 users. Ampersand uses the command prompt to compile user prototypes which includes various 
 graphical representations and webpages. It is very unlikely that users will be able to distinguish 
-EFA from Ampersand, it would be similar to someone attempting to distinguish a person’s hand as 
-a separate entity from that person. EFA may not look very personable, or user friendly, but it 
-will hopefully relieve some frustration and make the user feel more at ease with their design 
-because if things do not line up, there is something that can automatically fix it for them. It 
-would be another thing users would not have to worry about when designing a new system, this 
-feeling of ease could extend to smooth the interactions between the designer and the client as it 
-goes through various cycles of overhaul. The user will be notified of any changes that have been 
-made to their design and from there Ampersand provides options of how much of the changes the user 
-would like to keep, fix themselves, or add to a repository of changes to keep in mind for future 
-instances. Thus EFA can return corrections according to what the user specifies.
+the action performed by EFA within Ampersand without knowledge of its implementation. 
+
+EFA will affect the usability of Ampersand mainly by increasing the amount of
+automation in Ampersand. However, automation is a dangerous thing, especially in
+terms of usability: if there is too much automation and not enough feedback
+given to the user, then the user will likely be very confused about how her output
+artifacts were derived from the input. Therefore, 
+
+%% YT: Similies don't belong in a technical document...
+%% , it would be similar to someone attempting to distinguish a person’s hand as 
+%% a separate entity from that person. 
+
+%% YT: This part doesn't seem right... we want full automation. Yes, we want to
+%% propogate *information* to the user, but not require that the user give
+%% additional input.
+
+%% EFA may not look very personable, or user friendly, but it 
+%% will hopefully relieve some frustration and make the user feel more at ease with their design 
+%% because if things do not line up, there is something that can automatically fix it for them. It 
+%% would be another thing users would not have to worry about when designing a new system, this 
+%% feeling of ease could extend to smooth the interactions between the designer and the client as it 
+%% goes through various cycles of overhaul. The user will be notified of any changes that have been 
+%% made to their design and from there Ampersand provides options of how much of the changes the user 
+%% would like to keep, fix themselves, or add to a repository of changes to keep in mind for future 
+%% instances. Thus EFA can return corrections according to what the user specifies.
 
 This product shall be used by any individual who is willing to dedicate the time to learning the 
 basics of the Ampersand model and wishes to design an information system. The time it take to learn 
-Ampersand is truly up to the user, a normal individual may take anywhere from a week to a month. 
-While an engineer who has a strong background in mathematical logic or minor experience in 
-programming will be able to use Ampersand efficiently within a week. The most pronounced problem 
-concerning Ampersand’s usability is that it’s limited to two languages: English and Dutch. Those 
-who are not fluent in neither of these languages will have great difficulty learning the Ampersand 
-system.
+Ampersand is truly up to the user. 
+%% , a normal individual may take anywhere from a week to a month. 
+%% YT: Can't say this without proof...
+An engineer who has a strong background in mathematical logic or minor
+experience in programming will be able to learn to use Ampersand efficiently
+must faster than one who only works with design elements; however, the Ampersand
+method can be taught to anyone with sufficient background in requirements
+engineering (\cite[p.~1]{derFun}). 
 
-However, since Ampersand is a successor of CC, \cite[p.10]{RBD}
-and similarly it could be used to create consensus between groups of stakeholders with strong 
-diverging opinions on the same matter. Once the prototype is generated, it can be presented to 
+The most pronounced problem concerning Ampersand’s usability is that it’s
+limited to two languages: English and Dutch. Those who are not fluent in
+neither of these languages will have great difficulty learning the Ampersand
+system. However, this is mainly related to the user base and popularity of
+Ampersand; the majority of its users are its designers, and their primary
+languages are these two.
+
+%% YT: Removing this... I tracked down the reference to CC, this is very
+%% irrelevant and its mention here is just confusing.
+%% However, since Ampersand is a successor of CC, \cite[p.10]{RBD}
+%% and similarly it could be used to create consensus between groups of stakeholders with strong 
+%% diverging opinions on the same matter. 
+Once the prototype is generated, it can be presented to 
 different individuals who may wish to conduct their own investigation concerning the best course of 
 action. After the creation of the prototype, common users are able to manipulate various aspects of 
 a project due to an autofill feature. 
@@ -785,17 +812,22 @@ a project due to an autofill feature.
 
 \section{Understandability}
 \paragraph*{}
-What EFA does is simple to understand, it fixes logical inconsistencies with minimal if any 
-input from the user. It looks for contradictions and violations, an overly simplistic but accurate 
-example would be: a chair is red, a chair is blue, and there is only one chair. That chair cannot 
-be blue and red simultaneously, to fix the problem either another chair is added or one of the 
+What EFA does is simple to understand: it fixes logical inconsistencies with minimal, if any,
+input from the user. It does this by looking for contradictions, or violations. 
+
+An overly simplistic, but accurate,
+example would be: there is a red chair, there is a blue chair, but there is only one chair. That chair cannot 
+be blue and red simultaneously; to fix the problem, either another chair is added or one of the 
 colour conditions is eliminated. What is eliminated may be based on what is more important for the 
 system and the user. In the previous example, if it is most important that there is only one chair, 
-then one of the colours statements is erased. Otherwise, EFA could add a new chair, now ever if 
-adding a new chair decreases the efficiency of the system because it must keep track of two chairs 
-now. It may pick a chair colour depending on another criteria that is not directly part of this 
-problem. Such as if most individuals who may use the chair prefer it to be red rather than blue. 
-That may be an external condition that Ampersand has been programmed to keep in mind. 
+then one of the colours statements is erased. 
+It may pick a chair colour depending on another criteria that comes from another
+part of the information system. For example, if majority of customers' favourite colour is red,
+then most individuals who may use the
+chair would prefer it to be red rather than blue. Ampersand has the capability
+of tracking relations between criteria like these. %% Does it? Is this an accurate descrition of the system?
+%% That may be an external condition
+%% that Ampersand has been programmed to keep in mind.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{../figures/blueorredchair}
@@ -806,13 +838,15 @@ That may be an external condition that Ampersand has been programmed to keep in 
 
 \section{Performance Requirements}\label{sec:Performance}
 \paragraph*{}
-Ampersand can efficiently process a large amount of information in a short amount of time, the 
-process that EFA requires will be added onto Ampersand’s process time. The duration of time it 
+Ampersand can efficiently process a large amount of information in a short amount of time; and the 
+process that EFA requires will be added onto Ampersand’s process time. The time it 
 would take to verify data inconsistencies would depend on the complexity of the system design and 
 the number of corrections it may take to update the system to a valid prototype according to 
-specification. The current upper bound is expected at 120 seconds, or 2 minutes, the correction 
-process is terminated if exceeds beyond this threshold for simple Ampersand models. The prototypes 
-termed ‘simple models’ are tasks that can be accomplished by an individual within a short amount of 
+specification. The current upper bound is expected at 120 seconds, or 2 minutes; the correction 
+process is terminated if the running time exceeds this threshold, for a simple model.
+
+The prototypes 
+termed ``simple models'' are tasks that can be accomplished by an individual within a short amount of 
 time, such as selecting the best actor/actress to play lead according to experience and audience 
 appeal. Simple models are able to take into consideration not only the task at hand but the context 
 and environment to which the task must be completed in. Performance is measured on speed, but also 
@@ -824,12 +858,13 @@ initial stages. Furthermore, the allowable time between failures is unknown and 
 EFA can be a great tool, but in case of failure, in the unlikely event that errors are 
 propagated through the system and no one through any cycle of development catch it. If the designer 
 puts full faith in EFA it could be catastrophic, especially if mistakes are not caught and 
-products proceed into the production stage. However, Ampersand possess an internal structure to 
-detect inconsistencies and allows for manual correction. EFA although important is not the last 
-line of defense, this secondary system greatly minimizes the chances of complete failure. The 
-likely if EFA completely fails, is that the secondary system detects errors and compels users to 
-manually correct data (\cite[153]{RBD}). 
+products proceed into the production stage (\cite[153]{RBD}). However, our contribution will
 
+include the propogation of proofs as well as feedback to the user. These proofs
+will be generated based on the algorithm used by EFA. These proofs will be
+human-readable, so that if an engineer suspects that EFA has made a mistake, she
+can examine the proof to be convinced that EFA is indeed sound. If the proof
+contains a mistake, it will be much easier to catch than a code error. 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\textwidth]{../figures/Ampersanddecision}
@@ -849,14 +884,18 @@ grow in proportion to Ampersand to remain useful. Due to this it is difficult to
 longevity of this project, as it could remain until the client determines the current model is no 
 longer useful. 
 
-Any system that is capable of running Ampersand is automatically compatible with EFA, currently 
-those system are limited to Windows OS 7 and up. There are very few physical conditions required to 
-maintain EFA and they are the basic conditions required to keep most computer system running. 
-This includes minimal moisture, and temperatures no lower than 35 $^{\circ}$ F or 1.7 
-$^{\circ}$ C 
-as computer hardware of change by flexing 
-\edcomm{JG}{Is this common knowledge or does this need a citation?} and 
-temperatures preferably no higher than 90 (degree Farenheight) or 32.2 (degree celcius)
+Any system that is capable of running Ampersand is automatically compatible with EFA; currently 
+those system are limited to Windows OS 7 and up. %% What, you can't build Ampersand on linux? It's a
+%% cabal package... it should work. This seems dubious, please confirm.
+There are very few physical conditions required to 
+maintain EFA; they are the basic conditions required to keep most computer system running. 
+
+%% This includes minimal moisture, and temperatures no lower than 35 $^{\circ}$ F or 1.7 
+%% $^{\circ}$ C 
+%% as computer hardware of change by flexing 
+\edcomm{JG}{Is this common knowledge or does this need a citation?} %%and 
+%% temperatures preferably no higher than 90 (degree Farenheight) or 32.2 (degree celcius)
+\edcomm{YT}{Not necessary to say what the number is. The requirement isn't precise enough. }
 
 \section{Maintainability and Support Requirements}\label{sec:Support}
 \paragraph*{}
