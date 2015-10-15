@@ -15,9 +15,9 @@
 \usepackage{tabto}
 \usepackage{tocloft} %% This package prevents table of contents from generating a page break
 \usepackage{caption}
-
 \input{../ltx/setupComments}
-
+\usepackage{geometry}
+\usepackage{changepage}
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
 
 \newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
@@ -88,12 +88,29 @@ Yuriy Toporovskyy & 13 / 10 / 2015 & Initial round of editing \\\hline
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 1: ???                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\edchange{JG}
-{\chapter{Introduction}\label{ch:Intro}}
-{\chapter{Project Drivers}\label{ch:Drivers}}
-
-\edchange{JG}
-{\section{Project Description}\label{sec:Intro}}
+\setlength{\arrayrulewidth}{0.35mm}
+\setlength{\tabcolsep}{16pt}
+\renewcommand{\arraystretch}{2}
+\begin{figure}
+	\begin{adjustwidth}{-1cm}{}
+	\begin{tabular}{ |m{4cm}|m{6cm}|m{4cm}|  }
+		\hline
+		\multicolumn{3}{|c|}{\bfseries{Project Time Table}} \\
+		\hline
+		\bfseries{Projected Finish Date}& \bfseries{Milestone} & 
+		\bfseries{Actual Finish Date} \\
+		\hline
+		 09/10/2015& EFA SRS version 0 & 13/10/2015 \\
+		19/10/2015 & EFA SRS version 1  & 19/10/2015 \\
+		23/10/2015 & Proof of Concept Demonstation & --- \\
+		---    & --- & --- \\
+		--- & --- & --- \\
+		01/04/2016 & EFA Complete & --- \\
+		\hline
+	\end{tabular}
+	\end{adjustwidth}
+\end{figure}
+\chapter{Project Drivers}\label{ch:Intro}
 {\section{The Purpose of the Project}\label{sec:Purpose}}
 \edcomm{JG}{any comments I made, is a suggestion and its up to you which way 
 you prefer to write it. thanks for getting this to us early, I'm sorry we're so 
@@ -166,7 +183,13 @@ it shouldn't be incomprehensible).}%
 the order must equal the sum of the prices of the products.}}
 \end{quotation}
 \edcomm{YS}{Attempt at defining ECA}%
-\edcomm{YS}{Should we remove some of the haskell code and define the scope of our project in terms of conserving these data rules instead? There's a good chance Dan hasn't read our new problem statement so he doesn't necessarily have a clear idea of Ampersand. Suggestions?}\edcomm{YT}{There is no Haskell code!}\edcomm{YS}{Sorry, i meant the pre-post conditions pairs, I guess we'll let that stay.}%
+\edcomm{YS}{Should we remove some of the haskell code and define the scope of 
+our project in terms of conserving these data rules instead? There's a good 
+chance Dan hasn't read our new problem statement so he doesn't necessarily have 
+a clear idea of Ampersand. Suggestions?}
+\edcomm{YT}{There is no Haskell code!}
+\edcomm{YS}{Sorry, i meant the pre-post conditions pairs, I guess we'll let 
+that stay.}%
 
 The requirements engineer formalizes this requirement
 as a rule in Ampersand, which is a constraint on the data in the database.
@@ -209,10 +232,11 @@ addToOrder(o,t) = ...
 
 It is proven \edcomm{YT}{This is 'proven' because someone told me we have a
   proof/presentation of the algorithm, but not its implementation. Can anyone
-  find this? We absolutely need a reference to this.} \edcomm{JG}{Can you give 
-  me more context as to what is proven? I found an article on ampersand 
-  subsets, I pushed it; look for "subsets" by Joosten(both)}%
+  find this? We absolutely need a reference to this.} 
+\edcomm{JG}{Can you give me more context as to what is proven? I found an 
+article on ampersand subsets, I pushed it; look for "subsets" by Joosten(both)}%
 \edcomm{YT}{There is no file in the repository with the word 'subset' in it?}%
+\edcomm{JG}{Sorry, look for domain, it may help}
 that for the subset of processes which Ampersand can support, there is an
 algorithm which will generate the necessary code to satisfy the post-conditions
 (ie, formal specifications) of each function. However, Ampersand does not yet
@@ -229,7 +253,7 @@ addToOrder(o,t) =
   o.totalCost = o.totalCost + t.cost;
 { POST: o.totalCost = t0 + t.cost } 
 \end{verbatim}
-
+\edcomm{JG}{Should pieces of code be left to design spec?}
 The first line includes the item in the order, and the second line fixes the
 violation of the post-condition which would occur without it. Currently this
 second line would have to be hand-written by the programmer, but the
@@ -264,8 +288,9 @@ Ampersand designers are Dr. Stef Joosten and Dr. Sebastian Joosten, who in
 addition to supervising the development of EFA (``Event-Condition-Action'' rules
 for Ampersand, see \ref{sec:Naming}) are also Ampersand
 contributers. Dr. Stef Joosten is the designer of the Ampersand method which
-have been successfully implemented in various public sectors. These two individuals have not only professional interest in Ampersand, but also personal interest.
-Ampersand has been nurtured by a great deal of patience and
+have been successfully implemented in various public sectors. These two 
+individuals have not only professional interest in Ampersand, but also personal 
+interest.Ampersand has been nurtured by a great deal of patience and
 dedication. The designers of EFA by extension are Ampersand contributors and
 are affected by its outcome; the piece of Ampersand we will build is a necessary
 component required for completion of our undergraduate degrees and is designed 
@@ -475,8 +500,9 @@ specification of the services, and a function point analysis
   generating functional consraints from business requirements. To this end, I
   added a definiton of 'Ampersand'. But thanks for the reference to 'A
   description language'}
-\edcomm{JG}{I'm.. so confused lol the more we do this the more lost Ive become as to what is what 
-and how we're going to do what we're suppose to do -- I can't even tell if Ampersand is a system, 
+\edcomm{JG}{I'm.. so confused lol the more we do this the more lost Ive become 
+as to what is what and how we're going to do what we're suppose to do -- I 
+can't even tell if Ampersand is a system, 
 model or tool.. or all three? }
 \end{description}
 
@@ -565,10 +591,10 @@ restores rules made by the user (i.e., invariants) and correct any data which ha
 rules. A secondary component of this project is the implementation of ECA (Event-Condition 
 Action) Rules used for reactive rule-based systems which has the ability to discover and 
 systematically repond to triggers for events in a timely manner. 
-(\cite[p.182]{berstel})
+(\cite[p.182]{ECA})
 \edcomm{YT}{Who is Berstel? Is this reference in our repo?}
 Currently, implementation and architecture of ECA rules systems are intensively studied in Active 
-Database Management Systems. (\cite[p.202]{berstel})
+Database Management Systems. (\cite[p.202]{ECA})
 There are various problems that may arise during implementation of the ECA rules translation, 
 what those problems may be are unforseeable at this stage of development. Although there may be an 
 algorithm for this implementation, we have no been able to find it much less an example of its 
@@ -804,9 +830,13 @@ a project due to an autofill feature.
 \begin{figure}
 	\centering
 	\includegraphics[width=1.0\textwidth]{../figures/Ampersandmodel}
-	\caption{An example of what Ampersand users see when they compile a prototype}
+	\caption{An example of what Ampersand users see when they compile a 
+	prototype}
         {\captionsetup{font=small}\caption*{Note: each tab and 
-	figure the user has created can be modified.}}
+	figure the user has created can be modified. \\ \textit{Created by: Dr. 
+	Stef 
+	Joosten \\Source: Ampersand-model 
+	repository}}}
  ~\label{fig:figure3}
 \end{figure}
 
