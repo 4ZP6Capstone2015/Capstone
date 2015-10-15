@@ -875,12 +875,8 @@ contains a mistake, it will be much easier to catch than a code error.
 %%	YS
 %% 	Does this image aboe (^^) belong here? I believe this is the Figure 5.4 that is related to role of Ampersand in the INDiGO proj
 %%	 I suggest the following changes, in support of Dr. Joosten's comments
-%%		ECA rules can have interdependencies, these might be burried deep into the rules. Following a certain course of action 
-%%		under EFA, can trigger a deadlock situation where in the system is not able to come up with the best way to deal with
-%%		inconsistencies in data. In the above example lets say the system is required to give a 2$ discount to the customer if the %%		total cost(including) of his basket is greater than or equal to $10 and provide free shipping, but if the total cost (after 	
-%%		discount ) is less than 10$ then 2$ needs to be added for shipping. THis creates an infinite loop where the initial cost of 	
-%%		the chair is discount to $8 but then shipping is applied and it becomes $10, which is again subjected to the discount. EFA %%		needs to take care of such performance issue that would lead the system into a state if deadlock. EFA must have a run 		%%		time capability to interrupt and send a message to the user about the existence of such conflicting requirements.
-%%%
+\edcomm{YS}{ECA rules can have interdependencies, these might be buried deep into the rules. Following a certain course of action under EFA, can trigger a deadlock situation where in the system is not able to come up with the best way to deal with inconsistencies in data. In the above example lets say the system is required to give a 2$ discount to the customer if the total cost(including) of his basket is greater than or equal to $10 and provide free shipping, but if the total cost (after discount ) is less than 10$ then 2$ needs to be added for shipping. This creates an infinite loop where the initial cost of the chair is a discount to $8 but then shipping is applied, and it becomes $10, which is again subjected to the discount. EFA needs to take care of such performance issue that would lead the system into a state if deadlock. EFA must have a run time capability to interrupt and send a message to the user about the existence of such conflicting requirements.
+}
 %%	I'm not too sure if the example is valid in our case, Does Ampersand automatically detect such conflicting requirements at an
 %%	early stage? I've belive the existence of relational algebra can detect such conflicts, but what if they are introduced at run
 %%	later, while the information system is in production?
