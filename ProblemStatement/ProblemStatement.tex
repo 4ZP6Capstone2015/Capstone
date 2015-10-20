@@ -2,7 +2,7 @@
 \usepackage{nopageno}
 \usepackage{xcolor} % for different colour comments
 \usepackage{parskip} % Space between each paragraph.
-%\usepackage{hardwrap} % for text length of 80 pts
+\usepackage{hardwrap} % for text length of 80 pts
 \usepackage[margin=1.2in]{geometry}
 \usepackage{../ltx/edcomms}
 
@@ -13,73 +13,49 @@
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-\title{CS4ZP6 Problem Statement \\ Ampersand Tarski Event-Condition-Action Rules } 
-\author{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
-\date{September 25, 2015}
+\title{CS4ZP6 Problem Statement \\ Ampersand Tarski Event-Condition-Action 
+Rules \\ \vspace{-1ex}} 
+\author{\normalsize{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}}
+\date{\normalsize\today}
 \thispagestyle{empty}
 \maketitle
 
-\edcomm{YT}{
-What is EFA? What is ECA? These should be defined before they are used;
-so, they shouldn't appear in the title. In fact we should only mention it in
-passing; overuse of acronyms can make a text undecipherable. I know what ECA
-is, but I don't know what EFA is and it is never defined in this document, at 
-all.}%
-\edcomm{JG}{ EFA turned out to be the acronym for the project which was the 
-title E.F.A (Event-Condition Action) rules for Ampersand on the Project 
-Registration. It was on there you signed it and when I asked you two for a 
-project title, neither of you said anything and it was due }%
-\edcomm{YS}{I thought its was ECA, my bad. I don't think we can change what's done}%
+Ampersand Tarski is a tool for requirement engineers, system designers, and 
+business users to develop prototype solutions for real world problems. 
+Ampersand provides users with a dynamic model that allows them to translate 
+real-world problems into quantifiable requirements, so that potential solutions 
+can then be tested in order to ensure that all requirements are met.
 
-\edcomm{Note}{You don't need to put /indent before every paragraph. Latex inserts
-that automatically. You can change the amount by changing the value of
-/parindent.  Also instead of manually adding a line break after every
-paragraph, just use parskip (see above).}%
+Currently, Ampersand is live and readily accessible to the engineering 
+community through Github; it has the ability to assess logical discrepancies on 
+sets of data based on user specified limitations. Though it has the ability to 
+manipulate data and generate prototypes, logical inconsistencies still arise in 
+the system’s data. These inconsistencies occur when the user changes the 
+restrictions imposed on the data and the data struggles to remodel itself to 
+fit the new restrictions. Not all sets of data can easily remake themselves to 
+fit the restrictions imposed by the user, and as a result there can be 
+contradictions that violate one or more of the restrictions. Data that violate 
+the restrictions are dealt with in one of two ways: elimination or 
+rehabilitation.
 
-The Ampersand Project translates the non-functional requirements of a
-business into the functional specifications required by software engineers. It
-also provides engineers with a variety of aids which help them to design
-products that fulfill all of the needs of their clients and the end-users.
-\edcomm{YT}{What does ``such as data models and service catalogues'' mean? If I
-  don't understand it it, the prof won't}%
-\edcomm{JG}{ from what I can tell ADL generates data models and service 
-catalogues according to functional specifications, and ADL is part of 
-Ampersand; I got that from Joosten's article -- we could just take it out.}%
-Business requirements are not universal and often vary from one country or
-culture to the next. Additional difficulty arises from the fact that business
-requirements are not easily translatable into design requirements.
+The purpose of this project is to rehabilitate data and maintain the artificial 
+system according to user-defined limitations. Although Ampersand has the 
+ability to recognize inconsistencies, it relies entirely on the user to 
+manually them. The goal of this project is to automate the 
+rehabilitation of data in order to restore a realistic representation of 
+Ampersand's artificial system that is consistent with reality. It is important 
+to automate the repair of inconsistent data because it makes Ampersand less 
+tedious for users and more efficient overall.
 
-The Ampersand Project has proven reliable at translating natural
-language into technical specifications so that they could be incorporated into
-the overall design. Business transactions input by the user are translated into
-``process rules''; and requirements are translated into ``Event-Condition
-Action'' (ECA) rules. Both of these rules are combined into a single SQL
-program. Currently, a programmer using Ampersand must manually ensure that each
-requirement is satisfied after each transaction, by telling Ampersand how each
-violation must be fixed. Not only is this process error prone, it is
-unmaintainable; when new requirements are added, the already-existing system may
-violate the new restrictions. In many scenarios, the requirements may be safety
-and security critical. To this end, Ampersand must also generate relational
-algebra proofs to show that the SQL generated from ECA rules is sound. 
-
-This project will focus primarily on modifying Ampersand to include the
-translation from requirements to ECA rules to SQL commands (whereas the pipeline
-for process rules is already in place). This will ameliorate Ampersand in two
-ways; by automating part of the programmers \ds{Sp. Should be ``programmer's" or
-``programmers' "} job, namely writing code to preserve
-requirements throughout a transaction; and by generating SQL code which is
-proven to not violate any system requirements. 
-
-\ds{I understand what you'll be doing for this project, but what is the problem
-you will be solving?}
-
-\ds{Who exactly are the stakeholders? Programmers? Software Engineers? Why
-should they care about Ampersand (or your modifications to Ampersand)?}
-
-\ds{Your problem statement is not abstract enough. It is very focused on the 
-implementation (which, while important in this case, still clouds the problem
-being solved)}
-
+This project is important to Ampersand stakeholders (e.g. Ampersand 
+contributors and designers) because it enhances a functional requirement and 
+brings Ampersand closer to becoming a finished product. For other stakeholders, 
+such as Ampersand's end users, this project means a drastic decrease in the 
+amount of time users would normally spend searching and correcting 
+inconsistencies within their information system.  Moreover, this project is 
+important to us becaues it addresses a fundamental challenge that all software 
+engineers face: the need to facilitate and maintain an essence of reality in an 
+artificial system that has no natural boundaries.
 \end{document}
 
 
