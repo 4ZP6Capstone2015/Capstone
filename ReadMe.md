@@ -1,10 +1,10 @@
-CS 4ZP6 Capstone - Overview
+__CS 4ZP6 Capstone - EFA Overview__
 
 Members: Yash Sapra (sapray@mcmaster.ca), Jaeden Guo (guoy34@mcmaster.ca), Yuriy Toporovskyy (toporoy@mcmaster.ca)
 
-UPDATES: Yuriy added intro to SRS, Jaeden added alt. Problem Statement and removed incomp PS.
+UPDATES: Test plan document (big one) added and test plan for demo (one-page document) added.
 
-DEADLINES: (I have 10 email reminds to myself, thought I'd share the love) 
+NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT
 
 ================================FALL SEMESTER ======================================= 
 
