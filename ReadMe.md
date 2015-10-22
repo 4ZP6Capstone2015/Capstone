@@ -1,12 +1,27 @@
-CS 4ZP6 Capstone - Overview
+__CS 4ZP6 Capstone - EFA Overview__
 
 Members: Yash Sapra (sapray@mcmaster.ca), Jaeden Guo (guoy34@mcmaster.ca), Yuriy Toporovskyy (toporoy@mcmaster.ca)
 
-UPDATES: Yuriy added intro to SRS, Jaeden added alt. Problem Statement and removed incomp PS.
+UPDATES: Test plan document (big one) added and test plan for demo (one-page document) added.
 
-DEADLINES: (I have 10 email reminds to myself, thought I'd share the love) 
+**NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT @ 4:30 PM**
 
-Oct 9th - req doc rev. 0 <br \>
-SRS peel eval Oct 19t ( REVIEW BY TEAM 3, REVIEW TEAM 5) <br \>
-Proof of concept Oct 23rd <br \>
+======================FALL SEMESTER (SEPT-DEC 2015)=================== 
 
+[DONE] ~ Oct 9th - req doc rev. 0 ~ <br \>
+[DONE] ~ SRS peel eval Oct 19t ( REVIEW BY TEAM 3, REVIEW TEAM 5) ~ <br \>
+[__Oct 23rd__] Proof of concept plan (Proof of Concept Plan Folder)  <br \>
+[__Oct. 30th__] Test Plan Revision 0 (Test Plan Document folder)  <br \>
+[__Nov. 16th - Nov27th__] Proof of Concept DEMO 
+
+====================WINTER SEMESTER (JAN-APRIL 2016)==================
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+to do:
+- Re-do SRS via TA comments and Joosten's comments
