@@ -10,9 +10,9 @@ NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT
 
 [DONE] ~ Oct 9th - req doc rev. 0 ~ <br \>
 [DONE] ~ SRS peel eval Oct 19t ( REVIEW BY TEAM 3, REVIEW TEAM 5) ~ <br \>
-Proof of concept plan (TestPlanForDemo Folder) [__Oct 23rd__] <br \>
-Test Plan Revision 0 (Test Plan Document folder)  [__Oct. 30th__] <br \>
-Proof of Concept DEMO [__Nov. 16th-Nov27th__]
+[__Oct 23rd__] Proof of concept plan (TestPlanForDemo Folder)  <br \>
+[__Oct. 30th__] Test Plan Revision 0 (Test Plan Document folder)  <br \>
+[__Nov. 16th-Nov27th__] Proof of Concept DEMO 
 
 ================================WINTER SEMESTER =======================================
 
