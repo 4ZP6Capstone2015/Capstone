@@ -6,14 +6,14 @@ UPDATES: Test plan document (big one) added and test plan for demo (one-page doc
 
 NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT
 
-================================FALL SEMESTER ======================================= 
+================================FALL SEMESTER (SEPT-DEC 2015)======================================= 
 
 [DONE] ~ Oct 9th - req doc rev. 0 ~ <br \>
 [DONE] ~ SRS peel eval Oct 19t ( REVIEW BY TEAM 3, REVIEW TEAM 5) ~ <br \>
 [__Oct 23rd__] Proof of concept plan (TestPlanForDemo Folder)  <br \>
 [__Oct. 30th__] Test Plan Revision 0 (Test Plan Document folder)  <br \>
-[__Nov. 16th-Nov27th__] Proof of Concept DEMO 
+[__Nov. 16th - Nov27th__] Proof of Concept DEMO 
 
-================================WINTER SEMESTER =======================================
+================================WINTER SEMESTER (JAN-APRIL 2016)=======================================
 
 
