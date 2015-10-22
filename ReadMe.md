@@ -4,7 +4,7 @@ Members: Yash Sapra (sapray@mcmaster.ca), Jaeden Guo (guoy34@mcmaster.ca), Yuriy
 
 UPDATES: Test plan document (big one) added and test plan for demo (one-page document) added.
 
-NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT
+**NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT @ 4:30 PM**
 
 ========================FALL SEMESTER (SEPT-DEC 2015)================================ 
 
