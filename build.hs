@@ -23,6 +23,7 @@ targets =
   [  defOpts "ProblemStatement/ProblemStatement.tex"
   , (defOpts "SoftwareRequirementSpecification/SRS.tex") { hasBib = True }
   , defOpts "TestPlanDocument/TestPlan.tex"
+  , defOpts "TestPlanForDemo/TestPlanProposal.tex"
   ]
 
 --------------------------
