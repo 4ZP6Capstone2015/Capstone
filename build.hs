@@ -22,6 +22,7 @@ import System.IO.Unsafe (unsafeInterleaveIO)
 targets = 
   [  defOpts "ProblemStatement/ProblemStatement.tex"
   , (defOpts "SoftwareRequirementSpecification/SRS.tex") { hasBib = True }
+  , defOpts "TestPlanDocument/TestPlan.tex"
   ]
 
 --------------------------
