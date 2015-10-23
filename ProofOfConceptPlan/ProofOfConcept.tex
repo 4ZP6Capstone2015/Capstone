@@ -5,34 +5,34 @@
 \usepackage{hardwrap} % for text length of 80 pts
 \usepackage[margin=1.2in]{geometry}
 \usepackage{../ltx/edcomms}
+\usepackage{titling}
 
 \input{../ltx/setupComments}
 
-\setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
-
+\setlength{\parindent}{13pt} % parskip sets this to 0. 15 is default.
+\setlength{\droptitle}{-9em}
 
 \begin{document}
+
 \title{CS4ZP6 Proof of Concept demo Plan \\ Ampersand Tarski Event-Condition-Action 
-Rules \\ \vspace{-1ex}} 
+Rules \\ \vspace{2ex}} 
 \author{\normalsize{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}}
-\date{\normalsize\today \vspace{-3ex}}
+\date{\normalsize\today \vspace{1ex}}
 \thispagestyle{empty}
 \maketitle
 \paragraph{}
 The focus of the test plan will be to demonstrate the current state of the 
 Ampersand model prior to the addition of our project and to provide an overview 
 of where our project fits into the Ampersand system. Ampersand is a system with 
-patches for its unfinished pieces and one of those missing pieces is the 
+patches for its unfinished pieces, and one of those missing pieces is the 
 purpose of our project, EFA. Although Ampersand is functional, it is limited in 
 the number of finished products and complete services it can provide to its 
-users. An example script will be compiled using Ampersand and multiple switches 
-(i.e. compilation options) in order to generate different user feedback and 
-create various Ampersand artifacts. This demonstration will be a black box test of the current Ampersand 
+users. This demonstration will be a black box test of the current Ampersand 
 system, one designed to produce various kinds of errors and violations. The 
 error messages inform the user of syntax and definition errors, such as a 
 missing variable. Violations inform the user when the model they are attempting 
 to build violates pre-set conditions within the Ampersand system. 
-\newline
+\newline\newline
 \indent We will first compile a simple ADL script in Ampersand to generate a working
 information system. At this point, once we have a working information system generated from Ampersand,
 it will be easy to understand how the ADL script translates to a model and how by creating violations in the ADL script we can generate errors. After this we will partly go over the other supporting artifacts generated from Ampersand and explain how these are useful from a business point of view. 
@@ -41,7 +41,7 @@ the ADL script to establish that the ADL script is just plain text written in Na
  describes the system to be.
 We will explain how the real world constraints are reflected in the ADL script and in the information system produced by running that script. Further some violations will be inserted in the ADL script to generate error messages to show what type of violations Ampersand is capable of handling. Once the user is familiar with Ampersand and the artifacts it generates we'll get into the ``how'' of  Ampersand; explaining the ADL script we used. 
  
- At this point the audience will have a good understanding of what Ampersand does, what type of artifacts it is capable of producing and the syntax and semantics of the ADL file. With all the prerequisites in place, we will go ahead and explain where our project (EFA) fits in, into the Ampersand system and how our contribution will change the behavior of Ampersand. The purpose of our project is to automate handling of data violations, we will explain what these violations are, how the current system reacts to these violations and how our project will change the way Ampersand will handle these violations.
+ At this point, the audience will have a good understanding of what Ampersand does, what type of artifacts it is capable of producing and the syntax and semantics of the ADL file. With all the prerequisites in place, we will go ahead and explain where our project (EFA) fits in, into the Ampersand system and how our contribution will change the behavior of Ampersand. The purpose of our project is to automate the handling of data violations; we will explain what these violations are, how the current system reacts to these violations and how our project will change the way Ampersand will handle these violations.
  
 %The focus of the test plan will be to demonstrate the current state of 
 %Ampersand model prior to the addition of our project and to provide an overview 
@@ -75,11 +75,7 @@ We will explain how the real world constraints are reflected in the ADL script a
 %remove the entity that is not red or blue from the intersection of the red and 
 %blue set. 
 %\newline
-%\indent EFA is in its initial stages of development, and at this time it is 
-%difficult to provide a rigorous guide as to how this project will proceed. The 
-%first step was to figure out the particular classes of violations and the most 
-%conventional ways they are triggered. From there the developers of Ampersand 
-%have provided a partial algorithm for how individual violations can be 
+%\indent EFA is in its initial stages of development, and at this time it is ``
 %restored. Foreseeable issues include not having a complete algorithm to 
 %implement on complex system such as Ampersand, in addition to figuring out how 
 %to fix violations that may cycle within itself.
