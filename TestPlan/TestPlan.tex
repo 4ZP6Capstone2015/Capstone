@@ -58,6 +58,7 @@ Fall 2015 / Winter 2016
 \caption{Revision History}  
 \begin{tabular}{|l|l|l|}\hline
 \textbf{Author} & \textbf{Date} & \textbf{Comment} \\\hline 
+Yuriy Toporovskyy & 27 / 10 / 2015 & Reorganized document \\\hline
 Yuriy Toporovskyy & 27 / 10 / 2015 & Initial version - template \\\hline
 \end{tabular}
 \end{center}\end{table}
@@ -125,76 +126,81 @@ within Ampersand.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-%% \chapter{Plan}
+\chapter{Plan}
 
-%% %2.1 Software Description
-%% \section{Software Description}
-%% Ampersand is a software tool which converts a formal specification of business
-%% entities and rules, and compiles it into different design artifacts, as well as
-%% a prototype web application.
+\section{Software Description}
+Ampersand is a software tool which converts a formal specification of business
+entities and rules, and compiles it into different design artifacts, as well as
+a prototype web application.
 
-%% This prototype implements the business logic in the original specification, in
-%% the form of a relational database with a simple web-app front-end.
+This prototype implements the business logic in the original specification, in
+the form of a relational database with a simple web-app front-end.
 
-%% A particular class of relational database violations can be automatically
-%% restored; the algorithm for computing the code to fix these violations is called
-%% AMMBR \cite{amber}.  This class of violations is realized within Ampersand as
-%% ECA rules -- our contribution to Ampersand will add support for ECA rules, in
-%% both the Ampersand back-end and the generated prototype.
+A particular class of relational database violations can be automatically
+restored; the algorithm for computing the code to fix these violations is called
+AMMBR \cite{amber}.  This class of violations is realized within Ampersand as
+ECA rules -- our contribution to Ampersand will add support for ECA rules, in
+both the Ampersand back-end and the generated prototype.
 
-%% %% %2.2 Test Team
-%% \section{Test Team} 
+\section{Test Team} 
 
-%% The test team which will execute the strategy outline in this document is comprised of
-%% \begin{itemize}
-%% \item Yuriy Toporovskyy  
-%% \item Yash Sapra        
-%% \item Jaeden Guo         
-%% \begin{itemize}
+The test team which will execute the strategy outline in this document is comprised of
+\begin{itemize}
+\item Yuriy Toporovskyy  
+\item Yash Sapra        
+\item Jaeden Guo         
+\begin{itemize}
 
-%% %2.3 Milestones
-%% \section{Milestones}
-
-
-%% %2.3.1 Location
-%% \subsection{Location}
-
-
-%% \subsection{Events}
-
-%% %2.3.1 Dates and Deadlines
-%% \subsection{Dates and Deadlines}
-
-%% %2.4 Budget
-%% \section{Budget}
+\section{Test Schedule}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
-%
-%	3.) Software Specification
-%
+%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Software Specification}
+\chapter{Methods and constraints}
+\section{Methodology}
+\section{Test tools}
 
-\section{Specification}
+\section{Requirements}
 \subsection{Functional requirements}
-\subsection{Test -- requirement relationships}
-\subsection{Test progression}
+The functional requirements for ECA for Ampersand are detailed in the SRS; they
+are also briefly summarized here. Our implementation must
 
-\section{Methods and constraints}
-\subsection{Methodology}
-\subsection{Test tools}
-\subsection{Extent}
-\subsection{Data recording}
-\subsection{Constraints}
+\begin{description}
+\item[F1] provably implement the desired algorithm.
+\item[F2] accept its input in the existing ADL file format.
+\item[F3] produce an output compatible with the existing pipeline. 
+\item[F4] be a pure function; it should not have side effects.  
+\item[F5] not introduce appreciable performance degredation. 
+\item[F6] provide diagnostic information about the algorithm to
+the user, if the user asks for such information.
+\end{description}
 
+\subsection{Non-Functional requirements}
+The functional requirements for ECA for Ampersand are detailed in the SRS; they
+are also briefly summarized here. Our implementation must
+
+\begin{description}
+\item[N1] produce output which will be easily understood by the typical user,
+  such as a requirements engineer, and will not be misleading or confusing.  
+\item[N2] be composed of easily maintainable, well documented code.
+\item[N3] compile and run in the environment currently used to develop
+  Ampersand.
+\item[N4] annotated generated code with proofs of correctness or derivations,
+  where appropriate. 
+\item[N5] automatically fix database violations in the mock database of the
+  prototype. 
+\end{description}
+
+\section{Data recording}
+\section{Constraints}
 \section{Evaluation}
 
-%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%	5.) System Test Description
-%
-%%%%%%%%%%%%%%%%%%%%%%%%
+%% %%%%%%%%%%%%%%%%%%%%%%%%
+%% %
+%% %	5.) System Test Description
+%% %
+%% %%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{System Test Descriptions}
 
