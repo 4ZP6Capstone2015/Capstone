@@ -15,6 +15,7 @@
 \usepackage{tabto}
 \usepackage{tocloft} %% This package prevents table of contents from generating a page break
 \usepackage{caption}
+\usepackage{listings}
 \input{../ltx/setupComments}
 \usepackage{geometry}
 \usepackage{changepage}
@@ -160,6 +161,24 @@ The test team which will execute the strategy outline in this document is compri
 \chapter{Methods and constraints}
 \section{Methodology}
 \section{Test tools}
+
+\subsection{Static Typing}
+Programming languages can be distinguished by their type systems. They can either be Dynamically typed or statically typed. The language for implementation of our project is \textbf{Haskell}. Having a ``static'' type system, types will be checked at compile-time. This will allow us to catch error even before the code is run, reducing the chances of inducing errors into the existing system.
+
+\subsection{Static Analysis}
+Static analysis  includes syntax checking and generating correctness proof in the form of pre and post condition. A part of our project deals with generating annotated source code that will act as a correctness proof for the system. The annotated source code will have the functions explained with the help of pre and post condition pairs along with invariants. The invariants will become a part of QuickCheck, a properties testing tool for Haskell, at a later stage of the project.
+
+\textbf{QuickCheck} allows the programmers to provide a specification of the program, in the form of properties. The functions should satisfy these properties. QuickTest can test that these properties hold in a large number of randomly generated cases. Specifications are expressed in Haskell, using combinators defined in the QuickCheck library. Since Ampersand uses QuickCheck for testing purpose, we have explained a sample test using QuickTest below[\todo {add reference hackage}].
+
+\begin{lstlisting}
+quickCheck (\s -> length (take5 s) == 5)
+Falsifiable, after 0 tests:
+""
+\end{lstlisting}
+
+Here we test that the length of a list after implementing ``take 5'' should be 5 however this fails when the initial list is empty or has less than 5 elements.
+
+
 \subsection{Unit Testing}
 The group will be using HUnit for automated unit testing of the new source code in Ampersand. The testing tool will be critical in analyzing the effects of our project on the existing system.  In unit testing, a test case is the unit of test execution. That is, distinct test cases are executed independently and the failure of one is independent of the failure of any other test case.
 
@@ -171,6 +190,9 @@ and compare the actual results returned to the results we're expecting.
 \subsection{Functional requirements}
 The functional requirements for ECA for Ampersand are detailed in the SRS; they
 are also briefly summarized here. Our implementation must
+
+\subsection{Properties testing}
+
 
 \begin{description}
 \item[F1] provably implement the desired algorithm.
