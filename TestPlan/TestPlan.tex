@@ -149,7 +149,7 @@ The test team which will execute the strategy outline in this document is compri
 \item Yuriy Toporovskyy  
 \item Yash Sapra        
 \item Jaeden Guo         
-\begin{itemize}
+\end{itemize}
 
 \section{Test Schedule}
 
@@ -160,7 +160,13 @@ The test team which will execute the strategy outline in this document is compri
 \chapter{Methods and constraints}
 \section{Methodology}
 \section{Test tools}
+\subsection{Unit Testing}
+The group will be using HUnit for automated unit testing of the new source code in Ampersand. The testing tool will be critical in analyzing the effects of our project on the existing system.  In unit testing, a test case is the unit of test execution. That is, distinct test cases are executed independently and the failure of one is independent of the failure of any other test case.
 
+\textbf{HUnit} is a library providing unit testing capabilities in Haskell. 
+It is an adaption of JUnit to Haskell that allows you to easily create, name, group tests and execute them.
+The idea of using HUnit is similar to that of JUnit in Java; we feed some data to the functions that we're testing 
+and compare the actual results returned to the results we're expecting. 
 \section{Requirements}
 \subsection{Functional requirements}
 The functional requirements for ECA for Ampersand are detailed in the SRS; they
@@ -171,7 +177,7 @@ are also briefly summarized here. Our implementation must
 \item[F2] accept its input in the existing ADL file format.
 \item[F3] produce an output compatible with the existing pipeline. 
 \item[F4] be a pure function; it should not have side effects.  
-\item[F5] not introduce appreciable performance degredation. 
+\item[F5] not introduce appreciable performance degradation. 
 \item[F6] provide diagnostic information about the algorithm to
 the user, if the user asks for such information.
 \end{description}
