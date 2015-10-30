@@ -260,9 +260,13 @@ are also briefly summarized here. Our implementation must
 \chapter{System Test Descriptions}\label{ch:SystemTests}
 
 %% Environment for system test
+\newcounter{sysTestNum}
+\setcounter{sysTestNum}{1}
+
 \newcommand{\systemTest}[8]{
-\section*{#1~~~ #2}\label{sec:#1}
-\addcontentsline{toc}{section}{#1~~~ #2}
+\section*{T\arabic{sysTestNum}~~~ #2}\label{sec:#1}
+\addcontentsline{toc}{section}{T\arabic{sysTestNum}~~~ #2}
+\stepcounter{sysTestNum}
 \hspace{-6pt}\begin{tabular}{p{3cm}l}
 \textbf{Test type}     &   #3 \\ 
 \textbf{Schedule}      &   #4 \\
@@ -274,7 +278,7 @@ are also briefly summarized here. Our implementation must
 }
 
 %% Example usage....
-\systemTest{T1}  %% Test label, should be unique
+\systemTest{exampleSysTest}  %% Test label, should be unique
 {Example system test}  %% Test name
 {What type of test is this?}  
 {When will this test be done?}
