@@ -275,13 +275,22 @@ are also briefly summarized here. Our implementation must
 
 %% Example usage....
 \systemTest{T1}  %% Test label, should be unique
-{Example system test}  %% Test name
-{What type of test is this?}  
-{When will this test be done?}
-{Which requirements does this test address?}
-{What is the input to this test?}
-{What is the desired output of this test?}
-{How to do the test?}
+{EFA Black box test}  %% Test name
+{Functional Test}  
+{November 16th-27th }
+{Functional Requirements}
+{The input shall be a script written in ADL (abstract data language) in its initial state.}
+{The output shall vary depending on the test type. \\ For example, the output for a quickcheck test shall be a success message, while on the other hand the output for a GUI test shall be the final state of the program.}
+{A script shall be taken as input at which point EFA shall automate the correction of rule violations. This test shall uncover errors that occur in implementing requirements or design specification. This test is not concerned with the process works but with the results, furthermore, it focuses on functional requirements and normal behaviour. Dynamic analysis is used to examine the physical response from system variables that are not constant and change with time. }
+
+\systemTest{T2}  %% Test label, should be unique
+{EFA White box test} 
+{White Box test}  
+{November 16th-27th}
+{Non-functional Requirements}
+{N/A}
+{The desired output depends on the specific targeted non-functional specification}
+{The test shall be performed by an third party (Dr.Kahl), where Dr. Kahl shall perform a code walk through where he will be able to confirmed the validity of the code that is written, the correctness and the maintainability of the code. Structural testing uncovers errors during implementation of the program, and focuses on how the process occurs, and evaluates structure of the program. The white box test is also implemented by teach individual of our team and shall focus on abnormal or extreme behaviour. The white box test focuses on static program analysis which can be performed without actually executing the program. The main non-functional requirement for EFA is code maintainability and correctness, which requires heavy documentation alongside the source code. }
 
 %% \section{Black Box Test} \edcomm{JG}{Functional testing; should uncover errors that occur in implementing requirements or design specification; not concerned with how process work but with the results; focuses on functional requirements and normal behaviour; I think dynamic analysis should be incorporated here as it checks test cases against expected behaviour; exhaustive testing?; }
 %% \subsection{Control}
