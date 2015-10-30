@@ -119,6 +119,8 @@ within Ampersand.
 \item[SRS] Software Requirements Specification. Document regarding requirements, constraints, and project objectives.
 \item[ECA Rule] Event-Condition-Action Rule. A rule which describes how to
   handle a constraint violation in a database. See SRS for details.
+\item[HUnit] A Haskell library for unit testing. See TODO: ref test tools
+\item[QuickCheck] A Haskell library for running automated, randomized tests. See TODO: ref test tools
 \end{description}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,36 +165,60 @@ The test team which will execute the strategy outline in this document is compri
 \section{Test tools}
 
 \subsection{Static Typing}
-Programming languages can be distinguished by their type systems. They can either be Dynamically typed or statically typed. The language for implementation of our project is \textbf{Haskell}. Having a ``static'' type system, types will be checked at compile-time. This will allow us to catch error even before the code is run, reducing the chances of inducing errors into the existing system.
+Programming languages can be classified by many criteria, one of which is their
+type systems. One such classification is static versus dynamic typing. Our
+implementation language, Haskell, has a static type system. Types will be
+checked at compile-time, allow us to catch errors even before the code is run,
+reducing the errors that need to be found and fixed using testing techniques. 
 
-\subsection{Static Analysis}
-Static analysis  includes syntax checking and generating correctness proof in the form of pre and post condition. A part of our project deals with generating annotated source code that will act as a correctness proof for the system. The annotated source code will have the functions explained with the help of pre and post condition pairs along with invariants. The invariants will become a part of QuickCheck, a properties testing tool for Haskell, at a later stage of the project.
+\edcomm{YT}{``Static analysis'' is the analysis of a program without running it,
+  ie, analysis of the program text. We won't be doing any static analysis, I
+  believe... QuickCheck is absolutely unrelated to static analysis.}
+\subsection{Formal verification}
+A part of our project deals with generating source code annotated with the proof
+of derivation of that source code, which will act as a correctness proof for the
+system. In particular, when we generate code to restore a database violation
+using ECA rules, then the generated code will have a proof associated with it,
+which details how that code was derived from the original specification given by
+the user.
 
-\textbf{QuickCheck} allows the programmers to provide a specification of the program, in the form of properties. The functions should satisfy these properties. QuickTest can test that these properties hold in a large number of randomly generated cases. Specifications are expressed in Haskell, using combinators defined in the QuickCheck library. Since Ampersand uses QuickCheck for testing purpose, we have explained a sample test using QuickTest below[\todo {add reference hackage}].
+\subsection{Random Testing}
+Random testing allows us to easily run a very large number of tests without
+writing them by hand, and also has the advantage of not producing biased test
+cases, like a programmer is likely to do.
 
-\begin{lstlisting}
-quickCheck (\s -> length (take5 s) == 5)
-Falsifiable, after 0 tests:
-""
-\end{lstlisting}
+We will be using QuickCheck \todo{add reference hackage} for random testing. The existing Ampersand code base
+using QuickCheck for testing, therefore, using QuickCheck has the added benefit
+of easier integration with the existing Ampersand code base.
 
-Here we test that the length of a list after implementing ``take 5'' should be 5 however this fails when the initial list is empty or has less than 5 elements.
+QuickCheck allows the programmers to provide a specification of the program, in
+the form of properties. A property is essentially a boolean valued Haskell
+function of any number of arguments. QuickCheck can test that these properties
+hold in a large number of randomly generated cases. QuickCheck also takes great
+care to produce a large variety of test cases, and generally produces good code
+coverage.
 
+\edcomm{YT}{Don't assume that this super obvious example will make sense... better to leave it out.}
 
+%% \begin{lstlisting}
+%% quickCheck (\s -> length (take5 s) == 5)
+%% Falsifiable, after 0 tests:
+%% ""
+%% \end{lstlisting}
+
+%% Here we test that the length of a list after implementing ``take 5'' should be 5 however this fails when the initial list is empty or has less than 5 elements.
 \subsection{Unit Testing}
-The group will be using HUnit for automated unit testing of the new source code in Ampersand. The testing tool will be critical in analyzing the effects of our project on the existing system.  In unit testing, a test case is the unit of test execution. That is, distinct test cases are executed independently and the failure of one is independent of the failure of any other test case.
+Unit testing is comprised of feeding some data to the functions being tested and
+compare the actual results returned to the expected resultd.
+We will be using HUnit for unit testing of the new source code \edcomm{YT}{HUnit does
+not do *automated* testing.}in Ampersand. HUnit is a library providing unit
+testing capabilities in Haskell.  It is an adaption of JUnit to Haskell that
+allows you to easily create, name, group tests, and execute them.
 
-\textbf{HUnit} is a library providing unit testing capabilities in Haskell. 
-It is an adaption of JUnit to Haskell that allows you to easily create, name, group tests and execute them.
-The idea of using HUnit is similar to that of JUnit in Java; we feed some data to the functions that we're testing 
-and compare the actual results returned to the results we're expecting. 
 \section{Requirements}
 \subsection{Functional requirements}
 The functional requirements for ECA for Ampersand are detailed in the SRS; they
 are also briefly summarized here. Our implementation must
-
-\subsection{Properties testing}
-
 
 \begin{description}
 \item[F1] provably implement the desired algorithm.
