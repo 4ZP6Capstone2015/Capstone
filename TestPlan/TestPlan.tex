@@ -145,6 +145,7 @@ AMMBR \cite{amber}.  This class of violations is realized within Ampersand as
 ECA rules -- our contribution to Ampersand will add support for ECA rules, in
 both the Ampersand back-end and the generated prototype.
 
+\edcomm{YT}{Probably should merge Test Team and Test Schedule}
 \section{Test Team}\label{sec:TestTeam}
 
 The test team which will execute the strategy outline in this document is comprised of
@@ -257,16 +258,41 @@ are also briefly summarized here. Our implementation must
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{System Test Descriptions}\label{ch:SystemTests}
-\section{Black Box Test} \edcomm{JG}{Functional testing; should uncover errors that occur in implementing requirements or design specification; not concerned with how process work but with the results; focuses on functional requirements and normal behaviour; I think dynamic analysis should be incorporated here as it checks test cases against expected behaviour; exhaustive testing?; }
-\subsection{Control}
-\subsection{Inputs}
-\subsection{Outputs}
-\subsection{Procedures}
-\section{White Box Test}\edcomm{JG}{Structural testing; uncovers errors during implementation of the program, concerned with how processig ocurs, evalutes whether the structure is sound, focuses on non-functional requirements for the system; focuses on abnormal or extreme behaviour; static testing should go here -- its a code walk through, we can get Kahl to walk through it in theory and see if he can read it and understand it -- if he can it is maintainable and that is our quality accessment}
-\subsection{Control}
-\subsection{Inputs}
-\subsection{Outputs}
-\subsection{Procedures}
+
+%% Environment for system test
+\newcommand{\systemTest}[8]{
+\section*{#1~~~ #2}\label{sec:#1}
+\addcontentsline{toc}{section}{#1~~~ #2}
+\hspace{-6pt}\begin{tabular}{p{3cm}l}
+\textbf{Test type}     &   #3 \\ 
+\textbf{Schedule}      &   #4 \\
+\textbf{Requirements}  &   #5 \\
+\end{tabular}
+\vspace{-12pt}\subsubsection*{Input} #6
+\vspace{-12pt}\subsubsection*{Output} #7
+\vspace{-12pt}\subsubsection*{Procedure} #8 
+}
+
+%% Example usage....
+\systemTest{T1}  %% Test label, should be unique
+{Example system test}  %% Test name
+{What type of test is this?}  
+{When will this test be done?}
+{Which requirements does this test address?}
+{What is the input to this test?}
+{What is the desired output of this test?}
+{How to do the test?}
+
+%% \section{Black Box Test} \edcomm{JG}{Functional testing; should uncover errors that occur in implementing requirements or design specification; not concerned with how process work but with the results; focuses on functional requirements and normal behaviour; I think dynamic analysis should be incorporated here as it checks test cases against expected behaviour; exhaustive testing?; }
+%% \subsection{Control}
+%% \subsection{Inputs}
+%% \subsection{Outputs}
+%% \subsection{Procedures}
+%% \section{White Box Test}\edcomm{JG}{Structural testing; uncovers errors during implementation of the program, concerned with how processig ocurs, evalutes whether the structure is sound, focuses on non-functional requirements for the system; focuses on abnormal or extreme behaviour; static testing should go here -- its a code walk through, we can get Kahl to walk through it in theory and see if he can read it and understand it -- if he can it is maintainable and that is our quality accessment}
+%% \subsection{Control}
+%% \subsection{Inputs}
+%% \subsection{Outputs}
+%% \subsection{Procedures}
 
 \bibliographystyle{alpha}
 \bibliography{TestPlan}
