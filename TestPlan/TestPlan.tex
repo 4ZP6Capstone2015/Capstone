@@ -258,7 +258,7 @@ are also briefly summarized here. Our implementation must
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{System Test Descriptions}\label{ch:SystemTests}
-
+\newcommand{\bs}{\textunderscore}
 %% Environment for system test
 \newcommand{\systemTest}[8]{
 \section*{#1~~~ #2}\label{sec:#1}
@@ -327,98 +327,6 @@ tuples of set A and B, then the entire table needs to be adjusted for a new set
 of weights or the table must be deleted. EFA will output SQL commands to delete 
 the necessary components.
 
-Example 1. Possible Recursive Deletion SQL Output:
-Please note that this is a rolled out generic example of what EFA may produce, 
-the actual code EFA provides may be very different.
-\begin{verbatim}
-CREATE OR REPLACE PROCEDURE delete_cascade(
-table_owner          VARCHAR2,
-parent_table         VARCHAR2,
-where_clause         VARCHAR2
-) IS
--- ex:  execute delete_cascade('MY_SCHEMA', 'MY_MASTER', 'where ID=1'); */
-
-child_cons     VARCHAR2(30);
-parent_cons    VARCHAR2(30);
-child_table    VARCHAR2(30);
-child_cols     VARCHAR(500);
-parent_cols    VARCHAR(500);
-delete_command VARCHAR(10000);
-new_where_clause VARCHAR2(10000);
-
--- gets the foreign key constraints on other tables which depend on columns in 
-parent_table --
-CURSOR cons_cursor IS
-SELECT owner, constraint_name, r_constraint_name, table_name, delete_rule
-FROM all_constraints
-WHERE constraint_type = 'R'
-AND delete_rule = 'NO ACTION'
-AND r_constraint_name IN (SELECT constraint_name
-FROM all_constraints
-WHERE constraint_type IN ('P', 'U')
-AND table_name = parent_table
-AND owner = table_owner)
-AND NOT table_name = parent_table; -- ignore self-referencing constraints
-
-
--- for the current constraint, gets the child columns and corresponding parent 
-columns
-CURSOR columns_cursor IS
-SELECT cc1.column_name AS child_col, cc2.column_name AS parent_col
-FROM all_cons_columns cc1, all_cons_columns cc2
-WHERE cc1.constraint_name = child_cons
-AND cc1.table_name = child_table
-AND cc2.constraint_name = parent_cons
-AND cc1.position = cc2.position
-ORDER BY cc1.position;
-BEGIN
--- loops through all the constraints that refer to parent table
-FOR cons IN cons_cursor LOOP
-child_cons   := cons.constraint_name;
-parent_cons  := cons.r_constraint_name;
-child_table  := cons.table_name;
-child_cols   := '';
-parent_cols  := '';
-
--- loops through the child/parent column pairs; builds column list of del 
-statements
-FOR cols IN columns_cursor LOOP
-IF child_cols IS NULL THEN
-child_cols  := cols.child_col;
-ELSE
-child_cols  := child_cols || ', ' || cols.child_col;
-END IF;
-
-IF parent_cols IS NULL THEN
-parent_cols  := cols.parent_col;
-ELSE
-parent_cols  := parent_cols || ', ' || cols.parent_col;
-END IF;
-END LOOP;
-
-/* construct the WHERE clause of the delete statement, including a subquery to 
-get the related parent rows */
-new_where_clause  :=
-'where (' || child_cols || ') in (select ' || parent_cols || ' from ' || 
-table_owner || '.' || parent_table ||
-' ' || where_clause || ')';
-
-delete_cascade(cons.owner, child_table, new_where_clause);
-END LOOP;
-
---makes delete statement for the current table 
-delete_command  := 'delete from ' || table_owner || '.' || parent_table || ' ' 
-|| where_clause;
-
--- print delete command
-DBMS_OUTPUT.put_line(delete_command || ';');
-
-EXECUTE IMMEDIATE delete_command;
-
--- issue commit here
-END;
-\end{verbatim}
-
 
 Example 2 Input ECA Rule: An ECA rule that specifies that all clauses must be 
 executed based on conditions. Insertion of deletion must take place to restore 
@@ -448,16 +356,53 @@ Brief Explanation of Example 2:
 {The desired output depends on the specific targeted non-functional specification}
 {The test shall be performed by an third party (Dr.Kahl), where Dr. Kahl shall perform a code walk through where he will be able to confirmed the validity of the code that is written, the correctness and the maintainability of the code. Structural testing uncovers errors during implementation of the program, and focuses on how the process occurs, and evaluates structure of the program. The white box test is also implemented by teach individual of our team and shall focus on abnormal or extreme behaviour. The white box test focuses on static program analysis which can be performed without actually executing the program. The main non-functional requirement for EFA is code maintainability and correctness, which requires heavy documentation alongside the source code. }
 
-%% \section{Black Box Test} \edcomm{JG}{Functional testing; should uncover errors that occur in implementing requirements or design specification; not concerned with how process work but with the results; focuses on functional requirements and normal behaviour; I think dynamic analysis should be incorporated here as it checks test cases against expected behaviour; exhaustive testing?; }
-%% \subsection{Control}
-%% \subsection{Inputs}
-%% \subsection{Outputs}
-%% \subsection{Procedures}
-%% \section{White Box Test}\edcomm{JG}{Structural testing; uncovers errors during implementation of the program, concerned with how processig ocurs, evalutes whether the structure is sound, focuses on non-functional requirements for the system; focuses on abnormal or extreme behaviour; static testing should go here -- its a code walk through, we can get Kahl to walk through it in theory and see if he can read it and understand it -- if he can it is maintainable and that is our quality accessment}
-%% \subsection{Control}
-%% \subsection{Inputs}
-%% \subsection{Outputs}
-%% \subsection{Procedures}
+\systemTest
+{T3}{EFA System Compatibility}
+{Functional }
+{Dec 2015}
+{F4}
+{ADL File Input 1: \\
+	Based on the Rule: Only members who have relevant experience may apply for 
+	this 
+	job \\
+	Using Sets: JOBS-AVAIL, APPLICANTS, EMPLOYEES-WITH-RELEVANT-EXPERIENCE \\
+	With ECA rules:\\
+	\newline
+	ADL Files Input 2:\\
+	Based on the Rule: Only members who have relevant experience may apply for 
+	this 
+	job \\
+	Using Sets: JOBS-AVAIL, APPLICANTS, EMPLOYEES-WITH-RELEVANT-EXPERIENCE \\
+	With ECA rules: APPLICANTS must be a member of both 
+	EMPLOYEES-WITH-RELEVANT-EXPERIENCE AND have a relation to (i.e. applied 
+	for) 
+	JOBS-AVAIL \\}
+{EFA\ User\ Output\ for\ Input\ 1: \\
+	Reading $<$file$>$.adl.. \\
+	Generating.. \\
+	Rules Done.. \\
+	Sets Done.. \\
+	No Errors \\
+	No Violations \\
+	\newline
+	EFA\ User\ Output\ for\ Input\ 2: \\
+	Reading $<$file$>$.adl..\\
+	Generating.. \\
+	Rules Done.. \\
+	Sets Done.. \\
+	ECA Rules Done.. \\
+	No Errors \\
+	No Violations \\}
+{Two different version of the same script is given as input, the first is 
+without ECA rules the second is with ECA rules that this project adds. Both of 
+these scripts should pass through the Ampersand generator without causing 
+errors or violations. If the second script which contains ECA rules 
+successfully passes through each part of Ampersand then the new additions 
+generated by EFA is compatible with the old Ampersand system.}
+
+
+
+
 
 \bibliographystyle{alpha}
 \bibliography{TestPlan}
