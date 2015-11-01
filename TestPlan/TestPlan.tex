@@ -282,7 +282,9 @@ are also briefly summarized here. Our implementation must
 \newcommand{\ECAIns}[2]{\mathbf{Ins}(#1,#2)}
 \newcommand{\ECADel}[2]{\mathbf{Del}(#1,#2)}
 \newcommand{\ECAOn}{\mathbf{On~}}
-\newcommand{\ECADo}{\mathbf{Do~}}
+\newcommand{\ECADo}{\ECASpacer\mathbf{Do~}}
+\newcommand{\ECANop}{\mathbf{Nop~}}
+\newcommand{\ECASpacer}{\,\,\,\,}
 \newcommand{\IRel}[1]{\mathbb{I}_{#1}}
 \newcommand{\VRel}[2]{\mathbb{V}_{#1\times#2}}
 
@@ -309,6 +311,31 @@ The output is an abstract SQL statement of the form:
 INSERT INTO Concept_0_population VALUES e_0_query;
 INSERT INTO Concept_1_population VALUES e_1_query;
 \end{verbatim}
+
+\vspace{-12pt}\subsubsection*{Input}
+
+ECA rules of the input format are generated using QuickCheck, converted to
+  abstract SQL, then compared against the expected output format using HUnit.
+
+%%%%%%%%%%%%%%%%% Test 2
+\systemTest{ecaEmptyClause}
+{Empty PA clause} 
+{???}  
+{???}
+{???}
+\vspace{-12pt}\subsubsection*{Input}
+The input is an ECA rule of the form:
+
+$\ECAOn <\mathbf{Ins}/\mathbf{Del}> {\Delta}{r_0} \ECADo \ECANop $
+\vspace{-10pt}\[\hspace{-20pt}\begin{array}{ll}
+\text{where} & C_0, C_1 ::= \text{Concept} \\ 
+             & r_0 : [ C_0 \times C_1 ] \\ 
+\end{array}\]
+
+\vspace{-12pt}\subsubsection*{Output}
+
+The output is the empty abstract SQL statement; that is, the SQL statement which
+represents ``do nothing''.
 
 \vspace{-12pt}\subsubsection*{Input}
 
