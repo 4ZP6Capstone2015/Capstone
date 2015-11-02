@@ -711,15 +711,36 @@ Error: Structure and Meaning do not match\\
 {January 2016}
 {N2}
 \vspace{-12pt}\subsubsection*{Brief Explanation}
+Input and output are not available for this test, as it requires each member of 
+the design team to walk through the code line by line to check if it is easy to 
+understand by another programmer and well documented. If it is easy to read and 
+understand but not only the individual who wrote it but those around them, then 
+it should be easy to maintain. 
 
 
-
-\systemTest{T10}{arg2}
-{arg3}
-{arg4}
-{arg5}
+\systemTest{T10}{EFA Mock Trial}
+{Non-functional}
+{First Week of February 2016 }
+{N5}
+\vspace{-12pt}\subsubsection*{Brief Explanation}
+The design team shall create a mock database and fill it with relevant data. 
+EFA will be tested to see if it is able to automatically fix data violations on 
+a the mock database before any trials will take place in the real world. 
 \vspace{-12pt}\subsubsection*{Input}
+ECA Rules: \\
+   ECA = \{  \\ \tabb \tabb ECA Trigger: if cast member does not have relevant 
+   experience or 
+   enough experience \\
+   \tabb \tabb  ECA Violation: lack of experience \\
+   \tabb \tabb  ECA Action: Remove actors without enough relevant experience \\ 
+   \tabb \ \ \}
 \vspace{-12pt}\subsubsection*{Output}
+connect to mock database..
+
+\noindent
+if $<$relevant experience$>$ in $<$this table$>$ \\
+is under $<$this amount$>$, \\
+remove $<$person$>$ from table.$<$applicants$>$
 
 \systemTest{T11}{arg2}
 {arg3}
