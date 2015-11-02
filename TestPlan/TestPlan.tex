@@ -273,6 +273,7 @@ are also briefly summarized here. Our implementation must
 %% Commands for making ECA rules in math environments 
 \newcommand{\ECAIns}[2]{\mathbf{Ins}(#1,#2)}
 \newcommand{\ECADel}[2]{\mathbf{Del}(#1,#2)}
+\newcommand{\ECAInsDel}[2]{\mathbf{\{Ins/Del\}}(#1,#2)}
 \newcommand{\ECAOn}{\mathbf{On~}}
 \newcommand{\ECADo}{\ECASpacer\mathbf{Do~}}
 \newcommand{\ECANop}{\mathbf{Nop~}}
@@ -290,6 +291,12 @@ are also briefly summarized here. Our implementation must
 \textbf{Requirements}  &   #5 \\
 \end{tabular}
 }
+
+
+Many test cases use domain specific language to indicate inputs and outputs, for
+both clarity and brevity. This includes the syntax and semantics of ECA rules
+and Abstract SQL. For the full syntax and semantics of these , as well as
+related definitions, see section \ref{sec:Abbrev}.
 
 %% %% Example usage....
 %% \systemTest{T1}  %% Test label, should be unique
@@ -324,26 +331,26 @@ are also briefly summarized here. Our implementation must
 
 %%%%%%%%%%%%%%%%% Test 1 
 \systemTest{ecaInsIntoAll}
-{PA clause executing ``All'' subclauses}  %% Test name
-{???}  
-{???}
-{???}
+{ECA rule executing ``All'' subclauses}  %% Test name
+{Dynamic, white box, automated}  
+{Term 2}
+{F1}
 \vspace{-12pt}\subsubsection*{Input}
 The input is an ECA rule of the form:
 
-$\ECAOn \ECAIns{\Delta}{r_0} \ECADo \mathbf{All} ( \ECAIns{e_0}{\IRel{C_0}}, \ECAIns{e_1}{\IRel{C_1}} )$
-\vspace{-10pt}\[\hspace{-20pt}\begin{array}{ll}
-\text{where} & C_0, C_1 ::= \text{Concept} \\ 
-             & r_0 : [ C_0 \times C_1 ] \\ 
-             & e_0, e_1 : \text{Expression} \\ 
+$\ECAOn \ECAIns{\Delta}{r_0} \ECADo \mathbf{All} ( \ECAIns{e_1}{r_1}, \ECAIns{e_2}{r_2} )$
+\vspace{-10pt}\[\hspace{-20pt}\begin{array}{lll}
+\text{where} & r_0, r_1, r_2    & ::= \text{Atomic Relation} \\ 
+             & e_1, e_2, \Delta & ::= \text{Expression} \\ 
 \end{array}\]
 
 \vspace{-12pt}\subsubsection*{Output}
 
-The output is an abstract SQL statement of the form:
+The output is an abstract SQL function of the form:
 \begin{verbatim}
-INSERT INTO Concept_0_population VALUES e_0_query;
-INSERT INTO Concept_1_population VALUES e_1_query;
+f (delta, r_0):
+  INSERT INTO <r_1_table> VALUES <e_1_query>;
+  INSERT INTO <r_2_table> VALUES <e_2_query>;
 \end{verbatim}
 
 \vspace{-12pt}\subsubsection*{Input}
@@ -353,23 +360,58 @@ ECA rules of the input format are generated using QuickCheck, converted to
 
 %%%%%%%%%%%%%%%%% Test 2
 \systemTest{ecaEmptyClause}
-{Empty PA clause} 
-{???}  
-{???}
-{???}
+{ECA rule with empty PA clause} 
+{Dynamic, white box, automated}  
+{Term 2}
+{F1}
 \vspace{-12pt}\subsubsection*{Input}
 The input is an ECA rule of the form:
 
-$\ECAOn <\mathbf{Ins}/\mathbf{Del}> {\Delta}{r_0} \ECADo \ECANop $
-\vspace{-10pt}\[\hspace{-20pt}\begin{array}{ll}
-\text{where} & C_0, C_1 ::= \text{Concept} \\ 
-             & r_0 : [ C_0 \times C_1 ] \\ 
+$\ECAOn \ECAInsDel{\Delta}{r_0} \ECADo \ECANop $
+\vspace{-10pt}\[\hspace{-20pt}\begin{array}{lll}
+\text{where} & C_0, C_1 & ::= \text{Concept} \\ 
+             & r_0      & ::= \text{Atomic Relation} \\ 
 \end{array}\]
 
 \vspace{-12pt}\subsubsection*{Output}
 
-The output is the empty abstract SQL statement; that is, the SQL statement which
-represents ``do nothing''.
+The output is the empty abstract SQL statement; that is, a statement of the form:
+\begin{verbatim}
+f (delta, r_0): {} \\ Do nothing
+\end{verbatim}
+
+\vspace{-12pt}\subsubsection*{Input}
+
+ECA rules of the input format are generated using QuickCheck, converted to
+  abstract SQL, then compared against the expected output format using HUnit.
+
+
+%%%%%%%%%%%%%%%%% Test 3
+\systemTest{ecaIdentityRel}
+{ECA rule clause} 
+{Dynamic, white box, automated}  
+{Term 2}
+{F1}
+\vspace{-12pt}\subsubsection*{Input}
+The input is an ECA rule of the form:
+
+$\ECAOn \ECAInsDel{\Delta}{r_0} \ECADo \ECAIns{e_0}{\IRel{C_0}} $
+\vspace{-10pt}\[\hspace{-20pt}\begin{array}{lll}
+\text{where} & C_0 & ::= \text{Concept} \\ 
+             & r_0 & ::= \text{Atomic Relation}\\ 
+             & e_0 & ::= \text{Expression}\\ 
+\end{array}\]
+
+\vspace{-12pt}\subsubsection*{Output}
+
+The output is an abstract SQL statement of the form:
+\begin{verbatim}
+f (delta, r_0):
+  {INSERT INTO/DELETE FROM} <C_0_Population> VALUES <e_0_query>;
+\end{verbatim}
+
+\noindent where \verb|C_0_Population| is the table corresponding to $\IRel{C_0}$. 
+
 
 \vspace{-12pt}\subsubsection*{Input}
 
