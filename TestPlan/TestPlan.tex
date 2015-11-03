@@ -254,7 +254,9 @@ the form of properties. A property is essentially a boolean valued Haskell
 function of any number of arguments. QuickCheck can test that these properties
 hold in a large number of randomly generated cases. QuickCheck also takes great
 care to produce a large variety of test cases, and generally produces good code
-coverage \cite{hackage}.
+coverage. QuickCheck will be used for individualized module testing and well as 
+provide a fair array of random tests for the combination of all modules 
+\cite{hackage}.
 
 \edcomm{YT}{Don't assume that this super obvious example will make sense... better to leave it out.}
 
@@ -280,11 +282,14 @@ are also briefly summarized here. Our implementation must
 
 \begin{description}
 \item[F1] provably implement the desired algorithm.
-\item[F2] accept its input in the existing ADL file format.
+\item[F2] accept its input in the existing PAClause format.
 \item[F3] produce an output compatible with the existing pipeline. 
-\item[F4] be a pure function; it should not have side effects.  
-\item[F5] not introduce appreciable performance degradation. 
-\item[F6] provide diagnostic information about the algorithm to
+\item[F4] annotated generated code with proofs of correctness or derivations,
+where appropriate. 
+\item[F5] automatically fix database violations in the mock database of the
+prototype.
+\item[F6] not introduce appreciable performance degradation. 
+\item[F7] provide diagnostic information about the algorithm to
 the user, if the user asks for such information.
 \end{description}
 
@@ -298,10 +303,7 @@ are also briefly summarized here. Our implementation must
 \item[N2] be composed of easily maintainable, well documented code.
 \item[N3] compile and run in the environment currently used to develop
   Ampersand.
-\item[N4] annotated generated code with proofs of correctness or derivations,
-  where appropriate. 
-\item[N5] automatically fix database violations in the mock database of the
-  prototype. 
+\item[N4] be a pure function; it should not have side effects.  
 \end{description}
 
 \section{Data recording}\label{sec:DataRec}
@@ -404,7 +406,7 @@ f (delta, r_0):
   INSERT INTO <r_2_table> VALUES <e_2_query>;
 \end{verbatim}
 
-\vspace{-12pt}\subsubsection*{Input}
+\vspace{-12pt}\subsubsection*{Description}
 
 ECA rules of the input format are generated using QuickCheck, converted to
   abstract SQL, then compared against the expected output format using HUnit.
@@ -439,7 +441,7 @@ ECA rules of the input format are generated using QuickCheck, converted to
 
 %%%%%%%%%%%%%%%%% Test 3
 \systemTest{ecaIdentityRel}
-{ECA rule clause} 
+{ECA rule inserting into Identity relation} 
 {Dynamic, white box, automated}  
 {Term 2}
 {F1}
@@ -464,7 +466,7 @@ f (delta, r_0):
 \noindent where \verb|C_0_Population| is the table corresponding to $\IRel{C_0}$. 
 
 
-\vspace{-12pt}\subsubsection*{Input}
+\vspace{-12pt}\subsubsection*{Description}
 
 ECA rules of the input format are generated using QuickCheck, converted to
   abstract SQL, then compared against the expected output format using HUnit.
@@ -652,7 +654,7 @@ ECA rules of the input format are generated using QuickCheck, converted to
 
 \systemTest
 {T3}{EFA System Compatibility}
-{Functional }
+{Functional/Black box/ }
 {Dec 2015}
 {F3}
 \vspace{-12pt}\subsubsection*{Input}
@@ -689,7 +691,7 @@ EFA\ User\ Output\ for\ Input\ 1: \\
 	No Errors \\
 	No Violations \\
 	
-\vspace{-12pt}\subsubsection*{Output}
+\vspace{-12pt}\subsubsection*{Description}
 Two different version of the same script is given as input, the first is 
 without ECA rules the second is with ECA rules that this project adds. Both of 
 these scripts should pass through the Ampersand generator without causing 
@@ -811,38 +813,25 @@ understand but not only the individual who wrote it but those around them, then
 it should be easy to maintain. 
 
 
-\systemTest{T10}{EFA Mock Trial}
+\systemTest{T10}{Degradation Test}
 {Non-functional}
 {First Week of February 2016 }
-{N5}
+{F6}
 \vspace{-12pt}\subsubsection*{Brief Explanation}
-The design team shall create a mock database and fill it with relevant data. 
-EFA will be tested to see if it is able to automatically fix data violations on 
-a the mock database before any trials will take place in the real world. 
-\vspace{-12pt}\subsubsection*{Input}
-ECA Rules: \\
-   ECA = \{  \\ \tabb \tabb ECA Trigger: if cast member does not have relevant 
-   experience or 
-   enough experience \\
-   \tabb \tabb  ECA Violation: lack of experience \\
-   \tabb \tabb  ECA Action: Remove actors without enough relevant experience \\ 
-   \tabb \ \ \}
-\vspace{-12pt}\subsubsection*{Output}
-connect to mock database..
+Degradation shall be measured through a comparison of Ampersand before EFA and 
+Ampersand after EFA. The amount of time Ampersand takes to compile a prototype 
+will measure performance degradation; if Ampersand takes substantially longer 
+to compile after the addition of EFA then it is an appreciable difference. A 
+Linux distribution will be used to time multiple trials of Ampersand with and 
+without EFA. The test materials used will be taken off of the Ampersand-models 
+github.
 
-\noindent
-if $<$relevant experience$>$ in $<$this table$>$ \\
-is under $<$this amount$>$, \\
-remove $<$person$>$ from table.$<$applicants$>$
-
-\systemTest{T11}{arg2}
-{arg3}
-{arg4}
-{arg5}
-\vspace{-12pt}\subsubsection*{Input}
-\vspace{-12pt}\subsubsection*{Output}
-	
-\bibliographystyle{alpha}
-\bibliography{TestPlan}
+\systemTest{T11}{EFA Annotated Code}
+{Non-functional}
+{January 2016}
+{N4}
+\vspace{-12pt}\subsubsection*{Description}
+There is no input, however there will be annotations available for output, this 
+is used for debugging purposes and the user will never see this.
 
 \end{document}
