@@ -118,15 +118,66 @@ This test plan intends to better describe the scope of our contribution, ECA,
 within Ampersand. 
 
 %% %1.3  Definitions, Acronyms, and abbreviations 
-\section{Acronyms, Abbreviations, and Symbols}\label{sec:Abbrev}
+\section{Definitions}\label{sec:Abbrev}
 
-\begin{description}
-\item[SRS] Software Requirements Specification. Document regarding requirements, constraints, and project objectives.
-\item[ECA Rule] Event-Condition-Action Rule. A rule which describes how to
-  handle a constraint violation in a database. See SRS for details.
-\item[HUnit] A Haskell library for unit testing. See TODO: ref test tools
-\item[QuickCheck] A Haskell library for running automated, randomized tests. See TODO: ref test tools
-\end{description}
+\subsubsection*{SRS}
+Software Requirements Specification. Document regarding requirements, constraints, and project objectives.
+
+\subsubsection*{RA}
+Relation algebra. The mathematical language used in ADL files to specify business rules. 
+
+\subsubsection*{PA}
+Process algebra. The mathematical language used by ECA rules to describe the
+action to be taken to fix violations. A ``PA clause'' (also written as
+``PAclause''), or process algebra clause, is an imperative-style language which
+is taken to represent \emph{mathematical} process algebra in Ampersand. The
+syntax of PA clauses, in EBNF notation, is as follows:
+
+%% YT: this is a subset of the actual language... I don't actually understand the rest
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+PAclause ::= 'One' '(' PAclause { ',' PAclause } ')' ; 
+           | 'Choice' '(' GPAclause { ',' GPAclause } ')' ;  
+           | 'All' '(' PAclause { ',' PAclause } ')' ;  
+           | ('Ins' | 'Del') '(' RExpr ',' RAtom ')' ; 
+           | 'Nop'  
+           | 'Blk' 
+GPAclause ::= RExpr '->' PAclause ; 
+\end{lstlisting}
+where ``RExpr'' represents RA expressions, and ``RAtom'' (RA atom) represents
+\emph{atomic} RA expressions (that is, terms with no operators).
+
+\begin{table}[ht!]\begin{center}\label{tab:PASemantics}
+\caption{Semantics of PAclause terminals}
+\begin{tabularx}{\textwidth}{lX}
+One$(p_0 \ldots p_n)$ & Execute exactly one of $p_0 \ldots p_n$. \\
+Choice$(g_0 \rightarrow p_0 \ldots g_n \rightarrow p_n)$ & Execute exactly
+  one of $p_i$, such that $g_i$ is a non-empty RA term. \\
+All$(p_0 \ldots p_n)$ & Execute all of $p_0 \ldots p_n$. \\
+$<$Ins/Del$>(e,r)$ & Insert or delete the expression $e$ from the relation $r$. \\
+Nop & Do nothing. \\
+Blk & The null command, which blocks forever. 
+\end{tabularx}
+\end{center}\end{table}
+
+The semantics of process algebra says that the ``choice'' operators (One and
+Choice) execute their subclauses concurrently; if \emph{any} subclause
+completes, the PA clause has restored the violation.
+
+\subsubsection*{ECA Rule}
+ Event-Condition-Action Rule. A rule which describes how to handle a constraint
+ violation in a database. The syntax of ECA rules is as follows:
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+ECArule ::= 'On' ('Ins' | 'Del') 
+            '(' RExpr ',' RAtom ')'
+            'Do' PAclause    
+\end{lstlisting}
+
+\subsubsection*{HUnit}
+ A Haskell library for unit testing. See section \ref{sec:TestTools}.
+\subsubsection*{QuickCheck}
+ A Haskell library for running automated, randomized tests. See section \ref{sec:TestTools}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %
