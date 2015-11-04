@@ -920,17 +920,22 @@ it should be easy to maintain.
 
 
 \systemTest{T10}{Degradation Test}
-{Non-functional}
+{Dynamic, black box, partially automated}
 {First Week of February 2016 }
 {F6}
-\vspace{-12pt}\subsubsection*{Brief Explanation}
-Degradation shall be measured through a comparison of Ampersand before EFA and 
-Ampersand after EFA. The amount of time Ampersand takes to compile a prototype 
-will measure performance degradation; if Ampersand takes substantially longer 
-to compile after the addition of EFA then it is an appreciable difference. A 
-Linux distribution will be used to time multiple trials of Ampersand with and 
-without EFA. The test materials used will be taken off of the Ampersand-models 
-github.
+\vspace{-12pt}\subsubsection*{Input}
+The Ampersand test suite. 
+
+\vspace{-12pt}\subsubsection*{Output}
+The time taken to run the test suite, both with EFA enabled and EFA disabled.
+
+\vspace{-12pt}\subsubsection*{Description}
+
+The amount of time Ampersand takes to compile a prototype will measure
+performance degradation; if Ampersand takes substantially longer to compile
+after the addition of EFA then it is an appreciable difference.  The comparison
+will be made between \verb|time ampersand-test-suite| and
+\verb|ampersand-test-suite --noEFA| for enabled and disabled, respectively.
 
 \systemTest{T11}{EFA Annotated Code}
 {Non-functional}
