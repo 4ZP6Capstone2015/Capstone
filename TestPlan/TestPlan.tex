@@ -192,8 +192,8 @@ ECArule ::= 'On' ('Ins' | 'Del')
  A Haskell library for running automated, randomized tests. See section 
  \ref{sec:TestTools}.
  
- \subsubsection*{Sentinel Test}
-A test server accessible through \cite{sentinellink} which executes a set of 
+ \subsubsection*{Sentinel}
+A test server accessible through the Ampersand webcite (\cite{sentinellink}) which executes a set of 
 randomly generated tests on Ampersand on a daily basis, see \cite{sentinel} for details.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,11 +256,17 @@ approach to development activities these two compliment each other well.
 \includegraphics[scale=0.5]{testing}
 \end{center}|
 \section{Test tools}\label{sec:TestTools}
-See section \ref{subsec:RandTest} for QuickCheck.
 
-In addition to QuickCheck, Sentinel Test will be used for the completed 
-Ampersand system test. Since EFA will be incorporated into Ampersand, it must 
-pass all sets of randomly generated tests. 
+Various tools are used by the existing Ampersand developers to test
+Ampersand. In order to integrate best with Ampersand, our code will adopt their
+test tools. 
+
+%% This doesn't make grammatical sense?
+%% See section \ref{subsec:RandTest} for QuickCheck.
+
+%% In addition to QuickCheck, Sentinel Test will be used for the completed 
+%% Ampersand system test. Since EFA will be incorporated into Ampersand, it must 
+%% pass all sets of randomly generated tests. 
 
 \subsection{Static Typing}\label{subsec:Static}
 Programming languages can be classified by many criteria, one of which is their
@@ -276,7 +282,7 @@ reducing the errors that need to be found and fixed using testing techniques.
 A part of our project deals with generating source code annotated with the proof
 of derivation of that source code, which will act as a correctness proof for the
 system. In particular, when we generate code to restore a database violation
-using ECA rules, then the generated code will have a proof associated with it,
+using ECA rules, then the generated code will have a RA proof associated with it,
 which details how that code was derived from the original specification given by
 the user.
 
@@ -318,13 +324,17 @@ JUnit to Haskell that allows you to easily create, name, group tests, and
 execute them.
 
 \section{Requirements}\label{sec:Reqs}
+Requirements are the main motivator for tests and test methodoloy -- testing
+should help ensure that requirements are met. To this end, our requirements are
+briefly summarized and labelled below.
+
 \subsection{Functional requirements}\label{subsec:FunReqs}
 The functional requirements for ECA for Ampersand are detailed in the SRS; they
 are also briefly summarized here. Our implementation must
 
 \begin{description}
 \item[F1] provably implement the desired algorithm.
-\item[F2] accept its input in the existing PAClause format.
+\item[F2] accept its input in the existing ECArule format.
 \item[F3] produce an output compatible with the existing pipeline. 
 \item[F4] annotated generated code with proofs of correctness or derivations,
 where appropriate. 
@@ -430,7 +440,7 @@ related definitions, see section \ref{sec:Abbrev}.
 %%%%%%%%%%%%%%%%% Test 1 
 \systemTest{ecaInsIntoAll}
 {ECA rule executing ``All'' subclauses}  %% Test name
-{Dynamic, white box, automated}  
+{Dynamic, black box, automated}  
 {Term 2}
 {F1}
 \vspace{-12pt}\subsubsection*{Input}
@@ -459,7 +469,7 @@ ECA rules of the input format are generated using QuickCheck, converted to
 %%%%%%%%%%%%%%%%% Test 1 
 \systemTest{ecaInsIntoChoice}
 {ECA rule executing ``Choice'' subclauses}  %% Test name
-{Dynamic, white box, automated}  
+{Dynamic, black box, automated}  
 {Term 2}
 {F1}
 \vspace{-12pt}\subsubsection*{Input}
@@ -476,8 +486,10 @@ $\ECAOn \ECAIns{\Delta}{r_0} \ECADo \mathbf{Choice} ( p_0, p_1 )$
 
 The output is an abstract SQL function of the form:
 \begin{verbatim}
-no idea
+f (delta, r_0):
+  <p_i_statement>
 \end{verbatim}
+where $i \in \{ 0, 1 \}$. 
 
 \vspace{-12pt}\subsubsection*{Description}
 
@@ -487,7 +499,7 @@ ECA rules of the input format are generated using QuickCheck, converted to
 %%%%%%%%%%%%%%%%% Test 2
 \systemTest{ecaEmptyClause}
 {ECA rule with empty PA clause} 
-{Dynamic, white box, automated}  
+{Dynamic, black box, automated}  
 {Term 2}
 {F1}
 \vspace{-12pt}\subsubsection*{Input}
@@ -515,7 +527,7 @@ ECA rules of the input format are generated using QuickCheck, converted to
 %%%%%%%%%%%%%%%%% Test 3
 \systemTest{ecaIdentityRel}
 {ECA rule inserting into Identity relation} 
-{Dynamic, white box, automated}  
+{Dynamic, black box, automated}  
 {Term 2}
 {F1}
 \vspace{-12pt}\subsubsection*{Input}
@@ -544,6 +556,28 @@ ECA rules of the input format are generated using QuickCheck, converted to
   abstract SQL, then compared against the expected output format using HUnit.
 
 
+%%%%%%%%%%%%%%%%% Test 3
+\systemTest{compat}
+{ASQL is valid} 
+{Dynamic, black box, manual}  
+{Term 2}
+{F3, F1}
+\vspace{-12pt}\subsubsection*{Input} 
+
+The input is an ADL file which contains various entities, among them business
+process rules which produce ECA rules.
+
+\vspace{-12pt}\subsubsection*{Output}
+
+The prototype generated by Ampersand, which should be syntactically and
+semantically valid, as determined by the software which runs the prototype.
+
+\vspace{-12pt}\subsubsection*{Description}
+
+Ampersand generates a prototype from the input ADL file, which a developer will
+open on a web server running on their machine. If the file compiles (or more
+likely, is interpreted) successfully, this is an indication that the generated
+ASQL inside the prototype is correct, in the context of the entire prototype. 
 
 
 %% Example usage....
@@ -905,6 +939,25 @@ github.
 \vspace{-12pt}\subsubsection*{Description}
 There is no input, however there will be annotations available for output, this 
 is used for debugging purposes and the user will never see this.
+
+
+
+\systemTest{T12}{EFA domain}
+{Static, white box, manual}
+{Term 2}
+{T2}
+\vspace{-12pt}\subsubsection*{Description}
+Our contribution will take as an input the internal representation of the entire
+ADL file, which is essentially a large record, called \verb|FSpec|. For the most
+part, the majority of components will not be used -- we will mainly focus on one
+or two components of dozens. However, potentially the entire structure may be
+useful, so we say that our domain is this structure.
+
+Therefore, the entry point to our code should be a function with type
+\verb|FSpec -> a -> ASQL| for some \verb|a| (representing optional or auxillary
+arguments), where \verb|ASQL| is the type representing abstract SQL. If this
+code type checks, then the compiler has verified that our domain of input is
+indeed exactly \verb|FSpec|.
 		
 \bibliographystyle{alpha}		
 \bibliography{TestPlan}
