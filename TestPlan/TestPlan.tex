@@ -623,95 +623,91 @@ of Haskell) must not be used, or this guarantee may be broken.
 %% components uses mathematical constructs on expressions, the result is always a
 %% pure function. 
 
-\vspace{-12pt}\subsubsection*{Input}
-The input is an ECA rule of the form:
- \begin{tabbing}
-ECA = \{Condition that triggers action: Insertion of $<$new field into 
-table$>$, 
-\\	 \tabb \tabb Change that initiated trigger: Insertion of $<$e2$>$ into 
-	current data scheme, \\
-	\tabb \tabb \tabb	Action to be done : $\forall$  \\
-		\tabb \tabb \tabb \tabb	\{(take the difference of the previous result 
-		of the expressions \\
-				\tabb \tabb \tabb \tabb \tabb(take result of intersection of 
-				the returned result\\
-\tabb \tabb \tabb \tabb \tabb \tabb(composition of the result \\
-		\tabb \tabb \tabb \tabb \tabb \tabb \tabb	(Simple declaration of the 
-		result 
-		of the conversion \\
-\tabb \tabb \tabb \tabb \tabb \tabb \tabb \tabb(convert expression e2 using the 
-identity relation  
-							\\
-\tabb \tabb \tabb \tabb \tabb \tabb \tabb \ of e1 \\
-\tabb \tabb \tabb \tabb \tabb \tabb \tabb ) \\
-\tabb \tabb \tabb \tabb \tabb \tabb )\\
-\tabb \tabb \tabb \tabb \tabb  with e1) \\
-\tabb \tabb \tabb \tabb	with e1) \\
-\tabb \tabb \tabb  with e1 where e1 is another expression)\} \\
+%% This is a static ``test'' ... no input.
+%% \vspace{-12pt}\subsubsection*{Input}
+%% The input is an ECA rule of the form:
+%%  \begin{tabbing}
+%% ECA = \{Condition that triggers action: Insertion of $<$new field into 
+%% table$>$, 
+%% \\	 \tabb \tabb Change that initiated trigger: Insertion of $<$e2$>$ into 
+%% 	current data scheme, \\
+%% 	\tabb \tabb \tabb	Action to be done : $\forall$  \\
+%% 		\tabb \tabb \tabb \tabb	\{(take the difference of the previous result 
+%% 		of the expressions \\
+%% 				\tabb \tabb \tabb \tabb \tabb(take result of intersection of 
+%% 				the returned result\\
+%% \tabb \tabb \tabb \tabb \tabb \tabb(composition of the result \\
+%% 		\tabb \tabb \tabb \tabb \tabb \tabb \tabb	(Simple declaration of the 
+%% 		result 
+%% 		of the conversion \\
+%% \tabb \tabb \tabb \tabb \tabb \tabb \tabb \tabb(convert expression e2 using the 
+%% identity relation  
+%% 							\\
+%% \tabb \tabb \tabb \tabb \tabb \tabb \tabb \ of e1 \\
+%% \tabb \tabb \tabb \tabb \tabb \tabb \tabb ) \\
+%% \tabb \tabb \tabb \tabb \tabb \tabb )\\
+%% \tabb \tabb \tabb \tabb \tabb  with e1) \\
+%% \tabb \tabb \tabb \tabb	with e1) \\
+%% \tabb \tabb \tabb  with e1 where e1 is another expression)\} \\
 	
-\tabb \} 
-	\end{tabbing}
+%% \tabb \} 
+%% 	\end{tabbing}
 
-\vspace{-12pt}\subsubsection*{Output}
+%% \vspace{-12pt}\subsubsection*{Output}
 
-asdfasdf
+%% asdfasdf
 
-\systemTest{T8}{EFA User Feed Back}
+\systemTest{T8}{EFA gives appropriate feedback}
 {Functional}
 {January 2016}
 {F6,N1}
-\vspace{-12pt}\subsubsection*{Brief Explanation Concerning Context}
-Only those who are qualified can be cast into roles, the actor must have 
-relevant experience.
+
+%% Also doesn't make sense... 
+%% \vspace{-12pt}\subsubsection*{Brief Explanation Concerning Context}
+%% Only those who are qualified can be cast into roles, the actor must have 
+%% relevant experience.
+
 \vspace{-12pt}\subsubsection*{Input}
-The input shall be ECA rules specifying invariants that must be maintained 
-throughout the program.
 
-\noindent
-Example concerning how roles are cast for a theater performance:
+The input shall be ECA rules specifying invariants that must be maintained
+throughout the program. These ECA rules should be those derived from a
+user-declared rule, and the original rule should have appropriate documentation.
+For example, for a system composed of actors, plays, and acting rules, there
+could be a rule like:
 
-\noindent
-User Input:
+\begin{verbatim}
+1   RULE "who's cast in roles" 
+2     : cast;instantiates |- qualifies;comprises~
+3   MEANING "an Actor may appear in a Performance of 
+4            the Play only if the Actor is skilled
+5            for a Role that the Play comprises"
+\end{verbatim}
 
-\noindent
-   RULE "who's cast in roles" : cast; instantiates |- qualifies;comprises~
-   MEANING "an Actor may appear in a Performance of the Play only if the Actor 
-   is skilled for a Role that the Play comprises "
+These two declarations (which are actual ADL syntax) declare a rule called
+``who's cast in roles'' (line 1), gives the definition of that rule in RA on line 2(\verb|cast|,
+etc, are previously declared relations), and gives an english language
+explanation of the rule's meaning on lines 3-5.
 
-
-\noindent
-EFA INPUT:
-\begin{tabbing}
-   ECA = \{  \\ \tabb \tabb ECA Trigger: if cast member does not have relevant 
-   experience or 
-   enough experience \\
-\tabb \tabb  ECA Violation: lack of experience \\
-\tabb \tabb  ECA Action: Remove actors without enough relevant experience \\ 
-\tabb \ \ \}
-\end{tabbing}
 \vspace{-12pt}\subsubsection*{Output}
-\underline{User feed back if file has no errors:}\\
-Reading file theatreCasting.adl.. \\
-Done. \\
-Done. \\
 
-\noindent
-\underline{User feed back if file has errors:} \\
-Reading file theater.adl \\
-Error(s) found:\\
-Type error, cannot match:\\
-the concept "Role" (Tgt of qualifies)\\
-and concept "Performance" (Src of instantiates)\\
-if you think there is no type error, add an order between concepts "Role" and 
-"Performance".\\
-Error at symbol () in file theater.adl at line 26 : 44 \\
-============================== \\
-No declarations match the relation: actor\\
-Error at symbol () in file theater.adl at line 26 : 62\\
-==============================\\
-ECA Rule Violation: \\
-Error at Rule declaration and structure in file theater.adl at line 33 : 41\\
-Error: Structure and Meaning do not match\\
+When the prototype is run, and a violation occurs, any feedback regarding the
+ECA rule which fixes that violation should include the original ``MEANING''
+annotation which corresponds to the business rule from whic the ECA rule originated.
+The actual ECA rule is omitted here:
+
+\begin{verbatim}
+======= Violation log entry <...>
+=== ECA rule fired: <...> 
+=== Delta: <...>
+=== Original rule: cast;instantiates |- qualifies;comprises~
+Violation occured because rule "who's cast in roles" was not 
+ satisfied. This is because "an Actor may appear in a 
+ Performance of the Play only if the Actor is skilled for a 
+ Role that the Play comprises"
+\end{verbatim}
+
+
+
 
 \systemTest{T9}{EFA code walk-through}
 {Static, white box, manual}
