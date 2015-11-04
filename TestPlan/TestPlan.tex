@@ -129,6 +129,9 @@ within the Ampersand system.
 \subsubsection*{SRS}
 Software Requirements Specification. Document regarding requirements, constraints, and project objectives.
 
+\subsubsection*{EBNF}
+Extended Backus–Naur Form. A notation for specifying the syntax of languages, see \cite{ebnf}.
+
 \subsubsection*{RA}
 Relation algebra. The mathematical language used in ADL files to specify business rules. 
 
@@ -136,9 +139,8 @@ Relation algebra. The mathematical language used in ADL files to specify busines
 Process algebra. The mathematical language used by ECA rules to describe the
 action to be taken to fix violations. A ``PA clause'' (also written as
 ``PAclause''), or process algebra clause, is an imperative-style language which
-represents the \emph{mathematical} process which Ampersand uses. The
-syntax of PA clauses, in EBNF notation, is as follows:
-\edcomm{JG}{What is EBNF?}
+represents the \emph{mathematical} process which Ampersand uses. The syntax of
+PA clauses, in EBNF notation, is as follows: \edcomm{JG}{What is EBNF?}
 %% YT: this is a subset of the actual language... I don't actually understand the rest
 
 \begin{lstlisting}[basicstyle=\ttfamily]
@@ -166,9 +168,13 @@ Blk & The null command, which blocks forever.
 \end{tabularx}
 \end{center}\end{table}
 
-The semantics of process algebra says that the ``choice'' operators (e.g. One 
-and Choice) concurrently execute their subclauses; if \emph{any} of the 
-subclauses can be completed, the PA clause has restored the violation.
+The semantics of process algebra says that the ``choice'' operators (e.g. One
+and Choice) may execute any one of their subclauses; if \emph{any} of the
+subclauses can be completed, the PA clause has restored the violation.  One
+choice may be considered better in some ways, for example, different
+alternatives could have vastly different execution costs. For the purpose of
+this document, however, we will make the simplest ``choice'' possible, which
+generally means an arbitrary choice. 
 
 \subsubsection*{ECA Rule}
  Event-Condition-Action Rule. A rule which describes how to handle a constraint
@@ -387,7 +393,7 @@ Due to the early stage of development, this is not available at this time.
 
 Many test cases use domain specific language to indicate inputs and outputs, for
 both clarity and brevity. This includes the syntax and semantics of ECA rules
-and Abstract SQL. For the full syntax and semantics of these , as well as
+and Abstract SQL. For the full syntax and semantics of these, as well as
 related definitions, see section \ref{sec:Abbrev}.
 
 %% %% Example usage....
