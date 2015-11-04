@@ -24,6 +24,8 @@
 \usepackage{fancyvrb}
 \usepackage{listings}
 \usepackage[fleqn]{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {../figures/} }
 \setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
 
 \newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
@@ -90,32 +92,36 @@ Yuriy Toporovskyy & 27 / 10 / 2015 & Initial version - template \\\hline
 \section{Purpose}\label{sec:Purpose}
 This document outlines the test plan for ECA for Ampersand, including our
 general approach to testing, system test cases, and a specification of
-methodology and constraints. This test plan specifically targets our
-contribution to Ampersand, namely ECA -- elements of Ampersand, such as design
-artifact generation, will not be tested. 
+methodology and constraints. This test plan is centered around our contribution 
+to Ampersand and ignores other elements of the Ampersand process such as the 
+artifacts that are generated.
 
 %% %1.3 Objectives
 \section{Objectives}\label{sec:Objectives}
 \subsubsection*{Preparation for testing}
-The primary objective of this test plan is to collect all relevant information
-in preperation of the actual testing process, in order to facilitate this process.
+The primary objective of this test plan is to gather all relevant information 
+that could aid in creating effective tests for EFA. EFA in this regard is 
+modularized and tested as an individual component before it is tested within 
+the Ampersand system. 
 
 \subsubsection*{Communication}
-This test plan intends to clearly communicate to all developers of ECA for Ampersand 
-their intended role in the testing process. 
+This test plan intends to clearly communicate to all developers of ECA for 
+Ampersand their intended role in the testing process. 
 
 \subsubsection*{Motivation}
-The testing approach is motivated by constraints and requirements outlined in the
-Software Requirements Specification. This document seeks to clearly demonstrate
-this motivation.
+The testing approach is based on the constraints and requirements presented in 
+the Software Requirements Specification \big( i.e. SRS\big). This document 
+focuses on 
+how the functional and non-functional requirements provided in the SRS will be 
+tested for this project.
 
 \subsubsection*{Environment}
-This test plans outlines the resources, tools, and software required for the
+This test plan outlines the resources, tools, and software required for the
 testing process. This includes any resources needed to perform automated testing. 
 
 \subsubsection*{Scope}
 This test plan intends to better describe the scope of our contribution, ECA,
-within Ampersand. 
+within the Ampersand system. 
 
 %% %1.3  Definitions, Acronyms, and abbreviations 
 \section{Definitions}\label{sec:Abbrev}
@@ -130,9 +136,9 @@ Relation algebra. The mathematical language used in ADL files to specify busines
 Process algebra. The mathematical language used by ECA rules to describe the
 action to be taken to fix violations. A ``PA clause'' (also written as
 ``PAclause''), or process algebra clause, is an imperative-style language which
-is taken to represent \emph{mathematical} process algebra in Ampersand. The
+represents the \emph{mathematical} process which Ampersand uses. The
 syntax of PA clauses, in EBNF notation, is as follows:
-
+\edcomm{JG}{What is EBNF?}
 %% YT: this is a subset of the actual language... I don't actually understand the rest
 
 \begin{lstlisting}[basicstyle=\ttfamily]
@@ -145,7 +151,7 @@ PAclause ::= 'One' '(' PAclause { ',' PAclause } ')' ;
 GPAclause ::= RExpr '->' PAclause ; 
 \end{lstlisting}
 where ``RExpr'' represents RA expressions, and ``RAtom'' (RA atom) represents
-\emph{atomic} RA expressions (that is, terms with no operators).
+\emph{atomic} RA expressions (i.e. terms with no operators).
 
 \begin{table}[ht!]\begin{center}\label{tab:PASemantics}
 \caption{Semantics of PAclause terminals}
@@ -160,9 +166,9 @@ Blk & The null command, which blocks forever.
 \end{tabularx}
 \end{center}\end{table}
 
-The semantics of process algebra says that the ``choice'' operators (One and
-Choice) execute their subclauses concurrently; if \emph{any} subclause
-completes, the PA clause has restored the violation.
+The semantics of process algebra says that the ``choice'' operators (e.g. One 
+and Choice) concurrently execute their subclauses; if \emph{any} of the 
+subclauses can be completed, the PA clause has restored the violation.
 
 \subsubsection*{ECA Rule}
  Event-Condition-Action Rule. A rule which describes how to handle a constraint
@@ -177,7 +183,12 @@ ECArule ::= 'On' ('Ins' | 'Del')
 \subsubsection*{HUnit}
  A Haskell library for unit testing. See section \ref{sec:TestTools}.
 \subsubsection*{QuickCheck}
- A Haskell library for running automated, randomized tests. See section \ref{sec:TestTools}.
+ A Haskell library for running automated, randomized tests. See section 
+ \ref{sec:TestTools}.
+ 
+ \subsubsection*{Sentinel Test}
+A test server accessible through \ref{sentinellink} which executes a set of 
+randomly generated tests on Ampersand on a daily basis. \ref{sentinel}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -188,21 +199,23 @@ ECArule ::= 'On' ('Ins' | 'Del')
 \chapter{Plan}\label{ch:Plan}
 
 \section{Software Description}\label{sec:SoftwareDesc}
-Ampersand is a software tool which converts a formal specification of business
-entities and rules, and compiles it into different design artifacts, as well as
-a prototype web application.
+Ampersand is a software tool that converts the formal specifications of 
+business entities and rules, compiles it into various design artifacts (e.g. 
+latex documents), and produces a prototype web application.
 
-This prototype implements the business logic in the original specification, in
-the form of a relational database with a simple web-app front-end.
+The business prototype implements business logic according to specifications 
+provided by the user, it uses the entities and relationships that the user 
+provides to form a relational database with a simple web application front-end.
 
-A particular class of relational database violations can be automatically
-restored; the algorithm for computing the code to fix these violations is called
-AMMBR \cite{amber}.  This class of violations is realized within Ampersand as
-ECA rules -- our contribution to Ampersand will add support for ECA rules, in
-both the Ampersand back-end and the generated prototype.
+ECA for Ampersand focuses on automatically restoring a particular class of 
+database violations using an algorithm called AMMBR \cite{amber}.  This class 
+of violations is realized within Ampersand as ECA rules -- our contribution to 
+Ampersand will add support for ECA rules, that will affect Ampersand's back-end 
+as well as the generated prototype it provides.
 
 \edcomm{YT}{Probably should merge Test Team and Test Schedule}
-\section{Test Team}\label{sec:TestTeam}
+\section{Test Team}\label{sec:TestTeam} \edcomm{JG}{You did a great job! could 
+you explain to me what a test schedule is?}
 
 The test team which will execute the strategy outline in this document is comprised of
 \begin{itemize}
@@ -212,14 +225,36 @@ The test team which will execute the strategy outline in this document is compri
 \end{itemize}
 
 \section{Test Schedule}\label{sec:TestSched}
+\begin{center}
+ 	\begin{tabular}{| c | c| } \hline
+ 		Dates & Tests to be performed \\ \hline
+ 		12-20-2015 - 01-07-2016 & Unit testing, black box testing, \\ & white 
+ 		box 
+ 		testing with heavy use \\ & of QuickCheck  \\ \hline
+ 		01-08-2016 - 01-20-2016 & System testing EFA with Ampersand  \\  \hline
+ 	 01-20-2016-02-01-2016     & Testing for abnormality and performance. \\ 
+ 	 \hline     
+ 	\end{tabular}
+ \end{center}|
 
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-
+ \emph{Note:} More details for specific test will be provided in the future.
 \chapter{Methods and constraints}\label{ch:Methods}
 \section{Methodology}\label{sec:Methodology}
+A Waterfall Development methodology is used in combination with Software 
+Prototyping and will likely result in something similar to the spiral model. 
+The Waterfall method help translate the requirements outlines in the SRS into 
+functional and non-functional requirements that the design must include. 
+Furthermore, as Software Prototyping is not a standalone method, but rather an 
+approach to development activities these two compliment each other well.
+\begin{center}
+\includegraphics[scale=0.5]{testing}
+\end{center}|
 \section{Test tools}\label{sec:TestTools}
+See section \ref{subsec:RandTest} for QuickCheck.
+
+In addition to QuickCheck, Sentinel Test will be used for the completed 
+Ampersand system test. Since EFA will be incorporated into Ampersand, it must 
+pass all sets of randomly generated tests. 
 
 \subsection{Static Typing}\label{subsec:Static}
 Programming languages can be classified by many criteria, one of which is their
@@ -269,11 +304,12 @@ provide a fair array of random tests for the combination of all modules
 %% Here we test that the length of a list after implementing ``take 5'' should be 5 however this fails when the initial list is empty or has less than 5 elements.
 \subsection{Unit Testing}\label{subsec:UnitTest}
 Unit testing is comprised of feeding some data to the functions being tested and
-compare the actual results returned to the expected resultd.
-We will be using HUnit for unit testing of the new source code \edcomm{YT}{HUnit does
-not do *automated* testing.}in Ampersand. HUnit is a library providing unit
-testing capabilities in Haskell.  It is an adaption of JUnit to Haskell that
-allows you to easily create, name, group tests, and execute them.
+compare the actual results returned to the expected results.
+We will be using HUnit for unit testing of the new source code 
+\edcomm{YT}{HUnit does not do *automated* testing.}in Ampersand. HUnit is a 
+library providing unit testing capabilities in Haskell.  It is an adaption of 
+JUnit to Haskell that allows you to easily create, name, group tests, and 
+execute them.
 
 \section{Requirements}\label{sec:Reqs}
 \subsection{Functional requirements}\label{subsec:FunReqs}
@@ -307,9 +343,11 @@ are also briefly summarized here. Our implementation must
 \end{description}
 
 \section{Data recording}\label{sec:DataRec}
+Not Available at this time.
 \section{Constraints}\label{sec:Constraints}
+Not applicable at this time.
 \section{Evaluation}\label{sec:Evaluation}
-
+Due to the early stage of development, this is not available at this time.
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%	5.) System Test Description
