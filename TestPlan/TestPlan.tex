@@ -601,18 +601,28 @@ causing errors or violations. If the second script which contains ECA rules
 successfully passes through the Ampersand compiler, then the new code additions
 due to EFA are compatible with the Ampersand system.
 
-\paragraph{}
 \systemTest
 {T7}
-{EFA Pure Function}
+{EFA is a pure function}
+{Static, white box, manual}
 {Dec 2015}
 {F4}
-{Two conditions must hold for a function to be considered a pure function 1. 
-The function always evaluates to the same result given the same argument 
-values, and 2. The evaluation of the result does not cause any semantically 
-observable side effects (e.g. mutation). Since EFA in its smallest components 
-uses mathematical constructs on expressions, the result is always a pure 
-function. }
+\vspace{-12pt}\subsubsection*{Description} 
+
+Two conditions must hold for a function to be considered a pure
+function. Firstly, The function always evaluates to the same result given the
+same argument values, and secondly, the evaluation of the result does not cause
+any semantically observable side effects (e.g. mutation). Since all functions in
+Haskell are pure, and our code must be implemented in Haskell, this is
+guaranteed if the Haskell type checker accepts our program. The only caveat is
+that ``unsafe'' functions (i.e. functions which explicitly violate the semantics
+of Haskell) must not be used, or this guarantee may be broken.
+
+%% Wat? this makes 0 sense...
+%% Since EFA in its smallest
+%% components uses mathematical constructs on expressions, the result is always a
+%% pure function. 
+
 \vspace{-12pt}\subsubsection*{Input}
 The input is an ECA rule of the form:
  \begin{tabbing}
