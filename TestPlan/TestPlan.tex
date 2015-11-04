@@ -930,27 +930,41 @@ The Ampersand test suite.
 The time taken to run the test suite, both with EFA enabled and EFA disabled.
 
 \vspace{-12pt}\subsubsection*{Description}
-
 The amount of time Ampersand takes to compile a prototype will measure
 performance degradation; if Ampersand takes substantially longer to compile
 after the addition of EFA then it is an appreciable difference.  The comparison
 will be made between \verb|time ampersand-test-suite| and
-\verb|ampersand-test-suite --noEFA| for enabled and disabled, respectively.
+\verb|ampersand-test-suite --noEFA| for enabled and disabled,
+respectively. These are expected to differ by no more than 5\%. 
 
-\systemTest{T11}{EFA Annotated Code}
-{Non-functional}
+
+
+\systemTest{T11}{EFA generates annotated code}
+{Dynamic, white box, manual}
 {January 2016}
-{N4}
+{F7, N1}
+\vspace{-12pt}\subsubsection*{Input}
+An ADL file containing business process rules which gives rise to ECA rules. 
+
+\vspace{-12pt}\subsubsection*{Output} 
+The generated prototype, containing annotated code.
+
 \vspace{-12pt}\subsubsection*{Description}
-There is no input, however there will be annotations available for output, this 
-is used for debugging purposes and the user will never see this.
+The engineer will compile the input ADL file with ampersand, passing the
+appropriate command line options to produce AQSL annotated with the proof of
+their derivation, and to produce code which logs to the console whenever an ECA
+rule is used to fix a violation.
 
-
+The console log should include all information relevant to the ECA rule and
+violation which fired. Parts of this information may be internal information,
+but it is mainly composed of the proof of derivation of that ECA rule, and the
+origin of the ECA (which business rule it came from). The annotation indicating
+these things must be clear to the typical user of Ampersand.
 
 \systemTest{T12}{EFA domain}
 {Static, white box, manual}
 {Term 2}
-{T2}
+{F2}
 \vspace{-12pt}\subsubsection*{Description}
 Our contribution will take as an input the internal representation of the entire
 ADL file, which is essentially a large record, called \verb|FSpec|. For the most
