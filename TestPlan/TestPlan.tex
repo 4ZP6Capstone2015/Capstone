@@ -584,12 +584,13 @@ ASQL inside the prototype is correct, in the context of the entire prototype.
 %%%%%%%%%%%%%%%%% 
 \systemTest
 {T3}{EFA system compatibility}
-{Functional/Black box/ }
+{Functional, black box, manual}
 {Dec 2015}
 {F3}
 \vspace{-12pt}\subsubsection*{Input}
 An ADL file containing business process rules which gives rise to ECA rules. 
-	
+The ADL file comes from the Ampersand test database. 
+
 \vspace{-12pt}\subsubsection*{Output}
 The successful compilation of the input script.
 	
@@ -605,7 +606,7 @@ due to EFA are compatible with the Ampersand system.
 {T7}
 {EFA is a pure function}
 {Static, white box, manual}
-{Dec 2015}
+{Proof of Concept demonstration}
 {F4}
 \vspace{-12pt}\subsubsection*{Description} 
 
@@ -659,7 +660,7 @@ of Haskell) must not be used, or this guarantee may be broken.
 
 \systemTest{T8}{EFA gives appropriate feedback}
 {Functional}
-{January 2016}
+{Proof of Concept demonstration}
 {F6,N1}
 
 %% Also doesn't make sense... 
@@ -705,8 +706,6 @@ Violation occured because rule "who's cast in roles" was not
  Performance of the Play only if the Actor is skilled for a 
  Role that the Play comprises"
 \end{verbatim}
-
-
 
 
 \systemTest{T9}{EFA code walk-through}
