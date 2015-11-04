@@ -556,7 +556,7 @@ ECA rules of the input format are generated using QuickCheck, converted to
   abstract SQL, then compared against the expected output format using HUnit.
 
 
-%%%%%%%%%%%%%%%%% Test 3
+%%%%%%%%%%%%%%%%% 
 \systemTest{compat}
 {ASQL is valid} 
 {Dynamic, black box, manual}  
@@ -580,186 +580,10 @@ likely, is interpreted) successfully, this is an indication that the generated
 ASQL inside the prototype is correct, in the context of the entire prototype. 
 
 
-%% Example usage....
-%% \systemTest{T1}  %% Test label, should be unique
-%% {EFA Black box test}  %% Test name
-%% {Black box/Functional, using dynamic analysis}  
-%% {January 2016 }
-%% {Functional}
-%% {The input shall consist of PAClauses (i.e. a data type) that is composed of 
-%% ECA rules. These ECA rules consist of a condition (i.e. ecaTriggr) that 
-%% initiates a set of actions to be taken (i.e. ecaAction) based on the violation 
-%% (i.e. ecaDelta). Please see example below for further elaboration.}
-%% {The functional output shall be a SQL command template generated through a 
-%% Haskell script, for each type of ECA violations}
-%% {QuickCheck  is used to test the functionality of individual functions; it is a 
-%% package that provides a library for testing program properties. The programmer 
-%% is able to provide properties they want tested in their program specification, 
-%% and QuickCheck generates numerous random cases to test that the property 
-%% holds\cite{hackage}. }
-%% \edcomm{JG}{So.. I originally put the entire example 
-%% in Procedure and latex got very mad at me... so if you wanna put all that in 
-%% here, 
-%% feel free too or add/give a brief description (or I will) for those that do not 
-%% want an example cause they find this self-explanatory =) 
 
-%% Also, there are comments, but the comments can be taken out then shown for the 
-%% white box test as a walk through sorta thing, am I making sense?}
-
-%% \underline{Example 1.}
-%% \paragraph{}
-%% Input ECA Rule: No action needs to be taken when a data relation is 
-%% deleted because 
-%% an order placed by a client has been canceled.
-%% 	\begin{verbatim}
-%% 	ECA { ecaTriggr = On Del rel_orderedBy_Order_Client
-%% 	, ecaDelta  = vio_Delta_Order_Client
-%% 	, ecaAction = Nop []
-%% 	, ecaNum    = 2
-%% 	} 
-%% 	\end{verbatim} 	
-%% \underline{Brief Explanation of Example 1:} \newline \newline \indent
-%% The ecaTriggr specifies an event that takes place such as the deletion of a 
-%% Client's order; the action to be taken is "Nop[]", which means no 
-%% (mathematical) operations is to be performed on the data set. The ecaNum = 2, 
-%% indicates the ECA rule that has been violated which is number 2. The deletion 
-%% of data must be consistent and take place across all regions which it will 
-%% affect, for example of c = (a,b) where a is an element in set a (a $\in$ A) and 
-%% b is an element in set B (b $\in$ B), c may no longer exist. For this example, 
-%% we shall call c, cost which is the tuple (a,b) where a is an item and b is the 
-%% cost per weight unit of the item. Both a and b are needed to determine the cost 
-%% because cost is based on the item and its weight per unit. If the weight no 
-%% longer exists (i.e. it was deleted), the data table cost (c) no longer shows 
-%% proper cost for the item in question. If the cost table was entirely devoted to 
-%% tuples of set A and B, then the entire table needs to be adjusted for a new set 
-%% of weights or the table must be deleted. EFA will output SQL commands to delete 
-%% the necessary components.
-
-%% Example 1. Possible Recursive Deletion SQL Output:
-%% Please note that this is a rolled out generic example of what EFA may produce, 
-%% the actual code EFA provides may be very different.
-%% \begin{verbatim}
-%% CREATE OR REPLACE PROCEDURE delete_cascade(
-%% table_owner          VARCHAR2,
-%% parent_table         VARCHAR2,
-%% where_clause         VARCHAR2
-%% ) IS
-%% -- ex:  execute delete_cascade('MY_SCHEMA', 'MY_MASTER', 'where ID=1'); */
-
-%% child_cons     VARCHAR2(30);
-%% parent_cons    VARCHAR2(30);
-%% child_table    VARCHAR2(30);
-%% child_cols     VARCHAR(500);
-%% parent_cols    VARCHAR(500);
-%% delete_command VARCHAR(10000);
-%% new_where_clause VARCHAR2(10000);
-
-%% -- gets the foreign key constraints on other tables which depend on columns in 
-%% parent_table --
-%% CURSOR cons_cursor IS
-%% SELECT owner, constraint_name, r_constraint_name, table_name, delete_rule
-%% FROM all_constraints
-%% WHERE constraint_type = 'R'
-%% AND delete_rule = 'NO ACTION'
-%% AND r_constraint_name IN (SELECT constraint_name
-%% FROM all_constraints
-%% WHERE constraint_type IN ('P', 'U')
-%% AND table_name = parent_table
-%% AND owner = table_owner)
-%% AND NOT table_name = parent_table; -- ignore self-referencing constraints
-
-
-%% -- for the current constraint, gets the child columns and corresponding parent 
-%% columns
-%% CURSOR columns_cursor IS
-%% SELECT cc1.column_name AS child_col, cc2.column_name AS parent_col
-%% FROM all_cons_columns cc1, all_cons_columns cc2
-%% WHERE cc1.constraint_name = child_cons
-%% AND cc1.table_name = child_table
-%% AND cc2.constraint_name = parent_cons
-%% AND cc1.position = cc2.position
-%% ORDER BY cc1.position;
-%% BEGIN
-%% -- loops through all the constraints that refer to parent table
-%% FOR cons IN cons_cursor LOOP
-%% child_cons   := cons.constraint_name;
-%% parent_cons  := cons.r_constraint_name;
-%% child_table  := cons.table_name;
-%% child_cols   := '';
-%% parent_cols  := '';
-
-%% -- loops through the child/parent column pairs; builds column list of del 
-%% statements
-%% FOR cols IN columns_cursor LOOP
-%% IF child_cols IS NULL THEN
-%% child_cols  := cols.child_col;
-%% ELSE
-%% child_cols  := child_cols || ', ' || cols.child_col;
-%% END IF;
-
-%% IF parent_cols IS NULL THEN
-%% parent_cols  := cols.parent_col;
-%% ELSE
-%% parent_cols  := parent_cols || ', ' || cols.parent_col;
-%% END IF;
-%% END LOOP;
-
-%% /* construct the WHERE clause of the delete statement, including a subquery to 
-%% get the related parent rows */
-%% new_where_clause  :=
-%% 'where (' || child_cols || ') in (select ' || parent_cols || ' from ' || 
-%% table_owner || '.' || parent_table ||
-%% ' ' || where_clause || ')';
-
-%% delete_cascade(cons.owner, child_table, new_where_clause);
-%% END LOOP;
-
-%% --makes delete statement for the current table 
-%% delete_command  := 'delete from ' || table_owner || '.' || parent_table || ' ' 
-%% || where_clause;
-
-%% -- print delete command
-%% DBMS_OUTPUT.put_line(delete_command || ';');
-
-%% EXECUTE IMMEDIATE delete_command;
-
-%% -- issue commit here
-%% END;
-%% \end{verbatim}
-
-
-%% Example 2 Input ECA Rule: An ECA rule that specifies that all clauses must be 
-%% executed based on conditions. Insertion of deletion must take place to restore 
-%% invariants. 
-
-
-%% \begin{verbatim}
-%% ECA {	ecaTriggr = On Ins rel_orderedAt_Order_Vendor, 
-%% 		ecaDelta  = vio_Delta_Order_Vendor, 
-%% 		ecaAction = ALL [ Do Ins rel_I_Order (EDif 
-%% 			(EIsc (ECps	(EDcD vio_Delta_Order_Vendor,EFlp(EDcD 
-%% 						vio_Delta_Order_Vendor)),
-%% 						EDcI cpt_Order),EDcI cpt_Order
-%% 							))[], Do Ins rel_I_Vendor (EDif (EIsc (ECps (EFlp 
-%% 							(EDcD 
-%% 							vio_Delta_Order_Vendor),EDcD 
-%% 							vio_Delta_Order_Vendor),EDcI cpt_Vendor),EDcI 
-%% 							cpt_Vendor))[]][], ecaNum    = 3}
-%% \end{verbatim}
-
-%% Brief Explanation of Example 2: 
-
-%% \systemTest{T2}  %% Test label, should be unique
-%% {EFA White box test} 
-%% {White Box/Non-functional, using static analysis}  
-%% {January 2016}
-%% {Non-functional using static analysis}
-%% {N/A}
-%% {The desired output depends on the specific targeted non-functional specification}
-%% {The test shall be performed by an third party (Dr.Kahl), where Dr. Kahl shall perform a code walk through where he will be able to confirmed the validity of the code that is written, the correctness and the maintainability of the code. Structural testing uncovers errors during implementation of the program, and focuses on how the process occurs, and evaluates structure of the program. The white box test is also implemented by teach individual of our team and shall focus on abnormal or extreme behaviour. The white box test focuses on static program analysis which can be performed without actually executing the program. The main non-functional requirement for EFA is code maintainability and correctness, which requires heavy documentation alongside the source code. }
-
+%%%%%%%%%%%%%%%%% 
 \systemTest
-{T3}{EFA System Compatibility}
+{T3}{EFA system compatibility}
 {Functional/Black box/ }
 {Dec 2015}
 {F3}
@@ -964,7 +788,7 @@ these things must be clear to the typical user of Ampersand.
 \systemTest{T12}{EFA domain}
 {Static, white box, manual}
 {Term 2}
-{F2}
+{F2, F3}
 \vspace{-12pt}\subsubsection*{Description}
 Our contribution will take as an input the internal representation of the entire
 ADL file, which is essentially a large record, called \verb|FSpec|. For the most
@@ -977,6 +801,21 @@ Therefore, the entry point to our code should be a function with type
 arguments), where \verb|ASQL| is the type representing abstract SQL. If this
 code type checks, then the compiler has verified that our domain of input is
 indeed exactly \verb|FSpec|.
+
+
+\systemTest{T14}{Sentinel test}
+{Dynamic, black box, automated, integration test}
+{Term 2}
+{N3, F1}
+\vspace{-12pt}\subsubsection*{Description}
+
+The Ampersand system includes an online automated test framework, called
+Sentinel (see \ref{sec:Abbrev}), which runs at regular intervals and emails
+developers about failing tests. Sentinel uses the same environment used by the
+developers of Ampersand. Our code should compile and our test cases should all
+succeed when run by Sentinel. Additionally, there should be no more failures
+among the existing test cases of Ampersand (those not written by us) when run
+with our contibution as compared to when run without our contributon. 
 		
 \bibliographystyle{alpha}		
 \bibliography{TestPlan}
