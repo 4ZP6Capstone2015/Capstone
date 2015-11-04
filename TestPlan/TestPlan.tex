@@ -69,6 +69,8 @@ Fall 2015 / Winter 2016
 Yuriy Toporovskyy & 03 / 11 / 2015 & Version 0 \\\hline
 Yuriy Toporovskyy & 27 / 10 / 2015 & Reorganized document \\\hline
 Yuriy Toporovskyy & 27 / 10 / 2015 & Initial version - template \\\hline
+Yash Sapra & 31/10/2015 & Testing tools \\\hline
+Jaeden Guo&31/10/2015&System Test Descriptions \\\hline
 \end{tabular}
 \end{center}\end{table}
 
@@ -221,9 +223,9 @@ Ampersand will add support for ECA rules, that will affect Ampersand's back-end
 as well as the generated prototype it provides.
 
 \edcomm{YT}{Probably should merge Test Team and Test Schedule}
-\section{Test Team}\label{sec:TestTeam} \edcomm{JG}{You did a great job! could 
+\section{Test Team and Test Schedule}\label{sec:TestTeamSchedule} \edcomm{JG}{You did a great job! could 
 you explain to me what a test schedule is?}
-
+\subsection{Test team}\label{subsec:TestTeam}
 The test team which will execute the strategy outline in this document is comprised of
 \begin{itemize}
 \item Yuriy Toporovskyy  
@@ -231,15 +233,15 @@ The test team which will execute the strategy outline in this document is compri
 \item Jaeden Guo         
 \end{itemize}
 
-\section{Test Schedule}\label{sec:TestSched}
+\subsection{Test Schedule}\label{subsec:TestSched}
 \begin{center}
  	\begin{tabular}{| c | c| } \hline
  		Dates & Tests to be performed \\ \hline
- 		12-20-2015 - 01-07-2016 & Unit testing, black box testing, \\ & white 
+ 		Before Revision 0 demonstration & Unit testing, black box testing, \\ & white 
  		box 
  		testing with heavy use \\ & of QuickCheck  \\ \hline
- 		01-08-2016 - 01-20-2016 & System testing EFA with Ampersand  \\  \hline
- 	 01-20-2016-02-01-2016     & Testing for abnormality and performance. \\ 
+ 		Before Revision 0 demonstration & System testing EFA with Ampersand  \\  \hline
+ 	 Before Final Demonstration & Testing for abnormality and performance. \\ 
  	 \hline     
  	\end{tabular}
  \end{center}|
@@ -360,9 +362,18 @@ are also briefly summarized here. Our implementation must
 \end{description}
 
 \section{Data recording}\label{sec:DataRec}
-Not Available at this time.
+Our test data is stored in the following format
+\begin{itemize}
+\item QuickCheck tests - Stored in source code.
+\item ADL files - ADL files which act as an input to the Ampersand system will be stored on github under the ``Ampersand-models'' repository.        
+\item ASQL - Annotated SQL generated for the EFA project will be stored in the source code as comments.
+\end{itemize}
 \section{Constraints}\label{sec:Constraints}
-Not applicable at this time.
+\begin{itemize}
+\item It is difficult to obtain ADL (input) files that will generate a broad range of rules for our test.  
+\item Testing with QuickCheck involves careful crafting of invariants (rules).        
+\item ECA rule pipeline depends on the things above it. Any bug found will have to be traced back and communicated to the developers.
+\end{itemize}
 %% \section{Evaluation}\label{sec:Evaluation}
 %% Due to the early stage of development, this is not available at this time.
 %%%%%%%%%%%%%%%%%%%%%%%%%
