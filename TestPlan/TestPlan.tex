@@ -113,7 +113,9 @@ Ampersand their intended role in the testing process.
 
 \subsubsection*{Motivation}
 The testing approach is based on the constraints and requirements presented in 
-the Software Requirements Specification \big( i.e. SRS\big). This document 
+the Software Requirements Specification \big( i.e. SRS\big).
+\ds{Just say ``Software Requirements Specification (SRS)"}
+This document 
 focuses on 
 how the functional and non-functional requirements provided in the SRS will be 
 tested for this project.
@@ -196,7 +198,9 @@ ECArule ::= 'On' ('Ins' | 'Del')
  \ref{sec:TestTools}.
  
  \subsubsection*{Sentinel}
-A test server accessible through the Ampersand webcite (\cite{sentinellink}) which executes a set of 
+A test server accessible through the Ampersand webcite
+\ds{``website"}
+(\cite{sentinellink}) which executes a set of 
 randomly generated tests on Ampersand on a daily basis, see \cite{sentinel} for details.
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -305,6 +309,7 @@ function of any number of arguments. QuickCheck can test that these properties
 hold in a large number of randomly generated cases. QuickCheck also takes great
 care to produce a large variety of test cases, and generally produces good code
 coverage. QuickCheck will be used for individualized module testing and well as 
+\ds{``as well as"}
 provide a fair array of random tests for the combination of all modules 
 \cite{hackage}.
 
@@ -339,7 +344,9 @@ are also briefly summarized here. Our implementation must
 \item[F1] provably implement the desired algorithm.
 \item[F2] accept its input in the existing ECArule format.
 \item[F3] produce an output compatible with the existing pipeline. 
-\item[F4] annotated generated code with proofs of correctness or derivations,
+\item[F4] annotated 
+\ds{``annotate"}
+generated code with proofs of correctness or derivations,
 where appropriate. 
 \item[F5] automatically fix database violations in the mock database of the
 prototype.
@@ -630,6 +637,8 @@ Haskell are pure, and our code must be implemented in Haskell, this is
 guaranteed if the Haskell type checker accepts our program. The only caveat is
 that ``unsafe'' functions (i.e. functions which explicitly violate the semantics
 of Haskell) must not be used, or this guarantee may be broken.
+\ds{What are considered ``unsafe" functions? Do you have a reference or rule
+of thumb?}
 
 %% Wat? this makes 0 sense...
 %% Since EFA in its smallest
@@ -732,6 +741,9 @@ understand but not only the individual who wrote it but those around them, then
 it should be easy to maintain. Part of this standard will be to conform to the
 style of existing Ampersand code.
 
+\ds{In this case you could say that the source code is an ``input" for the test.
+There is no output as it is a measure of readability/maintainability.}
+
 \systemTest{T10}{Degradation Test}
 {Dynamic, black box, partially automated}
 {First Week of February 2016 }
@@ -750,6 +762,8 @@ will be made between \verb|time ampersand-test-suite| and
 \verb|ampersand-test-suite --noEFA| for enabled and disabled,
 respectively. These are expected to differ by no more than 5\%. 
 
+\ds{Is ``time" a keyword? If so should it be on both commands?}
+
 
 
 \systemTest{T11}{EFA generates annotated code}
@@ -764,12 +778,16 @@ The generated prototype, containing annotated code.
 
 \vspace{-12pt}\subsubsection*{Description}
 The engineer will compile the input ADL file with ampersand, passing the
-appropriate command line options to produce AQSL annotated with the proof of
+appropriate command line options
+\ds{Do you know what these options are or have they not been designed yet?}
+to produce AQSL annotated with the proof of
 their derivation, and to produce code which logs to the console whenever an ECA
 rule is used to fix a violation.
 
 The console log should include all information relevant to the ECA rule and
-violation which fired. Parts of this information may be internal information,
+violation which fired. 
+\ds{This sentence sounds a bit awkward.}
+Parts of this information may be internal information,
 but it is mainly composed of the proof of derivation of that ECA rule, and the
 origin of the ECA (which business rule it came from). The annotation indicating
 these things must be clear to the typical user of Ampersand.
@@ -805,6 +823,9 @@ developers of Ampersand. Our code should compile and our test cases should all
 succeed when run by Sentinel. Additionally, there should be no more failures
 among the existing test cases of Ampersand (those not written by us) when run
 with our contibution as compared to when run without our contributon. 
+		
+\ds{You make no mention of any tests related to requirement F5.
+Can you test for exceptions?}		
 		
 \bibliographystyle{alpha}		
 \bibliography{TestPlan}
