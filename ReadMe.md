@@ -12,7 +12,13 @@ UPDATES: Test plan document (big one) added and test plan for demo (one-page doc
 [DONE] ~ SRS peel eval Oct 19t ( REVIEW BY TEAM 3, REVIEW TEAM 5) ~ <br \>
 [__Oct 23rd__] Proof of concept plan (Proof of Concept Plan Folder)  <br \>
 [__Oct. 30th__] Test Plan Revision 0 (Test Plan Document folder)  <br \>
-[__Nov. 16th - Nov27th__] Proof of Concept DEMO 
+[__Nov26th__] Proof of Concept DEMO 
+---------------------------------------
+Proof of Concept Plan
+- run through 5.1 of ProjectAdmin latex <br \?
+- run through adl file <br \>
+- go through prototype <br \>
+- explain exec engine using the prototype <br \>
 
 ====================WINTER SEMESTER (JAN-APRIL 2016)==================
 
@@ -24,4 +30,4 @@ UPDATES: Test plan document (big one) added and test plan for demo (one-page doc
 
 --------------------------------------------------------------------
 to do:
-- Re-do SRS via TA comments and Joosten's comments
+- Re-do SRS via TA comments and Joosten's comments <br \>
