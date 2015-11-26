@@ -1,0 +1,53 @@
+<!-- 
+View for interface "Unstarted_32_projects" (context: "ProjectAdministration"). Generated code, edit with care.
+-->
+<div class="container-fluid interface" cg-busy="loadingInterface">
+    <table si-table class="table table-striped table-hover table-condensed">
+    	<thead>
+    		<tr>
+    			<th class="sortable-col" sort-by="_sortValues_['Name']">Name</th>
+    			<th class="sortable-col" sort-by="_sortValues_['Description']">Description</th>
+    			<th>Projectleider</th>
+    			<th> </th>
+    			<th class="sortable-col" sort-by="_sortValues_['Started']">Started</th>			<th>
+    			</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<tr si-sortable class="box" ng-repeat="(key, val) in val['Unstarted_32_projects'] | toArray" ng-init="ResourceId = val.id" ng-class="{warning : resourceStatus[ResourceId]['warning'], danger : resourceStatus[ResourceId]['danger'], success : resourceStatus[ResourceId]['success']}">
+    			<td class="row-content">
+    				        <div class="input-group">
+            	<div css="wordwrap">{{val['Name']}}</div>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <div class="input-group">
+            	<div class="wordwrap">{{val['Description']}}</div>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <div ng-repeat="(key, row) in val['Projectleider'] track by row.id">
+            	<my-nav-to-interfaces ifcs="row['@interfaces']" resource="row.id" label="row['@label']"></my-nav-to-interfaces>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <!-- Template: PersonEmail.html -->
+            <div ng-repeat="(key, row) in val['_32_'] track by row.id">
+              <div style="display:inline-block"><a ng-href="mailto:{{row['@view']['email']}}"><img src="app/images/email.png"></a>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <div class="checkbox" style="margin-top:0px; text-align:center; vertical-align:middle;">
+            	<label><input ng-model="val['Started']" type="checkbox" ng-change="put(ResourceId)"/></label>
+            </div>
+    			</td>			<td>
+    				<button type="button" class="btn btn-warning btn-xs" ng-if="showSaveButton[ResourceId]" ng-click="put(ResourceId, 'promise')">Save</button>
+    				<button type="button" class="btn btn-danger btn-xs" ng-if="showCancelButton[ResourceId]" ng-click="cancel(ResourceId)">Cancel</button>
+    				
+    				<div style="float:right;" cg-busy="{promise:loadingResources[ResourceId],templateUrl:'app/views/partials/loading.html',backdrop:false,wrapperClass:''}"></div>
+    			</td>
+    		</tr>
+    	</tbody>
+    	<tfoot>
+    </table>
+</div>

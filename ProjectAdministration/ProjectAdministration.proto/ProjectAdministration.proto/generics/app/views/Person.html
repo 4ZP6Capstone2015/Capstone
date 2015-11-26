@@ -1,0 +1,51 @@
+<!-- 
+View for interface "Person" (context: "ProjectAdministration"). Generated code, edit with care.
+-->
+<div class="container-fluid interface" cg-busy="loadingInterface">
+    <div class="box panel panel-default" ng-repeat="(key, val) in val['Person'] track by val.id" ng-init="ResourceId = val.id" ng-class="{'panel-default' : resourceStatus[ResourceId]['default'], 'panel-warning' : resourceStatus[ResourceId]['warning'], 'panel-danger' : resourceStatus[ResourceId]['danger'], 'panel-success' : resourceStatus[ResourceId]['success']}">	<div class="panel-heading">
+    		<div class="pull-right panel-heading-options">
+    			<button type="button" class="btn btn-sm btn-warning" ng-if="showSaveButton[ResourceId]" ng-click="put(ResourceId, 'promise')">Save</button>
+    			<button type="button" class="btn btn-sm btn-danger" ng-if="showCancelButton[ResourceId]" ng-click="cancel(ResourceId)">Cancel</button>
+    			<my-nav-to-other-interfaces ifcs="val['@interfaces']" resource="val.id" label="val['@label']"></my-nav-to-other-interfaces>
+    			
+    			
+    		</div>
+    		<h4>{{val['@label']}}&nbsp;</h4>
+    	</div>
+    	<div class="panel-body" cg-busy="loadingResources[ResourceId]">
+    	
+    		<div class="row">
+    			<div class="row-label col-md-2 wordwrap"><strong>Name</strong></div>
+    			<div class="row-content col-md-10">
+    				        <div class="input-group">
+            	<input ng-model="val['Name']" my-bluronenter type="text" class="form-control input-sm" ng-blur="put(ResourceId)">
+            </div>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="row-label col-md-2 wordwrap"><strong>Status</strong></div>
+    			<div class="row-content col-md-10">
+    				        <div class="input-group">
+            	<div css="wordwrap">{{val['Status']}}</div>
+            </div>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="row-label col-md-2 wordwrap"><strong>Email</strong></div>
+    			<div class="row-content col-md-10">
+    				        <div class="input-group">
+            	<input ng-model="val['Email']" my-bluronenter type="text" class="form-control input-sm" ng-blur="put(ResourceId)">
+            </div>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="row-label col-md-2 wordwrap"><strong>Works with</strong></div>
+    			<div class="row-content col-md-10">
+    				        <div ng-repeat="(key, row) in val['Works_32_with'] track by row.id">
+            	<my-nav-to-interfaces ifcs="row['@interfaces']" resource="row.id" label="row['@label']"></my-nav-to-interfaces>
+            </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>

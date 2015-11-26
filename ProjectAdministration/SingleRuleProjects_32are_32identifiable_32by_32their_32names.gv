@@ -1,0 +1,62 @@
+digraph {
+	graph [bb="0,0,282.98,36",
+		landscape=false,
+		outputorder=edgesfirst,
+		overlap=scalexy,
+		sep=0.5,
+		splines=polyline
+	];
+	node [label="\N"];
+	cpt_1	 [URL="Atlas.php?content=Concept&User=&Script=ProjectAdministration.adl&Concept=(.ProjectAdministration.adl)Project",
+		fontname=sans,
+		fontsize=10,
+		height=0.5,
+		label=Project,
+		pos="27,18",
+		shape=box,
+		style=filled,
+		width=0.75];
+	relName_1	 [URL="Atlas.php?content=Relatiedetails&User=&Script=ProjectAdministration.adl&Relatiedetails=(.ProjectAdministration.adl)projectName[Project*\
+ProjectName]",
+		bgcolor=white,
+		fontname=sans,
+		fontsize=10,
+		height=0.5,
+		label="",
+		pos="136.68,18",
+		shape=plaintext,
+		width=0.75];
+	cpt_1 -> relName_1	 [arrowhead=none,
+		arrowtail=none,
+		color=gray35,
+		decorate=false,
+		dir=forward,
+		fontname=sans,
+		fontsize=12,
+		headclip=false,
+		labelfloat=false,
+		labelfontcolor=black,
+		pos="54.112,18 86.592,18 136.68,18 136.68,18"];
+	cpt_2	 [URL="Atlas.php?content=Concept&User=&Script=ProjectAdministration.adl&Concept=(.ProjectAdministration.adl)ProjectName",
+		fontname=sans,
+		fontsize=10,
+		height=0.5,
+		label=ProjectName,
+		pos="247.48,18",
+		shape=box,
+		style=filled,
+		width=0.98611];
+	relName_1 -> cpt_2	 [arrowhead=normal,
+		arrowtail=none,
+		color=gray35,
+		decorate=false,
+		dir=forward,
+		fontname=sans,
+		fontsize=12,
+		label=projectName,
+		labelfloat=false,
+		labelfontcolor=black,
+		lp="186.18,11.5",
+		pos="e,211.81,18 136.68,18 136.68,18 171.18,18 201.68,18",
+		tailclip=false];
+}

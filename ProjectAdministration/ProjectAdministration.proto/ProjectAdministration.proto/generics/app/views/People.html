@@ -1,0 +1,52 @@
+<!-- 
+View for interface "People" (context: "ProjectAdministration"). Generated code, edit with care.
+-->
+<div class="container-fluid interface" cg-busy="loadingInterface">
+    <table class="table table-striped table-hover table-condensed">
+    	<thead>
+    		<tr>
+    			<th>Person</th>
+    			<th>Name</th>
+    			<th>Email</th>
+    			<th>Projects</th>			<th>
+    			</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<tr class="box" ng-repeat="(key, val) in val['People'] track by val.id" ng-init="ResourceId = val.id" ng-class="{warning : resourceStatus[ResourceId]['warning'], danger : resourceStatus[ResourceId]['danger'], success : resourceStatus[ResourceId]['success']}">
+    			<td class="row-content">
+    				        <div ng-repeat="(key, row) in val['Person'] track by row.id">
+            	<my-nav-to-interfaces ifcs="row['@interfaces']" resource="row.id" label="row['@label']"></my-nav-to-interfaces>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <div class="input-group">
+            	<div css="wordwrap">{{val['Name']}}</div>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <div class="input-group">
+            	<div css="wordwrap">{{val['Email']}}</div>
+            </div>
+    			</td>
+    			<td class="row-content">
+    				        <div ng-repeat="(key, row) in val['Projects'] track by row.id">
+            	<div>
+            		<span my-showonhover-box class="glyphicon glyphicon-remove" ng-click="removeObject(val['Projects'], row.id, ResourceId)"></span>
+            		<my-nav-to-interfaces ifcs="row['@interfaces']" resource="row.id" label="row['@label']"></my-nav-to-interfaces>
+            	</div>
+            </div>
+            <!-- Input to add new link to another resource -->
+            <div  my-showonhover-box ng-controller="addObjectController">
+            	<input ng-model="selected.label" type="text" class="input-sm" placeholder="Add new" typeahead="item['@label'] for item in typeahead['Project'] | filter:$viewValue | limitTo:15" typeahead-editable="false" typeahead-on-select="typeaheadOnSelect($item, $model, $label, val, 'Projects', ResourceId); selected.label=''">
+            </div>
+    			</td>			<td>
+    				<button type="button" class="btn btn-warning btn-xs" ng-if="showSaveButton[ResourceId]" ng-click="put(ResourceId, 'promise')">Save</button>
+    				<button type="button" class="btn btn-danger btn-xs" ng-if="showCancelButton[ResourceId]" ng-click="cancel(ResourceId)">Cancel</button>				<a my-showonhover-box href="" ng-click="deleteResource(ResourceId)"><span class="glyphicon glyphicon-trash"/></a>
+    				<div style="float:right;" cg-busy="{promise:loadingResources[ResourceId],templateUrl:'app/views/partials/loading.html',backdrop:false,wrapperClass:''}"></div>
+    			</td>
+    		</tr>
+    	</tbody>
+    	<tfoot>
+    </table>
+</div>

@@ -1,0 +1,126 @@
+digraph {
+	graph [bb="0,0,655,401.5",
+		bgcolor=white,
+		rankdir=LR
+	];
+	node [label="\N"];
+	edge [fontsize=11,
+		minlen=4
+	];
+	Project	 [color=purple,
+		height=2.1528,
+		label=<<TABLE BGCOLOR="white" COLOR="black" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD BGCOLOR="gray10" COLOR="black"><FONT COLOR="white">Project</FONT></TD></TR><TR><TD ALIGN="LEFT" PORT="Project">+ Project : Project</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_projectName">o tgt_projectName : ProjectName</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_projectStatus">o tgt_projectStatus : ProjectStatus</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_projectDescription">o tgt_projectDescription : Description</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_projectStartDate">o tgt_projectStartDate : Date</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_projectStarted">o tgt_projectStarted : Bool</TD></TR></TABLE>>,
+		pos="540.5,236.5",
+		shape=plaintext,
+		width=3.1806];
+	Project:tgt_projectStarted -> Project	 [arrowhead=onone,
+		head_lp="418.43,233.06",
+		headlabel="0-1",
+		label=projectStarted,
+		labelfloat=true,
+		lp="328.5,236.5",
+		pos="e,425.93,239.06 434.46,169.15 393.74,172.66 360,182.88 360,204.5 360,223.73 386.48,233.94 420.81,238.44",
+		tail_lp="426.96,163.15",
+		taillabel="0-1"];
+	Assignment	 [color=purple,
+		height=1.8611,
+		label=<<TABLE BGCOLOR="white" COLOR="black" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD BGCOLOR="gray10" COLOR="black"><FONT COLOR="white">Assignment</FONT></TD></TR><TR><TD ALIGN="LEFT" PORT="Assignment">+ Assignment : Assignment</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_project">o tgt_project : Project</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_assignee">o tgt_assignee : Person</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_pplStartDate">o tgt_pplStartDate : Date</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_pplStarted">o tgt_pplStarted : Bool</TD></TR></TABLE>>,
+		pos="187,334.5",
+		shape=plaintext,
+		width=2.4444];
+	Assignment:tgt_project -> Project	 [arrowhead=onone,
+		head_lp="456.6,320.07",
+		headlabel=1,
+		label=project,
+		labelfloat=true,
+		lp="350.5,343.5",
+		pos="e,459.6,314.07 268,345.5 287.88,345.5 292.12,337.5 312,337.5 312,337.5 312,337.5 389,337.5 412.5,337.5 435.1,328.9 455.32,316.73",
+		tail_lp="265,339.5",
+		taillabel="*"];
+	Assignment:tgt_pplStarted -> Assignment	 [arrowhead=onone,
+		head_lp="91.375,331.94",
+		headlabel="0-1",
+		label=pplStarted,
+		labelfloat=true,
+		lp="23,334.5",
+		pos="e,98.875,337.94 106.92,277.3 73.912,279.85 46,288.66 46,308 46,324.71 66.827,333.55 93.775,337.3",
+		tail_lp="99.422,271.3",
+		taillabel="0-1"];
+	Person	 [color=purple,
+		height=1.5694,
+		label=<<TABLE BGCOLOR="white" COLOR="black" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD BGCOLOR="gray10" COLOR="black"><FONT COLOR="white">Person</FONT></TD></TR><TR><TD ALIGN="LEFT" PORT="Person">+ Person : Person</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_personName">o tgt_personName : PersonName</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_personStatus">o tgt_personStatus : PersonStatus</TD></TR><TR><TD ALIGN="LEFT" PORT="tgt_personEmail">o tgt_personEmail : Email</TD></TR></TABLE>>,
+		pos="540.5,84.5",
+		shape=plaintext,
+		width=2.8333];
+	Assignment:tgt_assignee -> Person	 [arrowhead=onone,
+		head_lp="435.39,142.17",
+		headlabel=1,
+		label=assignee,
+		labelfloat=true,
+		lp="350.5,281.5",
+		pos="e,438.39,136.17 268,323.5 296.94,323.5 283.06,275.5 312,275.5 312,275.5 312,275.5 389,275.5 447.36,275.5 389.84,195.31 426,149.5 \
+428.68,146.1 431.59,142.86 434.68,139.75",
+		tail_lp="265,317.5",
+		taillabel="*"];
+	pl	 [color=purple,
+		height=0.98611,
+		label=<<TABLE BGCOLOR="white" COLOR="black" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD BGCOLOR="gray10" COLOR="black"><FONT COLOR="white">pl</FONT></TD></TR><TR><TD ALIGN="LEFT" PORT="Project">+ Project : Project</TD></TR><TR><TD ALIGN="LEFT" PORT="Person">+ Person : Person</TD></TR></TABLE>>,
+		pos="187,213.5",
+		shape=plaintext,
+		width=1.6944];
+	pl:Project -> Project	 [arrowhead=onone,
+		head_lp="422.88,213.09",
+		headlabel=1,
+		labelfloat=true,
+		pos="e,425.88,219.09 241,212.5 272.63,212.5 280.37,217.5 312,217.5 312,217.5 312,217.5 389,217.5 399.3,217.5 409.96,217.94 420.64,218.69",
+		tail_lp="238,206.5",
+		taillabel="*"];
+	pl:Person -> Person	 [arrowhead=onone,
+		head_lp="435.27,123.49",
+		headlabel=1,
+		labelfloat=true,
+		pos="e,438.27,129.49 241,191.5 259.24,191.5 260.52,179.6 275,168.5 292.26,155.27 290.26,136.5 312,136.5 312,136.5 312,136.5 389,136.5 \
+403.65,136.5 418.69,134.27 433.33,130.73",
+		tail_lp="238,185.5",
+		taillabel="*"];
+	member	 [color=purple,
+		height=0.98611,
+		label=<<TABLE BGCOLOR="white" COLOR="black" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD BGCOLOR="gray10" COLOR="black"><FONT COLOR="white">member</FONT></TD></TR><TR><TD ALIGN="LEFT" PORT="Project">+ Project : Project</TD></TR><TR><TD ALIGN="LEFT" PORT="Person">+ Person : Person</TD></TR></TABLE>>,
+		pos="187,124.5",
+		shape=plaintext,
+		width=1.6944];
+	member:Project -> Project	 [arrowhead=onone,
+		head_lp="422.74,176.95",
+		headlabel=1,
+		labelfloat=true,
+		pos="e,425.74,182.95 241,123.5 280.92,123.5 272.08,178.5 312,178.5 312,178.5 312,178.5 389,178.5 399.47,178.5 410.09,179.74 420.59,181.85",
+		tail_lp="238,117.5",
+		taillabel="*"];
+	member:Person -> Person	 [arrowhead=onone,
+		head_lp="435.41,89.637",
+		headlabel=1,
+		labelfloat=true,
+		pos="e,438.41,95.637 241,102.5 272.63,102.5 280.37,97.5 312,97.5 312,97.5 312,97.5 389,97.5 403.37,97.5 418.49,96.904 433.37,95.968",
+		tail_lp="238,96.5",
+		taillabel="*"];
+	workswith	 [color=purple,
+		height=0.98611,
+		label=<<TABLE BGCOLOR="white" COLOR="black" BORDER="0" CELLBORDER="1" CELLSPACING="0"><TR><TD BGCOLOR="gray10" COLOR="black"><FONT COLOR="white">workswith</FONT></TD></TR><TR><TD ALIGN="LEFT" PORT="SrcPerson">+ SrcPerson : Person</TD></TR><TR><TD ALIGN="LEFT" PORT="TgtPerson">+ TgtPerson : Person</TD></TR></TABLE>>,
+		pos="187,35.5",
+		shape=plaintext,
+		width=1.9167];
+	workswith:SrcPerson -> Person	 [arrowhead=onone,
+		head_lp="435.34,55.311",
+		headlabel=1,
+		labelfloat=true,
+		pos="e,438.34,61.311 249,34.5 278.81,34.5 282.19,57.5 312,57.5 312,57.5 312,57.5 389,57.5 403.43,57.5 418.52,58.717 433.33,60.635",
+		tail_lp="246,28.5",
+		taillabel="*"];
+	workswith:TgtPerson -> Person	 [arrowhead=onone,
+		head_lp="442.53,21.882",
+		headlabel=1,
+		labelfloat=true,
+		pos="e,445.53,27.882 249,13.5 277.03,13.5 283.97,16.5 312,16.5 312,16.5 312,16.5 389,16.5 406.43,16.5 424.06,20.334 440.83,26.181",
+		tail_lp="246,7.5",
+		taillabel="*"];
+}

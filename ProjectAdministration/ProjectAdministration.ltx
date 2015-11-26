@@ -1,0 +1,2599 @@
+\documentclass[10pt,a4paper,english,]{report}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{â¬}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{english}
+\else
+  \usepackage[english]{babel}
+\fi
+\usepackage{longtable,booktabs}
+\usepackage{graphicx}
+\usepackage{grfext}
+\PrependGraphicsExtensions*{.pdf,.PDF}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            pdfauthor={Specify authors in Ampersand with: META "authors" "\textless{}author names\textgreater{}"},
+            pdftitle={Functional Specification of ProjectAdministration},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+\title{Functional Specification of ProjectAdministration}
+\author{Specify authors in Ampersand with: META "authors" "\textless{}author
+names\textgreater{}"}
+\date{26 November 2015}
+% ============Ampersand specific Begin=================
+% First a couple of LaTeX packages are included:
+
+% The glossaries package supports acronyms and multiple glossaries
+\usepackage[toc]{glossaries}    % Add the glossaries to the table of contents
+\makeglossaries
+
+% geometry provides a flexible and easy interface to page dimentions
+\usepackage[ top=1.5cm, bottom=1.5cm, outer=5cm, inner=2cm
+            , heightrounded, footskip=.5cm
+            , marginparwidth=2.5cm, marginparsep=0.5cm]{geometry}
+
+% breqn – Automatic line breaking of displayed equations
+\usepackage{breqn}
+
+% colonequals – Colon equals symbols
+\usepackage{colonequals}
+
+
+\usepackage{textcomp}
+% == [all]{hypcap} after {hyperref} shows the ref'd picture i.o. the caption @ click ==
+
+\usepackage[all]{hypcap}
+
+% hack1) For the purpose of clear references in Latex. See also https://github.com/AmpersandTarski/ampersand/issues/31
+\makeatletter
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1}%
+  %\edef\@currentlabelname{#1}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+\makeatother
+% End-hack1
+
+% hack2) The LaTeX commands \[ and \], are redefined in the amsmath package, making sure that equations are
+% not numbered. This is undesireable behaviour. this is fixed with the following hack, inspired on a note
+% found at http://tex.stackexchange.com/questions/40492/what-are-the-differences-between-align-equation-and-displaymath
+\DeclareRobustCommand{\[}{\begin{equation}}
+\DeclareRobustCommand{\]}{\end{equation}}
+% End-hack2
+
+
+\def\id#1{\mbox{\em #1\/}}
+\newcommand{\marge}[1]{\marginpar{\begin{minipage}[t]{3cm}{\noindent\small\em #1}\end{minipage}}}
+\def\define#1{\label{dfn:#1}\index{#1}{\em #1}}
+\def\defmar#1{\label{dfn:#1}\index{#1}\marge{#1}{\em #1}}
+\newcommand{\iden}{\mathbb{I}}
+\newcommand{\ident}[1]{\mathbb{I}_{#1}}
+\newcommand{\full}{\mathbb{V}}
+\newcommand{\fullt}[1]{\mathbb{V}_{[#1]}}
+\newcommand{\flip}[1]{{#1}^\smallsmile} %formerly:  {#1}^\backsim
+\newcommand{\kleeneplus}[1]{{#1}^{+}}
+\newcommand{\kleenestar}[1]{{#1}^{*}}
+\newcommand{\asterisk}{*}
+\newcommand{\cmpl}[1]{\overline{#1}}
+\newcommand{\subs}{\vdash}
+\newcommand{\rel}{\times}
+\newcommand{\fun}{\rightarrow}
+\newcommand{\isa}{\sqsubseteq}
+\newcommand{\N}{\mbox{\msb N}}
+\newcommand{\disjn}[1]{\id{disjoint}(#1)}
+\newcommand{\fsignat}[3]{\id{#1}:\id{#2}\fun\id{#3}}
+\newcommand{\signat}[3]{\id{#1}:\id{#2}\rel\id{#3}}
+\newcommand{\signt}[2]{\mbox{\({#1}_{[{#2}]}\)}}
+\newcommand{\declare}[3]{\id{#1}:\ \id{#2}\rel\id{#3}}
+\newcommand{\fdeclare}[3]{\id{#1}:\ \id{#2}\fun\id{#3}}
+% ============Ampersand specific End===================
+
+\begin{document}
+\maketitle
+
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\chapter{Introduction}
+
+\label{chapterIntro}
+
+This is a small demonstration script that uses the basic \&-features. It
+is used as an example in our GitBook, in . Keep this script in the
+sentinel's Shouldsucceed, ensuring that readers of the GitBook always
+have something that actually works.
+
+This document\footnote{This document was generated at 26-11-2015 on
+  04:04:55, using Ampersand v3.2.0{[}master:4b6fc5c*{]}, build time:
+  06-Nov-15 20:29:59 Ame.} defines the functionality of an information
+system called `ProjectAdministration'. It defines the database and the
+business services of ProjectAdministration by means of business
+rules\footnote{Rule based design characterizes the Ampersand approach,
+  which has been used to produce this document. }. Those rules are
+listed in chapter \ref{chapterSharedLang}, ordered by theme. , ordered
+by theme.
+
+The diagnosis in chapter \ref{chapterDiagnosis} is meant to help the
+authors identify shortcomings in their Ampersand script.
+
+\chapter{Shared Language}
+
+\label{chapterSharedLang}
+
+This chapter defines the natural language, in which functional
+requirements of `ProjectAdministration' can be discussed and expressed.
+The purpose of this chapter is to create shared understanding among
+stakeholders. The language of `ProjectAdministration' consists of
+concepts and basic sentences. All functional requirements are expressed
+in these terms. When stakeholders can agree upon this language, at least
+within the scope of `ProjectAdministration', they share precisely enough
+language to have meaningful discussions about functional requirements.
+All definitions have been numbered for the sake of traceability.
+
+\section{Projects}\label{theme:Projects}
+
+This pattern describes an administration of persons who work on
+projects. For this reason, it introduces the concepts Project and
+Person.
+
+The sequel introduces the language of Projects.
+
+At this point, the definitions of \emph{Project}, \emph{Person}, and
+\emph{Assignment} are given.
+
+\begin{description}
+\item[Definition 1:]
+\newglossaryentry{Project}
+     { name={Project}
+     , description={planned set of interrelated tasks to be executed over a fixed period and within certain cost and other limitations}}
+~\marge{\gls{Project}}planned set of interrelated tasks to be executed over a fixed period and within certain cost and other limitations
+\end{description}
+
+In order to administer project participants, the system must register
+information about them. For that reason, we introduce the concept
+Person.
+
+\begin{description}
+\item[Definition 2:]
+\newglossaryentry{Person}
+     { name={Person}
+     , description={A person is any human being}}
+~\marge{\gls{Person}}A person is any human being
+\end{description}
+
+In order to allow a planner to allocate participants to projects, we
+introduce the concept of assignment. This will allow us to express rules
+such as: a person may register his hours on a project from the start
+date mentioned on his assignment to that project.
+
+\begin{description}
+\item[Definition 3:]
+\newglossaryentry{Assignment}
+     { name={Assignment}
+     , description={An assignment links one person to one project from a given start date.}}
+~\marge{\gls{Assignment}}An assignment links one person to one project from a given start date.
+\end{description}
+
+In order to refer to a project, it must be identifiable, which means
+that it must be possible to select or find it in the set of existing
+projects. We choose to use the project's name for that.
+
+In order to refer to a person (in the system), (s)he must be
+identifiable, which means that it must be possible to select him or her
+from the set of registered people. We choose to use the person's
+email-address for that.
+
+As a matter of definition, we choose to consider the project leader of a
+project to not be a (working) member of a project. Therefore, we need a
+rule that ensures this is the case.
+
+While it is possible that a project lacks a projectleader, this is an
+undesired situation. Planners are given the job to find a new
+projectleader for such projects. The projects that are in need for a
+projectleader must therefore be signalled.
+
+When a member of some project becomes the project leader of that
+project, it cannot be a project member any more. This is a consequence
+of the choice that project leaders are not considered to be members of
+the projects they lead. Whenever this is the case, the membership is
+automatically removed.
+
+We say that a person works with another person if there is a project
+which they share. This means that either person can be a member or a
+project leader (since there may be multiple project leaders) of a
+specific project. Therefore, we need a rule that populates the relation
+'workswith'. in appropriate cases
+
+We say that a person works with another person if there is a project
+which they share. This means that either person can be a member or a
+project leader (since there may be multiple project leaders) of a
+specific project. Therefore, we need a rule that depopulates the
+relation 'workswith' in appropriate cases.
+
+In order to become a project leader, you need an assignment as project
+leader. Therefore, we need a rule that creates such structures, and
+populates them.
+
+Whenever a project participant is discharged from his task, the
+corresponding Assignment needs to be deleted. This is done by means of
+an automated rule.
+
+\chapter{Diagnosis}
+
+\label{chapterDiagnosis}
+
+This chapter provides an analysis of the Ampersand script of \emph{`ProjectAdministration'}. This analysis is intended for the author(s) of this script. It can be used to complete the script or to improve possible flaws.
+
+\emph{ProjectAdministration} does not specify which roles may change the contents of which relations. 
+
+\emph{ProjectAdministration} assigns rules to roles. The following table shows the rules that are being maintained by a given role.
+
+\begin{longtable}[c]{@{}lll@{}}
+\toprule
+\begin{minipage}[b]{0.37\columnwidth}\raggedright\strut
+Rule
+\strut\end{minipage} &
+\begin{minipage}[b]{0.27\columnwidth}\raggedright\strut
+Planner
+\strut\end{minipage} &
+\begin{minipage}[b]{0.27\columnwidth}\raggedright\strut
+ExecEngine
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.37\columnwidth}\raggedright\strut
+Every project must have a projectleader
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\emph{no}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedright\strut
+Projectleaders are not members of a team
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\emph{no}
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedright\strut
+Works with (populate)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\emph{no}
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedright\strut
+Works with (depopulate)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\emph{no}
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedright\strut
+Create Assignment
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\emph{no}
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.37\columnwidth}\raggedright\strut
+Delete Assignment
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.27\columnwidth}\raggedright\strut
+\emph{no}
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Concepts Project, ProjectName, ProjectStatus, Description, Date,
+PersonName, PersonStatus, and Email remain without a purpose.
+
+The purpose of relations \({\text{projectName}}\),
+\({\text{projectStatus}}\), \({\text{projectDescription}}\),
+\({\text{projectStartDate}}\), \({\text{projectStarted}}\),
+\({\text{pl}}\), \({\text{member}}\), \({\text{personName}}\),
+\({\text{personStatus}}\), \({\text{personEmail}}\),
+\({\text{workswith}}\), \({\text{project}}\), \({\text{assignee}}\),
+\({\text{pplStartDate}}\), and
+\({\text{pplStarted}}\) is not documented.
+
+All concepts defined in this document are used in relations.
+
+Relations \({\text{projectStatus}}\), \({\text{projectDescription}}\),
+\({\text{projectStartDate}}\), \({\text{projectStarted}}\),
+\({\text{personName}}\), \({\text{personStatus}}\),
+\({\text{pplStartDate}}\), and
+\({\text{pplStarted}}\) are not used in any rule. 
+
+Figure \ref{figureConcept_32diagram_32of_32relations_32in_32Projects} shows a conceptual diagram with all relations.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{0.6}[0.6]{\includegraphics{RelationsInPatternProjects}}
+\caption{Concept diagram of relations in Projects}
+\label{figureConcept_32diagram_32of_32relations_32in_32Projects}
+\end{center}
+\end{figure}
+
+Rules are defined, the meaning of which is documented by means of computer generated language:
+
+\begin{itemize}
+\item
+  \emph{Projects are identifiable by their names}
+
+  line 72:1, file ProjectAdministration.adl
+\item
+  \emph{People are identifiable by their email-address}
+
+  line 76:1, file ProjectAdministration.adl
+\item
+  \emph{Project leaders are not considered members of the projects they lead.}
+
+  line 80:1, file ProjectAdministration.adl
+\item
+  \emph{Every project must have a projectleader}
+
+  line 86:1, file ProjectAdministration.adl
+\item
+  \emph{Projectleaders are not members of a team}
+
+  line 94:1, file ProjectAdministration.adl
+\item
+  \emph{Works with (populate)}
+
+  line 101:1, file ProjectAdministration.adl
+\item
+  \emph{Works with (depopulate)}
+
+  line 108:1, file ProjectAdministration.adl
+\item
+  \emph{Create Assignment}
+
+  line 114:1, file ProjectAdministration.adl
+\item
+  \emph{Delete Assignment}
+
+  line 123:1, file ProjectAdministration.adl
+\end{itemize}
+
+The table below shows for each theme (i.e. process or pattern) the number of relations and rules, followed  by the number and percentage that have a reference. Relations declared in multiple themes are counted multiple  times.
+
+\begin{longtable}[c]{@{}lcccccc@{}}
+\toprule
+\begin{minipage}[b]{0.32\columnwidth}\raggedright\strut
+Theme
+\strut\end{minipage} &
+\begin{minipage}[b]{0.08\columnwidth}\centering\strut
+Relations
+\strut\end{minipage} &
+\begin{minipage}[b]{0.08\columnwidth}\centering\strut
+With reference
+\strut\end{minipage} &
+\begin{minipage}[b]{0.08\columnwidth}\centering\strut
+\%
+\strut\end{minipage} &
+\begin{minipage}[b]{0.08\columnwidth}\centering\strut
+Rules
+\strut\end{minipage} &
+\begin{minipage}[b]{0.08\columnwidth}\centering\strut
+Entire context
+\strut\end{minipage} &
+\begin{minipage}[b]{0.08\columnwidth}\centering\strut
+\%
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.32\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+15
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0\%
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+9
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0\%
+\strut\end{minipage}\tabularnewline
+\tabularnewline
+\begin{minipage}[t]{0.32\columnwidth}\raggedright\strut
+Entire context
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+15
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0\%
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+9
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0
+\strut\end{minipage} &
+\begin{minipage}[t]{0.08\columnwidth}\centering\strut
+0\%
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+TODO: Inleiding bij de rol-regel tabel
+
+\begin{longtable}[c]{@{}lll@{}}
+\toprule
+\begin{minipage}[b]{0.30\columnwidth}\raggedright\strut
+role
+\strut\end{minipage} &
+\begin{minipage}[b]{0.30\columnwidth}\raggedright\strut
+rule
+\strut\end{minipage} &
+\begin{minipage}[b]{0.30\columnwidth}\raggedright\strut
+from
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Planner
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Every project must have a projectleader
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+ExecEngine
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projectleaders are not members of a team
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+ExecEngine
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Works with (populate)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+ExecEngine
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Works with (depopulate)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+ExecEngine
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Create Assignment
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+ExecEngine
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Delete Assignment
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Projects
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+This script contains work in progress. The following tables provide details with line numbers from the original script files.
+
+\begin{longtable}[c]{@{}lrr@{}}
+\toprule
+\begin{minipage}[b]{0.30\columnwidth}\raggedright\strut
+rule
+\strut\end{minipage} &
+\begin{minipage}[b]{0.30\columnwidth}\raggedleft\strut
+location
+\strut\end{minipage} &
+\begin{minipage}[b]{0.30\columnwidth}\raggedleft\strut
+\#tasks
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Works with (populate)
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedleft\strut
+line 101:1, file ProjectAdministration.adl
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedleft\strut
+40
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.30\columnwidth}\raggedright\strut
+Create Assignment
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedleft\strut
+line 114:1, file ProjectAdministration.adl
+\strut\end{minipage} &
+\begin{minipage}[t]{0.30\columnwidth}\raggedleft\strut
+6
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Rule`Works with (populate)'\ref{natLangRule:Works_32with_32_40populate_41}says: 
+
+This rule contains work (for ExecEngine)The following table shows the first ten items that require attention.
+
+\begin{longtable}[c]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+Person
+\strut\end{minipage} &
+\begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+Person
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10001
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10012
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10001
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10005
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10001
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10004
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10001
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10003
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10001
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10002
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10002
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10012
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10002
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10005
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10002
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10003
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10002
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10001
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10003
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10012
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Rule`Create Assignment'\ref{natLangRule:Create_32Assignment}says: 
+
+This rule contains work (for ExecEngine)The following table shows the items that require attention.
+
+\begin{longtable}[c]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+Project
+\strut\end{minipage} &
+\begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+Person
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+1970.13
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10008
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+2013.01
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10012
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+2014.01
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10012
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+2014.03
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10012
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+2014.04
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10011
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+2014.05
+\strut\end{minipage} &
+\begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+p10007
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+The population in this script violates 0 invariants and 2 process rules.
+
+\begin{itemize}
+\item
+  \emph{Rule Works with (populate)}
+
+  Total number of work items: 40
+
+  \begin{longtable}[c]{@{}ll@{}}
+  \caption{Tasks yet to be performed by ExecEngine}\tabularnewline
+  \toprule
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Person}
+  \strut\end{minipage} &
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Person}
+  \strut\end{minipage}\tabularnewline
+  \midrule
+  \endfirsthead
+  \toprule
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Person}
+  \strut\end{minipage} &
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Person}
+  \strut\end{minipage}\tabularnewline
+  \midrule
+  \endhead
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10006
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10010
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10006
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10009
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10006
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10010
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10009
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10006
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10009
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10010
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10009
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10009
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10006
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10010
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10009
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10010
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10010
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10006
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10005
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10004
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10003
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10002
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10001
+  \strut\end{minipage}\tabularnewline
+  \bottomrule
+  \end{longtable}
+\item
+  \emph{Rule Create Assignment}
+
+  Total number of work items: 6
+
+  \begin{longtable}[c]{@{}ll@{}}
+  \caption{Tasks yet to be performed by ExecEngine}\tabularnewline
+  \toprule
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Project}
+  \strut\end{minipage} &
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Person}
+  \strut\end{minipage}\tabularnewline
+  \midrule
+  \endfirsthead
+  \toprule
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Project}
+  \strut\end{minipage} &
+  \begin{minipage}[b]{0.47\columnwidth}\raggedright\strut
+  \textbf{Person}
+  \strut\end{minipage}\tabularnewline
+  \midrule
+  \endhead
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  1970.13
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10008
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  2013.01
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  2014.01
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  2014.03
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10012
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  2014.04
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10011
+  \strut\end{minipage}\tabularnewline
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  2014.05
+  \strut\end{minipage} &
+  \begin{minipage}[t]{0.47\columnwidth}\raggedright\strut
+  p10007
+  \strut\end{minipage}\tabularnewline
+  \bottomrule
+  \end{longtable}
+\end{itemize}
+
+\chapter{Conceptual Analysis}
+
+\label{chapterConceptualAnalysis}
+
+This chapter defines the formal language, in which functional
+requirements of `ProjectAdministration' can be analysed and
+expressed.The purpose of this formalisation is to obtain a buildable
+specification. This chapter allows an independent professional with
+sufficient background to check whether the agreements made correspond to
+the formal rules and definitions.
+
+This is a small demonstration script that uses the basic \&-features. It
+is used as an example in our GitBook, in . Keep this script in the
+sentinel's Shouldsucceed, ensuring that readers of the GitBook always
+have something that actually works.
+
+\section{Projects}\label{cptAnalPat:Projects}
+
+This pattern describes an administration of persons who work on
+projects. For this reason, it introduces the concepts Project and
+Person.
+
+Figure \ref{figureConcept_32diagram_32of_32the_32rules_32in_32Projects}
+shows a conceptual diagram of this pattern.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{0.7}[0.7]{\includegraphics{RulesInPatternProjects}}
+\caption{Concept diagram of the rules in Projects}
+\label{figureConcept_32diagram_32of_32the_32rules_32in_32Projects}
+\end{center}
+\end{figure}
+
+The definitions of concepts can be found in the glossary.
+
+\subsection{Declared relations}
+
+This section itemizes the declared relations with properties and
+purpose.
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[]
+The following  function has been defined
+
+\[\label{cptAnalDcl:projectName_42Project_42ProjectName}\begin{aligned}\\
+\id{projectName} &:&\id{Project} \rightarrow \id{ProjectName} 
+\end{aligned}\]
+
+A project must have one name
+\item[]
+The following univalent relation has been defined
+
+\[\label{cptAnalDcl:projectStatus_42Project_42ProjectStatus}\begin{aligned}\\
+\id{projectStatus} &:&\id{Project} \times \id{ProjectStatus} 
+\end{aligned}\]
+
+A project can have one status, such as 'in progress', or 'completed'
+\item[]
+The following univalent relation has been defined
+
+\[\label{cptAnalDcl:projectDescription_42Project_42Description}\begin{aligned}\\
+\id{projectDescription} &:&\id{Project} \times \id{Description} 
+\end{aligned}\]
+
+A project can have a description, e.g. stating the result it aims to
+achieve
+\item[]
+The following univalent relation has been defined
+
+\[\label{cptAnalDcl:projectStartDate_42Project_42Date}\begin{aligned}\\
+\id{projectStartDate} &:&\id{Project} \times \id{Date} 
+\end{aligned}\]
+
+The start date of a project can be specified
+\item[]
+The following
+symmetric, antisymmetric, univalent, and injective relation has been
+defined
+
+\[\label{cptAnalDcl:projectStarted_42Project_42Project}\begin{aligned}\\
+\id{projectStarted} &:&\id{Project} \times \id{Project} 
+\end{aligned}\]
+
+Projects can have the property of having been started
+\item[]
+The following  relation has been defined
+
+\[\label{cptAnalDcl:pl_42Project_42Person}\begin{aligned}\\
+\id{pl} &:&\id{Project} \times \id{Person} 
+\end{aligned}\]
+
+A project can have any number of project leaders
+\item[]
+The following  relation has been defined
+
+\[\label{cptAnalDcl:member_42Project_42Person}\begin{aligned}\\
+\id{member} &:&\id{Project} \times \id{Person} 
+\end{aligned}\]
+
+A person can be assigned to work within a project
+\item[]
+The following univalent relation has been defined
+
+\[\label{cptAnalDcl:personName_42Person_42PersonName}\begin{aligned}\\
+\id{personName} &:&\id{Person} \times \id{PersonName} 
+\end{aligned}\]
+
+A person can have (at most) one name
+\item[]
+The following univalent relation has been defined
+
+\[\label{cptAnalDcl:personStatus_42Person_42PersonStatus}\begin{aligned}\\
+\id{personStatus} &:&\id{Person} \times \id{PersonStatus} 
+\end{aligned}\]
+
+A person can have a status
+\item[]
+The following  function has been defined
+
+\[\label{cptAnalDcl:personEmail_42Person_42Email}\begin{aligned}\\
+\id{personEmail} &:&\id{Person} \rightarrow \id{Email} 
+\end{aligned}\]
+
+A person can have an email-address
+\item[]
+The following  relation has been defined
+
+\[\label{cptAnalDcl:workswith_42Person_42Person}\begin{aligned}\\
+\id{workswith} &:&\id{Person} \times \id{Person} 
+\end{aligned}\]
+
+A person can work with another person (in some project)
+\item[]
+The following  function has been defined
+
+\[\label{cptAnalDcl:project_42Assignment_42Project}\begin{aligned}\\
+\id{project} &:&\id{Assignment} \rightarrow \id{Project} 
+\end{aligned}\]
+
+Every Assignment must apply to one project
+\item[]
+The following  function has been defined
+
+\[\label{cptAnalDcl:assignee_42Assignment_42Person}\begin{aligned}\\
+\id{assignee} &:&\id{Assignment} \rightarrow \id{Person} 
+\end{aligned}\]
+
+Every Assignment must apply to one person
+\item[]
+The following univalent relation has been defined
+
+\[\label{cptAnalDcl:pplStartDate_42Assignment_42Date}\begin{aligned}\\
+\id{pplStartDate} &:&\id{Assignment} \times \id{Date} 
+\end{aligned}\]
+
+The date at which the Assignment started may be known
+\item[]
+The following
+symmetric, antisymmetric, univalent, and injective relation has been
+defined
+
+\[\label{cptAnalDcl:pplStarted_42Assignment_42Assignment}\begin{aligned}\\
+\id{pplStarted} &:&\id{Assignment} \times \id{Assignment} 
+\end{aligned}\]
+
+A Assignment may have the property that it has been started
+\end{description}
+
+\subsection{Rules}
+
+This section itemizes the rules with a reference to the shared language
+of stakeholders for the sake of traceability.
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[]
+In order to refer to a project, it must be identifiable, which means
+that it must be possible to select or find it in the set of existing
+projects. We choose to use the project's name for that.
+
+Therefore \ref{natLangRule:Projects_32are_32identifiable_32by_32their_32names} exists:
+
+Using relations \ref{cptAnalDcl:projectName_42Project_42ProjectName}
+(projectName), this is formalized as 
+
+\[\begin{aligned}\label{cptAnalRule:Projects_32are_32identifiable_32by_32their_32names}\\
+\text{projectName};\text{projectName}^{\smallsmile }\vdash I_{[\text{Project}]}
+\end{aligned}\]
+
+Figure \ref{figureConcept_32diagram_32of_32rule_32Projects_32are_32identifiable_32by_32their_32names} shows a conceptual diagram of this rule.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{0.7}[0.7]{\includegraphics{SingleRuleProjects_32are_32identifiable_32by_32their_32names}}
+\caption{Concept diagram of rule Projects are identifiable by their names}
+\label{figureConcept_32diagram_32of_32rule_32Projects_32are_32identifiable_32by_32their_32names}
+\end{center}
+\end{figure}
+\item[]
+In order to refer to a person (in the system), (s)he must be
+identifiable, which means that it must be possible to select him or her
+from the set of registered people. We choose to use the person's
+email-address for that.
+
+Therefore \ref{natLangRule:People_32are_32identifiable_32by_32their_32email_45address} exists:
+
+Using relations \ref{cptAnalDcl:personEmail_42Person_42Email}
+(personEmail), this is formalized as 
+
+\[\begin{aligned}\label{cptAnalRule:People_32are_32identifiable_32by_32their_32email_45address}\\
+\text{personEmail};\text{personEmail}^{\smallsmile }\vdash I_{[\text{Person}]}
+\end{aligned}\]
+
+Figure \ref{figureConcept_32diagram_32of_32rule_32People_32are_32identifiable_32by_32their_32email_45address} shows a conceptual diagram of this rule.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{0.7}[0.7]{\includegraphics{SingleRulePeople_32are_32identifiable_32by_32their_32email_45address}}
+\caption{Concept diagram of rule People are identifiable by their email-address}
+\label{figureConcept_32diagram_32of_32rule_32People_32are_32identifiable_32by_32their_32email_45address}
+\end{center}
+\end{figure}
+\item[]
+As a matter of definition, we choose to consider the project leader of a
+project to not be a (working) member of a project. Therefore, we need a
+rule that ensures this is the case.
+
+Therefore \ref{natLangRule:Project_32leaders_32are_32not_32considered_32members_32of_32the_32projects_32they_32lead_46} exists:
+
+Using relations \ref{cptAnalDcl:pl_42Project_42Person}
+(pl), \ref{cptAnalDcl:member_42Project_42Person}
+(member), this is formalized as 
+
+\[\begin{aligned}\label{cptAnalRule:Project_32leaders_32are_32not_32considered_32members_32of_32the_32projects_32they_32lead_46}\\
+\text{pl}\vdash \cmpl{\text{member}}
+\end{aligned}\]
+
+Figure \ref{figureConcept_32diagram_32of_32rule_32Project_32leaders_32are_32not_32considered_32members_32of_32the_32projects_32they_32lead_46} shows a conceptual diagram of this rule.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{0.7}[0.7]{\includegraphics{SingleRuleProject_32leaders_32are_32not_32considered_32members_32of_32the_32projects_32they_32lead_46}}
+\caption{Concept diagram of rule Project leaders are not considered members of the projects they lead.}
+\label{figureConcept_32diagram_32of_32rule_32Project_32leaders_32are_32not_32considered_32members_32of_32the_32projects_32they_32lead_46}
+\end{center}
+\end{figure}
+\end{description}
+
+\chapter{Process Analysis}
+
+\label{chapterProcessAnalysis}
+
+This is a small demonstration script that uses the basic \&-features. It
+is used as an example in our GitBook, in . Keep this script in the
+sentinel's Shouldsucceed, ensuring that readers of the GitBook always
+have something that actually works.
+
+ProjectAdministration does not specify which roles may change the contents of which relations. 
+
+ProjectAdministration assigns rules to roles. The following table shows
+the rules that are being maintained by a given role.
+
+\begin{tabular}{|l|l|}\hline
+Role&Rule\\ \hline
+Planner & Every project must have a projectleader\\ \hline
+   ExecEngine & Projectleaders are not members of a team\\
+   &Works with (populate)\\
+   &Works with (depopulate)\\
+   &Create Assignment\\
+   &Delete Assignment\\ \hline
+\end{tabular}
+
+\section{Projects}\label{prcAnal:Projects}
+
+This pattern describes an administration of persons who work on
+projects. For this reason, it introduces the concepts Project and
+Person.
+
+\begin{description}
+\itemsep1pt\parskip0pt\parsep0pt
+\item[Rule: Projects are identifiable by their names]
+In order to refer to a project, it must be identifiable, which means
+that it must be possible to select or find it in the set of existing
+projects. We choose to use the project's name for that.
+
+We use relations
+\ref{cptAnalDcl:projectName_42Project_42ProjectName}(\emph{projectName}).
+
+This means:
+
+\[\begin{aligned}\label{cptAnalRule:Projects_32are_32identifiable_32by_32their_32names}\\
+\text{projectName};\text{projectName}^{\smallsmile }\vdash I_{[\text{Project}]}
+\end{aligned}\]
+\item[Rule: People are identifiable by their email-address]
+In order to refer to a person (in the system), (s)he must be
+identifiable, which means that it must be possible to select him or her
+from the set of registered people. We choose to use the person's
+email-address for that.
+
+We use relations
+\ref{cptAnalDcl:personEmail_42Person_42Email}(\emph{personEmail}).
+
+This means:
+
+\[\begin{aligned}\label{cptAnalRule:People_32are_32identifiable_32by_32their_32email_45address}\\
+\text{personEmail};\text{personEmail}^{\smallsmile }\vdash I_{[\text{Person}]}
+\end{aligned}\]
+\item[Rule: Project leaders are not considered members of the projects
+they lead.]
+As a matter of definition, we choose to consider the project leader of a
+project to not be a (working) member of a project. Therefore, we need a
+rule that ensures this is the case.
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person} (\emph{pl}) and
+\ref{cptAnalDcl:member_42Project_42Person} (\emph{member})
+
+This means:
+
+\[\begin{aligned}\label{cptAnalRule:Project_32leaders_32are_32not_32considered_32members_32of_32the_32projects_32they_32lead_46}\\
+\text{pl}\vdash \cmpl{\text{member}}
+\end{aligned}\]
+\item[Rule: Every project must have a projectleader]
+While it is possible that a project lacks a projectleader, this is an
+undesired situation. Planners are given the job to find a new
+projectleader for such projects. The projects that are in need for a
+projectleader must therefore be signalled.
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person}(\emph{pl}).
+
+Activities that are defined by this rule are finished when:
+
+\[\begin{aligned}\label{cptAnalRule:Every_32project_32must_32have_32a_32projectleader}\\
+I_{[\text{Project}]}\vdash \text{pl};\text{pl}^{\smallsmile }
+\end{aligned}\]
+\item[Rule: Projectleaders are not members of a team]
+When a member of some project becomes the project leader of that
+project, it cannot be a project member any more. This is a consequence
+of the choice that project leaders are not considered to be members of
+the projects they lead. Whenever this is the case, the membership is
+automatically removed.
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person} (\emph{pl}) and
+\ref{cptAnalDcl:member_42Project_42Person} (\emph{member})
+
+Activities that are defined by this rule are finished when:
+
+\[\begin{aligned}\label{cptAnalRule:Projectleaders_32are_32not_32members_32of_32a_32team}\\
+\text{pl}\vdash \cmpl{\text{member}}
+\end{aligned}\]
+\item[Rule: Works with (populate)]
+We say that a person works with another person if there is a project
+which they share. This means that either person can be a member or a
+project leader (since there may be multiple project leaders) of a
+specific project. Therefore, we need a rule that populates the relation
+'workswith'. in appropriate cases
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person} (\emph{pl}),
+\ref{cptAnalDcl:member_42Project_42Person} (\emph{member}), and
+\ref{cptAnalDcl:workswith_42Person_42Person} (\emph{workswith})
+
+Activities that are defined by this rule are finished when:
+
+\[\begin{aligned}\label{cptAnalRule:Works_32with_32_40populate_41}\\
+(\text{pl}\cup \text{member})^{\smallsmile };(\text{pl}\cup \text{member}) - I_{[\text{Person}]}\vdash \text{workswith}
+\end{aligned}\]
+\item[Rule: Works with (depopulate)]
+We say that a person works with another person if there is a project
+which they share. This means that either person can be a member or a
+project leader (since there may be multiple project leaders) of a
+specific project. Therefore, we need a rule that depopulates the
+relation 'workswith' in appropriate cases.
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person} (\emph{pl}),
+\ref{cptAnalDcl:member_42Project_42Person} (\emph{member}), and
+\ref{cptAnalDcl:workswith_42Person_42Person} (\emph{workswith})
+
+Activities that are defined by this rule are finished when:
+
+\[\begin{aligned}\label{cptAnalRule:Works_32with_32_40depopulate_41}\\
+\text{workswith}\vdash (\text{pl}\cup \text{member})^{\smallsmile };(\text{pl}\cup \text{member}) - I_{[\text{Person}]}
+\end{aligned}\]
+\item[Rule: Create Assignment]
+In order to become a project leader, you need an assignment as project
+leader. Therefore, we need a rule that creates such structures, and
+populates them.
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person} (\emph{pl}),
+\ref{cptAnalDcl:project_42Assignment_42Project} (\emph{project}), and
+\ref{cptAnalDcl:assignee_42Assignment_42Person} (\emph{assignee})
+
+Activities that are defined by this rule are finished when:
+
+\[\begin{aligned}\label{cptAnalRule:Create_32Assignment}\\
+\text{pl}\vdash \text{project}^{\smallsmile };\text{assignee}
+\end{aligned}\]
+\item[Rule: Delete Assignment]
+Whenever a project participant is discharged from his task, the
+corresponding Assignment needs to be deleted. This is done by means of
+an automated rule.
+
+We use relations \ref{cptAnalDcl:pl_42Project_42Person} (\emph{pl}),
+\ref{cptAnalDcl:member_42Project_42Person} (\emph{member}),
+\ref{cptAnalDcl:project_42Assignment_42Project} (\emph{project}), and
+\ref{cptAnalDcl:assignee_42Assignment_42Person} (\emph{assignee})
+
+Activities that are defined by this rule are finished when:
+
+\[\begin{aligned}\label{cptAnalRule:Delete_32Assignment}\\
+\text{project}^{\smallsmile };\text{assignee}\vdash \text{pl}\cup \text{member}
+\end{aligned}\]
+\end{description}
+
+\chapter{Data structure}
+
+\label{chapterDataAnalysis}
+
+This chapter contains the result of the data analysis. It is structured
+as follows:
+
+We start with the classification model, followed by a list of all
+relations, that are the foundation of the rest of the analysis. Finally,
+the logical and technical data model are discussed.
+
+\section{Rules}
+
+TODO: explain section
+
+\subsection{Process rules}
+
+TODO: explain process rules
+
+\textbf{Process rule: \emph{Every project must have a projectleader}}
+
+While it is possible that a project lacks a projectleader, this is an
+undesired situation. Planners are given the job to find a new
+projectleader for such projects. The projects that are in need for a
+projectleader must therefore be signalled.
+
+\[I_{[\text{Project}]}\vdash \text{pl};\text{pl}^{\smallsmile }\]
+
+\bigskip
+
+\textbf{Process rule: \emph{Projectleaders are not members of a team}}
+
+When a member of some project becomes the project leader of that
+project, it cannot be a project member any more. This is a consequence
+of the choice that project leaders are not considered to be members of
+the projects they lead. Whenever this is the case, the membership is
+automatically removed.
+
+\[\text{pl}\vdash \cmpl{\text{member}}\]
+
+\bigskip
+
+\textbf{Process rule: \emph{Works with (populate)}}
+
+We say that a person works with another person if there is a project
+which they share. This means that either person can be a member or a
+project leader (since there may be multiple project leaders) of a
+specific project. Therefore, we need a rule that populates the relation
+'workswith'. in appropriate cases
+
+\[(\text{pl}\cup \text{member})^{\smallsmile };(\text{pl}\cup \text{member}) - I_{[\text{Person}]}\vdash \text{workswith}\]
+
+\bigskip
+
+\textbf{Process rule: \emph{Works with (depopulate)}}
+
+We say that a person works with another person if there is a project
+which they share. This means that either person can be a member or a
+project leader (since there may be multiple project leaders) of a
+specific project. Therefore, we need a rule that depopulates the
+relation 'workswith' in appropriate cases.
+
+\[\text{workswith}\vdash (\text{pl}\cup \text{member})^{\smallsmile };(\text{pl}\cup \text{member}) - I_{[\text{Person}]}\]
+
+\bigskip
+
+\textbf{Process rule: \emph{Create Assignment}}
+
+In order to become a project leader, you need an assignment as project
+leader. Therefore, we need a rule that creates such structures, and
+populates them.
+
+\[\text{pl}\vdash \text{project}^{\smallsmile };\text{assignee}\]
+
+\bigskip
+
+\textbf{Process rule: \emph{Delete Assignment}}
+
+Whenever a project participant is discharged from his task, the
+corresponding Assignment needs to be deleted. This is done by means of
+an automated rule.
+
+\[\text{project}^{\smallsmile };\text{assignee}\vdash \text{pl}\cup \text{member}\]
+
+\bigskip
+
+\subsection{Invariants}
+
+TODO: explain invariants
+
+\textbf{Invariant: \emph{Projects are identifiable by their names}}
+
+In order to refer to a project, it must be identifiable, which means
+that it must be possible to select or find it in the set of existing
+projects. We choose to use the project's name for that.
+
+\[\text{projectName};\text{projectName}^{\smallsmile }\vdash I_{[\text{Project}]}\]
+
+\bigskip
+
+Violations of this rule will result in an error message for the user:
+"TODO".
+
+\textbf{Invariant: \emph{People are identifiable by their
+email-address}}
+
+In order to refer to a person (in the system), (s)he must be
+identifiable, which means that it must be possible to select him or her
+from the set of registered people. We choose to use the person's
+email-address for that.
+
+\[\text{personEmail};\text{personEmail}^{\smallsmile }\vdash I_{[\text{Person}]}\]
+
+\bigskip
+
+Violations of this rule will result in an error message for the user:
+"TODO".
+
+\textbf{Invariant: \emph{Project leaders are not considered members of
+the projects they lead.}}
+
+As a matter of definition, we choose to consider the project leader of a
+project to not be a (working) member of a project. Therefore, we need a
+rule that ensures this is the case.
+
+\[\text{pl}\vdash \cmpl{\text{member}}\]
+
+\bigskip
+
+Violations of this rule will result in an error message for the user:
+"TODO".
+
+\section{Logical data model}
+
+The functional requirements have been translated into a data model. This
+model is shown by figure
+\ref{figureLogical_32data_32model_32of_32ProjectAdministration}.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{1.2}[1.2]{\includegraphics{LogicalDataModel}}
+\caption{Logical data model of ProjectAdministration}
+\label{figureLogical_32data_32model_32of_32ProjectAdministration}
+\end{center}
+\end{figure}
+
+There are three entity types.The details of each entity type are
+described (in alphabetical order) in the following two tables:
+
+\begin{longtable}[c]{@{}lll@{}}
+\caption{Logical entity types}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Concept
+\strut\end{minipage} &
+\begin{minipage}[b]{0.61\columnwidth}\raggedright\strut
+Meaning
+\strut\end{minipage} &
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Type
+\strut\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Concept
+\strut\end{minipage} &
+\begin{minipage}[b]{0.61\columnwidth}\raggedright\strut
+Meaning
+\strut\end{minipage} &
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Type
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Assignment
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+An assignment links one person to one project from a given start date.
+
+In order to allow a planner to allocate participants to projects, we
+introduce the concept of assignment. This will allow us to express rules
+such as: a person may register his hours on a project from the start
+date mentioned on his assignment to that project.
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Person
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+A person is any human being
+
+In order to administer project participants, the system must register
+information about them. For that reason, we introduce the concept
+Person.
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Project
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+planned set of interrelated tasks to be executed over a fixed period and
+within certain cost and other limitations
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[c]{@{}lll@{}}
+\caption{Other attributes}\tabularnewline
+\toprule
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Concept
+\strut\end{minipage} &
+\begin{minipage}[b]{0.61\columnwidth}\raggedright\strut
+Meaning
+\strut\end{minipage} &
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Type
+\strut\end{minipage}\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Concept
+\strut\end{minipage} &
+\begin{minipage}[b]{0.61\columnwidth}\raggedright\strut
+Meaning
+\strut\end{minipage} &
+\begin{minipage}[b]{0.15\columnwidth}\raggedright\strut
+Type
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Date
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Description
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+Email
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+PersonName
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+PersonStatus
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+ProjectName
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+ProjectStatus
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+SESSION
+\strut\end{minipage} &
+\begin{minipage}[t]{0.61\columnwidth}\raggedright\strut
+\strut\end{minipage} &
+\begin{minipage}[t]{0.15\columnwidth}\raggedright\strut
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsection{\texorpdfstring{Entity type:
+\emph{\textbf{Assignment}}}{Entity type: Assignment}}
+
+In order to allow a planner to allocate participants to projects, we
+introduce the concept of assignment. This will allow us to express rules
+such as: a person may register his hours on a project from the start
+date mentioned on his assignment to that project.
+
+This entity type has the following attributes:
+
+\begin{longtable}[c]{@{}lll@{}}
+\toprule
+Attribute & Type &\tabularnewline
+\midrule
+\endhead
+Id & Assignment & Primary key\tabularnewline
+project & Project & Mandatory\tabularnewline
+assignee & Person & Mandatory\tabularnewline
+pplStartDate & Date & Optional\tabularnewline
+pplStarted & Bool & Optional\tabularnewline
+\bottomrule
+\end{longtable}
+
+Assignment has the following associations:
+
+\begin{enumerate}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  project (from Assignment to Project).
+\item
+  assignee (from Assignment to Person).
+\end{enumerate}
+
+\subsection{\texorpdfstring{Entity type:
+\emph{\textbf{Person}}}{Entity type: Person}}
+
+In order to administer project participants, the system must register
+information about them. For that reason, we introduce the concept
+Person.
+
+This entity type has the following attributes:
+
+\begin{longtable}[c]{@{}lll@{}}
+\toprule
+Attribute & Type &\tabularnewline
+\midrule
+\endhead
+Id & Person & Primary key\tabularnewline
+personName & PersonName & Optional\tabularnewline
+personStatus & PersonStatus & Optional\tabularnewline
+personEmail & Email & Mandatory\tabularnewline
+\bottomrule
+\end{longtable}
+
+Person has the following associations:
+
+\begin{enumerate}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  pl (from Project to Person).
+\item
+  member (from Project to Person).
+\item
+  workswith (from Person to Person).
+\item
+  assignee (from Assignment to Person).
+\end{enumerate}
+
+\subsection{\texorpdfstring{Entity type:
+\emph{\textbf{Project}}}{Entity type: Project}}
+
+This entity type has the following attributes:
+
+\begin{longtable}[c]{@{}lll@{}}
+\toprule
+Attribute & Type &\tabularnewline
+\midrule
+\endhead
+Id & Project & Primary key\tabularnewline
+projectName & ProjectName & Mandatory\tabularnewline
+projectStatus & ProjectStatus & Optional\tabularnewline
+projectDescription & Description & Optional\tabularnewline
+projectStartDate & Date & Optional\tabularnewline
+projectStarted & Bool & Optional\tabularnewline
+\bottomrule
+\end{longtable}
+
+Project has the following associations:
+
+\begin{enumerate}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  pl (from Project to Person).
+\item
+  member (from Project to Person).
+\item
+  project (from Assignment to Project).
+\end{enumerate}
+
+\section{Technical datamodel}
+
+The functional requirements have been translated into a technical data
+model. This model is shown by figure
+\ref{figureTechnical_32data_32model_32of_32ProjectAdministration}.
+
+\begin{figure}[htb]
+\begin{center}
+\scalebox{1.2}[1.2]{\includegraphics{TechnicalDataModel}}
+\caption{Technical data model of ProjectAdministration}
+\label{figureTechnical_32data_32model_32of_32ProjectAdministration}
+\end{center}
+\end{figure}
+
+The technical datamodel consists of the following 14 tables:
+
+\subsection{Table: Assignment}
+
+This table has the following 5 fields:
+
+\begin{itemize}
+\item
+  \textbf{Assignment}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\item
+  \textbf{tgt\_project}\\This attribute implements the relation
+  \({Assignment \xrightarrow {project} Project}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\item
+  \textbf{tgt\_assignee}\\This attribute implements the relation
+  \({Assignment \xrightarrow {assignee} Person}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\item
+  \textbf{tgt\_pplStartDate}\\This attribute implements the relation
+  \({Assignment \xrightarrow {pplStartDate} Date}\).\\\texttt{SQLDate},
+  Optional.
+\item
+  \textbf{tgt\_pplStarted}\\This attribute implements the relation
+  \({Assignment \xrightarrow {pplStarted} Assignment}\).\\\texttt{SQLVarchar\ 255},
+  Optional, Unique.
+\end{itemize}
+
+\subsection{Table: Date}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{Date}\\This attribute is the primary key.\\\texttt{SQLDate},
+  Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: Description}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{Description}\\This attribute is the primary
+  key.\\\texttt{SQLText}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: Email}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{Email}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: member}
+
+This is a link-table, implementing the relation
+\({Project \xrightarrow {member} Person}\). It contains the following
+columns:
+
+\begin{itemize}
+\item
+  \textbf{Project}\\This attribute is a foreign key to
+  Project\\\texttt{SQLVarchar\ 255}, Mandatory.
+\item
+  \textbf{Person}\\This attribute implements the relation
+  \({Project \xrightarrow {member} Person}\).\\\texttt{SQLVarchar\ 255},
+  Mandatory.
+\end{itemize}
+
+\subsection{Table: Person}
+
+This table has the following 4 fields:
+
+\begin{itemize}
+\item
+  \textbf{Person}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\item
+  \textbf{tgt\_personName}\\This attribute implements the relation
+  \({Person \xrightarrow {personName} PersonName}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\item
+  \textbf{tgt\_personStatus}\\This attribute implements the relation
+  \({Person \xrightarrow {personStatus} PersonStatus}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\item
+  \textbf{tgt\_personEmail}\\This attribute implements the relation
+  \({Person \xrightarrow {personEmail} Email}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\end{itemize}
+
+\subsection{Table: PersonName}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{PersonName}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: PersonStatus}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{PersonStatus}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: pl}
+
+This is a link-table, implementing the relation
+\({Project \xrightarrow {pl} Person}\). It contains the following
+columns:
+
+\begin{itemize}
+\item
+  \textbf{Project}\\This attribute is a foreign key to
+  Project\\\texttt{SQLVarchar\ 255}, Mandatory.
+\item
+  \textbf{Person}\\This attribute implements the relation
+  \({Project \xrightarrow {pl} Person}\).\\\texttt{SQLVarchar\ 255},
+  Mandatory.
+\end{itemize}
+
+\subsection{Table: Project}
+
+This table has the following 6 fields:
+
+\begin{itemize}
+\item
+  \textbf{Project}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\item
+  \textbf{tgt\_projectName}\\This attribute implements the relation
+  \({Project \xrightarrow {projectName} ProjectName}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\item
+  \textbf{tgt\_projectStatus}\\This attribute implements the relation
+  \({Project \xrightarrow {projectStatus} ProjectStatus}\).\\\texttt{SQLVarchar\ 255},
+  Optional.
+\item
+  \textbf{tgt\_projectDescription}\\This attribute implements the
+  relation
+  \({Project \xrightarrow {projectDescription} Description}\).\\\texttt{SQLText},
+  Optional.
+\item
+  \textbf{tgt\_projectStartDate}\\This attribute implements the relation
+  \({Project \xrightarrow {projectStartDate} Date}\).\\\texttt{SQLDate},
+  Optional.
+\item
+  \textbf{tgt\_projectStarted}\\This attribute implements the relation
+  \({Project \xrightarrow {projectStarted} Project}\).\\\texttt{SQLVarchar\ 255},
+  Optional, Unique.
+\end{itemize}
+
+\subsection{Table: ProjectName}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{ProjectName}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: ProjectStatus}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{ProjectStatus}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: SESSION}
+
+This table has the following 1 fields:
+
+\begin{itemize}
+\item
+  \textbf{SESSION}\\This attribute is the primary
+  key.\\\texttt{SQLVarchar\ 255}, Mandatory, Unique.
+\end{itemize}
+
+\subsection{Table: workswith}
+
+This is a link-table, implementing the relation
+\({Person \xrightarrow {workswith} Person}\). It contains the following
+columns:
+
+\begin{itemize}
+\item
+  \textbf{SrcPerson}\\This attribute is a foreign key to
+  Person\\\texttt{SQLVarchar\ 255}, Mandatory.
+\item
+  \textbf{TgtPerson}\\This attribute implements the relation
+  \({Person \xrightarrow {workswith} Person}\).\\\texttt{SQLVarchar\ 255},
+  Mandatory.
+\end{itemize}
+
+\section{Logical data model}
+
+\begin{longtable}[c]{@{}lllll@{}}
+\toprule
+Concept & C & R & U & D\tabularnewline
+\midrule
+\endhead
+Assignment & & Project & &\tabularnewline
+Assignment & & & Person &\tabularnewline
+Date & & Started projects & &\tabularnewline
+Description & & Started projects & &\tabularnewline
+Description & & Unstarted projects & &\tabularnewline
+Description & & Project & &\tabularnewline
+Email & & People & &\tabularnewline
+Email & & Project & &\tabularnewline
+Email & Person & Person & & Person\tabularnewline
+Person & & Started projects & &\tabularnewline
+Person & & Unstarted projects & &\tabularnewline
+Person & People & People & & People\tabularnewline
+Person & & Project & &\tabularnewline
+Person & & Person & &\tabularnewline
+PersonName & & People & &\tabularnewline
+PersonName & & Project & &\tabularnewline
+PersonName & Person & Person & & Person\tabularnewline
+PersonStatus & & Project & &\tabularnewline
+PersonStatus & & Person & &\tabularnewline
+Project & & Started projects & &\tabularnewline
+Project & Unstarted projects & Unstarted projects & & Unstarted
+projects\tabularnewline
+Project & & People & &\tabularnewline
+Project & & Project & &\tabularnewline
+ProjectName & & Started projects & &\tabularnewline
+ProjectName & & Unstarted projects & &\tabularnewline
+ProjectName & & Project & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\chapter{Interface: ``Started
+projects''}\label{interface:Startedux5f32projects}
+
+Dit hoofdstuk bevat de documentatie voor de interface ``Started projects''.
+
+De interface is beschikbaar voor alle rollen.
+
+Voor deze interface hoeven geen regels gecontroleerd te worden.
+
+\textbf{CRUD matrix:}
+
+\begin{longtable}[c]{@{}lllll@{}}
+\toprule
+Concept & C & R & U & D\tabularnewline
+\midrule
+\endhead
+Project & & \(\surd\) & &\tabularnewline
+ProjectName & & \(\surd\) & &\tabularnewline
+Person & & \(\surd\) & &\tabularnewline
+Description & & \(\surd\) & &\tabularnewline
+Date & & \(\surd\) & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Interfacestructuur:}
+
+Interface voor een waarde van type ``Project''.
+
+Een lijst van 0 of meer velden van type ``Project''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{V{[}SESSION*Project{]};projectStarted}
+
+Elk veld bestaat uit 7 deelvelden:
+
+\textbf{1 Projects}
+
+Een verplicht veld van type ``Project''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{I{[}Project{]}}
+
+\textbf{2 Name}
+
+Een optioneel veld van type ``ProjectName''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectName}
+
+\textbf{3 Description}
+
+Een optioneel veld van type ``Description''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectDescription}
+
+\textbf{4 Projectleider}
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{pl}
+
+\textbf{5  }
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{pl}
+
+\textbf{6 Start}
+
+Een optioneel veld van type ``Date''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectStartDate}
+
+\textbf{7 Started}
+
+Een optioneel veld van type ``Project''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectStarted}
+
+\chapter{Interface: ``Unstarted
+projects''}\label{interface:Unstartedux5f32projects}
+
+Dit hoofdstuk bevat de documentatie voor de interface ``Unstarted projects''.
+
+De interface is beschikbaar voor alle rollen.
+
+Voorafgaand aan het afsluiten van een transactie (commit), moet aan de
+volgende regels voldaan zijn:
+
+\textbf{CRUD matrix:}
+
+\begin{longtable}[c]{@{}lllll@{}}
+\toprule
+Concept & C & R & U & D\tabularnewline
+\midrule
+\endhead
+Project & \(\surd\) & \(\surd\) & & \(\surd\)\tabularnewline
+ProjectName & & \(\surd\) & &\tabularnewline
+Person & & \(\surd\) & &\tabularnewline
+Description & & \(\surd\) & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Interfacestructuur:}
+
+Interface voor een waarde van type ``Project''.
+
+Een lijst van 0 of meer velden van type ``Project''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{V{[}SESSION*Project{]};(I{[}Project{]}\ -\ projectStarted)}
+
+Elk veld bestaat uit 5 deelvelden:
+
+\textbf{1 Name}
+
+Een optioneel veld van type ``ProjectName''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectName}
+
+\textbf{2 Description}
+
+Een optioneel veld van type ``Description''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectDescription}
+
+\textbf{3 Projectleider}
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{pl}
+
+\textbf{4  }
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{pl}
+
+\textbf{5 Started}
+
+Een optioneel veld van type ``Project''. (editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectStarted}
+
+\chapter{Interface: ``People''}\label{interface:People}
+
+Dit hoofdstuk bevat de documentatie voor de interface ``People''.
+
+De interface is beschikbaar voor alle rollen.
+
+Voorafgaand aan het afsluiten van een transactie (commit), moet aan de
+volgende regels voldaan zijn:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Works with (populate)
+\item
+  Delete Assignment
+\item
+  Project leaders are not considered members of the projects they lead.
+\item
+  Projectleaders are not members of a team
+\item
+  Works with (depopulate)
+\end{itemize}
+
+\textbf{CRUD matrix:}
+
+\begin{longtable}[c]{@{}lllll@{}}
+\toprule
+Concept & C & R & U & D\tabularnewline
+\midrule
+\endhead
+Project & & \(\surd\) & &\tabularnewline
+Person & \(\surd\) & \(\surd\) & & \(\surd\)\tabularnewline
+Email & & \(\surd\) & &\tabularnewline
+PersonName & & \(\surd\) & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Interfacestructuur:}
+
+Interface voor een waarde van type ``Person''.
+
+Een lijst van 1 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{V{[}SESSION*Person{]}}
+
+Elk veld bestaat uit 4 deelvelden:
+
+\textbf{1 Person}
+
+Een verplicht veld van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{I{[}Person{]}}
+
+\textbf{2 Name}
+
+Een optioneel veld van type ``PersonName''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personName}
+
+\textbf{3 Email}
+
+Een optioneel veld van type ``Email''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personEmail}
+
+\textbf{4 Projects}
+
+Een lijst van 0 of meer velden van type ``Project''. (editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{member\textasciitilde{}}
+
+\chapter{Interface: ``Project''}\label{interface:Project}
+
+Dit hoofdstuk bevat de documentatie voor de interface ``Project''.
+
+De interface is beschikbaar voor alle rollen.
+
+Voor deze interface hoeven geen regels gecontroleerd te worden.
+
+\textbf{CRUD matrix:}
+
+\begin{longtable}[c]{@{}lllll@{}}
+\toprule
+Concept & C & R & U & D\tabularnewline
+\midrule
+\endhead
+Project & & \(\surd\) & &\tabularnewline
+ProjectName & & \(\surd\) & &\tabularnewline
+Person & & \(\surd\) & &\tabularnewline
+Email & & \(\surd\) & &\tabularnewline
+Assignment & & \(\surd\) & &\tabularnewline
+Description & & \(\surd\) & &\tabularnewline
+PersonName & & \(\surd\) & &\tabularnewline
+PersonStatus & & \(\surd\) & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Interfacestructuur:}
+
+Interface voor een waarde van type ``Project''.
+
+Een verplicht veld van type ``Project''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{I{[}Project{]}}
+
+Dit veld bestaat uit 4 deelvelden:
+
+\textbf{1 Name}
+
+Een optioneel veld van type ``ProjectName''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectName}
+
+\textbf{2 Current PL}
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{pl}
+
+\textbf{3 Description}
+
+Een optioneel veld van type ``Description''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{projectDescription}
+
+\textbf{4 Administration}
+
+Een verplicht veld van type ``Project''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{I{[}Project{]}}
+
+Dit veld bestaat uit 2 deelvelden:
+
+\textbf{4.1 Project leaders}
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{project\textasciitilde{};assignee\ /\textbackslash{}\ pl}
+
+Elk veld bestaat uit 3 deelvelden:
+
+\textbf{4.1.1 Name}
+
+Een optioneel veld van type ``PersonName''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personName}
+
+\textbf{4.1.2 Status}
+
+Een optioneel veld van type ``PersonStatus''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personStatus}
+
+\textbf{4.1.3 Email}
+
+Een optioneel veld van type ``Email''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personEmail}
+
+\textbf{4.2 Project members}
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{project\textasciitilde{};assignee\ /\textbackslash{}\ member}
+
+Elk veld bestaat uit 3 deelvelden:
+
+\textbf{4.2.1 Name}
+
+Een optioneel veld van type ``PersonName''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personName}
+
+\textbf{4.2.2 Status}
+
+Een optioneel veld van type ``PersonStatus''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personStatus}
+
+\textbf{4.2.3 Email}
+
+Een optioneel veld van type ``Email''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personEmail}
+
+\chapter{Interface: ``Person''}\label{interface:Person}
+
+Dit hoofdstuk bevat de documentatie voor de interface ``Person''.
+
+De interface is beschikbaar voor alle rollen.
+
+Voorafgaand aan het afsluiten van een transactie (commit), moet aan de
+volgende regels voldaan zijn:
+
+\begin{itemize}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  People are identifiable by their email-address
+\end{itemize}
+
+\textbf{CRUD matrix:}
+
+\begin{longtable}[c]{@{}lllll@{}}
+\toprule
+Concept & C & R & U & D\tabularnewline
+\midrule
+\endhead
+Person & & \(\surd\) & &\tabularnewline
+Email & \(\surd\) & \(\surd\) & & \(\surd\)\tabularnewline
+Assignment & & & \(\surd\) &\tabularnewline
+PersonName & \(\surd\) & \(\surd\) & & \(\surd\)\tabularnewline
+PersonStatus & & \(\surd\) & &\tabularnewline
+\bottomrule
+\end{longtable}
+
+\textbf{Interfacestructuur:}
+
+Interface voor een waarde van type ``Person''.
+
+Een verplicht veld van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{I{[}Person{]}}
+
+Dit veld bestaat uit 4 deelvelden:
+
+\textbf{1 Name}
+
+Een optioneel veld van type ``PersonName''. (editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personName}
+
+\textbf{2 Status}
+
+Een optioneel veld van type ``PersonStatus''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personStatus}
+
+\textbf{3 Email}
+
+Een optioneel veld van type ``Email''. (editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{personEmail}
+
+\textbf{4 Works with}
+
+Een lijst van 0 of meer velden van type ``Person''. (niet editable)
+
+De bijbehorende Ampersand expressie is:
+
+\texttt{workswith}
+
+\printglossaries
+
+\end{document}

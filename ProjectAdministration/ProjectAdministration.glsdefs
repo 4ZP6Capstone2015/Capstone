@@ -1,0 +1,90 @@
+\ifglsentryexists{Project}{}%
+{%
+\gls@defglossaryentry{Project}%
+{%
+name={Project},%
+sort={Project},%
+type={main},%
+first={Project},%
+firstplural={Projects},%
+text={Project},%
+plural={Projects},%
+description={planned set of interrelated tasks to be executed over a fixed period and within certain cost and other limitations},%
+descriptionplural={planned set of interrelated tasks to be executed over a fixed period and within certain cost and other limitations},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Person}{}%
+{%
+\gls@defglossaryentry{Person}%
+{%
+name={Person},%
+sort={Person},%
+type={main},%
+first={Person},%
+firstplural={Persons},%
+text={Person},%
+plural={Persons},%
+description={A person is any human being},%
+descriptionplural={A person is any human being},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{Assignment}{}%
+{%
+\gls@defglossaryentry{Assignment}%
+{%
+name={Assignment},%
+sort={Assignment},%
+type={main},%
+first={Assignment},%
+firstplural={Assignments},%
+text={Assignment},%
+plural={Assignments},%
+description={An assignment links one person to one project from a given start date.},%
+descriptionplural={An assignment links one person to one project from a given start date.},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%

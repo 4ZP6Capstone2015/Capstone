@@ -1,0 +1,40 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2}Shared Language}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Projects}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}Diagnosis}{5}{chapter.3}
+\contentsline {chapter}{\numberline {4}Conceptual Analysis}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}Projects}{9}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Declared relations}{9}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Rules}{11}{subsection.4.1.2}
+\contentsline {chapter}{\numberline {5}Process Analysis}{13}{chapter.5}
+\contentsline {section}{\numberline {5.1}Projects}{13}{section.5.1}
+\contentsline {chapter}{\numberline {6}Data structure}{15}{chapter.6}
+\contentsline {section}{\numberline {6.1}Rules}{15}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Process rules}{15}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Invariants}{16}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}Logical data model}{16}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Entity type: \emph {\textbf {Assignment}}}{17}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Entity type: \emph {\textbf {Person}}}{17}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Entity type: \emph {\textbf {Project}}}{18}{subsection.6.2.3}
+\contentsline {section}{\numberline {6.3}Technical datamodel}{18}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Table: Assignment}{18}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}Table: Date}{19}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Table: Description}{19}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}Table: Email}{19}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}Table: member}{20}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {6.3.6}Table: Person}{20}{subsection.6.3.6}
+\contentsline {subsection}{\numberline {6.3.7}Table: PersonName}{20}{subsection.6.3.7}
+\contentsline {subsection}{\numberline {6.3.8}Table: PersonStatus}{20}{subsection.6.3.8}
+\contentsline {subsection}{\numberline {6.3.9}Table: pl}{20}{subsection.6.3.9}
+\contentsline {subsection}{\numberline {6.3.10}Table: Project}{21}{subsection.6.3.10}
+\contentsline {subsection}{\numberline {6.3.11}Table: ProjectName}{21}{subsection.6.3.11}
+\contentsline {subsection}{\numberline {6.3.12}Table: ProjectStatus}{21}{subsection.6.3.12}
+\contentsline {subsection}{\numberline {6.3.13}Table: SESSION}{21}{subsection.6.3.13}
+\contentsline {subsection}{\numberline {6.3.14}Table: workswith}{21}{subsection.6.3.14}
+\contentsline {section}{\numberline {6.4}Logical data model}{22}{section.6.4}
+\contentsline {chapter}{\numberline {7}Interface: ``Started projects''}{23}{chapter.7}
+\contentsline {chapter}{\numberline {8}Interface: ``Unstarted projects''}{25}{chapter.8}
+\contentsline {chapter}{\numberline {9}Interface: ``People''}{27}{chapter.9}
+\contentsline {chapter}{\numberline {10}Interface: ``Project''}{29}{chapter.10}
+\contentsline {chapter}{\numberline {11}Interface: ``Person''}{31}{chapter.11}
