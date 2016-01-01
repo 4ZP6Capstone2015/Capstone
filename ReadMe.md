@@ -4,17 +4,17 @@ Members: Yash Sapra (sapray@mcmaster.ca), Jaeden Guo (guoy34@mcmaster.ca), Yuriy
 
 UPDATES: Test plan document (big one) added and test plan for demo (one-page document) added.
 
-**NEXT DEADLINE: FRIDAY OCT 23RD TEST PLAN FOR DEMO DOCUMENT @ 4:30 PM**
+**NEXT DEADLINE: January 11th POC**
 
 ======================WINTER SEMESTER 2016=================== 
 
 [__Jan 11th__] Proof of concept initial code <br \>
 [__Feb 1st - 12th__] Design Document ?  <br \>
-[__Nov26th__] Proof of Concept DEMO 
-==============================================================
-to do:
-- Re-do SRS period <br \>
-=============================================================
+
+ `to do:` <br\>
+ ## - Re-do SRS period 
+ <br \>
+<br\>
 From Dr. Spencer: 
 
 Hello Jaeden, Yash and Yuriy.
