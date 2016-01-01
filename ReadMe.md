@@ -11,10 +11,10 @@ UPDATES: Test plan document (big one) added and test plan for demo (one-page doc
 [__Jan 11th__] Proof of concept initial code <br \>
 [__Feb 1st - 12th__] Design Document ?  <br \>
 
- `to do:` <br\>
- ## - Re-do SRS period 
- <br \>
-<br\>
+ `to do:` <br \>
+ `--> Re-do SRS period` 
+<br \>
+<br \>
 From Dr. Spencer: 
 
 Hello Jaeden, Yash and Yuriy.
