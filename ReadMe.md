@@ -11,12 +11,12 @@ UPDATES: Test plan document (big one) added and test plan for demo (one-page doc
 [__Jan 11th__] Proof of concept initial code <br \>
 [__Feb 1st - 12th__] Design Document ?  <br \>
 [__Nov26th__] Proof of Concept DEMO 
---------------------------------------------------------------------
+==============================================================
 to do:
 - Re-do SRS period <br \>
-- 
--------------------------------------------------------------------
+=============================================================
 From Dr. Spencer: 
+
 Hello Jaeden, Yash and Yuriy.
 
 Given that your team’s project is different from the typical project, I recommend that we proceed as follows for your next deliverables:
