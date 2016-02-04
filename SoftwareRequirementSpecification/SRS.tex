@@ -102,758 +102,489 @@ Yuriy Toporovskyy & 13 / 10 / 2015 & Initial round of editing \\\hline
 		\hline
 		 09/10/2015& EFA SRS version 0 & 13/10/2015 \\
 		19/10/2015 & EFA SRS version 1  & 22/10/2015 \\
-		23/10/2015 & Proof of Concept Demonstation & --- \\
-		---    & --- & --- \\
+		23/10/2015 & Proof of Concept Demonstation & 19/01/2016 \\
+		10/02/2016 & Software Demonstration & 10/02/2016 \\
 		--- & --- & --- \\
 		01/04/2016 & EFA Complete & --- \\
 		\hline
 	\end{tabular}
 	\end{adjustwidth}
 \end{figure}
-\chapter{Project Drivers}\label{ch:Intro}
-{\section{The Purpose of the Project}\label{sec:Purpose}}
-\edcomm{JG}{any comments I made, is a suggestion and its up to you which way 
-you prefer to write it. thanks for getting this to us early, I'm sorry we're so 
-unorganized}
-%% 1a. The User Business or Background of the Project Effort
-A large part of designing software systems is requirements engineering. One
-of the greatest challenges of requirements engineering is translating from
-business requirements to a functional specification. Business requirements are
-informal, with the intention of being easily understood by humans; however,
-functional specifications are written in formal language to unambiguously capture attributes of the 
-information system. Typically, this translation
-of business requirements to a formal specification is done by a requirements
-engineer, which can be prone to human error.
-
-Ampersand is a tool which aims to address this problem in a different way; by
-translating business requirements written in natural language into a formal
-specification by means of a ``compilation process'' (\cite{derFun}). 
-\edcomm{JG}{Maybe we should cut out how entirely, because there's a design 
-specification -- and solely focus on what? thoughts?}%
-\edcomm{YT}{The significance of Ampersand has to do with how it solves the
-  problem, or how it works. To speak to the purpose of the project means to
-  explain why the Ampersand solution is good and why we are spending our time
-  making it better. The rubric has a section titled 'General System
-  Description', so we need to say something about it}%
-%% NB: Put a tex comment at
-%% the end of the line after your 'in-line' comments, or latex inserts extra
-%% whitespace when rendering with comments off.
-Even though the business requirements and formal specification are written in
-entirely different languages, the ``compiler guarantees compliance between the
-two'' (\cite[2]{derFun}). 
-
-Ampersand also provides engineers with a variety of aids which
-help them to design products that fulfill all of the needs of their clients and
-the end-users (Figure~\ref{fig:figure1}); including data models, service catalogs and their
-specifications. Requirements engineering is perhaps most important in
-safety-critical systems; to this end, Ampersand generates modeling aids and
-specifications which are provably correct (\cite{derFun}). 
-
-\begin{figure}
-  \centering
-    \includegraphics[width=0.7\textwidth]{../figures/ampersand_artifacts}
-\caption{Ampersand produces a set of artifacts based on user's requirements.}~\label{fig:figure1}
-\end{figure}
-
-%% 1b. Goals of the Project 
-Ampersand has proven reliable in practical situations, and there have been
-efforts to teach this approach to business analysts. A large portion of the
-Ampersand system is already in place; the primary focus of this project is to
-augment Ampersand with increased capabilities for automation.
-
-For example, consider a system for ordering products online. Ampersand takes, as
-an input, statements of business requirements like
-\edcomm{JG}{Good example, could we put something in here about restrictions of 
-of the real world?}%
-\edcomm{YT}{Business requirements *are* real world requirements. Do you mean something safety-related?
-This example isn't the best, I know, but I deliberately chose a simple example}%
-\edcomm{YS}{The example is easy to understand. I think we should keep it.} 
-\edcomm{YS}{I'm not too sure if the haskell implementation needs to be a part of the introduction.
-Rubrics indicate the following critera - - - - %%%%%%%%%%%%%%%%%
- delineate purpose, specify intended audience), system scope, definitions, acronyms,
-abbreviations, references, system overview, roadmap of report - - - -
-%%%%%%%%%%%%%%%%%%%%%%%
-I believe we miss definition of EFA and ECA since it is being used a lot in the document
-}%
-\edcomm{YT}{Haskell isn't mentioned at all the intro, ECA is mentioned but is also defined
-(it is really quite simple, we don't define it mathematically, just in natural language, so 
-it shouldn't be incomprehensible).}%
-\begin{quotation}
-\noindent{\emph{Every order must have a customer and a list of products; and the total price on
-the order must equal the sum of the prices of the products.}}
-\end{quotation}
-\edcomm{YS}{Attempt at defining ECA}%
-\edcomm{YS}{Should we remove some of the haskell code and define the scope of 
-our project in terms of conserving these data rules instead? There's a good 
-chance Dan hasn't read our new problem statement so he doesn't necessarily have 
-a clear idea of Ampersand. Suggestions?}
-\edcomm{YT}{There is no Haskell code!}
-\edcomm{YS}{Sorry, i meant the pre-post conditions pairs, I guess we'll let 
-that stay.}%
-
-The requirements engineer formalizes this requirement
-as a rule in Ampersand, which is a constraint on the data in the database.
-These constraints are called invariants, because they are meant to remain satisfied at
-all times during runtime.
-
- The Ampersand compiler translates each rule into Event-Condition-Action Rules (referred to as ECA rules hereafter).
-An ECA-rule specifies the action to be taken by the system when an event takes place
-under a given condition. In Ampersand, the purpose of an ECA-rule is to restore
-invariants, i.e. to change data in the database such that the constraint becomes true
-again, after having been violated. Currently, an information system generated by
-Ampersand produces runtime events that signal violations of the constraints. 
-
-It also contains the ECA rules that are generated by the Ampersand compiler --
-information about ECA rules is propagated
-\ds{``propagated"}
-through the pipeline. 
-\ds{``pipeline"?} 
-of
-Ampersand. However, these ECA rules are not being called in order to restore
-violations automatically in the current version of Ampersand. This is due to the
-fact that it is currently unclear how to incorporate the functionality of ECA
-rules into the information system generated by Ampersand. 
-
-The information system may contain a function for manipulating orders. (Ampersand can also generate
-prototype software models, including functions types like these, from business
-requirements - but this is not the topic of our contribution). For example,
-
-\begin{verbatim}
-addToOrder : ( o : Ref Order, t : Product )
-\end{verbatim}
-\noindent{where \verb|Ref x| represents the type of references to values of type
-\verb|x|; \verb|Order| and \verb|Product| the types of orders and products, respectively.  }
-
-Ampersand can generate pre- and post-conditions for this function, based on the
-business requirements. This constitutes a formal specification of the
-information system. For example, the above function may have the following specification:
-
-\begin{verbatim}
-{ PRE: o.totalCost = t0 } 
-addToOrder(o,t) = ...
-{ POST: o.totalCost = t0 + t.cost } 
-\end{verbatim}
-
-It is proven \edcomm{YT}{This is 'proven' because someone told me we have a
-  proof/presentation of the algorithm, but not its implementation. Can anyone
-  find this? We absolutely need a reference to this.} 
-\edcomm{JG}{Can you give me more context as to what is proven? I found an 
-article on ampersand subsets, I pushed it; look for "subsets" by Joosten(both)}%
-\edcomm{YT}{There is no file in the repository with the word 'subset' in it?}%
-\edcomm{JG}{Sorry, look for domain, it may help}
-that for the subset of processes which Ampersand can support, there is an
-algorithm which will generate the necessary code to satisfy the post-conditions
-(i.e. 
-\ds{``i.e."}
-formal specifications) of each function. However, Ampersand does not yet
-implement this algorithm. Currently, a user of Ampersand must manually indicate
-how each violation must be corrected.
-
-In the previous example, the implementation of the
-function could be as follows: 
-
-\begin{verbatim}
-{ PRE: o.totalCost = t0 } 
-addToOrder(o,t) = 
-  o.orders.append(t);
-  o.totalCost = o.totalCost + t.cost;
-{ POST: o.totalCost = t0 + t.cost } 
-\end{verbatim}
-\edcomm{JG}{Should pieces of code be left to design spec?}
-The first line includes the item in the order, and the second line fixes the
-violation of the post-condition which would occur without it. Currently this
-second line would have to be hand-written by the programmer, but the
-aforementioned
-\ds{``aforementioned"}
-\edcomm{YT}{Should have a name to refer to the algorithm
-  somehow?} algorithm can derive it from the business rules. The main
-contribution of this project will be to implement the algorithm which generates
-the code to fix violations.
-
-\ds{You may want to simplify the introduction a bit to make the purpose more clear.}
-
-\section{The Stakeholders}\label{sec:Stakeholders}
-%% From the template:
-%% For each type of stakeholder, provide the following information:
-%% ● Stakeholder identification (some combination of role/job title, person name, and organization name)
-%% ● Knowledge that the project needs from that stakeholder
-%% ● The degree of involvement necessary for that stakeholder/knowledge combination
-%% ● The degree of influence for that stakeholder/knowledge combination
-%% ● Agreement on how to address conflicts between stakeholders who have an interest in the same knowledge
-%% This doesn't really seem to fit a list format.. And the majority of these things apply
-%% mainly to Ampersand - everyone else only uses Ampersand, the developers of Ampersand
-%% themselves also need our code to fit into their project, so they have the majority of the say
-%% in how things are done. Namely:
-%%    A list of the decisions for which the client will be responsible
-%% Most 'decisions' will be made by them. 
-%% TODO: Write this section. 
-
-\edcomm{YT}{These are the only real stakeholders I can think of...}
-\edcomm{JG}{you're right, I can't name names for end users so we might have to cut everything but 
-the designers out, or find a way to use the multiple rules the professors have and play in 
-dailylife to shovel the other subsections into the first one and strip the subsection titles. I'm 
-not sure what to do here  }
-\subsection{Ampersand Designers}\label{subsec:Ampersand}
-Ampersand designers are Dr. Stef Joosten and Dr. Sebastian Joosten, who in
-addition to supervising the development of EFA ("Event-Condition-Action" rules
-for Ampersand, see \ref{sec:Naming}) are also Ampersand
-contributors.
-\ds{``contributors"}
-Dr. Stef Joosten is the designer of the Ampersand method which
-have been successfully implemented in various public sectors. These two 
-individuals have not only professional interest in Ampersand, but also personal 
-interest.Ampersand has been nurtured by a great deal of patience and
-dedication. The designers of EFA by extension are Ampersand contributors and
-are affected by its outcome; the piece of Ampersand we will build is a necessary
-component required for completion of our undergraduate degrees and is designed 
-to test the capabilities of an undergraduate team. 
+\chapter{Ampersand As A System}\label{ch:Intro}
 
 
-\subsection{Requirements engineers, Architects and Functional Specification 
-Designers}\label{subsec:BusReq}
+\includegraphics[width=\textwidth]{../figures/ampersand_parts}
 \paragraph{}
-Requirement engineers such as Dr. Joosten, are responsible of translating 
-business requirements into project specifications. Ampersand provides 
-requirement engineers with the freedom to explore their creativity rather than 
-be tied down down by technical minutea (\cite{RBD}). These job titles listed 
-consist of individuals who are 
-end-users and hold stake in this project because it acts similar to an editor 
-that will oversee the minutia of creating an information system. Furthermore, 
-the editor will have the ability to prove if the system that the designer has 
-built is correct according to client specification (\cite{applyAlg}). 
+Ampersand is an open-source project that produces design artifacts based on 
+business rules. One of the essential functions of Ampersand is to maintain all 
+the business rules that keep transactions valid during the course of each 
+cycle, where multiple transactions could take place.  The diagram above breaks 
+down the major components of ampersand ignoring specification details. This 
+project focuses mainly on one component of Ampersand, which is the F-spec which 
+contains ECA/(Event-Condition-Action Rules/) that each process must obey. These 
+rules are essential to the functionality of ampersand, and purpose of this 
+project is to correctly translate ECA Rules into type safe SQL queries.
+{\section{The Ampersand Environment}\label{sec:Purpose}}
+Ampersand is a on-going project with an increasing number of modules being
+added to it on a weekly basis. Since this project focuses on a component of 
+ampersand, it must be built to fit within the ampersand environment and 
+co-exist with other modules. Due to this restriction, many design decisions are 
+predetermined such as types of data that are used and programming language used 
+to build them.
+\subsection{Project Purpose}
+The purpose of this project is to correctly translate ECA rules, used to 
+maintain business conditions into type-safe SQL queries using Haskell. 
+\subsection{Project Goals} 
+The goals of this project can be divided into two components. The first 
+component consists of satisfying the condition necessary for the completion of 
+an undergraduate capstone project. The second component is to design and 
+implement maintainable code that can be absorbed to the ampersand open-source 
+project. 
+\section{The Stakeholders}\label{sec:Stakeholders}
+The stakeholders is separated into two sections, those that directly benefit 
+from this projects contribution and those that indirectly benefit.
+\subsection{Ampersand Designers}\label{subsec:Ampersand}
+Ampersand designers is our client, and they directly benefit from this project 
+as it bring Ampersand one step closer to completion. This project EFA /(ECA for 
+Ampersand/) delivers a maintainable component for Ampersand that produces type 
+safe SQL queries, a crucial part of Ampersand used for database manipulation 
+which is currently absent. 
 
-\ds{Break up this wall of text into paragraphs.}
+\subsection{End-Users}\label{subsec:BusReq}
+\paragraph{}
+Ampersand users indirectly benefit from this project's contribution because it 
+drastically decrease the time spent manually restoring system invariants, which 
+are the rules that maintain the validity of each business process. As EFA is 
+executed during compile time, the user will not suffer any noticeable delays 
+and can rest assured that the artifacts they received are correct according to 
+specification.
 
-\ds{This entire section (1.2) has been unnecessarily verbose. A simple explanation
-	of who the stakeholder is and why they hold a stake would be enough.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 2: Project Constraints %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Project Constraints}\label{ch:Constraints}
-The main constraints of this project is time and the programming language that 
-this project must be written in. The maximum allotted time for this project is 
-8 months and during this time we must create a program from a partial 
-algorithm, test it externally for all possible bugs and then implement it 
-within a much bigger system. 
-The other constraint is the use of Haskell as it 
-is the language choosen by Ampersand designers, any additions to Ampersand must 
-be in Haskell.
-
-\ds{Lack of a constraint is not a constraint.}
+The current Ampersand system is the main limitation of this project; everything 
+that is built, must be built to fit within its current constraints. These 
+constraints include the language used to build Ampersand /(i.e. Haskell/). 
+Anything incorporated into Ampersand must be implemented in the Haskell 
+language as other languages cannot be used. Additional constraints is placed on 
+the acceptance of this project by our clients, which is to produce maintainable 
+code; this includes the use of dependable libraries and any support modules 
+generated by this project to help the translation of ECA rules to SQL commands.
 
 \section{Mandated Constraints}\label{sec:Constraints}
-
 %%%%
 %% 4.1 Solution constraints. 
-%% We don't have that many, so 'solution constraints' isn't really appropriate.
-\subsection{Project philosophy}
 
-Ampersand is an existing software project with a very sizable code base. The
-cost of maintaining poorly-written code can be very high and can outweigh the
-benefit of the contribution. For our code to eventually be merged into
-Ampersand, it must be maintainable: it must be written according to coding
-practices of Ampersand; it must be well documented, so it can be easily
-understood by other programmers. 
-
-Primarily, our code must be well-documented, backwards-compatible and 
-mathematically provable. Our code must satisfy existing tests, and additional 
-tests should be written for the new algorithm being implemented. Writing 
-maintainable and well-documented code will help with this goal as well.
-
-These motivations are very important to Ampersand and are considered primary
-goals alongside the obvious goal of producing code implementing the desired
-feature.
-
-\ds{So the code must be well-documented and backwards-compatible?}
+All code must be well documented, backwards compatible and fit seamlessly into 
+the current Ampersand project. Due to the long-term nature of this project, we 
+must minimize the number of external dependencies as we little, if any control 
+over the modification that will be made to them over time. 
 
 %%3b.
-\subsection{Implementation environment}
+\subsection{Implementation Environment of the Current System}
 \subsubsection*{Haskell}
-The Ampersand code base is written almost entirely in Haskell (\cite{ampSource}). Part of the
-prototype software is written in PHP and Javascript. 
-However, we do not have to interact with this code base. Our code contribution
-must be entirely in Haskell.
-
-\subsubsection*{Haskell software}
-Ampersand is designed to be used with the Glasgow Haskell Compiler (\cite{GHC}) , or GHC,
-and the associated Cabal build system (see \verb|ampersand.cabal| from \cite{ampSource}). 
-Ampersand also uses many open source Haskell packages, all available on the
-Hackage package archive. 
-If we are to introduce dependencies on additional packages,
-\ds{This doesn't sound like a constraint}
-  these must be well-justified and negotiated with the Ampersand developers.
+The Ampersand code base is written almost entirely in Haskell 
+(\cite{ampSource}) with the exception of user interfaces for the generated 
+prototypes written in PHP and Javascript. Haskell is the only programming 
+language we can use to build modules for ampersand.
 
 
-\subsubsection*{GitHub}
-The Ampersand code base currently lives on GitHub. Our code contributions must
-also be on GitHub; this will facilitate easy integration of our code into
-Ampersand. This is especially useful if only parts of our code eventually become
-integrated into Ampersand - GitHub facilitates this especially. 
-\edcomm{YS}{Do we want to tell them that our code might not be integrated in Ampersand?
-I think we should abstract this information to make our configuration look more significant.}%
+\subsubsection*{The Glasgow Haskell Compiler \& Cabal Build System}
+As most of Ampersand's base code is written in Haskell, a compiler must be used 
+to compile it. The Glasgow Haskell Compiler (\cite{GHC}) with the Cabal build 
+system (see \verb|ampersand.cabal| must be used to compile ampersand 
+\cite{ampSource}). Ampersand is not designed to used with other Haskell 
+compilers.
+
+
+\subsubsection*{GitHub Repository}
+Ampersand's main repository is hosted on github, we must also host our project 
+on github to be able to maintain consistency with the Ampersand source code.
 
 \subsubsection*{Graphviz}
 Graphviz is an open source graph visualization software, which can
-visually represent information in the form of charts and graphs. It contains
-various designs from which the user is able to select. This is used to take
-descriptions of graphs in simple text and create diagrams. Ampersand generates
-reports about the input system using graphs and charts, so Graphviz is one of the
-basic components required to run Ampersand.
+visually represent information in the form of charts and graphs. Graphviz is 
+used to create visuals in ampersand artifacts and is an essential to running 
+ampersand.
 
 \subsubsection*{XAMPP}
-Ampersand generates prototype websites based on business requirements; to run
-these, some web server software is needed. XAMPP stands for cross \big( i.e., X
-\big) platform Apache distribution containing MySQL, PHP and Perl. XAMPP \cite{xampp} is the
-recommended way
-\ds{Convenient, but not the only way? Then is it really a constraint?
-Is there a specific reason you \emph{must} use XAMPP?}
-to set up a working database for Ampersand and access .php
-pages. XAMPP is the only bundled software that has all the necessary components 
-that Ampersand needs. Alternatively, users can install individual components, 
-however it is very tedious to adjust individual ports and Ampersand may not  
-automatically detect these components to use as part of its internal system. 
-Experienced programmers who wish to install individual components are welcome 
-to do so.
+XAMPP is used to create a local ampersand database for the generated prototype. 
+Ampersand is internally built to use XAMPP configurations, and currently it is 
+not set up to use alternative software for database generation.
 
-\edcomm{YT}{Be liberal with what you include in this section, but if it is a
-  'technology' then put it in the previous section. Any acronyms, or words that
-  the layman probably won't know, need to be here.}%
-
+\subsection{Partner of Collaborative Applications}
+%%3c. of voltere template, applications that are not part of product but with 
+%%which the product will collaborate, can be external applications, commercial 
+%%packages or pre-existing in-house applications
+\begin{longtable}{ |m{4.5cm}|m{1.5cm}|m{7cm}|  }
+    \hline 
+    \textbf{Name} & \textbf{Type} & \textbf{Description} \\ \hline \hline
+    AbstractSyntaxTree & Ampersand module & A module designed specifically for 
+    Ampersand, data from this module is manipulated in EFA.
+    \\ \hline        
+    Control.Applicative & Library module & An interface that provides an 
+    intermediate structure between a monad and a functor. This interface is 
+    used to embed pure expressions, sequence computations and combine their 
+    results.  \\ \hline
+    Control.Exception & Library module & An interface that provides support for 
+    raising and catching build-in and user-defined exceptions.  \\ \hline
+    Control.DeepSeq & Library module & This module is used to fully evaluate 
+    data structure and is used to prevent resource leaks in lazy IO programs.  
+    \\ \hline            
+    Data.Proxy & Library module & A concrete proxy type, used to represent the 
+    value of something else.  \\ \hline    
+    Data.Type.Equality & Library module & This module offers pattern-matching 
+    on types and provides a proof, it is used as a definition of propositional 
+    equality.  \\ \hline        
+    Data.List & Library module & A module that provides support for operations 
+    on list structures.  \\ \hline
+    Data.Char & Library module & A module that provides support for characters 
+    and operations on characters.  \\ \hline
+    Data.Coerce & Library module & Provides safe coercions between data types; 
+    allows user to safely convert between values of type that have the same 
+    representation with no run-time overhead.   \\ \hline
+    Debug.Trace & Library module & Interface for tracing and monitoring 
+    execution, used for investigating bugs and other performance issues.  \\ 
+    \hline
+    GHC.TypeLits & Library module & Internal GHC module that declares the 
+    constants used in type-level implementation of natural numbers.  \\ 
+    \hline    
+    GHC.Exts & Library module & This modules allows the use of pointers to an 
+    object or array of objects.  \\ \hline    
+    Language.SQL.SimpleSQL & Library module & Syntax: provides the AST for SQL 
+    queries. \\& & Pretty: provides pretty printing functions that formates 
+    output for human reading. \\ \hline            
+    Numeric.Natural & Library module & Natural number type  \\ \hline    
+    Prelude & Library module & A standard module that is imported by default 
+    and provides support for basic data types, comparison functions, and 
+    methods used for data manipulation.   \\ \hline
+    System.IO.Unsafe & Library module & This module allows IO computation to be 
+    performed at any time, the IO computation must be free of side effecets and 
+    independent of its environment to be considered safe. Any I/O computation 
+    that is wrapped in unsafePerformIO performs side effects.  \\ \hline
+    Text.PrettyPrint.Leijen & Library module & A pretty printer module based 
+    off of Philip Wadler's 1997 "A prettier printer", used to show SQL queries 
+    in a readable manner to humans.  \\ \hline        
+    Unsafe.Coerce & Library module & A helper module that converts a value from 
+    any type to any other type, the user must assure that the old data type and 
+    the new data type have identical internal representations, else runtime 
+    corruption occurs. This is used in the translation of ECA rules to SQL 
+    using unique data types.  \\ 
+    \hline  
+\end{longtable}
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
 \begin{description}
 \item[ECA] Stands for Event-Condition Action. The rule structure used for data
   bases and commonly used in market ready business rule engines. ECA rules are
   used in Ampersand to describe how a database should be modified in response to
-  a system constraint becoming untrue. Event-Condition Action rules have
-  the following structure (\cite[8--9]{RBD}):
- %TODO{JG}: bold or italicize words in definitions
-\edcomm{JG}{Please keep this in alphabetical order, or order it by chapter or something, but it 
-needs to be in an order of some kind}
-\ds{A lot of these are far too specific. I do not need to know implementation
-details to understand the abstract requirements.}
-\item [ADL] Stands for ``A Description Language'' (\cite[13]{derFun}). From a
+  a system constraint becoming untrue.
+  
+\item [ADL] Stands for ``Abstract Data Language'' (\cite[13]{derFun}). From a
 given set of formally defined business requirements, Ampersand generates a
 functional specification consisting of a data model, a service catalog, a
 formal specification of the services, and a function point analysis. An ADL
 script acts as an input for Ampersand. An ADL file consists of a plain ASCII
 text file.
-\item [Ampersand] Ampersand is the name of this project. It is used to refer to
-both the method of generating functional specification from formalized
-business requirements, and the software tool which implements this method.
-\item [Business requirements] Requirements which exist due to some real world constraints;
-i.e.
-\ds{``i.e."}
-financial, logistic, physical or safety constraints. 
-\item [Business rules] See \emph{Business Requirements}.
-\item [EFA] Stands for ``ECA (see above) for Ampersand''. This term is used to refer to 
-  the contribution of this project. 
-\item [Functional specification] A \emph{formal} document which details the operation,
-  capabilities, and appearance of a software system. 
+\item [Ampersand] Ampersand is a method and the name of the open source 
+project. 
+    \begin{itemize}
+        \item[$\Rightarrow$] The Ampersand method is used to generate
+        functional specification from formalized business requirements.
+        \item[$\Rightarrow$] The Ampersand software is a tool that implements 
+        this method.
+    \end{itemize} 
+    
+\item [Business rules] Rules that exist to represent real world 
+constraints that the virtual world does not naturally possess, such as resource 
+and social limitations. Examples of constraints include but are not limited to 
+financial, logistic, physical or legal constraints.
 
-\item [Natural language] Language written in a manner similar
-\ds{``similar"}
-to that of human communication; 
-  language intended to be interpreted and understood by humans, as opposed to machines. 
+\item [EFA] Stands for ``ECA (see above) for Ampersand''. This term is used to 
+refer to this project. 
+\item [Functional specification] A \emph{formal} document which details the 
+operation, capabilities, and appearance of a software system. 
+
+\item [Natural language] Language written in a manner similar to that of human 
+communication; 
+  language intended to be interpreted and understood by humans, as opposed to 
+  machines. 
+  
 \item [Requirements engineering] The process of translating business
 requirements into a functional specification. 
- 
-
-\edcomm{YS}{ADL is probably not "A data Language".}
-\edcomm{YT}{I swear to god I read "A data Language" somewhere... maybe I was
-  delirious from lack of sleep... In any case, we should eventually find a
-  reference for ``ADL'', whatever it is...}
-\edcomm{JG}{this is in Joosten's article "Deriving Functional Specifications from Business 
-Requirements with Ampersand", ADL is a tool that accompanies Ampersand (which is a method); ADL 
-generates a functional specification consisting of a data model, service catalogue, a formal 
-specification of the services, and a function point analysis
-	
-	It (ADL) translates business rules  back into the natural language, and provides feed back to 
-	the requirments engineer for validating his work. (Also becareful with how you use the word 
-	validation vs. verification, these terms are distinguished in Rule based design and we dont 
-	want to contradict ourselves/our supervisors by using them interchangably)
-	
-	ADL translates the entire set of requirements to design artifacts that are needed in subsequent 
-	software design processes (p.2)
-	
-	They also specify the difference between requiement and specification: where specification is 
-	used to prescribe properties of a system to be built; and requirement 
-	describes an explicit or implicit need of users input}
-\edcomm{YT}{Stef's article describes ADL as 'an accompanying tool' but also as
-  the 'language which is input to Ampersand'. This is confusing and I feel like
-  the former definition is not that useful so I decided to omit it. Just refer
-  to 'Ampersand' as both the tool which is written in Haskell and this method of
-  generating functional consraints from business requirements. To this end, I
-  added a definiton of 'Ampersand'. But thanks for the reference to 'A
-  description language'}
-\edcomm{JG}{I'm.. so confused lol the more we do this the more lost Ive become 
-as to what is what and how we're going to do what we're suppose to do -- I 
-can't even tell if Ampersand is a system, 
-model or tool.. or all three? }
 \end{description}
 
-%TODO{JG}: add Expression as a data type? Find a better way of describing 
-%Expression without implementation details
-
-%% This section is strange and we may have to replace it with something else...
 \section{Relevant Facts and Assumptions}\label{sec:Assumptions}
-\ds{Why is this section here and empty?}
-This project assumes that those who may use Ampersand and by extension this 
-project, are computer literate and work in the field of business or 
-engineering. We assume our users are knowledgeable about computer systems and 
-able to understand and follow error messages. Furthermore, we assume that any 
-system that can run Ampersand, can run EFA.
+This project makes the assumption that Ampersand users are using it according 
+to its intended purposes and have all the necessary software dependencies 
+installed for it properly function. This project is designed with the 
+assumption that no direct interaction is necessary between the design component 
+and the user. All interactions that could take place is buffered by Ampersand. 
+Furthermore, we assume that Ampersand users are industry professionals that are 
+capable of tracing error messages and fixing them. 
+
 \subsection{Error Detection}
-Ampersand has a built in type-error detector that will reject scripts if they 
-are not written in the appropriate order (e.g. misalignment of syntax, missing 
-logical inconsistencies, missing references to objects, missing rules, missing 
-headers, etc). Thus the error-detection system for this project only focuses on 
-error detection within the internal operations of EFA. It does not extend 
-beyond EFA output.
+EFA provides traceable error messages for the developer, however on a user 
+level these trace error messages would be absorbed into Ampersand and its 
+various error detection mechanisms situated on every level of compilation. 
+Ampersand is equipped with friendly error detection for the user beginning with 
+syntax detection for ADL scripts to assure that there are no missing or out of 
+place components. To logical error detections that the user might have missed 
+during the creation of their information system. The error messages inform the 
+user what line the error has been found, what the error pertains to, and what 
+is expected typically in the script structure. The script structure provides 
+the user clues for how they may wish to fix the error by adjust their script to 
+fit the appropriate format.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 3 -- Functional requirements %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Functional Requirements}\label{ch:Functional}
-%% This section is probably a good place to give a description of ampersand. 
-\section{The Scope of the Work}\label{sec:ScopeOfWork}
-
 \begin{figure}[!htb]
-\begin{center}
-\includegraphics[width=\textwidth]{../figures/business_process}
-\caption{Business process diagram representing the role of Ampersand in the
-  software design cycle}~\label{fig:BusinessProcess}
-\end{center}
-\end{figure}
-
-\edcomm{YT}{The template has a bunch of stuff for this section. But I think this
-  diagram is a good summary. Let me know what you guys think. }%
-\edcomm{JG}{looks good!}
-
-Figure \ref{fig:BusinessProcess} is a simplified view of the software design
-cycle, intended to highlight the role of Ampersand in this cycle. This view
-omits many of the uses of the design artifacts
-\ds{``artifacts"} generated by Ampersand; instead
-it focuses mainly on the primary purpose, which is to help create a finished
-software system. 
+    \begin{center}
+        \includegraphics[width=\textwidth]{../figures/business_process}
+        \caption{Business process diagram representing the role of Ampersand in 
+        the software design cycle}~\label{fig:BusinessProcess} \end{center}
+The diagram is a simplified view of the software design cycle, intended to 
+highlight 
+the role of Ampersand in this cycle. This view omits many of the uses of the 
+design artifacts generated by Ampersand; instead it focuses mainly on the 
+primary purpose, which is to help create a finished software system. 
 
 The contribution of this project is denoted with dashed lines. Note that it is
-isolated to a process completely internal to Ampersand. It should not affect the
-interface to Ampersand.
+isolated to a process completely internal to Ampersand.    
+\end{figure}
 
-%% http://tex.stackexchange.com/questions/165793/how-to-make-a-table-on-more-then-one-page-by-using-the-table-environment
-%% Make this table ultra wide so it doesn't take 10 pages...
-\ds{This table needs to have its columns adjusted. The description should be 
-the widest column.}
 
-\begin{longtable}{ |m{4.5cm}|m{1.5cm}|m{7cm}|  }
-\hline 
-\textbf{Entity} & \textbf{Type} & \textbf{Description} \\
-\hline \hline
-Real World & Actor & Everything outside of the software system \\ \hline
-Requirements engineers & Actor & Stakeholder: end-users\\ \hline 
-Ampersand system & Actor & The Ampersand software tool (\ref{sec:Naming}) and
-  all of its associated resources. \\ \hline 
-Software engineers & Actor & Stakeholder: end-users\\ \hline
-ADL File        & Object        & The input to Ampersand, see section 
-\ref{sec:Naming} \\ \hline  
-Real world constraints  & Object & Driving force for software system \\
-Finished product  & Object & The finished software system, including supporting 
-documentation and training/services  \\ \hline
-Business requirements & Object & Important constraints separated
-\ds{``separated"}
-into logical units, see section \ref{sec:Naming} \\ \hline
-Internal representation & Object & The internal representation on which all
-  computations are done; this is never exposed to the outside world directly \\ 
-  \hline
-Prototypes & Object & Resource generated by Ampersand \\ \hline
-Data models & Object & Resource generated by Ampersand \\ \hline
-Design documents & Object & Resource generated by Ampersand \\ \hline
-Functional specification & Object & Resource generated by Ampersand \\ 
-\hline
-Distribute product & Process & Physical deployment of software and services \\ 
-\hline
-Re-evaluate
-\ds{``Re-evaluate"}
-constraints & Process & Constraints deemed not valid and must be 
-\ds{``re-evaluated"}
-re-evaluated \\ \hline
-Interpret constraints & Process & Turn constraints into business requirements 
-\\ \hline
-Formalize & Process & Rewrite something in formal language, usually from 
-natural language \\ \hline
-Re-evaluate
-\ds{``Re-evaluate"}
-requirements & Process & Requirements deemed not valid and must be re-evaluated
-\ds{``re-evaluated"}
-\\ \hline
-Verify and compile & Process & Verification consists of typechecking (see 
-\ref{sec:Naming}) \\ \hline
-Automatically fix violations & Process & Insert the necessary code so that
-  generated code will not violated business constraints \\ \hline
-Write software & Process & \\ \hline
-Error detection & Process & Is this product able to detect inconsistent data 
-errors with new contributions? Is the error detection robust enough to catch 
-process associated bugs such as cycling, and deadlocks?\\ \hline
-Product  fulfills requirements? & Decision & Is the product deemed sufficient 
-or accepted? \\ \hline
-Software matches specification? & Decision & Does the software meet all of the
-  requirements set forth by the formal specification? \\ \hline
-Design is feasible? & Decision & Does the software engineer think that the
-  design can be implemented in the desired timeframe? \\ 
-\hline
- \caption{Description of entities present in figure \\ 
- \ref{fig:BusinessProcess}}
-\end{longtable}
+\section{The Scope of the Work}\label{sec:ScopeOfWork}
+\textit{The following sections focuses specifically on EFA and how it will 
+function in the Ampersand environment.}
+%data flow diagram for EFA goes here
+EFA is an automated process internal to Ampersand, and as a part of the 
+ampersand system it works in collaboration with other internal components such 
+as the F-spec. The purpose of EFA is to replace the current exec-engine, 
+creating a permanent solution for the implementation of ECA rules. EFA also 
+provides extensive functionalities that the exec-engine is missing, such as the 
+ability to manipulate data in a database beyond the basic level of creating and 
+dropping tables, and basic select queries. It provides the fundamental 
+datatypes that are crucial for the expansion and maintenance of Ampersand as it 
+grows. Due to the way that queries are generated in its present state, large 
+number of projects will bog down the system until it becomes unmanageable, and 
+if Ampersand is used in practice.
+
+\subsection{The Current Situation} %what is being replaced/made better, the 
+%effects of the proposed change
+
+Ampersand currently has an exec-engine that passes SQL queries which are 
+triggered by the prototype user interface implemented in PHP. Though the 
+exec-engine functions, it is a temporary solution for translating ECA rules 
+into SQL queries. Any changes made to the information system after its initial 
+generation require manual maintenance. This project will create a permanent 
+solution that is provably correct and will automate the correction of system 
+invariants so that manual maintenance of system invariants is no longer 
+necessary once EFA has been successfully incorporated into Ampersand.
 
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
-\edcomm{JG}{Scope = work that needs to be done to delivery a product}
-EFA require formal proofs and documentation that are provable in addition to its implementation; 
-the implementation requires the final product to be able to implement an algorithm in Haskell that 
-restores rules made by the user (i.e., invariants) and correct any data which have violated these 
-rules. A secondary component of this project is the implementation of ECA (Event-Condition 
-Action) Rules used for reactive rule-based systems which has the ability to discover and 
-systematically respond
-\ds{``respond" -- I'm no longer looking at spelling or grammar. It is up to you to 
-find the rest of the mistakes (if any) before the next revision is submitted.}
-to triggers for events in a timely manner. 
-(\cite[p.182]{ECA})
-\edcomm{YT}{Who is Berstel? Is this reference in our repo?}
-Currently, implementation and architecture of ECA rules systems are intensively 
-studied in Active Database Management Systems. (\cite[p.202]{ECA})
-There are various problems that may arise during implementation of the ECA rules translation, 
-what those problems may be are unforeseeable at this stage of development. 
+The translation of ECA rules into SQL queries require unique datatypes that 
+preserves the semantics the user provides in the ADL script. ECA rules are 
+generated from the conditions the user specifies in the ADL script. The SQL 
+queries generated from ECA rules can be thought of as a sequence of changes 
+made to the data. This sequence of actions are made through specific event 
+triggers, and the actions only take place if all conditions are satisfied and 
+are valid. An example of this, would be attempting to delete a person who does 
+not exist. This actions cannot be completed because the person does not exist, 
+this action would be invalid. 
 
 \section{Functional Requirements}\label{sec:Functional}
-%%TODO: Formatting, elaboration? What else goes here?
-%\Subse
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../figures/functional}
-	\caption{Diagram of how EFA fits into Ampersand}~\label{fig:figure2}
-\end{figure}
-%TODO{JG}: Make diagram of EFA
-
-Ampersand as a whole is a large system with many moving parts. However, for the
-most part, these different subsystems have little influence on our 
-contribution. As highlighted in figure \ref{fig:figure2}, our contribution will 
-be implemented as a program transformation on the internal data structures of 
-Ampersand. Our contribution will not interact with the parsing of input; or 
-with the generation of design artifacts.
- 
-Therefore, we omit functional requirements that are not related to our
-contribution from this section; that is, those requirements which are related
-only to subsystems with which we will not be interacting. These requirements are
-included in section \ref{sec:Waiting}. 
-
-Our functional requirements can be summarized as follows. Our implementation must
-\begin{itemize}
-\item provably implement the desired algorithm.
-\item accept its input in the existing ADL file format.
-\item produce an output compatible with the existing pipeline. 
-\item be a pure function; it should not have side effects.  
-\item not introduce appreciable performance degredation. 
-\item provide diagnostic information about the algorithm to
-the user, if the user asks for such information.
-\end{itemize}
-\edcomm{JG}{To YT: I'm sorry I used bullet points, but I needed more before 
-writting this out and its 4:30 in the morning, I'm not sure you're available}
-\edcomm{YT}{This seems to be a good use of bullet points, because we elaborate
-  on our functional requirements below. The above is just a summary.}
-
-
-%% YT: I got rid of 'Conflict' altogether from all the reqs. 
-%% \subsubsection*{Explanation of functional requirements template}
-%% %%%%%%%%%%%%%%%%%%%%
-%% \edcomm{JG}{maybe this note should go into glossary or something?}%
-%% \edcomm{YT}{This seems like a good spot. Could you give a touch up this part a
-%%   bit? The first thing ranges from 1 to 5 but there are four named
-%%   'levels'. This is logical inconsistency that will make this document very
-%%   confusing.}%
- 
-%% Conflicts: 
-%% 	\begin {itemize} 
-%% 	\item[$\rightarrow$] none: no existing conflict
-%% 	\item[$\rightarrow$] minor: does not affect functionality and can be remodeled to fit into 
-%% 	current system 
-%% 	\item[$\rightarrow$] medium: requires immediate attention, but can be resolved
-%% 	\item[$\rightarrow$] major: severe system conflict with Ampersand and 
-%% 	requires alternative implementation
-%% 	\item[$\rightarrow$] severe: requires immediate attention and product 
-%% 	cannot function due to severe system conflict; needs over haul for proceed; 
-%% 	this may constitute a dead end.
-	 
-%% 	\end{itemize} 
-
-
-\subsection{User Requirements}
-
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-Requirement & U1 \\ 
-\midrule
-\endhead
-Description  & Users of Ampersand shall be able to insert and 
-modify ECA rules at any time.  
-\\	Rationale & To allow user to change the requirements in accordance to the changing needs.
-\\	Originator & Users of Ampersand
-\\	Fit Criterion & The Data in the database preserves these rules and maintains consistency.   
-\\	Priority & 4 - High
-\\	Supporting Materials & --- 
-\vspace{12pt}
-\end{tabularx}
-}
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-	\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-		Requirement & U2 \\ 
-		\midrule
-		\endhead
-		Description  & Error reports for users  
-		\\	Rationale & To give users a detailed report of bugs at the users 
-		request
-		\\	Originator & Users of Ampersand
-		\\	Fit Criterion & Usablity and Understandability  
-		\\	Priority & 4 - High
-		\\	Supporting Materials & --- 
-		\vspace{12pt}
-	\end{tabularx}
-}
-
-\subsection{Product and System Requirement}
-
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-Requirement & S1 \\ 
-\midrule
-\endhead
-Description  & Error handling on new contributions  
-\\	Rationale & Must produce user-friendly error messages that are specific to 
-the error it has caught and able to catch errors with new additions to the 
-information system.
-\\	Originator & Client/Designers 
-\\	Fit Criterion & Able to compile using GHC %% --haskell function  
-\\	Priority & 5 - Highest
-\\	Supporting Materials & Ampersand Documentation (Rule Based Design \cite{RBD}) 
-\vspace{12pt}
-\end{tabularx}
-}%
-\ds{This is a constraint, not a functional requirement.}
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-Requirement & S2 \\ 
-\midrule
-\endhead
-Description  & The code contribution must be a patch to the existing Ampersand system 
-\\	Rationale & Cohesion of new product into existing system; 
-                    necessary for EFA to be added to source code of Ampersand 
-\\	Originator & Client/Designers 
-\\	Fit Criterion & Able to submit pull request on GitHub %% --haskell function  
-\\	Priority & 5 - Highest
-\\	Supporting Materials & Ampersand Documentation (Rule Based Design \cite {RBD}) 
-\vspace{12pt}
-\end{tabularx}
-}%
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-Requirement & S3 \\ 
-\midrule
-\endhead
-	Description  & Able to recognize input in the existing Ampersand format
-	\\	Rationale & Necessary for ECA rules to be added; the algorithm needs 
-  an input, which must take the form of existing Ampersand datatypes 
-	\\	Originator & Client/Designers 
-	\\	Fit Criterion & Able to take input from existing Ampersand datatypes 
-  and return a value
-	\\	Priority & 5 - Highest 
-	\\	Supporting Materials & Ampersand Documentation (Rule Based Design \cite{RBD}) 
-\vspace{12pt}
-\end{tabularx}
-}%
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
-Requirement & S4 \\ 
-\midrule
-\endhead
-	Description  & Able to translate input into ECA rules 
-	\\	Rationale & Major portion of project and EFA is useless without it
-	\\	Originator & Client/Designers 
-
-	\\	Fit Criterion & Outputs ECA rules in proper format for F-Spec (i.e., 
-	SQL translator)
-	\\	Customer Satisfaction & 5 - Highest 
-	\\	Priority & 5 - Highest 
-	\\	Supporting Materials & Rule Based Design (\cite{RBD}); ECA for Web Development %% 
-	%%TODO ref to this? JG: your choice?
-\vspace{12pt}
-\end{tabularx}
-}
-{\setlength{\tabcolsep}{12pt} %% Default is 6
-	\begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
-		Requirement & S5 \\ 
-		\midrule
-		\endhead
-		Description  & Use of Haskell
-		\\	Rationale & The use of a functional programing languages requires 
-		that this program be a pure function and does not have side effects
-		\\	Originator & Stakeholder 
-		
-		\\	Fit Criterion & This is necessary for our system design and the 
-		incorporation of 
-		core programming principles
-		\\	Customer Satisfaction & 5 - Highest 
-		\\	Priority & 5 - Highest 
-		\\	Supporting Materials & ---
-		%%TODO ref to this? JG: your choice?
-		\vspace{12pt}
-	\end{tabularx}
-}
-
 \ds{What about error handling on the new contributions?
-Where's the functional requirement related to: 
- ``be a pure function; it should not have side effects." and 
- ``provide diagnostic information about the algorithm to
-the user, if the user asks for such information."?}
+    Where's the functional requirement related to: 
+    ``be a pure function; it should not have side effects." and 
+    ``provide diagnostic information about the algorithm to
+    the user, if the user asks for such information."?}
 
+\subsection{System Requirements}
+%%-----------------------------SIDE EFFECTS---------------------------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        Requirement & S1 \\ 
+        \midrule
+        \endhead
+        Description  & Create pure functions with no unintended side effects
+        \\	Rationale & The use of a functional programing languages requires 
+        that this program be a pure function and does not have side effects, 
+        however certain portions of the code requires the execution of side 
+        effects to match the behaviour presented by external programs. In these 
+        specific instances, the side effects are an intended behaviour.
+        \\	Originator & Stakeholder/Developer
+        
+        \\	Fit Criterion & This behaviour is necessary to produce the results 
+        the stakeholders desire
+        \\ Test Case & Desired results can be confirmed as they will be 
+        reflected in changes that take place in the ampersand database.
+        \\	Customer Satisfaction & 5 - Highest 
+        \\	Priority & 5 - Highest 
+        \\	Supporting Materials & (Rule Based Design \cite {RBD})
+        \vspace{12pt}
+    \end{tabularx}
+}
+
+%%------------------USE OF HASKELL AS IMPLEMENTATION LANGAUGE-----------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        Requirement & S2 \\ 
+        \midrule
+        \endhead
+        Description  & The use of Haskell to implement EFA modules
+        \\	Rationale & The source code of Ampersand is written completely in 
+        Haskell, and thus Haskell must be used for any modules created by this 
+        project to be absorbed into the pre-existing source code.
+        \\	Originator & Ampersand Creators (i.e. our client)        
+        \\	Fit Criterion & Primary ability to write code compatible with 
+        Ampersand as it is.
+        \\ Test case & Added modules are tested with cabal build inside of 
+        Ampersand
+        \\	Customer Satisfaction & 5 - Highest 
+        \\	Priority & 5 - Highest 
+        \\	Supporting Materials & Dr. Joosten, Joosten and Kahl
+        \vspace{12pt}
+    \end{tabularx}
+}
+%%------------------ MODULES MUST FIT AMPERSAND FRAMEWORK-----------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        Requirement & S3 \\ 
+        \midrule
+        \endhead
+        Description  & Added modules must fit within Ampersand's current 
+        framework
+        \\	Rationale & As Ampersand is a huge system that has weekly additions 
+        to prevent conflict and breaking of existing packages/modules, an 
+        effort should be made to minimize external dependencies. As EFA will be 
+        an internal component of Ampersand, if a package that EFA depends on to 
+        function properly is no longer maintained and breaks, it will in turn 
+        break Ampersand.
+        \\	Originator & Ampersand Creators (i.e. our client)        
+        \\	Fit Criterion & Functionality of EFA as an Ampersand internal 
+        component.
+        \\ Test case & Added modules are tested with cabal build inside of the
+        Ampersand system as an internal component (i.e. System testing)
+        \\	Customer Satisfaction & 4 - High 
+        \\	Priority & 4 - High
+        \\	Supporting Materials & Hackage, Dr. Kahl
+        \vspace{12pt}
+    \end{tabularx}
+}
+
+\subsection{Project Requirements}
+%%-------------------------TYPE CORRECTNESS ----------------------------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P1 \\ 
+        \midrule
+        \endhead
+        Description  & Provable Correctness: Haskell like other functional 
+        programming languages have 
+        a strong type system which can be used for machine-checked proofs.
+        \\	Rationale & Curry-Howard correspondence which states that the 
+        return type of the function is analogous to a logical theorem, that is 
+        subject to the hypothesis corresponding to the types of the argument 
+        values that are passed to the function and thus the program uysed to 
+        compute that function is analogous to a proof of that theorem.
+        \\	Fit Criterion & Provable correctness of the program that is 
+        generated.
+        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
+        queries through a series of datatype tests, each of which will result 
+        in a traceable result or error message
+        \\	Priority & 4 - High
+        \\	Supporting Materials & Programming language theory, Dr. Kahl
+        \vspace{12pt}
+    \end{tabularx}
+}
+%%--------------------------CORRECTNESS OF ECA TO SQL RULES ------------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P2 \\ 
+        \midrule
+        \endhead
+        Description  & Generated SQL queries must preserve the semantics of ECA 
+        rules.  
+        \\	Rationale & The translation would otherwise not be correct, as the 
+        rules would be meaningless if their semantics are lost.
+        \\	Originator & Ampersand Developers
+        \\	Fit Criterion & Generated queries must be provably correct as per 
+        client's request.
+        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
+        queries through a series of datatype tests, each of which will result 
+        in a traceable result or error message
+        \\	Priority & 4 - High
+        \\	Supporting Materials & Hackage, Dr. Kahl
+        \vspace{12pt}
+    \end{tabularx}
+}
+%%-------------------------TRACABLE EERRORS---------------------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P3 \\ 
+        \midrule
+        \endhead
+        Description  & Generating traceable results and error messages for 
+        handling new contributions from this project
+        \\	Rationale & Saves time by allowing the program to inform the 
+        programmer where the errors are located.
+        \\	Originator & Ampersand Developers
+        \\	Fit Criterion & Errors must be traceable and have a standard format 
+        that can be easily followed.
+        \\ Test Cases & Error message will print to screen.
+        \\	Priority & 4 - High
+        \\	Supporting Materials & Hackage, Dr. Kahl
+        \vspace{12pt}
+    \end{tabularx}
+}
+
+\subsection{Non-Functional Requirements}
+%%---------------------------AVAILABILITY TO USERS REQUIREMENT ---------------%%
+{\setlength{\tabcolsep}{12pt} %% Default is 6
+\begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+Requirement & N1 \\ 
+\midrule
+\endhead
+Description  & EFA must be available at anytime ampersand is running.
+\\	Rationale & To provide the user with unlimited access to EFA within 
+Ampersand.
+\\	Originator & Ampersand Developers
+\\	Fit Criterion & Ampersand can detect when internal components are 
+non-responsive
+\\ Test cases & Ampersand is subject to sentential tests on a daily basis as 
+part of its maintenance.   
+\\	Priority & 4 - High
+\\	Supporting Materials & Useful feedback in Ampersand parser \cite{SB2011}
+\vspace{12pt}
+\end{tabularx}
+}
 
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
-\ds{You just explained what NFRs are, but did not contribute anything. Perhaps
- just introduce the diagram.}
-\edcomm{JG}{How do I pull the tree up to the first page of non-functional?? 
-*facepalm* \vspace{-infinity} doesnt work}
-\edcomm{YT}{LaTeX floats have 'position modifiers'. Generally you should use
-  !htb, this works in over 99 percent of case in my experience. Full details of floats and their positioning here:
-  https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions }
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
 	\caption{Tree of non-functional requirements as it relates to EFA}~\label{fig:figure2}
 \end{figure}
 \section{Usability and Humanity Requirements}\label{sec:Usability}
-
-\paragraph{}
-This product can be used by anyone who uses Ampersand, but it is geared to 
-individuals with an engineering or business background such as university 
-students and graduates. Anyone who is 16 years of age and older is able to use 
-this product as they have access to a computer that has a linux or windows 
-operating system and is capable of running Ampersand. This product will help 
-users correct mistakes, produce easy to understand error messages, and help 
-users to understand the logical construction of the information system they are 
-building.\\
-
-\begin{figure}
-	\centering
-	\includegraphics[width=1.0\textwidth]{../figures/Ampersandmodel}
-	\caption{An example of what Ampersand users see when they compile a 
-	prototype}
-        {\captionsetup{font=small}\caption*{Note: each tab and 
-	figure the user has created can be modified. \\ \textit{Created by: Dr. 
-	Stef 
-	Joosten \\Source: Ampersand-model 
-	repository}}}
- ~\label{fig:figure3}
-\end{figure}
-
-\ds{So what are the usability and humanity requirements? All you did was explain
-what constitutes one of these requirements and some of Ampersand's current system.}
+\textit{This section is not directly related to EFA, but rather Ampersand.}
+\subsection{Administrators}
+Administrations are the primary end users that create the ADL script and any 
+individual who can use Ampersand can or will be automatically using EFA. 
+Administrators in particular have full system access and will use EFA whenever 
+the system requires change. No users interact with EFA, but if usability is 
+extended to Ampersand, it is a rather complicated system to navigate and is 
+geared towards industry professionals. Those ages 21 and under are unlikely to 
+use this product. Users seeking to be administrator should have a basic 
+understanding of programming.
+\subsection{Ordinary Users}
+This section covers the majority of individuals who are able to use the 
+artifacts that Ampersand produces, such as the prototype interfaces which are 
+very use friendly for all those who are 12 years of age and over and computer 
+literate.
 
 \section{Understandability}
 \paragraph*{}
