@@ -73,6 +73,7 @@ Yash Sapra &  12/ 09 / 2015 & Non-Functional - legal requirements, \\ & & Functi
 Requirements, tasks, risks \\ & & and chapter 5.
 \\\hline
 Yuriy Toporovskyy & 13 / 10 / 2015 & Initial round of editing \\\hline
+J Guo & 04/ 02/ 2016 & Revision 0\\\hline
 \end{tabular}
 \end{center}\end{table}
 
@@ -103,8 +104,8 @@ Yuriy Toporovskyy & 13 / 10 / 2015 & Initial round of editing \\\hline
 		 09/10/2015& EFA SRS version 0 & 13/10/2015 \\
 		19/10/2015 & EFA SRS version 1  & 22/10/2015 \\
 		23/10/2015 & Proof of Concept Demonstation & 19/01/2016 \\
-		10/02/2016 & Software Demonstration & 10/02/2016 \\
-		--- & --- & --- \\
+		11/02/2016 & Software Demonstration & 11/02/2016 \\
+		%%--- & --- & --- \\
 		01/04/2016 & EFA Complete & --- \\
 		\hline
 	\end{tabular}
@@ -112,16 +113,27 @@ Yuriy Toporovskyy & 13 / 10 / 2015 & Initial round of editing \\\hline
 \end{figure}
 \chapter{Ampersand As A System}\label{ch:Intro}
 
-
+\begin{figure}[!htb]
+\centering
 \includegraphics[width=\textwidth]{../figures/ampersand_parts}
+\caption{Components of Ampersand System}~\label{fig:AmpersandParts}
+\end{figure}
+
+%%
+%%\begin{figure}[!htb]
+%%	\centering
+%%	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
+%%	\caption{Tree of non-functional requirements as it relates to EFA}~\label{fig:figure2}
+%%\end{figure}
+%%
 \paragraph{}
 Ampersand is an open-source project that produces design artifacts based on 
 business rules. One of the essential functions of Ampersand is to maintain all 
 the business rules that keep transactions valid during the course of each 
-cycle, where multiple transactions could take place.  The diagram above breaks 
+cycle, where multiple transactions could take place.  Figure 1.1  breaks 
 down the major components of ampersand ignoring specification details. This 
 project focuses mainly on one component of Ampersand, which is the F-spec which 
-contains ECA/(Event-Condition-Action Rules/) that each process must obey. These 
+contains ECA (Event-Condition-Action Rules) that each process must obey. These 
 rules are essential to the functionality of ampersand, and purpose of this 
 project is to correctly translate ECA Rules into type safe SQL queries.
 {\section{The Ampersand Environment}\label{sec:Purpose}}
@@ -132,8 +144,9 @@ co-exist with other modules. Due to this restriction, many design decisions are
 predetermined such as types of data that are used and programming language used 
 to build them.
 \subsection{Project Purpose}
-The purpose of this project is to correctly translate ECA rules, used to 
-maintain business conditions into type-safe SQL queries using Haskell. 
+The purpose of this project is to correctly translate ECA rules
+ into type-safe SQL queries using Haskell. These ECA rules are used to 
+maintain business constraints.
 \subsection{Project Goals} 
 The goals of this project can be divided into two components. The first 
 component consists of satisfying the condition necessary for the completion of 
@@ -141,14 +154,13 @@ an undergraduate capstone project. The second component is to design and
 implement maintainable code that can be absorbed to the ampersand open-source 
 project. 
 \section{The Stakeholders}\label{sec:Stakeholders}
-The stakeholders is separated into two sections, those that directly benefit 
+The stakeholders are separated into two sections, those that directly benefit 
 from this projects contribution and those that indirectly benefit.
 \subsection{Ampersand Designers}\label{subsec:Ampersand}
-Ampersand designers is our client, and they directly benefit from this project 
-as it bring Ampersand one step closer to completion. This project EFA /(ECA for 
-Ampersand/) delivers a maintainable component for Ampersand that produces type 
-safe SQL queries, a crucial part of Ampersand used for database manipulation 
-which is currently absent. 
+Ampersand designers are our client, and they directly benefit from this project 
+as it bring Ampersand one step closer to completion. This project EFA (ECA for 
+Ampersand) delivers a maintainable component for Ampersand that produces type 
+safe SQL queries, which will be used to maintain the consistency of the data in the back-end Database. 
 
 \subsection{End-Users}\label{subsec:BusReq}
 \paragraph{}
@@ -165,12 +177,12 @@ specification.
 \chapter{Project Constraints}\label{ch:Constraints}
 The current Ampersand system is the main limitation of this project; everything 
 that is built, must be built to fit within its current constraints. These 
-constraints include the language used to build Ampersand /(i.e. Haskell/). 
+constraints include the language used to build Ampersand (i.e. Haskell). 
 Anything incorporated into Ampersand must be implemented in the Haskell 
-language as other languages cannot be used. Additional constraints is placed on 
-the acceptance of this project by our clients, which is to produce maintainable 
+language. An Additional constraint placed on 
+the acceptance of this project by our clients is to produce maintainable 
 code; this includes the use of dependable libraries and any support modules 
-generated by this project to help the translation of ECA rules to SQL commands.
+generated by this project to help the translation of ECA rules to SQL queries.
 
 \section{Mandated Constraints}\label{sec:Constraints}
 %%%%
@@ -178,8 +190,7 @@ generated by this project to help the translation of ECA rules to SQL commands.
 
 All code must be well documented, backwards compatible and fit seamlessly into 
 the current Ampersand project. Due to the long-term nature of this project, we 
-must minimize the number of external dependencies as we little, if any control 
-over the modification that will be made to them over time. 
+must minimize the number of external dependencies. 
 
 %%3b.
 \subsection{Implementation Environment of the Current System}
@@ -199,8 +210,8 @@ compilers.
 
 
 \subsubsection*{GitHub Repository}
-Ampersand's main repository is hosted on github, we must also host our project 
-on github to be able to maintain consistency with the Ampersand source code.
+Ampersand's main repository is hosted on Github, we must also host our project 
+on Github to be able to maintain consistency with the Ampersand source code.
 
 \subsubsection*{Graphviz}
 Graphviz is an open source graph visualization software, which can
@@ -208,10 +219,7 @@ visually represent information in the form of charts and graphs. Graphviz is
 used to create visuals in ampersand artifacts and is an essential to running 
 ampersand.
 
-\subsubsection*{XAMPP}
-XAMPP is used to create a local ampersand database for the generated prototype. 
-Ampersand is internally built to use XAMPP configurations, and currently it is 
-not set up to use alternative software for database generation.
+%%removed XAMPP, not a constraint
 
 \subsection{Partner of Collaborative Applications}
 %%3c. of voltere template, applications that are not part of product but with 
@@ -385,7 +393,7 @@ invariants so that manual maintenance of system invariants is no longer
 necessary once EFA has been successfully incorporated into Ampersand.
 
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
-The translation of ECA rules into SQL queries require unique datatypes that 
+The translation of ECA rules into SQL queries require unique data types that 
 preserves the semantics the user provides in the ADL script. ECA rules are 
 generated from the conditions the user specifies in the ADL script. The SQL 
 queries generated from ECA rules can be thought of as a sequence of changes 
@@ -599,14 +607,14 @@ explained in detail in the Ampersand User Guide.
 An example is given as to how a decision making process takes place: there is a 
 red chair, there is a blue chair, but there is only one chair. That chair 
 cannot be blue and red simultaneously; to fix the problem, either another chair 
-is added or one of the colour conditions is eliminated. What is eliminated may 
+is added or one of the color conditions is eliminated. What is eliminated may 
 be based on what is more important for the system and the user. In the previous 
 example, if it is most important that there is only one chair, then one of the 
-colours statements is erased. 
+colors statements is erased. 
 
-It may pick a chair colour depending on another criteria that comes from another
+It may pick a chair color depending on another criteria that comes from another
 part of the information system. For example, if majority of customers' 
-favourite colour is red,then most individuals who may use the
+favorite color is red,then most individuals who may use the
 chair would prefer it to be red rather than blue. Ampersand is built to keep 
 external conditions in mind and those conditions are passed along to EFA. EFA 
 can recognize if any of these conditions are violated and may return a message 
@@ -678,11 +686,6 @@ contains a mistake, it will be much easier to catch than a code error.
 \ds{Explicitly state your performance requirements. Also, fix the odd break in
 the last paragraph.}
 
-%%Figure removed - unreferenced and unexplained Figure.
-
-%%	YS
-%% 	Does this image aboe (^^) belong here? I believe this is the Figure 5.4 that is related to role of Ampersand in the INDiGO proj
-%%	 I suggest the following changes, in support of Dr. Joosten's comments
 \edcomm{YS}{ECA rules can have interdependencies, these might be buried deep into the rules. Following a certain course of action under EFA, can trigger a deadlock situation where in the system is not able to come up with the best way to deal with inconsistencies in data. In the above example lets say the system is required to give a 2$ discount to the customer if the total cost(including) of his basket is greater than or equal to $10 and provide free shipping, but if the total cost (after discount ) is less than 10$ then 2$ needs to be added for shipping. This creates an infinite loop where the initial cost of the chair is a discount to $8 but then shipping is applied, and it becomes $10, which is again subjected to the discount. EFA needs to take care of such performance issue that would lead the system into a state if deadlock. EFA must have a run time capability to interrupt and send a message to the user about the existence of such conflicting requirements.
 }
 \edcomm{JG}{feel free to add that}
@@ -695,7 +698,7 @@ the last paragraph.}
 \section{Operational and Environmental Requirements}\label{sec:Operational}
 \paragraph*{}
 Any system that is currently running Ampersand will be able to run this product 
-under a new verion and thus no new requirements have been introduced.
+under a new version and thus no new requirements have been introduced.
 \ds{Either explicitly state the current requirements for running Ampersand, or
 mention that any system currently running Ampersand will be able to run
 the new version and thus no new requirements have been introduced}.
@@ -722,7 +725,7 @@ Since its open source, anyone can access or change it, it just wont be part of t
 code? We're not dealing with sensitive information (there's no confidentiality breach possible..) I 
 mean we could name system function name, and user roles but thats a rather short two sentences
 	
-	There also specificiation of  requried integrity of databases; this is partially applicable, it 
+	There also specification of  required integrity of databases; this is partially applicable, it 
 	applies to Ampersand and how it requires a local database but EFA doesn't.. however, it is 
 	part of Ampersand. 
 	
@@ -751,7 +754,7 @@ the user has in place on his or her work station.
 	
 \section{Validation and Verification Requirements}\label{sec:Verification}
 
-\edcomm{JG}{ We can distinguish validation from verfication here, like Joosten did, and link how 
+\edcomm{JG}{ We can distinguish validation from verification here, like Joosten did, and link how 
 validation is required for verification and validation must be done by the user.
 		As Joosten specifies that validation is only something that the user can do.. however, does 
 		EFA in theory validate the state of the system by fixing inconsistent data? 
@@ -847,10 +850,10 @@ requirement for any component used.
 \ds{You can also mention time costs.}
 \section{User Documentation and Training}\label{sec:UserDoc}
 \paragraph*{}
- User documentation will accompany EFA which will give a brief explaination concerning 
+ User documentation will accompany EFA which will give a brief explanation concerning 
 how EFA works and how users can use EFA to maximize their efficiency. EFA requires minimal 
 input from user, but each possible input will be explained thoroughly and various examples will be 
-provided in a step by step tutorial to help familiarze the user with EFA. Furthermore, a 
+provided in a step by step tutorial to help familiarize the user with EFA. Furthermore, a 
 practice simulation will be in place for the user. The test will include a well documented default 
 script which the user can compile to try out different priority options. The manual will include 
 pictures as a type of visual guide concerning what the screen should look like from beginning to 
