@@ -133,15 +133,15 @@ Ampersand is an open-source project that produces design artifacts based on
 business rules. One of the essential functions of Ampersand is to maintain all 
 the business rules that keep transactions valid during the course of each 
 cycle, where multiple transactions could take place.  Figure 1.1  breaks 
-down the major components of ampersand ignoring specification details. This 
+down the major components of Ampersand ignoring specification details. This 
 project focuses mainly on one component of Ampersand, which is the F-spec which 
 contains ECA (Event-Condition-Action Rules) that each process must obey. These 
-rules are essential to the functionality of ampersand, and purpose of this 
+rules are essential to the functionality of Ampersand, and purpose of this 
 project is to correctly translate ECA Rules into type safe SQL queries.
 {\section{The Ampersand Environment}\label{sec:Purpose}}
 Ampersand is a on-going project with an increasing number of modules being
 added to it on a weekly basis. Since this project focuses on a component of 
-ampersand, it must be built to fit within the ampersand environment and 
+Ampersand, it must be built to fit within the Ampersand environment and 
 co-exist with other modules. Due to this restriction, many design decisions are 
 predetermined such as types of data that are used and programming language used 
 to build them.
@@ -153,7 +153,7 @@ maintain business constraints.
 The goals of this project can be divided into two components. The first 
 component consists of satisfying the condition necessary for the completion of 
 an undergraduate capstone project. The second component is to design and 
-implement maintainable code that can be absorbed to the ampersand open-source 
+implement maintainable code that can be absorbed to the Ampersand open-source 
 project. 
 \section{The Stakeholders}\label{sec:Stakeholders}
 The stakeholders are separated into two sections, those that directly benefit 
@@ -200,13 +200,13 @@ must minimize the number of external dependencies.
 The Ampersand code base is written almost entirely in Haskell 
 (\cite{ampSource}) with the exception of user interfaces for the generated 
 prototypes written in PHP and Javascript. Haskell is the only programming 
-language we can use to build modules for ampersand.
+language we can use to build modules for Ampersand.
 
 
 \subsubsection*{The Glasgow Haskell Compiler \& Cabal Build System}
 As most of Ampersand's base code is written in Haskell, a compiler must be used 
 to compile it. The Glasgow Haskell Compiler (\cite{GHC}) with the Cabal build 
-system (see \verb|ampersand.cabal| must be used to compile ampersand 
+system (see \verb|ampersand.cabal| must be used to compile Ampersand 
 \cite{ampSource}). Ampersand is not designed to used with other Haskell 
 compilers.
 
@@ -218,15 +218,16 @@ on Github to be able to maintain consistency with the Ampersand source code.
 \subsubsection*{Graphviz}
 Graphviz is an open source graph visualization software, which can
 visually represent information in the form of charts and graphs. Graphviz is 
-used to create visuals in ampersand artifacts and is an essential to running 
-ampersand.
+used to create visuals in Ampersand artifacts and is essential to running 
+Ampersand.
 
 %%removed XAMPP, not a constraint
 
 \subsection{Partner of Collaborative Applications}
-%%3c. of voltere template, applications that are not part of product but with 
-%%which the product will collaborate, can be external applications, commercial 
-%%packages or pre-existing in-house applications
+\edcomm{JG}{3c. of voltere template, applications that are not part of product 
+but with which the product will collaborate, can be external applications, 
+commercial packages or pre-existing in-house applications}
+
 \begin{longtable}{ |m{4.5cm}|m{1.5cm}|m{7cm}|  }
     \hline 
     \textbf{Name} & \textbf{Type} & \textbf{Description} \\ \hline \hline
@@ -371,7 +372,7 @@ isolated to a process completely internal to Ampersand.
 function in the Ampersand environment.}
 %data flow diagram for EFA goes here
 EFA is an automated process internal to Ampersand, and as a part of the 
-ampersand system it works in collaboration with other internal components such 
+Ampersand system it works in collaboration with other internal components such 
 as the F-spec. The purpose of EFA is to replace the current exec-engine, 
 creating a permanent solution for the implementation of ECA rules. EFA also 
 provides extensive functionalities that the exec-engine is missing, such as the 
@@ -430,7 +431,7 @@ this action would be invalid.
         \\	Fit Criterion & This behaviour is necessary to produce the results 
         the stakeholders desire
         \\ Test Case & Desired results can be confirmed as they will be 
-        reflected in changes that take place in the ampersand database.
+        reflected in changes that take place in the Ampersand database.
         \\	Customer Satisfaction & 5 - Highest 
         \\	Priority & 5 - Highest 
         \\	Supporting Materials & (Rule Based Design \cite {RBD})
@@ -578,7 +579,7 @@ this action would be invalid.
 Requirement & N1 \\ 
 \midrule
 \endhead
-Description  & EFA must be available at anytime ampersand is running.
+Description  & EFA must be available at anytime Ampersand is running.
 \\	Rationale & To provide the user with unlimited access to EFA within 
 Ampersand.
 \\	Originator & Ampersand Developers
