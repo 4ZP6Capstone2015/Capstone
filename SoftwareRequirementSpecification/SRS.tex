@@ -12,6 +12,8 @@
 \usepackage{tabularx}
 \usepackage{ltablex} %% Multi page tables 
 \usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{tabto}
 \usepackage{tocloft} %% This package prevents table of contents from generating a page break
 \usepackage{caption}
@@ -36,7 +38,7 @@
 \vspace{0.5cm}
 {\Large Software Requirement Specification 
 	
-	\edinsert{JG}{Version 0}
+	\edinsert{JG}{Version 0 Revised}
 
 \vspace{1.5cm}
 Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
@@ -571,307 +573,140 @@ part of its maintenance.
 }
 
 
-\chapter{Non-functional Requirements}\label{ch:NonFunc}
+\chapter{Non-Functional Requirements}\label{ch:NonFunc}
 \begin{figure}[!htb]
 	\centering
 	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
-	\caption{Tree of non-functional requirements as it relates to EFA}~\label{fig:figure2}
+	\caption{Tree of non-functional requirements as it relates to 
+	EFA}~\label{fig:figure2} 
 \end{figure}
-\section{Usability and Humanity Requirements}\label{sec:Usability}
-\textit{This section is not directly related to EFA, but rather Ampersand.}
-\subsection{Administrators}
-Administrations are the primary end users that create the ADL script and any 
-individual who can use Ampersand can or will be automatically using EFA. 
-Administrators in particular have full system access and will use EFA whenever 
-the system requires change. No users interact with EFA, but if usability is 
-extended to Ampersand, it is a rather complicated system to navigate and is 
-geared towards industry professionals. Those ages 21 and under are unlikely to 
-use this product. Users seeking to be administrator should have a basic 
-understanding of programming.
-\subsection{Ordinary Users}
-This section covers the majority of individuals who are able to use the 
-artifacts that Ampersand produces, such as the prototype interfaces which are 
-very use friendly for all those who are 12 years of age and over and computer 
-literate.
-
-\section{Understandability}
-\paragraph*{}
-What EFA does is simple to understand: it fixes logical inconsistencies with 
-minimal, if any,input from the user. It does this by looking for 
-contradictions, or violations. This product will use natural language that is 
-easy to understand when error reporting and hide the details of its 
-construction from the user. Any symbols that are not standard mathematical 
-symbols will be explained and a full range of mathematical symbols are 
-explained in detail in the Ampersand User Guide. 
-
-An example is given as to how a decision making process takes place: there is a 
-red chair, there is a blue chair, but there is only one chair. That chair 
-cannot be blue and red simultaneously; to fix the problem, either another chair 
-is added or one of the color conditions is eliminated. What is eliminated may 
-be based on what is more important for the system and the user. In the previous 
-example, if it is most important that there is only one chair, then one of the 
-colors statements is erased. 
-
-It may pick a chair color depending on another criteria that comes from another
-part of the information system. For example, if majority of customers' 
-favorite color is red,then most individuals who may use the
-chair would prefer it to be red rather than blue. Ampersand is built to keep 
-external conditions in mind and those conditions are passed along to EFA. EFA 
-can recognize if any of these conditions are violated and may return a message 
-to the user concerning what was modified based on what conditions. %% Does 
-%%it? Is this an accurate descrition of the system?
-%% That may be an external condition
-%% that Ampersand has been programmed to keep in mind.
-\begin{figure}
-	\centering
-	\includegraphics[width=0.5\textwidth]{../figures/blueorredchair}
-	\caption{Simplistic diagram of decision making process}
-  {\captionsetup{font=small}\caption*{Note: For this process, the blue chair is 
-  discarded, we can think of it as the deletion of a dataset that contradicted 
-  one or more of the conditions that the user specified. In this case, a 
-  message may be returned such as: \\ \textbf{Based on condition} : "can only 
-  have one 
-  chair", 
-  "higher precentage of users prefer the use of red chair". \\ 
-  \textbf{modified:} deletion of blue chair, retain red chair. \newline 
-  \textit{ Each condition is seperated by a 
-  comma, and each action taken to modify the existing system is also seperated 
-  by a comma. \\ The original dataset is always preserved thus any changes can 
-  be reverted if they are deemed undesirable, however if the user decides that 
-  they would like to keep the changes that are made. They are prompted 
-  \big(e.g. Would you like to keep current changes? \big) and the most current 
-  copy is saved over previous copies. In either circumstance the original input 
-  data created by the user is kept as "before" version.)}
-  \ref{fig:figure5}}~\label{fig:figure4}}
-\end{figure}
-
-\ds{What are your understandability requirements for this project?}
-
+    Each Non-functional requirement must be traceable in the Ampersand system 
+    with the addition of EFA. 
+    \textit{Note: Missing sections in this chapter are not applicable for this 
+    project }
 \section{Performance Requirements}\label{sec:Performance}
 \paragraph*{}
-Ampersand can efficiently process a large amount of information in a short 
-amount of time; and the process that EFA requires will be added onto 
-Ampersand’s process time. The time it would take to verify data inconsistencies 
-would depend on the complexity of the system design and the number of 
-corrections it may take to update the system to a valid prototype according to 
-specification. Any interface between a user and the automated system shall have 
-a maximum response time of 1 minute. The response time shall be faster after 
-the initial compilation to avoid breaking the user's flow of thought. The 
-system shall prevent deadlock and cycling by flagging areas that it has already 
-corrected. 
-
-The prototypes termed "simple models" are tasks that can be accomplished by an 
-individual within a short amount of 
-time, such as selecting the best actor/actress to play lead according to 
-experience and audience appeal. Simple models are able to take into 
-consideration not only the task at hand but the context 
-and environment to which the task must be completed in. Performance is measured 
-on speed, but also on validation of limitations set forth by the user; it will 
-not matter how quickly EFA can do something if it does it incorrectly and 
-creates more work for the user. Currently, the quantification of the desired 
-accuracy of the results produced is unknown, as EFA is in its initial stages. 
-Furthermore, the allowable time between failures is unknown and untested.
-
-EFA can be a great tool, but in case of failure, in the unlikely event that 
-errors are propagated through the system and no one through any cycle of 
-development catch it. If the designer puts full faith in EFA it could be 
-catastrophic, especially if mistakes are not caught and products proceed into 
-the production stage (\cite[153]{RBD}). However, our contribution will include 
-the propogation of proofs as well as feedback to the user. These proofs
-will be generated based on the algorithm used by EFA. These proofs will be
-human-readable, so that if an engineer suspects that EFA has made a mistake, she
-can examine the proof to be convinced that EFA is indeed sound. If the proof
-contains a mistake, it will be much easier to catch than a code error. 
-
-\ds{Explicitly state your performance requirements. Also, fix the odd break in
-the last paragraph.}
-
-\edcomm{YS}{ECA rules can have interdependencies, these might be buried deep into the rules. Following a certain course of action under EFA, can trigger a deadlock situation where in the system is not able to come up with the best way to deal with inconsistencies in data. In the above example lets say the system is required to give a 2$ discount to the customer if the total cost(including) of his basket is greater than or equal to $10 and provide free shipping, but if the total cost (after discount ) is less than 10$ then 2$ needs to be added for shipping. This creates an infinite loop where the initial cost of the chair is a discount to $8 but then shipping is applied, and it becomes $10, which is again subjected to the discount. EFA needs to take care of such performance issue that would lead the system into a state if deadlock. EFA must have a run time capability to interrupt and send a message to the user about the existence of such conflicting requirements.
-}
-\edcomm{JG}{feel free to add that}
-%%	I'm not too sure if the example is valid in our case, Does Ampersand automatically detect such conflicting requirements at an
-%%	early stage? I've belive the existence of relational algebra can detect such conflicts, but what if they are introduced at run
-%%	later, while the information system is in production?
-
-%% Can you guys come up with a better example? The ones we've listed before don't really capture the performance of EFA
-
-\section{Operational and Environmental Requirements}\label{sec:Operational}
-\paragraph*{}
-Any system that is currently running Ampersand will be able to run this product 
-under a new version and thus no new requirements have been introduced.
-\ds{Either explicitly state the current requirements for running Ampersand, or
-mention that any system currently running Ampersand will be able to run
-the new version and thus no new requirements have been introduced}.
-
+EFA is designed to optimize the Ampersand system by automating the tedious task 
+of restoring system invariants when broken using ECA rules. Ampersand will 
+perform as it use to with less maintenance required on behalf of the user.
 \section{Maintainability and Support Requirements}\label{sec:Support}
 \paragraph*{}
-All code submitted for this project must be maintainable, which mean it is well 
-documented and comes with mathematical proof. This is an essential requirement 
-for the future maintenance of Ampersand. EFA must make sure that each 
-specification/error is traceable (\cite[2]{derFun}).
+EFA must make sure that each specification/error is traceable 
+(\cite[2]{derFun}). EFA will be upgrade and tested as a part of Ampersand does 
+not require additional maintenance or support to perform optimally.
 
-\edcomm{who}{Part of the reason that non-functional requirements as essential 
-to EFA concerns the requirements for interfacing with Adjacent Systems. Thus 
-features concerning how implementation is done which is normally based on the 
-choice of the designers is a functional requirement when it comes to EFA }
-%%YS - 	I don't think the above commented lines are related to EFA or it maintainability.
-%%		I don't think they belong here.
-  
-\ds{Pull out the explicit requirements and remove the fluff.}
-
-\section{Security and Integrity Requirements}\label{sec:Security}
-\edcomm{JG}{this section includes access requirements: who is authorized to access the product. 
-Since its open source, anyone can access or change it, it just wont be part of the official source 
-code? We're not dealing with sensitive information (there's no confidentiality breach possible..) I 
-mean we could name system function name, and user roles but thats a rather short two sentences
-	
-	There also specification of  required integrity of databases; this is partially applicable, it 
-	applies to Ampersand and how it requires a local database but EFA doesn't.. however, it is 
-	part of Ampersand. 
-	
-	We dont have privacy issues.. do we? 
-	Audit requirements --- specification of what the product has to do (work?)
-	---- we might need audit requirements I mean we could say that if we fed it standard rules it 
-	should be able to recognize, translate and fix easily. like if A (subset) B and B (subset C) 
-	then A (subset) C. If a is need for b to function, and b is needed by c to function, then by 
-	<insert property name> a is required for c.
-	
-	Immunity requirements: we dont.. really have security, so immunity is confusing.
-	
-	
-}
-\paragraph*{}
-As an open source project any individual who clones the Ampersand Github has access to source code 
-and can manipulate it as they wish. Irrelevant of what changes the user makes locally, it does not 
-effect the Github respository, as only developers of Ampersand \big(i.e., our client \big) has 
-permission to change source code in the respository. Access to the database and software which 
-supports the various functions of Ampersand are run locally and subjected to the security system 
-the user has in place on his or her work station.
-
-\ds{The git repository is not the issue here, are there any security/integrity
-	concerns for the data you will be handling or for the way your contribution
-	will handle data?}
-	
+\chapter{Traceability and Proof of Concept}\label{ch:NonFunc}
 \section{Validation and Verification Requirements}\label{sec:Verification}
 
-\edcomm{JG}{ We can distinguish validation from verification here, like Joosten did, and link how 
-validation is required for verification and validation must be done by the user.
-		As Joosten specifies that validation is only something that the user can do.. however, does 
-		EFA in theory validate the state of the system by fixing inconsistent data? 
-		
-		Someone help a brother out?What's below cant be all there is}
-\paragraph*{}
-Validation and verification are important parts of non-functional requirements used to test the 
-quality of the final product. Validation is a human activity and requires user input; the rules for 
-the software system to follow are provided by the user, and only the user can judge if the rules 
-are correct for the system that they are attempting to create. The validation that EFA offers is 
-a logical test to confirm that all data sets do not violate the rules that the system follow for 
-the model to properly mimic realistic conditions. 
 
-Verification test the accuracy of EFA, and how well it can replicate what the use has in mind 
-according to an ECA rule system. Verification is an automated process that confirms correctness 
-of the project in accordance to previously validated rules. Furthermore, verification confirms the 
-success of ECA rule adoption, and is able to quantify the level of success or failure 
-encountered by EFA (\cite{RBD}). 
-%TODO{JG}: cite Rule Design (section on verification and validation); then confirm that we can meet 
-%these principles or else we need to redefine what these terms are in our project
-
-\ds{What are your explicit verification/validation requirements?}
-
-\section{Legal Requirements}\label{sec:Legal}
-The implementation must eventually be included in Ampersand, which is licensed
-under GPL3. To comply with this license, all of the implementation code must be
-either written by us so we may license it under GPL, or must already be licensed
-under GPL, or a compatible license, by its original author. We do not plan to
-use existing code, other than as a reference.
-\edcomm{YS}{Rephrase this one, I wanted to put forward the idea}%
-\edcomm{YT}{I rephrased it more concretely: we have to follow the license agreement of
-Ampersand, which appears to be GPL3. That means all the code we include must
-either be our own so we can place it under that license, or must already be
-under GPL. I don't see any reason we couldn't take code from somewhere if it was
-GPL. }%
+\begin{longtable}{|m{5cm}|m{9cm}| }
+    \hline 
+    \textbf{Notation}  & \textbf{Description} \\ \hline
+       X : Y   &  X has type Y \\ 
+        \hline  
+       $`Types`$  &  Type of types \\ 
+        \hline
+       $`Kind`$   &  Type of Kinds \\ 
+        \hline
+         \_ $\rightarrow$ \_ ∶ Type →$\rightarrow$Type $\rightarrow$ Type  & 
+         This function requires 2 Type inputs and produces a Type output. Where 
+         \_ $\rightarrow$ \_ can be seen as for each element x of type A 
+         defines a function F(x) where x does not exist in set {Type,Kind} for 
+         every x that defines F(x)  \\ 
+        \hline
+       \_ $\rightarrow$ \_∶ Kind $\rightarrow$Kind $\rightarrow$ Kind  & This 
+       function requires 2 of type Kinds and produces an output of Type Kinds . 
+       Where 
+       \_ $\rightarrow$ \_ can be seen as for each element x of type A 
+       defines a function F(x) where x does not exist in set {Type,Kind} for 
+       every x that defines F(x). This a dependent type, an example of this 
+       would be 
+       SingT (x :: a) $\rightarrow$ SingT (F x)
+       \\ 
+        \hline
+          $\mathbb{N}$, Symbol : Kind   &  Left of the : are the elements that 
+          represent type Kinds (right of the : )\\ 
+        \hline
+          0, 1, 2, $...$ ∶ $\mathbb{N}$   &  These are natural numbers, 
+          elements left of the : belong to the set N of natural numbers\\ 
+        \hline
+         \{$""$, $"a"$, $"aa"$, $...$, $"b"$, $"bb"$\} : Symbol &  
+         Elements left of : are elements that belong to the set Symbol \\ 
+        \hline
+        ( x : A  ) $\rightarrow$ F x   & \\ where x $\notin$ \{Type,Kind\}   &  
+        This can also be seen as $\forall$ x $\rightarrow$ F x; where as  \\ 
+        \hline
+           SingT \(x $::$ a\) $\rightarrow$ SingT \(F x\)  &  SingT is the type 
+           of singleton, a dependent type created for EFA datatypes. \\ 
+        \hline
+          $\rightarrow$: Constraint $\rightarrow$ Type $\rightarrow$ Type  and  
+          \_ $\Rightarrow$ \_ : Type $\rightarrow$ Constraint $\rightarrow$ 
+          Type    &  where $\forall$x : S $\Rightarrow$ T corresponds to 
+          $\mathbf{G}$ \textit{S} ($\lambda$x.T) in Illative Combinatory 
+          Logic 
+          where G is the combinator \cite{CombLogic}. The $\Rightarrow$ 
+          represents restraints for what on the right side of the : .\\ 
+        \hline
+        X : Y  where Y $\in$ {Type,Kind} &  X is equal in definition to 'X : 'Y 
+        and only X' : Y'. \\ 
+        \hline
+        elim-Y: (r:Type) $\rightarrow$ Y $\rightarrow$ ($A_0$ $\rightarrow$ r) 
+        $\rightarrow$ ($A_1$ $\rightarrow$ r ) $\rightarrow$ $\rightarrow$ 
+        $...$ $\rightarrow$ ($A_n$ $\rightarrow$ r) $\rightarrow$ r   &  An 
+        eliminator that corresponds to pattern matching \\ 
+        \hline
+        'P : Y $\rightarrow$ Z'   &  This represents 'P (Ctr x)', where 'Ctr  
+        is used for type casting\\ 
+        \hline
+         $\exists$ (x : A) (P x) & This indicates that (r:Type) $\rightarrow$ 
+         ((x:A) . (P x $\rightarrow$ r) $\rightarrow$ r) \\ 
+        \hline
+        X : Y   &  X has type Y \\ 
+        \hline
+        
+\end{longtable}
+\textit{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Project Issues}\label{ch:issues}
-\section{Open Issues}\label{sec:issues}
-Our contribution consists entirely of adding a new feature to Ampersand. There
-have been no significant previous efforts to implement this feature within
-Ampersand. There are no open issues outside of implementing this feature. 
-\edcomm{YS}{Since we're not concerned with any problem or issues associated with Ampersand.}%
-\section{Off-the-Shelf Solutions}\label{sec:solutions}
-No off the shelf solutions exist for this project.
-\section{New Problems}\label{sec:NewProblems}
-Our contribution will be entirely internal to Ampersand; it will not affect end
-users in terms of the interface to Ampersand or any of the resources that
-Ampersand generates. 
+\textit{Absent sections have been taken our as they are not applicable to this 
+project}
 
-The current Ampersand environment will not be affected by our contribution,
-since EFA is an additional feature whose functionality will exist on top of
-existing functionality; that is, EFA will not affect old functionalities of
-Ampersand.
-
-Our contribution will be smoothly intergrated into Ampersand using git and GitHub. 
-This transition is not expected to create any problems. 
-\edcomm{YS}{Since we're not concerned with any problem or issues associated with Ampersand.}%
 \section{Tasks}\label{sec:Tasks}
 \begin{itemize}
-\item Analyze and the existing software code base and do an impact analysis of our project on the existing software.
-\item Propose a solution to the supervisor and product owner.
+\item Translate ECA rules to SQL commands
+\item Create supporting data structures for sustainable translation and future 
+maintenance
 \item Implement the solution and provide the  annotated source code to the supervisor and the product owner for a review.
-\item Incorporate any changes suggested by them and create a pull request in the main Ampersand repository upon successful completion of the task.
+\item Incorporate changes to project as suggested by our client and supervisor
+\item Provide mathematical proof to back up implemented code
 \end{itemize}
 \edcomm{YS}{Add in any significant task you feel is worth mentioning}%
 \section{Migration to the New Product}\label{sec:Migration}
 \paragraph*{}
 Upon final review by the client and intensive testing, if the client is
 satisfied by the quality of code and its maintainability, the implementation
-will be made part of the production stream.  This process is quite simple due to
-the nature of the project; the core development team of Ampersand is quite
-small, and the project is hosted on GitHub; so our migration will consist of
-submitting a pull request to the Ampersand repository.
+will be made part of the production stream hosted on Github.  
 \section{Risks}\label{sec:Risks}
 \begin{itemize}
-\item The new code must not introduce any 
-errors or performance regressions
+\item The new code must not introduce any errors or performance regressions
 into Ampersand.
 \item The code must satisfy existing tests and 
 additional tests written for the new algorithm being implemented.
+\item products (i.e. SQL queries) must be provable and sustainable on large 
+scale projects
+\item the system must not fail due to dependency issues
 \end{itemize}
 
 \section{Costs}\label{sec:Costs}
 \paragraph*{}
-Currently the Ampersand software system is open source and maintained by Tarski
-Systems.  All the software subsystems used in Ampersand are also open
-source. There will no change in cost as a result of our implementation. The
-client (Tarski Systems) will be responsible for managing the cost of
-maintenance of the software in the future. All software used in the development
-of EFA (GHC, LaTeX, etc.) are open source as well; there is no cost
-requirement for any component used.
-\ds{You can also mention time costs.}
+The cost is eight months of time.
+
 \section{User Documentation and Training}\label{sec:UserDoc}
 \paragraph*{}
- User documentation will accompany EFA which will give a brief explanation concerning 
-how EFA works and how users can use EFA to maximize their efficiency. EFA requires minimal 
-input from user, but each possible input will be explained thoroughly and various examples will be 
-provided in a step by step tutorial to help familiarize the user with EFA. Furthermore, a 
-practice simulation will be in place for the user. The test will include a well documented default 
-script which the user can compile to try out different priority options. The manual will include 
-pictures as a type of visual guide concerning what the screen should look like from beginning to 
-end. The documentation will likely be part of the Ampersand documentation, but for the purposes of 
-this project, it will be submitted independently. 
+User documentation is not necessary, as EFA provides traceable error messages 
+for developers. 
 
-\section{Waiting Room}\label{sec:Waiting}
-Our project consists of implementing a single feature. There are no other
-features that even touch the scope of this project. Therefore, there are no
-requirements which will not be satisfied as a part of the initial release.
-
-%% \section{Ideas for Solutions}\label{sec:Solutions}
-\edcomm{YT}{Not really relevant... our 'solution' consists of implementing a
-  known algorithm. Maybe we could put something here if we had started
-  implementing and could even thing about this...}
-
-\ds{Overall comment: Too verbose. Throughout the document
-you use a lot of words to say very little.}
 
 \bibliographystyle{alpha}
 \bibliography{SRS}
