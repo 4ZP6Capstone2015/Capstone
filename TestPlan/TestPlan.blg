@@ -1,8 +1,51 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: TestPlan.aux
+This is BibTeX, Version 0.99d (TeX Live 2015/W32TeX)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: TestPlan.aux
 The style file: alpha.bst
 Database file #1: TestPlan.bib
 Warning--to sort, need author or key in sentinellink
 Warning--to sort, need author or key in sentinel
 Warning--to sort, need author or key in hackage
 Warning--empty journal in amber
+You've used 5 entries,
+            2543 wiz_defined-function locations,
+            578 strings with 5035 characters,
+and the built_in function-call counts, 1211 in all, are:
+= -- 120
+> -- 19
+< -- 2
++ -- 5
+- -- 4
+* -- 56
+:= -- 173
+add.period$ -- 15
+call.type$ -- 5
+change.case$ -- 22
+chr.to.int$ -- 4
+cite$ -- 12
+duplicate$ -- 55
+empty$ -- 127
+format.name$ -- 8
+if$ -- 266
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 1
+newline$ -- 28
+num.names$ -- 6
+pop$ -- 52
+preamble$ -- 1
+purify$ -- 27
+quote$ -- 0
+skip$ -- 42
+stack$ -- 0
+substring$ -- 38
+swap$ -- 4
+text.length$ -- 2
+text.prefix$ -- 2
+top$ -- 0
+type$ -- 40
+warning$ -- 4
+while$ -- 4
+width$ -- 7
+write$ -- 58
 (There were 4 warnings)

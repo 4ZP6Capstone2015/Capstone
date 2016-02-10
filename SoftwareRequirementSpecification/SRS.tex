@@ -24,7 +24,7 @@
 
 \newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
 %%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
-\edcommsfalse
+%% \edcommsfalse
 \begin{document}
 
 \pagenumbering{roman} %% Roman numerals before actual document starts
@@ -115,6 +115,52 @@ J Guo & 04/ 02/ 2016 & Revision 0\\\hline
 \end{figure}
 \chapter{Ampersand As A System}\label{ch:Intro}
 
+
+\edcomm{YT}{Overall comments: 
+  Do not use random words in places just to pad the line or whatever. 
+  Use deliberate, consistent language. \\
+  GRAMMAR PLEASE GOD GRAMMAR. Proofread your work! \\
+  Do not make things up! I'm a little horrified 
+  at how many things I found that were simply made up 
+  and can be disproved in less than a minute of google 
+  search \\ 
+  ``Writing much, saying nothing'' - I see what our graders meant now.
+  When you write a sentance you should be able to justify why each 
+  and every single word is absolutely necessary. If it is not, 
+  it should be removed. This goes back to being deliberate and 
+  not just writing random crap. \\
+  Formatting is extremely important! If your document looks good 
+  but is really crap, you won't have a hard time tricking your reader
+  into thinking it is actually good. Conversely, if your document
+  looks like crap but is actually good, then noone will even 
+  pay attention to the content and will focus on the crap formatting.
+  In practice, the second thing DOES NOT HAPPEN. This is because
+  very poor formatting is usually indicative of being in a rush 
+  or a lack of effort,
+  which also certainly wll reflect on the content of the document as well. 
+  Also, do not assume that you can just ``do the formatting later'' or something. 
+  Refactoring all the formatting of even a 1kloc tex document is non-trivial at best
+  and a huge pain in the ass at worst. \\\\
+  MOVING FORWARD:
+  The biggest issue is the fact that the document has lost most semblance 
+  of coherence and organization. There is no way to recover from this. 
+  You can't really just keep throwing things in and hoping things will 
+  make sense at the end. \\
+  Take the template and create a skeleton (no content) for it. Include every single 
+  section, without exception. Do NOT delete any sections from now on!
+  Feel free to add whatever you like, or rename existing things,
+  but do not reorganize or delete what is in the template. If you 
+  do not know what to write for something, just skip it. 
+  Once everything else is done, we can decide which sections 
+  actually must be removed. 
+  Now start copying thing from the current version of the document 
+  to the skeleton, placing each thing in the appropriate section. 
+  If you end up chaning the ordering of things, be careful 
+  that you do not place an explanation which depends on another 
+  before its dependency. Once you are done, you should have the 
+  current document, but brought back closer to a state of organization. 
+  }
+
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=\textwidth]{../figures/ampersand_parts}
@@ -133,58 +179,99 @@ Ampersand is an open-source project that produces design artifacts based on
 business rules. One of the essential functions of Ampersand is to maintain all 
 the business rules that keep transactions valid during the course of each 
 cycle, where multiple transactions could take place.  Figure 1.1  breaks 
-down the major components of Ampersand ignoring specification details. This 
+down the major components of Ampersand ignoring specification details. 
+\edcomm{YT}{What are specification details?} 
+This 
 project focuses mainly on one component of Ampersand, which is the F-spec which 
 contains ECA (Event-Condition-Action Rules) that each process must obey. These 
-rules are essential to the functionality of Ampersand, and purpose of this 
+rules are essential 
+\edcomm{YT}{Essential how? This is far too little on the topic. I wrote quite
+ a detailed explanation of how ECA fits into Ampersand for the original SRS,
+ but it was deleted? Please fit it back in - as it stands nobody reading
+ this document can have any idea as to what ECA does} 
+to the functionality of Ampersand, and purpose of this 
 project is to correctly translate ECA Rules into type safe SQL queries.
 {\section{The Ampersand Environment}\label{sec:Purpose}}
 Ampersand is a on-going project with an increasing number of modules being
-added to it on a weekly basis. Since this project focuses on a component of 
+added to it on a weekly basis. 
+\edcomm{YT}{Is this really true? Will it always be true? I know you are 
+ going for dramatic effect, but a technical document isn't really the place}
+Since this project focuses on a component of 
 Ampersand, it must be built to fit within the Ampersand environment and 
 co-exist with other modules. Due to this restriction, many design decisions are 
 predetermined such as types of data that are used and programming language used 
 to build them.
+\edcomm{YT}{The last sentance is quite akward, it can probably just be removed
+ or reworded to not include the examples which are obviously mentioned further on}
 \subsection{Project Purpose}
 The purpose of this project is to correctly translate ECA rules
  into type-safe SQL queries using Haskell. These ECA rules are used to 
 maintain business constraints.
+\edcomm{YT}{Again, this says almost nothing. See previous comment about 
+  detailed explanation of ECA}
 \subsection{Project Goals} 
 The goals of this project can be divided into two components. The first 
 component consists of satisfying the condition necessary for the completion of 
-an undergraduate capstone project. The second component is to design and 
+an undergraduate capstone project. 
+\edcomm{YT}{We are designing part of a real software system
+  for a real software tool. Anything ``capstone'' is unrelated 
+  and should be removed}
+The second component is to design and 
 implement maintainable code that can be absorbed to the Ampersand open-source 
 project. 
+\edcomm{YT}{Same thing about far too little information. Provable correctness?
+  You do not design code, you write code based on a design. We are 
+  not ``designing'' anything, unless you call implementation details 
+  a ``design''. }
+
 \section{The Stakeholders}\label{sec:Stakeholders}
 The stakeholders are separated into two sections, those that directly benefit 
 from this projects contribution and those that indirectly benefit.
 \subsection{Ampersand Designers}\label{subsec:Ampersand}
 Ampersand designers are our client, and they directly benefit from this project 
-as it bring Ampersand one step closer to completion. This project EFA (ECA for 
+as it bring Ampersand one step closer to completion. 
+
+\eddelete{YT}{This project EFA (ECA for 
 Ampersand) delivers a maintainable component for Ampersand that produces type 
 safe SQL queries, which will be used to maintain the consistency of the data in the back-end Database. 
+}
+\edcomm{YT}{A whole bunch of words which say nothing. Please reword}
 
 \subsection{End-Users}\label{subsec:BusReq}
 \paragraph{}
 Ampersand users indirectly benefit from this project's contribution because it 
-drastically decrease the time spent manually restoring system invariants, which 
-are the rules that maintain the validity of each business process. As EFA is 
+drastically decreases the time spent manually restoring system invariants, which 
+are the rules that maintain the validity of each business process. 
+\edcomm{YT}{The time spent restoring invariants manually is always 0. It is the 
+ time spent writing ugly PHP code in order to restore invariants.}
+As EFA is 
 executed during compile time, the user will not suffer any noticeable delays 
 and can rest assured that the artifacts they received are correct according to 
 specification.
+\edcomm{YT}{What???? How can we execute SQL on the database at compile time?
+  This is just a complete lie!}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 2: Project Constraints %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Project Constraints}\label{ch:Constraints}
-The current Ampersand system is the main limitation of this project; everything 
+The current Ampersand system is the main limitation of this project; 
+\edcomm{YT}{``limitation'' is not the right word here.}
+everything 
 that is built, must be built to fit within its current constraints. These 
 constraints include the language used to build Ampersand (i.e. Haskell). 
-Anything incorporated into Ampersand must be implemented in the Haskell 
-language. An Additional constraint placed on 
-the acceptance of this project by our clients is to produce maintainable 
+
+\eddelete{YT}{Anything incorporated into Ampersand must be implemented in the Haskell 
+language.}
+\edcomm{YT}{This was JUST said. DNRY!!!!!!!!!!!}
+An additional constraint placed on 
+this project by our clients is to produce maintainable 
 code; this includes the use of dependable libraries and any support modules 
 generated by this project to help the translation of ECA rules to SQL queries.
+\edcomm{YT}{I'm not sure what this is trying to say.
+  ``support modules'' - what about them? 
+  You are saying ``this includes'' ... ``support modules'' - which 
+  doesn't even make sense}
 
 \section{Mandated Constraints}\label{sec:Constraints}
 %%%%
@@ -202,18 +289,26 @@ The Ampersand code base is written almost entirely in Haskell
 prototypes written in PHP and Javascript. Haskell is the only programming 
 language we can use to build modules for Ampersand.
 
+\edcomm{YT}{Mention that we may have to write code for the prototype as well
+ , but it probably won't be much.}
 
 \subsubsection*{The Glasgow Haskell Compiler \& Cabal Build System}
 As most of Ampersand's base code is written in Haskell, a compiler must be used 
-to compile it. The Glasgow Haskell Compiler (\cite{GHC}) with the Cabal build 
+to compile it. 
+\edcomm{YT}{GRAMMAR! This sentance is BAD. A lot of the sentances lack the 
+  basic essential component of grammatical correctness. I can't correct 
+  each one so please proofread for grammar!}
+
+The Glasgow Haskell Compiler (\cite{GHC}) with the Cabal build 
 system (see \verb|ampersand.cabal| must be used to compile Ampersand 
 \cite{ampSource}). Ampersand is not designed to used with other Haskell 
-compilers.
+compilers. \edcomm{YT}{Mention versions}
 
 
 \subsubsection*{GitHub Repository}
 Ampersand's main repository is hosted on Github, we must also host our project 
 on Github to be able to maintain consistency with the Ampersand source code.
+\edcomm{YT}{GRAMMAR}
 
 \subsubsection*{Graphviz}
 Graphviz is an open source graph visualization software, which can
@@ -224,10 +319,15 @@ Ampersand.
 %%removed XAMPP, not a constraint
 
 \subsection{Partner of Collaborative Applications}
+\edcomm{YT}{``Partner of Collaborative Applications'' - what}
+
 \edcomm{JG}{3c. of voltere template, applications that are not part of product 
 but with which the product will collaborate, can be external applications, 
 commercial packages or pre-existing in-house applications}
 
+
+\edcomm{YT}{This entire table is no good. A table is not the 
+ right format for a module heirarchy. See email}
 \begin{longtable}{ |m{4.5cm}|m{1.5cm}|m{7cm}|  }
     \hline 
     \textbf{Name} & \textbf{Type} & \textbf{Description} \\ \hline \hline
@@ -235,19 +335,34 @@ commercial packages or pre-existing in-house applications}
     Ampersand, data from this module is manipulated in EFA.
     \\ \hline        
     Control.Applicative & Library module & An interface that provides an 
-    intermediate structure between a monad and a functor. This interface is 
+    intermediate structure between a monad and a functor. 
+\edcomm{YT}{NONONONO never write the words ``monad'' or ``functor'' or ``applicative'' in this document 
+  unless you are willing to write a section for the appendix explaining category theory!}
+This interface is 
     used to embed pure expressions, sequence computations and combine their 
     results.  \\ \hline
     Control.Exception & Library module & An interface that provides support for 
     raising and catching build-in and user-defined exceptions.  \\ \hline
-    Control.DeepSeq & Library module & This module is used to fully evaluate 
-    data structure and is used to prevent resource leaks in lazy IO programs.  
+    Control.DeepSeq & Library module & 
+\edchange{YT}{This module is used to fully evaluate 
+    data structure and is used to prevent resource leaks in lazy IO programs.  }
+{ This module provides a type class for evaluating data to normal form.
+}
     \\ \hline            
-    Data.Proxy & Library module & A concrete proxy type, used to represent the 
-    value of something else.  \\ \hline    
-    Data.Type.Equality & Library module & This module offers pattern-matching 
-    on types and provides a proof, it is used as a definition of propositional 
-    equality.  \\ \hline        
+    Data.Proxy & Library module & A concrete proxy type, 
+\edchange{YT}{used to represent the 
+    value of something else.}  
+{ used to explicitly manipulate type parameters. }
+\edcomm{YT}{``represent the value of something else'' is literally
+  one of the vaguest things I've ever heard}
+\\ \hline    
+    Data.Type.Equality & Library module & 
+\edchange{YT}{This module offers pattern-matching 
+    on types and provides a proof, 
+it is used as a definition of propositional 
+    equality.}{This modules defines a proposotional equality type} 
+\edcomm{YT}{This doesn't make much sense. Please don't write things that 
+  don't make sense just to write something} \\ \hline        
     Data.List & Library module & A module that provides support for operations 
     on list structures.  \\ \hline
     Data.Char & Library module & A module that provides support for characters 
@@ -261,8 +376,15 @@ commercial packages or pre-existing in-house applications}
     GHC.TypeLits & Library module & Internal GHC module that declares the 
     constants used in type-level implementation of natural numbers.  \\ 
     \hline    
-    GHC.Exts & Library module & This modules allows the use of pointers to an 
-    object or array of objects.  \\ \hline    
+    GHC.Exts & Library module & 
+\edchange{YT}{This modules allows the use of pointers to an 
+    object or array of objects. }  
+{ This module provides access to types, classes, and functions necessary to 
+  use GHC extensions. }
+\edcomm{YT}{Again with the writing random stuff.... if you had googled
+  ``GHC.Exts'' you could discover precisely what it 
+  does in 10 second, so this is just plain lazy}
+ \\ \hline    
     Language.SQL.SimpleSQL & Library module & Syntax: provides the AST for SQL 
     queries. \\& & Pretty: provides pretty printing functions that formates 
     output for human reading. \\ \hline            
@@ -271,20 +393,35 @@ commercial packages or pre-existing in-house applications}
     and provides support for basic data types, comparison functions, and 
     methods used for data manipulation.   \\ \hline
     System.IO.Unsafe & Library module & This module allows IO computation to be 
-    performed at any time, the IO computation must be free of side effecets and 
+    performed at any time.
+\eddelete{YT}{, the IO computation must be free of side effecets and 
     independent of its environment to be considered safe. Any I/O computation 
-    that is wrapped in unsafePerformIO performs side effects.  \\ \hline
+    that is wrapped in unsafePerformIO performs side effects.  }
+\edcomm{YT}{This is not the place for this detail, and the 2nd part is simply untrue again}
+\\ \hline
     Text.PrettyPrint.Leijen & Library module & A pretty printer module based 
     off of Philip Wadler's 1997 "A prettier printer", used to show SQL queries 
-    in a readable manner to humans.  \\ \hline        
+    in a readable manner to humans.  
+\edcomm{YT}{If you are going to cite ANYTHING do it properly! This is no good}
+\\ \hline        
     Unsafe.Coerce & Library module & A helper module that converts a value from 
-    any type to any other type, the user must assure that the old data type and 
-    the new data type have identical internal representations, else runtime 
-    corruption occurs. This is used in the translation of ECA rules to SQL 
-    using unique data types.  \\ 
+    any type to any other type. The user must assure that the old data type and 
+    the new data type have identical runtime representations, else undefined
+    behaviour occurs. 
+\eddelete{YT}{This is used in the translation of ECA rules to SQL 
+    using unique data types.}
+\edcomm{YT}{This doesn't mean anything. What is a unique datatype?}
+\\ 
     \hline  
 \end{longtable}
 \section{Naming Conventions and Terminology}\label{sec:Naming} 
+
+\edcomm{YT}{This section is in desperate need of being revised. 
+  Please collect all the definitions you can find in this doc
+  which should be here (anything even vaguely math or Haskell related
+  should be here!). If you think the actual definition is too hard 
+  to write, just leave it blank (I'll fill it in)}
+
 \begin{description}
 \item[ECA] Stands for Event-Condition Action. The rule structure used for data
   bases and commonly used in market ready business rule engines. ECA rules are
@@ -330,22 +467,42 @@ This project makes the assumption that Ampersand users are using it according
 to its intended purposes and have all the necessary software dependencies 
 installed for it properly function. This project is designed with the 
 assumption that no direct interaction is necessary between the design component 
-and the user. All interactions that could take place is buffered by Ampersand. 
+and the user. 
+\edcomm{YT}{I'm not sure what a ``design component'' is exactly, but if you mean
+  the software or the prototype, then this is no longer true (if it ever was).
+  }
+All interactions that could take place is buffered by Ampersand. 
+\edcomm{YT}{Makes no sense}
 Furthermore, we assume that Ampersand users are industry professionals that are 
 capable of tracing error messages and fixing them. 
+\edcomm{YT}{``Industry professional'' is oddly specific. A non-industry professional
+  with sufficient experience in software requirements engineering and 
+  perhaps a little maths should be able to use Ampersand.}
 
 \subsection{Error Detection}
 EFA provides traceable error messages for the developer, however on a user 
 level these trace error messages would be absorbed into Ampersand and its 
 various error detection mechanisms situated on every level of compilation. 
-Ampersand is equipped with friendly error detection for the user beginning with 
+\edcomm{YT}{Lots of works to say little}
+Ampersand is equipped with friendly error detection 
+\edcomm{YT}{Ampersand has error detection?}
+for the user beginning with 
 syntax detection for ADL scripts to assure that there are no missing or out of 
 place components. To logical error detections that the user might have missed 
-during the creation of their information system. The error messages inform the 
+during the creation of their information system. 
+\edcomm{YT}{GRAMMAR}
+The error messages informs the 
 user what line the error has been found, what the error pertains to, and what 
 is expected typically in the script structure. The script structure provides 
 the user clues for how they may wish to fix the error by adjust their script to 
 fit the appropriate format.
+
+\edcomm{YT}{None of this section addresses error detection as it pertains our 
+  work, only in other components of Ampersand. This should be a minor focus 
+  - the majour focus is on our work. I'm also not sure what ``error detection''
+  has to do with ``relevant facts or assumptions'' - this subsection is 
+  clearly out of place.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Chapter 3 -- Functional requirements %%
@@ -368,12 +525,15 @@ isolated to a process completely internal to Ampersand.
 
 
 \section{The Scope of the Work}\label{sec:ScopeOfWork}
-\textit{The following sections focuses specifically on EFA and how it will 
-function in the Ampersand environment.}
+The following sections focuses specifically on EFA and how it will 
+function in the Ampersand environment.
 %data flow diagram for EFA goes here
 EFA is an automated process internal to Ampersand, and as a part of the 
 Ampersand system it works in collaboration with other internal components such 
-as the F-spec. The purpose of EFA is to replace the current exec-engine, 
+as the F-spec. The purpose of EFA is to replace the current exec-engine,
+\edcomm{YT}{No explanation of ``exec-engine'' yet. It must be explained. Also, for the 
+  sake of consistency, it should be written ``ExecEngine''. 
+}
 creating a permanent solution for the implementation of ECA rules. EFA also 
 provides extensive functionalities that the exec-engine is missing, such as the 
 ability to manipulate data in a database beyond the basic level of creating and 
@@ -386,7 +546,11 @@ if Ampersand is used in practice.
 \subsection{The Current Situation} %what is being replaced/made better, the 
 %effects of the proposed change
 
-Ampersand currently has an exec-engine that passes SQL queries which are 
+Ampersand currently has an exec-engine 
+
+\edcomm{YT}{``an'' ExecEngine? ExecEngine is a proper noun. What is ``the'' ExecEngine?
+}
+that passes SQL queries which are 
 triggered by the prototype user interface implemented in PHP. Though the 
 exec-engine functions, it is a temporary solution for translating ECA rules 
 into SQL queries. Any changes made to the information system after its initial 
@@ -396,6 +560,8 @@ invariants so that manual maintenance of system invariants is no longer
 necessary once EFA has been successfully incorporated into Ampersand.
 
 \section{The Scope of the Product}\label{sec:ScopeOfProduct}
+
+\eddelete{YT}{
 The translation of ECA rules into SQL queries require unique data types that 
 preserves the semantics the user provides in the ADL script. ECA rules are 
 generated from the conditions the user specifies in the ADL script. The SQL 
@@ -405,6 +571,9 @@ triggers, and the actions only take place if all conditions are satisfied and
 are valid. An example of this, would be attempting to delete a person who does 
 not exist. This actions cannot be completed because the person does not exist, 
 this action would be invalid. 
+}
+
+\edcomm{YT}{This says NOTHING about the scope of the product! See ``writing random shit''} 
 
 \section{Functional Requirements}\label{sec:Functional}
 \ds{What about error handling on the new contributions?
@@ -603,21 +772,67 @@ part of its maintenance.
 \end{figure}
     Each Non-functional requirement must be traceable in the Ampersand system 
     with the addition of EFA. 
+\edcomm{YT}{If we make this claim we better provide data and facts to 
+  back up the traceability. Have we done this? No. Will we be able to do it? 
+  Probably not easily}
     \textit{Note: Missing sections in this chapter are not applicable for this 
-    project }
+    project }    
+\edcomm{YT}{Not necessary. A document about any topic is assumed to not include 
+  information not relevant to that topic. On the subject of missing sections, 
+  please put them all back in. The flow and organization of this document 
+  has degraded to essentially zero with all of the removals and renmaings 
+  and mysterious changes.}
+
 \section{Performance Requirements}\label{sec:Performance}
 \paragraph*{}
-EFA is designed to optimize the Ampersand system by automating the tedious task 
-of restoring system invariants when broken using ECA rules. Ampersand will 
+EFA is designed to optimize 
+\edcomm{YT}{``optimize'' is not the right word here}
+the Ampersand system by automating the tedious task 
+of restoring system invariants when broken using ECA rules. 
+Ampersand will 
 perform as it use to with less maintenance required on behalf of the user.
+\edcomm{YT}{Is this even a sentance?}
+
+
 \section{Maintainability and Support Requirements}\label{sec:Support}
 \paragraph*{}
 EFA must make sure that each specification/error is traceable 
 (\cite[2]{derFun}). EFA will be upgrade and tested as a part of Ampersand does 
 not require additional maintenance or support to perform optimally.
 
+\edcomm{YT}{Both the grammar and content of this section is bad} 
+
 \section{Validation and Verification Requirements}\label{sec:Verification}
 
+
+
+\edcomm{YT}{This table is very poorly formatted. If you use tables,
+  they must look good. Firstly your things need to fit into the table 
+  properly. Secondly, please do not place so many rules everywhere 
+  and do not put a box around the table for no reason. You should 
+  strive to MINIMIZE your use of rules, not maximize. Please fix 
+  ALL of the hideous tables. Thirdly, DO put a title and caption 
+  on EVERY SINGLE TABLE. To be clear, THIS IS ABSOLUTELY NECESSARY.
+  In general, tables are a terrible organization structure 
+  for English prose, so this table should just be removed and the information 
+  organized into a logical format, like paragraphs. Next onto the 
+  content. Every explanation that is a few words is correct. Every single
+  one which is longer is either simply WRONG or is just completely
+  nonsensical. Secondly, most, if all, of these things do NOT need
+  to be introduced. Thirdly, the organization of the information 
+  is just poor - there is a definition for ``X : Y where Y $\in$ Type,Kind''
+  however the given definition only holds in the context of a declaration
+  and only when explicitly giving things which are definitional equal 
+  to themselves. The entry as written implies that the syntax ``X : Y'' 
+  has this meaning, which is clearly untrue. `where Y $\in$...' is not part of 
+  the syntax, so it shouldn't be written so simply beside the part 
+  which IS real syntax, because it misleads the reader into thinking 
+  that the entire thing is real syntax. If you do write this, there 
+  should be a logical seperator between the two, for example writing 
+  one of them in a different font. Fourthly, if this information 
+  is placed anywhere, it certainly should NOT be in the functional requirements 
+  section. It should be in the same section, or adject to, as the part
+  where we describe terminology. } 
 
 \begin{longtable}{|m{5cm}|m{9cm}| }
     \hline 
@@ -695,7 +910,15 @@ not require additional maintenance or support to perform optimally.
         EFA}~\label{fig:figure2} 
 \end{figure}
 
+\edcomm{YT}{Full page figures go in the appendix at the end, Preferably fit it into 
+  the page width}
+
 \newpage
+
+\edcomm{YT}{I understand this is unfinished but the same comments about table formatting apply.
+  Also this table goes *far* outside of the margins of the page. This is very bad. 
+  Finally, this data is not a good fit for a table either (diagrams are your friend)}
+
 \setlength\LTleft{-1in}
 \setlength\LTright{-1in}
 \begin{longtable}{|m{1.5cm}|m{2.5cm}|m{6cm}|m{6cm}|} \hline
@@ -730,6 +953,8 @@ not require additional maintenance or support to perform optimally.
 \chapter{Project Issues}\label{ch:issues}
 \vspace{-1cm}
 \textit{Sections not applicable to this project have been removed}
+
+\edcomm{YT}{Put them back}
 
 \section{Tasks}\label{sec:Tasks}
 \begin{itemize}
