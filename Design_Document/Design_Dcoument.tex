@@ -1,0 +1,205 @@
+\documentclass[12pt]{report}
+\usepackage{xcolor} % for different colour comments
+\usepackage{parskip} % Space between each paragraph.
+%\usepackage{hardwrap} % for text length of 80 pts
+\usepackage[margin=1.2in]{geometry}
+\usepackage{hyperref}
+\usepackage{../ltx/edcomms}
+\usepackage{graphicx}
+\usepackage[section]{placeins} % Prevents floats from floating across sections
+\usepackage{natbib}%Bibtex
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{ltablex} %% Multi page tables 
+\usepackage{booktabs}
+\usepackage{tabto}
+\usepackage{tocloft} %% This package prevents table of contents from generating a page break
+\usepackage{caption}
+\input{../ltx/setupComments}
+\usepackage{geometry}
+\usepackage{changepage}
+\usepackage{adjustbox}
+\setlength{\parindent}{15pt} % parskip sets this to 0. 15 is default.
+
+\newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
+%%%%%%%%%%%%%%%	START OF DOCUMENT %%%%%%%%%%%%%%%%%%%%
+\edcommsfalse
+\begin{document}
+
+\pagenumbering{roman} %% Roman numerals before actual document starts
+\begin{titlepage}\begin{center}
+\thispagestyle{empty} %% No page no. on title
+
+\vspace*{1cm}
+
+{\Huge\textbf{Ampersand Event-Condition-Action Rules}}
+
+\vspace{0.5cm}
+{\Large Design Document
+	
+	\edinsert{JG}{Version 0}
+
+\vspace{1.5cm}
+Yuriy Toporovskyy (toporoy) \\ Yash Sapra (sapray) \\ Jaeden Guo (guoy34)}
+\vfill
+
+
+\vspace{0.8cm}
+\end{center}
+CS 4ZP6 \\
+February 29th, 2016 \\ 
+Fall 2015 / Winter 2016 
+\end{titlepage}
+
+%% Revision history
+
+\begin{table}[ht!]\begin{center}
+\caption{Revision History}  
+\begin{tabular}{|l|l|l|}\hline
+\textbf{Author} & \textbf{Date} & \textbf{Comment} \\\hline 
+Yash Sapra & 24 / 02 / 2016 & Initial draft\\\hline
+\end{tabular}
+\end{center}\end{table}
+
+\newpage
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\pagenumbering{arabic} %% Arabic numerals in actual document
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Chapter 1: Introduction %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}\label{ch:Introduction}
+
+\section{Purpose}\label{sec:Purpose}
+The document outlines the design decision for the EFA project. 
+EFA is responsible for generating SQL from ECA rules that will 
+be used to fixed any data inconsistencies in the Ampersand Database.
+
+%% TODO :  Build Chapters as we go
+%\section{Design Principles}\label{sec:DesignPrinciples}
+%\section{Document Structure}\label{sec:DocumentStructure}
+
+\chapter{Modules - Temporary }\label{ch:Modules_Temp}
+%% Keeping these tables here for a bit, will have to put them in Appropiate section
+%%\subsection{Partner or Collaborative Applications}\label{subsec:Collaborative}
+This section provides a brief description of the modules that EFA uses. More 
+details are provided in the Module Guide for EFA.
+
+\begin{adjustbox}{center}
+\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
+    \hline
+    \multicolumn{2}{|c|}{\bfseries{\large{Ampersand Core Modules}}} \\ 
+    \hline\hline
+    \bfseries{Module Name} & \bfseries{Description}\\
+    \hline
+    AbstractSyntaxTree   & Ampersand's abstract representation of input from 
+    ADL.   \\
+    \hline
+    FSpec &   A module that represents the F-Spec structure.\\
+    \hline
+    Basics & An Ampersand internal module that provides basic functions for 
+    data manipulation.\\
+    \hline
+    ParseTree    & Ampersand parse tree for ADL script; concrete representation 
+    of the input, and retains all information of the input. \\
+    \hline
+\end{tabular}
+\end{adjustbox}
+
+
+\begin{adjustbox}{center}
+\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
+    \hline
+    \multicolumn{2}{|c|}{\bfseries{\large{External Haskell Modules}}} \\
+    \hline\hline
+    \bfseries{Module Name} & \bfseries{Description}\\
+    \hline
+    GHC.TypeLits   & Internal GHC module used in the implementation of 
+    type-level natural numbers \cite{hackage}    \\ 
+    \hline
+    Data.List & A module that provides support for operations on list 
+    structures.  \\
+    \hline
+    Data.Char &  A module that provides support for characters and operations 
+    on characters.  \\
+    \hline
+    Data.Coerce  & Provides safe coercions between data types; allows user to 
+    safely convert between values of type that have the same representation 
+    with no run-time overhead \cite{hackage}.\\
+    \hline
+    Debug.Trace &  Interface for tracing and monitoring execution, used for 
+    investigating bugs and other performance issues \cite{hackage}. \\ 
+    \hline 
+    GHC.TypeLits & Internal GHC module that declares the constants used in 
+    type-level implementation of natural numbers \cite{hackage}.  \\ 
+    \hline  
+    SimpleSQL.Syntax&   The AST for SQL queries \cite{hackage}\\ 
+    \hline
+    Text.PrettyPrint .Leijen & A pretty printer module based 
+    off of Philip Wadler's 1997 "A prettier printer", used to show SQL queries 
+    in a readable manner to humans \cite{hackage}.\\ 
+    \hline
+    GHC.Exts & This module provides access to types, classes, and functions 
+    necessary to use GHC extensions. \\ 
+    \hline
+    Unsafe.Coerce &  A helper module that converts a value from any type to any 
+    other type.This is used in the translation of ECA rules to SQL using 
+    user-defined data types. \\ 
+    \hline
+     System.IO.Unsafe & IO computation must be free of side effects and 
+     independent of its environment to be considered safe. Any I/O computation 
+     that is wrapped in unsafePerformIO performs side effects. \\
+    \hline
+\end{tabular}
+\end{adjustbox}
+
+\begin{adjustbox}{center}
+    \begin{tabular}{ |p{3.2cm}|p{11cm}|  }
+        \hline
+        \multicolumn{2}{|c|}{\bfseries{\large{EFA Modules}}} \\
+        \hline\hline
+        \bfseries{Module Name} & \bfseries{Description}\\
+        \hline
+        ECA2SQL & The top-level module that takes ECA rules from FSpec and 
+        converts it into SQL queries.    \\ 
+        \hline
+        Equality & Various utilities related to type level equality   \\ 
+        \hline
+        PrettyPrinterSQL & Prints SQl queries in human-readable format    \\ 
+        \hline
+        Singletons & Module for Singleton datatypes, the module defines 
+        singleton for a kind in terms of an isomorphism between a type and a 
+        type representation   \\ 
+        \hline
+        Trace & Provides trace messages and various utilities used by 
+        ECA2SQL    \\ 
+        \hline
+        TSQLCombinators & Uses an overloaded operator for indexing and 
+        implements SQL as a primitive data type.   \\ 
+        \hline
+        TypedSQL & Contains basic SQL types represented in Haskell.    \\ 
+        \hline
+        Utils & Provides utility functions for ECA2SQL and contains type 
+        families    \\ 
+        \hline
+    \end{tabular}
+\end{adjustbox}
+
+
+%\bibliography{SRS}
+\end{document}
+
+
+
+
+
+
+
+
+
+
