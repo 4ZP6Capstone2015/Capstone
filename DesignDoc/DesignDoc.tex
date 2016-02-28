@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 %\usepackage{../ltx/edcomms}
+\usepackage{../ltx/setupComments}
 \usepackage{hyperref}
 \usepackage{geometry}
 \usepackage{changepage}
@@ -32,17 +33,20 @@
 \begin{document}
 
 \title{\vspace*{3cm} Module Guide for ECA Rules for Ampersand} 
-\author{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
-\date{February 13th,\ 2016} 
+\author{Yuriy Toporovskyy (toporoy)\\ Yash Sapra (sapray) \\ Jaeden Guo (guoy34)}
+%%Yuriy Toporovskyy (toporoy) \\ Yash Sapra (sapray) \\ Jaeden Guo (guoy34)}
+\date{February 24th,\ 2016} 
 
 
 \maketitle
+\newpage
 \vspace*{1cm}
 \begin{table}[ht!]\begin{center}
         \caption{Revision History}  
         \begin{tabular}{|c|c|c|}\hline
-            \textbf{Author} & \textbf{Date} & \textbf{Comment} \\\hline 
+            \textbf{Author} & \textbf{Date} & \textbf{Comments} \\\hline 
             Yash Sapra & 24 / 02 / 2016 & Initial draft\\\hline
+	 Jaeden Guo & 27/ 02 / 2016 & Update and merge \\\hline
         \end{tabular}
     \end{center}\end{table}
 \newpage
@@ -55,7 +59,7 @@
 %TODO: edit for grammar, spelling, context, flow, watch for contractions
 \subsection{Description}
 The document outlines the design decision for the EFA project. 
-EFA is responsible for generating SQL from ECA rules that will 
+EFA is responsible for generating SQL Statements from ECA rules that will 
 be used to fixed any data inconsistencies in the Ampersand Database.
 
 This document follows the principle set by Parnas and Clements\citep{fakeIt}. 
@@ -64,7 +68,7 @@ commonly accepted practice for this situation is to decompose modules based on
 the principle of abstraction, where unnecessary information in hidden for the 
 benefit of designers and maintainers\citep{modStruct,Parnas1972}.
  
-Our design follows the principles layed out by \citep{modStruct}, as follows:
+Our design follows the principles laid out by \citep{modStruct}, as follows:
 \begin{itemize}
 \item Unnecessary design details are omitted for simplicity
 \item Each data structure is only in one module
@@ -192,8 +196,10 @@ terms}
 \\
 \underline{Internal Description}\\ \\
 eca2SQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
-\subsection{Support Modules}
+
 %% ------------------------------M2: TypedSQL -------------------------------%%
+\subsection{Support Modules}
+
 {\setlength{\tabcolsep}{6pt} 
     \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
         M2 & eca2SQL \\ 
@@ -291,11 +297,9 @@ types
         M3 & Equality \\ 
         \midrule
         
-        Contains functions  & 
-        \\ Input &
-        \\ Output &
-        \\	Secrets & 
-        \\	Services &  
+        Contains functions  &  not, cong, elimNeg and more
+        \\	Secrets & Various utilities functions
+        \\	Services &  The module contains utility functions that are being used in the Singletons and Utils module to provide type level security for the TypedSQL with an aim to make it total.
         \\       
         \vspace{12pt}
     \end{tabularx}
@@ -306,10 +310,8 @@ types
         M4 & Singleton \\ 
         \midrule
         
-        Main function  & 
-        \\ Input &
-        \\ Output &
-        \\	Secrets & 
+        Main function  &  No functions exported
+        \\	Secrets & Extension to the Haskell Singleton Library Singleton Types and promoted functions
         \\	Services &  
         \\       
         \vspace{12pt}
@@ -321,8 +323,8 @@ types
         \midrule
         
         Main function  & 
-        \\	Secrets & 
-        \\	Services &  
+        \\	Secrets & Varies Utilities Functions
+        \\	Services &  The module also contains some utility functions used by the ECA2SQL module
         \\       
         \vspace{12pt}
     \end{tabularx}\vspace{3em}
@@ -332,9 +334,9 @@ types
         M6 & Trace \\ 
         \midrule
         
-        Main function  & 
-        \\	Secrets & 
-        \\	Services &  
+        Main function  &  getTraceInfo 
+        \\	Secrets & Creates a function for tracing the output
+        \\	Services &  The modules contains support for tracing back the ECA rule. Tracing is used for development and debugging purpose
         \\       
         \vspace{12pt}
     \end{tabularx}\vspace{3em}
@@ -344,9 +346,9 @@ types
         M7 & Combinators \\ 
         \midrule
         
-        Main function  & 
-        \\	Secrets & 
-        \\	Services &  
+        Main function  & No functions exported
+        \\	Secrets &  Combinator Logic for TypedSQL
+        \\	Services &  This module contains Combinatory Logic for our TypedSQL module. The module defines SQL primitives such as AND, OR, NOT and the primitive SQL functions such as the EXISTS, GROUP BY, SORT BY.
         \\       
         \vspace{12pt}
     \end{tabularx}\vspace{3em}
@@ -356,12 +358,14 @@ types
             M8 & Pretty \\ 
             \midrule
             
-            Main function  & 
-            \\	Secrets & 
-            \\	Services &  
+            Main function  & eca2PrettySQL
+            \\	Secrets & Pretty prints the generated SQL
+            \\	Services &  The function takes in the FSpec as an input with an ECA rule and runs the eca2SQL function to generate SQLSt(SQL Statements). The generated SQL statement are pretty printed using a Pretty Printer Library.
             \\       
             \vspace{12pt}
         \end{tabularx}\vspace{3em}
+\underline{Internal Description}\\ \\
+eca2PrettySQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
         
 \subsection{External Libraries}
 \begin{tabular}{ | m{4cm} | m{11cm} |}
