@@ -13,6 +13,10 @@
 \usepackage{adjustbox}
 \usepackage{graphicx}
 \usepackage[section]{placeins} % Prevents floats from floating across sections
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{glossaries}
+%\usepackage{amssymb}
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
 \newcommand{\acref}[1]{AC\ref{#1}}
@@ -24,14 +28,14 @@
 \newcounter{mnum}
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
-
+\makeglossary
 \begin{document}
 
 \title{\vspace*{3cm} Module Guide for ECA Rules for Ampersand} 
 \author{Yuriy Toporovskyy,\ Yash Sapra,\ Jaeden Guo}
 \date{February 13th,\ 2016} 
 
-	
+
 \maketitle
 \vspace*{1cm}
 \begin{table}[ht!]\begin{center}
@@ -54,8 +58,8 @@ The document outlines the design decision for the EFA project.
 EFA is responsible for generating SQL from ECA rules that will 
 be used to fixed any data inconsistencies in the Ampersand Database.
 
-This document follows the principle set by Parnas and Clements \citep{fakeIt} . 
-Ampersand is currently in development where modifications are frequent, a 
+This document follows the principle set by Parnas and Clements\citep{fakeIt}. 
+EFA is currently in development where changes occur frequently, a 
 commonly accepted practice for this situation is to decompose modules based on 
 the principle of abstraction, where unnecessary information in hidden for the 
 benefit of designers and maintainers\citep{modStruct,Parnas1972}.
@@ -92,9 +96,10 @@ a guide to EFA for future designers of Ampersand.
 \section{Anticipated and Unlikely Changes}
 \subsection{Anticipated Changes}
 It is likely that EFA will require changes to the front-end interface and an 
-addition that integrates the front end to the back-end. Furthermore, the number 
-of ECA rules are not permanent and if changes are made to the ECA rules, those 
-changes will need to be incorporated into EFA. 
+addition that will connect the front-end interface to back-end functions, which 
+will give the user more control. In addition, ECA rules are not static and may 
+change over time, if changes do take place those changes will need to be 
+incorporated into EFA's future versions. 
 
 Thus far anticipated changes include:
 
@@ -132,12 +137,23 @@ system, and also changes that would not affect EFA.
     \item[UC7:] Type of output data will always be SQL.
 \end{description}
 
-\section{Use Hierarchy \& Dependency Graph }
+\section{Module Hierarchy}
 This section provides an overview of the module design. Modules are decomposed 
 based on their hierarchy from top to bottom. The modules are broken down into 
-two sections, the first section consists of the main modules used for EFA, the 
-second section contains support module and finally the last sections contain 
-external libraries.
+three sections, the first section consists of the main module used for EFA, 
+the second section contains support modules and finally the last section
+contains external libraries.
+
+\begin{description}
+    \item[M1:] eca2SQL
+    \item[M2:] TypedSQL
+    \item[M3:] Equality
+    \item[M4:] Singletons
+    \item[M5:] Utils
+    \item[M6:] Trace
+    \item[M7:] Combinators
+    \item[M8:] Pretty
+\end{description}
 
 \begin{figure}
     \centering
@@ -145,21 +161,219 @@ external libraries.
     \caption{Dependency graph of EFA modules}~\label{fig:figure1}
 \end{figure}
 
-
-\section{Main Modules}
-
-\section{Support Modules}
-
-\section{External Libaries}
-
 \section{Connection Between Requirements and Design} \label{SecConnection}
 
-
 \section{Module Decomposition} \label{SecMD}
+Modules are located in their respective subsections (i.e. main module, support 
+modules and external library modules). Each module is decomposed based on their 
+use while hiding implementation details. 
+\\ \newline
+\textit{Please see glossary for math references and clarification of uncommon 
+terms}
 
-\section{Behaviour-Hiding Module}
+\subsection{Main Module}
 
-\section{Software Decision Module}
+%% ------------------------------M1: ECA2SQL -------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        M1 & eca2SQL \\ 
+        \midrule 
+        Main function & eca2SQL
+        \\  Input & Options, FSpec, ECARule
+        \\  Output & Doc
+        \\	Secrets & The algorithm and data structures used to implement ECA 
+        Rules.
+        \\	Services & Produces the final product by using supporting modules 
+        as tools in translating ECA rules to SQL statements which can be 
+        applied to a database.
+        \\     
+         \vspace{12pt}
+     \end{tabularx}
+\\
+\underline{Internal Description}\\ \\
+eca2SQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
+\subsection{Support Modules}
+%% ------------------------------M2: TypedSQL -------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+        M2 & eca2SQL \\ 
+        \midrule       
+        \\  Requires Modules & ProofUtils, Trace, Singleton
+        \\	Secrets & Implements a type language for SQL through pattern 
+        matches where the representation of SQL references types which can 
+        appear in SQL statements.
+        \\	Services & Contains Base which implements a typed SQL query 
+        language and a type SQL statement.
+        \\         
+        \vspace{12pt}
+    \end{tabularx} 
+
+
+\setlength{\parindent}{0pt}
+\underline{Internal Description}\\
+
+Read as: \textit{function: input $\rightarrow$ input2 $\rightarrow$ 
+output}\newline
+
+Where a function may require multiple inputs of different types to produce the 
+necessary output type.\\
+
+\textit{function (type and value level): (x:A) $\rightarrow$ output}
+This indicates the function of a certain type and its value level, this is seen 
+on SQL types. (x:A) is used to indicate a variable x of type A (e.g. x=9, (x:A) 
+is a type of integer). (function::) is used to define a function and its input 
+types 
+
+
+
+\newglossaryentry{N}{name=N, description= $\mathbb{N}$ represents 
+    the 
+    set of natural numbers}
+
+ (:::) : Symbol $\rightarrow$ SQLType $\rightarrow$ SQLRecLabel \\
+ 
+ SQLSizeVariant : Kind \\
+ SQLSmall, SQLMedium, SQLNormal, SQLBig :SQLSizeVariant \\ \\
+ 
+ SQLSign : Kind \\
+ SQLSigned, SQLUnsigned : SQLSign  \\
+ 
+ SQLNumeric : Kind \\
+ SQLFloat, SQLDouble : SQLSign $\rightarrow$ SQLNumeric \\
+ 
+ SQLInt : SQLSizeVariant $\rightarrow$ SQLSign $\rightarrow$ SQLNumeric \\
+ SQLRecLabel : Kind \\
+
+ SQLType : Kind \\
+ SQLBool, SQLDate, SQLDateTime, SQLSerial : SQLType \\
+ 
+ SQLNumericTy : SQLNumeric $\rightarrow$ SQLType  \\
+ SQLBlob : SQLSign $\rightarrow$ SQLType \\
+ 
+ SQLVarChar : \Gls{N} $\rightarrow$ SQLType 
+ SQLRel : SQLType $\rightarrow$ SQLType \\
+ 
+ SQLRow : [SQLRecLabel] $\rightarrow$ SQLType 
+ SQLVec : [SQLType]$\rightarrow$ SQLType \\
+ 
+ SQLRef, SQLUnit: SQLType \\
+ SQLRefType: Kind\\
+ 
+ SQLMethod: [SQLType] $\rightarrow$ SQLType $\rightarrow$ SQLRefType \\
+ SQLVal: SQLType $\rightarrow$ Type \\
+ 
+ SQLScalarVal: IsScalarType a $\equiv$ True $\rightarrow$ Sm.ValueExpr 
+ $\rightarrow$ SQLVal a \\
+ SQLQueryVal: IsScalarType a $\equiv$ False $\rightarrow$ Sm.QueryExpr 
+ $\rightarrow$ SQLVal a \\
+ 
+ SQLValSem: SQLRefType $\rightarrow$ Type\\
+
+ 
+ Ty: SQLType $\rightarrow$ SQLRefType \\
+
+ IsScalarType: SQLType $\rightarrow$ Bool \\
+ isScalarType: (x:SQLType) $\rightarrow$ IsScalarType x \\
+ IsScalarTypes: [SQLType] $\rightarrow$ Bool \\
+ isScalarTypes: (X:[SQLType]) $\rightarrow$ IsScalarTypes x \\
+ 
+ typeOf: SQLVal a $\rightarrow$ a \\
+ argOfRel: SQLRel a $\rightarrow$ a\\
+ 
+ Unit: SQLValSem SQLUnit\\
+ Val:: SQLVal x $\rightarrow$ SQLValSem ('Ty x)
+ 
+ 
+
+%% ------------------------------M3: Equality -------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+        M3 & Equality \\ 
+        \midrule
+        
+        Contains functions  & 
+        \\ Input &
+        \\ Output &
+        \\	Secrets & 
+        \\	Services &  
+        \\       
+        \vspace{12pt}
+    \end{tabularx}
+    \vspace{3em}
+%% ------------------------------M4: Singleton -------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+        M4 & Singleton \\ 
+        \midrule
+        
+        Main function  & 
+        \\ Input &
+        \\ Output &
+        \\	Secrets & 
+        \\	Services &  
+        \\       
+        \vspace{12pt}
+    \end{tabularx}\vspace{3em}
+%% ------------------------------M5: Utils -------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+        M5 & Utils \\ 
+        \midrule
+        
+        Main function  & 
+        \\	Secrets & 
+        \\	Services &  
+        \\       
+        \vspace{12pt}
+    \end{tabularx}\vspace{3em}
+%% ------------------------------M6: Trace -------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+        M6 & Trace \\ 
+        \midrule
+        
+        Main function  & 
+        \\	Secrets & 
+        \\	Services &  
+        \\       
+        \vspace{12pt}
+    \end{tabularx}\vspace{3em}
+%% ------------------------------M7: Combinators------------------------------%%
+{\setlength{\tabcolsep}{6pt} 
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{5cm}X}
+        M7 & Combinators \\ 
+        \midrule
+        
+        Main function  & 
+        \\	Secrets & 
+        \\	Services &  
+        \\       
+        \vspace{12pt}
+    \end{tabularx}\vspace{3em}
+%% ----------------------------- M8: Pretty    ------------------------------%%
+    {\setlength{\tabcolsep}{6pt} 
+        \begin{tabularx}{\textwidth}{>{\bfseries}m{5cm}X}
+            M8 & Pretty \\ 
+            \midrule
+            
+            Main function  & 
+            \\	Secrets & 
+            \\	Services &  
+            \\       
+            \vspace{12pt}
+        \end{tabularx}\vspace{3em}
+        
+\subsection{External Libraries}
+\begin{tabular}{ | m{4cm} | m{11cm} |}
+    \hline
+    \bfseries{Library} & \bfseries{Reference}  \\
+    \hline
+    item 21  & item 22   \\
+    item 21  & item 22   \\
+    item 21  & item 22   \\
+    item 21  & item 22   \\
+    \hline
+    \end{tabular}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -167,8 +381,11 @@ external libraries.
 
 
 
-%\section*{References}
 
+
+%\section*{References}
+\clearpage
+\printglossaries
 \bibliographystyle {plainnat}
 \bibliography {docDesign}
 
