@@ -19,7 +19,7 @@
 \usepackage{glossaries}
 \usepackage{listings}
 \usepackage{calc}
-\usepackage{../ltx/pgf-umlcd/pgf-umlcd}
+\usepackage[simplified]{../ltx/pgf-umlcd/pgf-umlcd}
 
 \usetikzlibrary{arrows.meta}
 
@@ -76,7 +76,7 @@
   {.}{{$\circ$\,\,}}1
   ,
   escapeinside={\%*}{*)},
-  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id},
+  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id,Show},
   morekeywords={forall, ::, :},
   postbreak={},
   breaklines=true,                
@@ -209,36 +209,153 @@ system, and also changes that would not affect EFA.
     \item[UC6:] Type of output data will always be a SQL procedure.
 \end{description}
 
-\section{Module Hierarchy}
-This section provides an overview of the module design. Modules are decomposed 
-based on their hierarchy from top to bottom. The modules are broken down into 
-three sections, the first section consists of the main module used for EFA, 
-the second section contains support modules and finally the last section
-contains external libraries.
 
-\begin{description}
-    \item[M1:] eca2SQL
-    \item[M2:] TypedSQL
-    \item[M3:] Equality
-    \item[M4:] Singletons
-    \item[M5:] Utils
-    \item[M6:] Trace
-    \item[M7:] Combinators
-    \item[M8:] Pretty
-\end{description}
+%%%%%%%%%%%%%%%%%%%%%
+%%% Section - System Architecture %%%%%
+%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{System Architecture} \label{SystemArch}
+
+This section provides an overview of the module design. The module design is
+detailed with UML-like class diagrams. However, UML class diagrams are typically
+used to describe the module systems of object-oriented programs, as opposed to
+functional programs. Many of the components of the traditional UML class
+diagram are inapplicable to functional programs; therefore, we detail our
+modifications to the UML class diagram syntax in section~\ref{subsec:ModuleSyntax}. 
+
+Furthermore, the syntax used to describe types and data declarations is not
+actual Haskell syntax. The syntax shares many similarities, but several changes
+to the syntax are made in this document in order to present the module hierarchy
+in a clearer manner. These changes are also detailed, in section~\ref{subsec:HaskellSyntax}. 
+
+
+\subsection{Haskell-like Syntax Description}\label{subsec:HaskellSyntax}
+
+This section details the syntax used to describe the module system of
+Ampersand. This syntax largely borrows from actual Haskell syntax, and from the
+Agda programming language \cite{agda}. Agda is a dependantly typed functional
+language, and since a large part of our work deals with ``faking'' dependant
+types, the syntax of Agda is conducive to easy communication of our module system. The
+principle of faking dependant types in Haskell is detailed in
+Hasochism~\cite{hasochism} (a portmanteau of Haskell and masochism, because
+purportedly wanting to fake dependant types in Haskell is masochism). While the
+implementation has since been refined many times over, the general approach is still the
+same, and will not be detailed here.
+
+While the changes made to the Haskell syntax are reasonably complex, the ensuing 
+module description becomes vastly simplified. This section is meant to be used
+as a reference - in many cases, the meaning of a type is self-evident. 
+
+\subsubsection*{Types and kinds}
+In the way that a type classifies a set of values, a kind classifies a set of
+types. Haskell permits one to define algebraic data types, which are then ``promoted''
+to the kind level. This permits the type constructor of the datatype to be used
+as a kind constructor, and for the value constructors to be used as type constructors. 
+In every case in our system, when we define a datatype and use the promoted version,
+we never use the \emph{unpromoted} version. That is, we define types which are never
+used as types, only as kinds, and constructors which are never used as value constructors,
+only type constructors. We write \,\,\,\lstinline!X : A -> B -> $\ldots$ -> Type!\,\,\, to denote
+a regular data type, and \,\,\,\lstinline!Y : A -> B -> $\ldots$ -> Kind!\,\,\, to denote a datatype
+which is used exclusively as a kind. 
+
+\subsubsection*{Dependant types}
+The syntax used to denote a ``fake'' dependant type in our model is the same 
+as used to denote a real dependant type in Agda. \lstinline!(x : A) -> B! is the function
+from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly looks like a 
+real Haskell type - in Haskell, the syntax would be \texttt{forall (x :: A) . B}. However, 
+the semantics of these two types are vastly different - one can pattern match
+on the value of $x$ in the former case, while this is impossible in the latter case. 
+
+In certain cases, it may be elucidating to see the \emph{real} Haskell type of
+an entity (function, datatype, etc.). To differentiate the two, they are typeset
+differently, as in this example.
+
+The real type of a function whose type is given as \lstinline!(x : A) -> B! in
+our model is \texttt{forall (x :: A) . SingT x -> B}. \texttt{SingT :: A -> Type}
+denotes the singleton type for the kind $A$, which is inhabitted by precisely
+one value for each type which inhabits $A$. The role and use of singleton types
+is detailed further on, in section~\ref{subsec:Singletons}. 
+
+The syntax \lstinline!forall (x : A) -> B! is used to denote the regular
+Haskell type \texttt{forall (x :: A) . B}. As is customary in Haskell, the quantification
+may be dropped when the kind $A$ is clear from the context: \lstinline!forall (x : A) -> P x!,
+\lstinline!forall x -> P x!, and \lstinline!x -> P x! all denote the type \texttt{forall (x :: A) . P x}.
+
+\subsubsection*{Constraints}
+The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
+we use the arrow to additionally denote constraints. For example, the function
+\texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> a -> String!.
+
+\subsubsection*{Overloading}
+Haskell supports overloaded function names through type classes. When we use a type 
+class to simply overload a function name, we simply write the function name
+multiple times with different types. The motivation for this is that often the 
+real type will be exceeding complex, because it must be so to get good type inference. 
+
+\subsubsection*{Types, kinds, and type synonyms}
+Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is the name
+of the type synonym, $K$ is its kind, and $X$ its implementation. This is to differentiate
+from type families, which are written as \lstinline!Ty : K where Ty $\ldots$ = $\ldots$!. 
+
+\subsubsection*{Omitted implementations}
+When the implementation of a type synonym, or any other entity, is omitted, it
+is replaced by ``$\ldots$''. This is to differentiate from a declaration of the form
+\lstinline!Ty : Type!, which is an abstract type whose constructors cannot be
+accessed. Furthermore, types may have pattern-match-only constructors; that is,
+constructors which can only be used in the context of a pattern match, and not
+to construct a value of that type. This is denoted by the syntax
+``\lstinline!pattern Ctr : Ty!''. Furthermore, it is not a simple matter of
+convention - the use of this constructor in expressions will be strictly
+forbidden by Haskell.
+
+\subsection{Module Diagram Syntax Description}\label{subsec:ModuleSyntax}
+
 
 \begin{figure}[!ht]
 \makebox[\textwidth][c]{
 \scalebox{0.6}{
 \begin{tikzpicture}
 
-  %% \begin{class}[text width=13cm]{ECA2SQL}{0,0}
-  %%   \hsfunc{eca2SQL : Options -> FSpec -> ECArule -> SQLMethod [] SQLBool}
-  %%   \hsfunc{eca2PrettySQL : Options -> FSpec -> ECArule -> Doc}
-  %% \end{class}
+  \begin{package}{Module}
+
+    \begin{class}[text width=10cm]{Submodule$_0$}{0,0}
+      \hstype{Data$_0$ : Type where}
+      \hstypectr{Ctr$_0$ : A -> Data$_0$}
+      \hstypectr{pattern Ctr$_1$ : B -> Data$_0$}
+      \hsfunc{func$_0$ : B -> C -> D} 
+      \hstype{Data$_1$ : Kind where}
+      \hstypectr{Ctr$_2$ : E -> Data$_1$}
+    \end{class}
+
+    \begin{class}[text width=10cm]{Submodule$_1$}{0,-7}
+      \attribute{\emph{Type level namespace}}
+      \operation{\emph{Value level namespace}}
+    \end{class}
+    
+
+    \draw [umlcd style, ->] (Submodule$_0$.south) -- (Submodule$_0$ |- Submodule$_1$.north); 
+
+  \end{package}
+  \renewcommand{\umlfillcolor}{grey}
+    \begin{class}[text width=10cm]{Dependency}{12,0.5}
+      \hstype{$\ldots$}
+      \hsfunc{$\ldots$}
+    \end{class}
+
+\end{tikzpicture}
+}}\caption{Example of module diagram syntax}\label{fig:ModExample}
+\end{figure}
+
+
+
+\subsection{Module Hierarchy}
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
 
   \begin{package}{TypedSQL}
-
 
   \begin{class}[text width=30cm]{TypedSQLStatement}{10,18}
     \hstype{SQLMethod : [SQLType] -> SQLType -> Type where}
@@ -349,14 +466,6 @@ contains external libraries.
 
   \end{class}
 
-  %% \unidirectionalAssociation{TypedSQLStatement}{}{}{TypedSQLLanguage}
-  %% \unidirectionalAssociation{TypedSQLExpr}{}{}{TypedSQLLanguage}
-  %% \unidirectionalAssociation{TypedSQLTable}{}{}{TypedSQLLanguage}
-
-  %% %% \unidirectionalAssociation{TypedSQLStatement}{}{}{TypedSQLExpr}
-  %% \unidirectionalAssociation{TypedSQLStatement}{}{}{TypedSQLTable}
-
-
   \draw [umlcd style, ->] ([xshift=-60pt]TypedSQLStatement.south) -- ([xshift=-60pt]TypedSQLStatement |- TypedSQLExpr.north); 
   \draw [umlcd style, ->] ([xshift=60pt]TypedSQLStatement.south) -- ([xshift=60pt]TypedSQLStatement |- TypedSQLTable.north); 
   \draw [umlcd style, ->] ([xshift=-180pt]TypedSQLStatement.south) -- ([xshift=-180pt]TypedSQLStatement |- TypedSQLLanguage.north); 
@@ -366,28 +475,12 @@ contains external libraries.
   \draw [umlcd style, ->] (TypedSQLTable.west) -- (TypedSQLTable -| TypedSQLLanguage.east); 
   \draw [umlcd style, ->] (TypedSQLExpr.west) -- (TypedSQLExpr -| TypedSQLLanguage.east);
 
-  %% \node[inner sep=0,minimum size=0,right of=TypedSQLStatement] (k) {}; % invisible node
-  
-%% \draw[umlcd style ,->] (TypedSQLStatement) node[above , sloped ,
-%%   black]{} (TypedSQLExpr);
-
   \end{package}
 
 \end{tikzpicture}
-}}
+}}\caption{Module diagram for TypedSQL} \label{fig:typedSQL}
 \end{figure}
 
-%% \begin{figure}
-%%     \centering
-%%     \includegraphics[width=0.95\textwidth]{../DesignDoc/depent_tree}
-%%     \caption{Dependency graph of EFA modules}~\label{fig:figure1}
-%% \end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%
-%%% Section - System Architecture %%%%%
-%%%%%%%%%%%%%%%%%%%%%
-\newpage
-\section{System Architecture} \label{SystemArch}
 
 \subsection{Key Algorithm}
 The key Algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method that allows organization to build information systems that comply to their business requirements in a provable manner. This Algorithm is implemented in Ampersand and is responsible for translating the business requirements into ECA rules. These ECA rules contain information on how to fix any data violation and are translated into SQL in our EFA project.
@@ -633,3 +726,5 @@ The EFA project depends on the following Libraries
 \bibliography{DesignDoc}
 
 \end{document}
+
+%%  LocalWords:  UML
