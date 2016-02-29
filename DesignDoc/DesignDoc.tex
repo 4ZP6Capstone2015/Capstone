@@ -6,7 +6,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{float}
-%\usepackage{../ltx/edcomms}
+\usepackage{../ltx/edcomms}
 \usepackage{../ltx/setupComments}
 \usepackage{hyperref}
 \usepackage{geometry}
@@ -17,6 +17,7 @@
 \usepackage{tabularx}
 \usepackage{amsfonts}
 \usepackage{glossaries}
+\usepackage{multirow} %% Used for Traceability matrix
 \usepackage{listings}
 \usepackage{calc}
 \usepackage[simplified]{../ltx/pgf-umlcd/pgf-umlcd}
@@ -158,8 +159,8 @@ features, as well as how and where they are used, are considered an
 implementation detail that is not relevant to the design of EFA.
 
 \subsection{Scope}
-The purpose of this document is to outline the implementation details of the EFA project described in the Problem Statement.
-%The document outlines the design decision for the EFA project. 
+The purpose of this document is to outline the implementation details of the 
+EFA project described in the Problem Statement.
 EFA is responsible for generating SQL Statements from ECA rules that will 
 be used to fixed any violated invariants in the Ampersand prototype. 
 The document will serve as a referral document for future software development in the Ampersand project.
@@ -169,7 +170,9 @@ This document is designed for:
 \paragraph{New project members:}
 This document designed to be a guide to introduce new Ampersand users to EFA 
 (ECA rules for Ampersand). It provides a basic structure that allows 
-individuals to quickly access what they are looking for.
+individuals to quickly access the information they seek.
+\edcomm{JG}{In modern English, is it more acceptable to end sentences in 
+prepositions? -- Would it count as a grammar mistake or not?}
    
 \paragraph{Maintainers \& Designers:} The structure of this module guide will 
 help maintainers rationalize where changes should be made in order to 
@@ -178,11 +181,11 @@ a guide to EFA for future designers of Ampersand.
 
 \section{Anticipated and Unlikely Changes}
 \subsection{Anticipated Changes}
-It is likely that EFA will require changes to the front-end interface and an 
-addition that will connect the front-end interface to back-end functions, which 
-will give the user more control. In addition, ECA rules are not static and may 
-change over time, if changes do take place those changes will need to be 
-incorporated into EFA's future versions. 
+It is likely that EFA will require changes to the front-end interface. This 
+addition may include a protocol that will connect the front-end interface to 
+back-end functions, which will give the user more control. In addition, ECA 
+rules are not static and may change over time, if changes do take place those 
+changes will need to be incorporated into EFA's future versions. 
 
 Thus far anticipated changes include:
 
@@ -211,7 +214,7 @@ system, and also changes that would not affect EFA.
     used for building the Ampersand system.
     \item[UC5:] The format of initial input data and associated markers for 
     data association.
-    \item[UC6:] Type of output data will always be a SQL procedure.
+    \item[UC6:] Type of output data will always be a SQL query.
 \end{description}
 
 
@@ -537,22 +540,49 @@ figure~\ref{fig:ModExample}.
 
 
 \subsection{Key Algorithm}
-The key Algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method that allows organization to build information systems that comply to their business requirements in a provable manner. This Algorithm is implemented in Ampersand and is responsible for translating the business requirements into ECA rules. These ECA rules contain information on how to fix any data violation and are translated into SQL in our EFA project.
+The key Algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method 
+that allow organizations to build information systems that comply to their 
+business requirements in a provable manner. This Algorithm is implemented in 
+Ampersand and is responsible for translating the business requirements into ECA 
+rules. These ECA rules contain information on how to fix any data violation and 
+are translated into SQL queries in our EFA project.
 
 \subsection{Communication Protocol}
-The EFA implementation needs to communicate with the front end to be able to run the generated SQL when a violation occurs. 
+The EFA implementation needs to communicate with the front end to be able to 
+run the generated SQL queries when a violation occurs. 
 	\begin{itemize}
 		\item \textbf{Old communication protocol -  PHP engine} \newline
-			In the existing version, Ampersand depends on PHP code to run the generated SQL on the database. However this comes at the cost of human intervention and maintenance cost for the development. 
+			In the existing version, Ampersand depends on PHP code to run the 
+			generated SQL on the database. However, this comes at the cost of 
+			human intervention, which results in manual maintenance when 
+			changes occur during development. 
 		\item \textbf{New Communication protocol - Stored Procedures} \newline
-			The developments teams of EFA has come to a conclusion that the best way of communicating with the front-end will be to use Stored Procedures\cite{SP}. The Stored Procedures provide the extra benefit of query optimization at compile time which results in better performance. While this is a suggested change, it will require changes to the existing Ampersand software in order to successfully implement this idea. This is an anticipated change and will be implemented in the near future.
+			The developments teams of EFA has come to a conclusion that the 
+			best way of communicating with the front-end will be to use Stored 
+			Procedures\cite{SP}. These Stored Procedures provide the extra 
+			benefit of query optimization at compile time which results in 
+			better performance. While this is a suggested change, it will 
+			require changes to the existing Ampersand software in order for 
+			this idea to be successfully implement. This anticipated 
+			change will be implemented in the near future.
 			
 	\end{itemize}
 
 \subsection{Error handling}
-Most of the error handling is done by the underlying Ampersand software. Any human errors (syntactic or semantical) in the input ADL file are handled during the generation of the ECA. The resulting ECA rules which are fed into the EFA project are provably correct. The language of implementation (i.e Haskell) guarantees type level correctness of the EFA project at compile time. 
+Most of the error handling is done by the underlying Ampersand software. Any 
+human errors (syntactic or semantical) in the input ADL file are handled during 
+the generation of ECA rules. These resulting ECA rules are fed into the EFA 
+project and are determined to be provably correct. \edcomm{JG}{The sentence 
+before this comment, starting with "These resulting ECA rules", there might be 
+a sentence structure problem? It makes sense, but doesnt quite read right?} The 
+language of implementation (i.e. Haskell), 
+guarantees type level correctness of the EFA project at compile time. 
 \newline
-If any error occurs during runtime, the state of the database will be checked before and after the SQL statement is run. In case of an inconsistency in the data, the SQL \textbf{rollback} command will be issued that will change the database to its previous state. In such a scenario, the user will be notified about the event and can take necessary actions to fix the issue. 
+If any error occurs during runtime, the state of the database is checked 
+before and after the SQL statement has ran. In case of an inconsistency found 
+in the data, the SQL \textbf{rollback} command is issued and that will change 
+the database to its previous state. In such a scenario, the user will be 
+notified about the event and can take the necessary action to fix the issue. 
 
 %% \subsection{Main Module}
 
@@ -752,19 +782,48 @@ If any error occurs during runtime, the state of the database will be checked be
 The EFA project depends on the following Libraries 
 \begin{description}
 	\item \textbf{Ampersand Core Libraries} \newline
-		The EFA project depends on the Ampersand software for the definition of core Data Structures, i.e FSpec (which contains the definition to the underlying ECA rules). EFA also maintains the relational schema of the input and hence imports Ampersand's existing functions to fetch the table declarations while generating SQL Statements for the ECA rules. AMMBR \cite{AMMBR} which is the key algorithm responsible for translating business requirements into ECA rules is an intergral part of Ampersand.
+		The EFA project depends on the Ampersand software for the definition of 
+		core Data Structures, (i.e. FSpec, which contains the definition ofo 
+		the underlying ECA rules). EFA also maintains the relational schema of 
+		the input, and hence, imports Ampersand's existing functions to fetch 
+		the table declarations while generating SQL Statements for the ECA 
+		rules. AMMBR \cite{AMMBR}, which is the key algorithm responsible for 
+		translating business requirements into ECA rules is an integral part of 
+		Ampersand.
 	\item \textbf{Simple-sql-parser} \newline
-		The pretty printer of the EFA project depends directly on this library for pretty printing the SQL statements in the console. This is important from a development and debugging perspective.\cite{simple-sql}
+		EFA's pretty printer depends directly on this library for formatting 
+		and printing SQL statements to console. This is important from a 
+		development and debugging perspective.\cite{simple-sql}
 	\item \textbf{wl-pprint} \newline
 		The wl-pprint library\cite{wl-pprint} is a pretty printer based on the pretty printing combinators described by Philip Wadler (1997). EFA uses this library in combination with the simple-sql-pretty to output the SQL statements in a human readable format.
 	\item 
 \end{description}
 
-
-
-%% TODO
 \section{Traceability Matrix} \label{SecTM}
 
+%% TODO : Fix position
+Note : The traceability matrix is based on test plan submitted by the EFA team. Removing test cases 11,12,13 which are not feasible at this point. These test cases will be removed from the Test plan in the next update.
+
+\begin{table}[]
+\caption{Traceability Matrix for the EFA Project}
+\label{traceMatrixl}
+\begin{tabular}{l|l|llllll}
+\multicolumn{1}{c}{}                                                   & \multicolumn{7}{l}{Requirements}  \\
+\hline
+\multirow{11}{*}{\begin{tabular}[c]{@{}l@{}}Test\\ Cases\end{tabular}} &     & F1 & F3 & F4 & F6 & N1 & N2 \\
+\hline
+                                                                       & T1  & *  &    &    &    &    &    \\
+                                                                       & T2  & *  &    &    &    &    &    \\
+                                                                       & T3  & *  &    &    &    &    &    \\
+                                                                       & T4  & *  &    &    &    &    &    \\
+                                                                       & T5  & *  & *  &    &    &    &    \\
+                                                                       & T6  &    & *  &    &    &    &    \\
+                                                                       & T7  &    &    & *  &    &    &    \\
+                                                                       & T8  &    &    &    & *  & *  &    \\
+                                                                       & T9  &    &    &    &    &    & *  \\
+                                                                       & T10 &    &    &    & *  &    &   
+\end{tabular}
+\end{table}
 
 
 %%%\section{Use Hierarchy Between Modules} \label{SecUse}

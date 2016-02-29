@@ -1,0 +1,3 @@
+-> tracebility from requirements
+-> maybe include a "reason for this design" section in the modules
+-> explanation of symbol, convention
