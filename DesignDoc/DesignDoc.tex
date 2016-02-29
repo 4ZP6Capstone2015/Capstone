@@ -127,31 +127,37 @@
 \section{Introduction}
 %TODO: edit for grammar, spelling, context, flow, watch for contractions
 \subsection{Description}
-This document follows the principle set by Parnas and Clements\citep{fakeIt}. 
-EFA is currently in development where changes occur frequently, a 
-commonly accepted practice for this situation is to decompose modules based on 
-the principle of abstraction, where unnecessary information in hidden for the 
-benefit of designers and maintainers\citep{modStruct,Parnas1972}.
- 
-%% TODO: fix this
 
-Our design follows the principles laid out by \citep{modStruct}, as follows:
+This document details the module system of EFA, as well as the design principles
+which guided said module system. EFA, as well as the core Ampersand system, is
+currently in active development where changes occur frequently.  commonly
+accepted practice for this situation is to decompose modules based on the
+principle of abstraction, where unnecessary information in hidden for the
+benefit of designers and maintainers\citep{modStruct,Parnas1972}.
+
+Our design follows the principles laid out by \citep{modStruct}, which can be summarized as follows:
 \begin{itemize}
-\item Unnecessary design details are omitted for simplicity
-\item Each module is broken down based on hierarchy with no overlap of functionality
-\item All our modules are Open Modules i.e they are available for extension in the future
-\item Reference material are provided for external libraries
-%% but details of its use will not be provided within the module break-down
+\item Unnecessary design details are omitted for simplicity.
+\item Each module is broken down based on hierarchy with no overlap of functionality.
+\item All our modules are \emph{Open Modules}, that is, they are available for extension in the future.
+\item Reference materials are provided for external libraries but details of
+  their implementation are not included here. 
 \end{itemize}
 
-The language of implementation is Haskell.
+The language of implementation is Haskell. The primary reason for using Haskell
+is the existing Ampersand system is largely written in Haskell. However, we
+leverage the full power of the Haskell type system in order to encode as many
+invariants in Haskell as possible. In particular, we use many modern features of
+the Glasgow Haskell Compiler (GHC) in order to do so. However, the particular
+features, as well as how and where they are used, are considered an
+implementation detail that is not relevant to the design of EFA.
 
 \subsection{Scope}
 The purpose of this document is to outline the implementation details of the EFA project described in the Problem Statement.
 %The document outlines the design decision for the EFA project. 
 EFA is responsible for generating SQL Statements from ECA rules that will 
-be used to fixed any data inconsistencies in the Ampersand Database. 
-The document will serve as a referral document for future Software Development in the Ampersand project.
+be used to fixed any violated invariants in the Ampersand prototype. 
+The document will serve as a referral document for future software development in the Ampersand project.
 
 \subsubsection{Intended Audience}
 This document is designed for:
