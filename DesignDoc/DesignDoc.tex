@@ -24,6 +24,9 @@
 \usepackage[section]{placeins}
 
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
 
 \let\Oldsubsection\subsection
 \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
@@ -48,6 +51,8 @@
 % math things
 \newcommand{\ra}{$\rightarrow$}
 
+
+
 % 
 \definecolor{grey}{RGB}{185,185,185}
 \definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
@@ -58,9 +63,9 @@
   {/}{{$/$}}1 
   {*}{{$*$}}1 
   {=}{{$=\,\,\,$}}1
-  {==}{{$==$}}2 
+  {==}{{$==$}}1 
   %{/=}{{$\not\equiv$}}2
-  {==}{{$\equiv$}}2 
+  {==}{{$\equiv$}}2
   {/=}{{$\not\equiv$}}2
   {>}{{$>$}}1 
   {<}{{$<$}}1 
@@ -75,9 +80,9 @@
   {|}{{$\mid$}}1 
   {forall}{{$\forall$}}1
   {exists}{{$\exists$}}1 
-  {Nat}{{$\mathbb{N}$}}3
-  {:\~:}{{$\equiv$\,\,}}3
-  {\~}{{$\equiv$\,\,}}1
+  {Nat}{{$\mathbb{N}$}}1
+  {:\~:}{{$\equiv$}}2
+  {\~}{{$\equiv$}}2
   {`In`}{{$\in$}}1
   {.}{{$\circ$\,\,}}1
   ,
@@ -95,11 +100,11 @@
   mathescape
 }
 
-\newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline[mathescape]!#2!}}
+\newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline[mathescape]|#2|}}
 
-\newcommand{\hstypectr}[1]{\attribute{\hspace*{10pt}\lstinline[mathescape]!#1!}}
+\newcommand{\hstypectr}[1]{\attribute{\hspace*{10pt}\lstinline[mathescape]|#1|}}
 
-\newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline[mathescape]!#2!}}
+\newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline[mathescape]|#2|}}
 
 %% \tikzset{>=latex}
 
@@ -340,7 +345,7 @@ system.  A coarse module hierarchy is given, and each module is further broken
 into submodules.  A dependency between two modules $A$ and $B$ indicates that
 each submodule in $A$ depends on all of $B$. There is no necessity to break
 down modules into submodule, if they do not have any interesting submodule 
-structure. 
+structure. Arrows between modules and submodules denote a dependency. 
 
 External dependencies, which are modules which come from an external pacakge,
 are indicated in {\color{grey}grey}. System modules, which are modules part of
@@ -388,7 +393,7 @@ figure~\ref{fig:ModExample}.
   \draw [umlcd style, ->] (Module$_1$.east) -- (Module$_1$ -| Module$_2$.west); 
 
   \renewcommand{\umlfillcolor}{grey}
-    \begin{class}[text width=10cm]{Dependency}{12,0.5}
+    \begin{class}[text width=10cm]{Package Dependency}{12,0.5}
       \hstype{$\ldots$}
       \hsfunc{$\ldots$}
     \end{class}
@@ -407,6 +412,167 @@ figure~\ref{fig:ModExample}.
 
 
 \subsection{Module Hierarchy}
+
+This section contains a hierarchal breakdown of each module, as well as a brief
+explanation of each modules' elements. 
+
+The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}. Note
+that every module which is part of EFA depends on the ``Trace'' module and the
+Haskell ``base'' package (which are the core libraries of Haskell). In general,
+all modules implicitly depend on base. The primary interface to EFA is the
+function ``eca2PrettySQL'', which takes an FSpec (the abstract syntax of
+Ampersand) and an ECA rule, and returns the pretty printed SQL code for that
+rule. Also note that while the dependencies within EFA modules is relatively
+complex, they depend on the rest of the Ampersand system in a simple manner. The
+modules ``Test'' and ``Prototype'' implement the testing framework and the
+prototype generation, respectively; these modules depend directly on only one
+module from EFA, namely ``ECA2SQL''. Similarly, the majority of EFA itself does
+not depend directly on Ampersand modules outside of EFA. This makes EFA very
+resilient to changes in the core Ampersand system; in order to update EFA
+to work with a modification to Ampersand, only one EFA module will generally need 
+to be modified. 
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+  
+  %% \begin{package}{TypedSQL}
+    %% fwQcGWGGF
+
+  \begin{class}[text width=16.6cm]{ECA2SQL}{0,2}
+    \hsfunc{eca2SQL : FSpec -> ECArule -> exists (a : [SQLType]) (SQLMethod a SQLBool)}
+    \hsfunc{eca2PrettySQL : FSpec -> ECArule -> Doc}
+      %% \hsfunc{$\ldots$}
+  \end{class}
+
+  \begin{class}[text width=3cm]{TypedSQL}{-3.4, -2.5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \begin{class}[text width=4.5cm]{PrettyPrinterSQL}{-9, -2.5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \begin{class}[text width=6cm]{TypedSQLCombinators}{5,-2.5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+
+  \begin{class}[text width=3cm]{Equality}{-3.4,-5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \begin{class}[text width=3cm]{Singletons}{3.55,-5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+
+  \begin{class}[text width=3cm]{Trace}{-3.4,-13.5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \begin{class}[text width=3cm]{Proof Utils}{3.55,-7.5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \renewcommand{\umlfillcolor}{grey}
+  \begin{class}[text width=3cm]{base}{0,-13.5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \renewcommand{\umlfillcolor}{grey}
+  \begin{class}[text width=6cm]{wl-pprint}{-3.4,-8}
+    \hstype{Doc : Type} 
+    \hstype{instance Show Doc where $\ldots$} 
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \renewcommand{\umlfillcolor}{grey}
+  \begin{class}[text width=5cm]{simple-sql-parser}{-10,-8}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+
+  \renewcommand{\umlfillcolor}{applegreen}
+  \begin{class}[text width=4.9cm]{AmpersandCore}{4,-10}
+    \hstype{ECArule : Type where $\ldots$} 
+      %% \hsfunc{$\ldots$}
+  \end{class}
+
+  \renewcommand{\umlfillcolor}{applegreen}
+  \begin{class}[text width=3cm]{Test}{-2,5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \renewcommand{\umlfillcolor}{applegreen}
+  \begin{class}[text width=3cm]{Prototype}{2,5}
+      \hsfunc{$\ldots$}
+  \end{class}
+
+  \renewcommand{\umlfillcolor}{applegreen}
+  \begin{class}[text width=4.5cm]{FSpec}{10.4,-10}
+    \hstype{FSpec : Type where $\ldots$} 
+      %% \hsfunc{$\ldots$}
+  \end{class}
+
+  \unidirectionalAssociation{Prototype}{}{}{ECA2SQL}
+  \unidirectionalAssociation{Test}{}{}{ECA2SQL}
+
+  \draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south west)$) -- (TypedSQL.north); 
+  \draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south east)$) -- (TypedSQLCombinators.north); 
+  \draw [umlcd style, ->] (ECA2SQL.south) -- (Equality.north east); 
+  \draw [umlcd style, ->] (ECA2SQL.south) -- (Singletons.north west); 
+  %% \draw [umlcd style, ->] (ECA2SQL.south) -- (Trace.north east); 
+  \draw [umlcd style, ->] (ECA2SQL.south) -- (Proof Utils.north west); 
+  \draw [umlcd style, ->] (ECA2SQL.south west) -- (PrettyPrinterSQL.north); 
+
+
+  \node[above = 1cm of base] (basedummy)       {};
+  \node[above = 1.5cm of base](basedummy2)       {};
+  \draw [umlcd style, ->, thick] (basedummy) -- (base); 
+  \draw [umlcd style dashed line, -, thick] (basedummy2) -- (base); 
+
+  \draw [umlcd style, ->] (Singletons.south) -- (Proof Utils.north); 
+  %% \draw [umlcd style, ->] (Singletons.west) -- (Trace.east); 
+  \draw [umlcd style, ->] (TypedSQL.south) -- (Equality.north); 
+  %% \draw [umlcd style, ->] (Equality.south) -- (Trace.north); 
+  \draw [umlcd style, ->] (TypedSQLCombinators.west) -- (TypedSQL.east); 
+  \draw [umlcd style, ->] (Singletons.west) -- (Equality.east); 
+  %% \draw [umlcd style, ->] (Proof Utils.south west) -- (Trace.south east); 
+  \draw [umlcd style, ->] (TypedSQL.south east) -- (AmpersandCore.north west); 
+
+  \draw [umlcd style, ->] ([xshift=60pt]TypedSQLCombinators.south) -- ([xshift=30pt]AmpersandCore.north); 
+  \draw [umlcd style, ->] (TypedSQLCombinators.south) -- (Singletons.north); 
+  \draw [umlcd style, ->] ([xshift=30pt]TypedSQLCombinators.south) -- (Proof Utils.north east); 
+
+
+  \draw [umlcd style, ->] ([xshift=-30pt]PrettyPrinterSQL.south east) -- (wl-pprint.north west); 
+  %% \draw [umlcd style, ->] (PrettyPrinterSQL.south east) -- (Trace.west); 
+  \draw [umlcd style, ->] (PrettyPrinterSQL.east) -- (TypedSQL.west); 
+
+
+  
+  \node[above = 1cm of Trace] (tracedummy)       {};
+  \node[above = 1.5cm of Trace](tracedummy2)       {};
+  \draw [umlcd style, ->, thick] (tracedummy) -- (Trace); 
+  \draw [umlcd style dashed line, -, thick] (tracedummy2) -- (Trace); 
+  
+
+  \draw [umlcd style, ->] (TypedSQL.south west) -- (simple-sql-parser.north east); 
+
+  \draw  [umlcd style, ->, fill opacity=0]  ([xshift=70pt]TypedSQLCombinators.south) --++ (0cm,-8cm) -| (simple-sql-parser.south);
+
+
+  \draw[umlcd style ,->, fill opacity=0] (ECA2SQL.east) -| node[above , sloped , black]{} (FSpec.north);
+
+  \draw[umlcd style ,->, fill opacity=0] (ECA2SQL.south) |- node[above , sloped , black]{} (AmpersandCore.west);
+
+  \unidirectionalAssociation{PrettyPrinterSQL}{}{}{simple-sql-parser}
+
+\end{tikzpicture}
+}}\caption{Module diagram for EFA as a whole} \label{fig:efaMod}
+\end{figure}
 
 \begin{figure}[!ht]
 \makebox[\textwidth][c]{
@@ -537,6 +703,106 @@ figure~\ref{fig:ModExample}.
 \end{tikzpicture}
 }}\caption{Module diagram for TypedSQL} \label{fig:typedSQL}
 \end{figure}
+
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+  
+  %% \begin{package}{TypedSQL}
+    
+  \begin{class}[text width=22cm]{TypedSQLCombinators}{17,5}
+    \hstype{PrimSQLFunction : [SQLType] -> SQLType -> Type}
+    \hstypectr{PTrue, PFalse : PrimSQLFunction [] SQLBool}
+    \hstypectr{Not : PrimSQLFunction [ SQLBool ] SQLBool}
+    \hstypectr{Or, And : PrimSQLFunction [ SQLBool, SQLBool ] SQLBool}
+    \hstypectr{In, NotIn : PrimSQLFunction [ a, SQLRel a ] SQLBool}
+    \hstypectr{Exists : PrimSQLFunction [ SQLRel a ] SQLBool}
+    \hstypectr{GroupBy : PrimSQLFunction [ SQLRel a, a ] (SQLRel (SQLRel a))}
+    \hstypectr{SortBy  : PrimSQLFunction [ SQLRel a, a ] (SQLRel a)}
+    \hstypectr{Max, Min, Sum, Avg : IsSQLNumeric a -> PrimSQLFunction [ SQLRel a ] a }
+    \hstypectr{Alias : (RecAssocs ts :~: RecAssocs ts') -> PrimSQLFunction [ SQLRel (SQLRow ts) ] (SQLRel (SQLRow ts'))}
+
+    \hsfunc{primSQL : PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
+
+    \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i :\~: r -> SQLVal (SQLRow xs) -> SingT i -> SQLVal r}
+    \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i :\~: r -> SQLVal (SQLRel (SQLRow xs)) -> SingT i -> SQLVal r}
+    \hsfunc{(!) : (xs : [SQLType]) (i : Nat) -> LookupIx t i :\~: r -> SQLVal (SQLVec t) -> SingT i -> SQLVal r}
+   
+    
+  \end{class}
+
+  %% \end{package}
+
+\end{tikzpicture}
+}}\caption{Module diagram for TypedSQLCombinators} \label{fig:typedSQLComb}
+\end{figure}
+
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+  
+  \begin{package}{Base}
+    
+    \renewcommand{\umlfillcolor}{grey}
+    \begin{class}[text width=10cm]{Primitive}{0,0}
+
+      \hstype{Nat : Kind} 
+      \hstype{Constraint : Kind} 
+      \hstype{Type : Kind} 
+      \hstype{class $\,\,\text{KnownNat}$ : Nat -> Constraint where $\ldots$} 
+      \hstype{Symbol : Kind}
+      \hstype{class KnownSymbol : Nat -> Constraint where $\ldots$}  
+      \hstype{(\~) : Type -> Type -> Constraint} 
+
+    \end{class}
+
+    \begin{class}[text width=10cm]{List}{0,5}
+      \hstype{$\ldots$}
+    \end{class}
+
+    \begin{class}[text width=10cm]{Maybe}{0,7}
+      \hstype{$\ldots$}
+    \end{class}
+
+  \end{package}
+
+\end{tikzpicture}
+}}\caption{Module diagram for \texttt{base} package} \label{fig:basePkg}
+\end{figure}
+
+
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+  
+  %% \begin{package}{TypedSQL}
+    
+  \begin{class}[text width=22cm]{TypedSQLCombinators}{17,5}
+
+    \hstype{instance Pretty (SQLTypeS x) $\,\,$ where $\ldots$}
+    \hstype{instance Pretty (SQLVal x)  $\,\,$ where $\ldots$}
+    \hstype{instance Pretty (SQLValSem x)  $\,\,$ where $\ldots$}
+    \hstype{instance Pretty (SQLSt k x)  $\,\,$ where $\ldots$}
+    \hstype{instance (str \~ String) => Pretty (str, SQLMethod args out)  $\,\,$ where $\ldots$}
+
+    \hsfunc{eca2PrettySQL : FSpec -> ECArule -> Doc}
+
+  \end{class}
+
+  %% \end{package}
+
+\end{tikzpicture}
+}}\caption{Module diagram for PrettySQL} \label{fig:prettySQL}
+\end{figure}
+
+
+
 
 
 \subsection{Key Algorithm}
@@ -790,12 +1056,17 @@ The EFA project depends on the following Libraries
 		rules. AMMBR \cite{AMMBR}, which is the key algorithm responsible for 
 		translating business requirements into ECA rules is an integral part of 
 		Ampersand.
-	\item \textbf{Simple-sql-parser} \newline
+	\item \textbf{simple-sql-parser} \newline
 		EFA's pretty printer depends directly on this library for formatting 
-		and printing SQL statements to console. This is important from a 
-		development and debugging perspective.\cite{simple-sql}
-	\item \textbf{wl-pprint} \newline
-		The wl-pprint library\cite{wl-pprint} is a pretty printer based on the pretty printing combinators described by Philip Wadler (1997). EFA uses this library in combination with the simple-sql-pretty to output the SQL statements in a human readable format.
+		and printing SQL statements. The SQL statement syntax 
+                defined here is built on top of the existing expression syntax defined 
+                in this package. This package is the one used by the core Ampersand system,
+                so our use of it facilitates interaction and integration with Ampersand. \cite{simple-sql}
+	\item \textbf{wl-pprint} \newline 
+          The wl-pprint library\cite{wl-pprint} is a pretty printer based on the
+          pretty printing combinators. EFA uses this library in combination with
+          the simple-sql-pretty to output the SQL statements in a human readable
+          format.
 	\item 
 \end{description}
 
