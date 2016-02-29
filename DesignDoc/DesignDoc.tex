@@ -17,6 +17,7 @@
 \usepackage{tabularx}
 \usepackage{amsfonts}
 \usepackage{glossaries}
+\usepackage{multirow} %% Used for Traceability matrix
 %\usepackage{amssymb}
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
@@ -375,11 +376,29 @@ The EFA project depends on the following Libraries
 	\item 
 \end{description}
 
-
-
-%% TODO
 \section{Traceability Matrix} \label{SecTM}
 
+%% TODO : Fix position
+Note : The traceability matrix is based on test plan submitted by the EFA team. Removing test cases 11,12,13 which are not feasible at this point. These test cases will be removed from the Test plan in the next update.
+
+\begin{table}[]
+\caption{Traceability Matrix for the EFA Project}
+\label{traceMatrixl}
+\begin{tabular}{llllllll}
+\multicolumn{1}{c}{}                                                   & \multicolumn{7}{l}{Requirements}  \\
+\multirow{11}{*}{\begin{tabular}[c]{@{}l@{}}Test\\ Cases\end{tabular}} &     & F1 & F3 & F4 & F6 & N1 & N2 \\
+                                                                       & T1  & X  &    &    &    &    &    \\
+                                                                       & T2  & X  &    &    &    &    &    \\
+                                                                       & T3  & X  &    &    &    &    &    \\
+                                                                       & T4  & X  &    &    &    &    &    \\
+                                                                       & T5  & X  & X  &    &    &    &    \\
+                                                                       & T6  &    & X  &    &    &    &    \\
+                                                                       & T7  &    &    & X  &    &    &    \\
+                                                                       & T8  &    &    &    & X  & X  &    \\
+                                                                       & T9  &    &    &    &    &    & X  \\
+                                                                       & T10 &    &    &    & X  &    &   
+\end{tabular}
+\end{table}
 
 
 %%%\section{Use Hierarchy Between Modules} \label{SecUse}
@@ -391,7 +410,7 @@ The EFA project depends on the following Libraries
 %\section*{References}
 \clearpage
 \printglossaries
-\bibliographystyle{alpha}
+\bibliographystyle{plain}
 \bibliography {docDesign}
 
 \end{document}
