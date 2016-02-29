@@ -828,8 +828,6 @@ a SQL value, again of the corresponding type.
     \hstype{instance Pretty (SQLSt k x)  $\,\,$ where $\ldots$}
     \hstype{instance (str \~ String) => Pretty (str, SQLMethod args out)  $\,\,$ where $\ldots$}
 
-    \hsfunc{eca2PrettySQL : FSpec -> ECArule -> Doc}
-
   \end{class}
 
   %% \end{package}
@@ -838,6 +836,13 @@ a SQL value, again of the corresponding type.
 }}\caption{Module diagram for PrettySQL} \label{fig:prettySQL}
 \end{figure}
 
+The module PrettySQL defines pretty printers for each of the types
+corresponding to SQL entities, including SQL types, SQL values, SQL references
+and methods, and SQL statements. These pretty printers produce a value of
+type Doc (which comes from the wl-pprint package), which is like a string
+value, but contains the layout and indentation of all lines of the document,
+allowing for easy composition of Doc values into larger documents, without
+worrying about layout. 
 
 
 
