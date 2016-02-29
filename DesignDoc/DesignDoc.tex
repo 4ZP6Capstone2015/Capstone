@@ -135,13 +135,13 @@
 
 \newpage
 
-\section{Introduction}
+\section{Introduction}\label{intro}
 %TODO: edit for grammar, spelling, context, flow, watch for contractions
 \subsection{Description}
 
 This document details the module system of EFA, as well as the design principles
 which guided said module system. EFA, as well as the core Ampersand system, is
-currently in active development where changes occur frequently.  commonly
+currently in active development where changes occur frequently. Commonly
 accepted practice for this situation is to decompose modules based on the
 principle of abstraction, where unnecessary information in hidden for the
 benefit of designers and maintainers\citep{modStruct,Parnas1972}.
@@ -156,7 +156,7 @@ Our design follows the principles laid out by \citep{modStruct}, which can be su
 \end{itemize}
 
 The language of implementation is Haskell. The primary reason for using Haskell
-is the existing Ampersand system is largely written in Haskell. However, we
+is that the existing Ampersand system is largely written in Haskell. However, we
 leverage the full power of the Haskell type system in order to encode as many
 invariants in Haskell as possible. In particular, we use many modern features of
 the Glasgow Haskell Compiler (GHC) in order to do so. However, the particular
@@ -173,11 +173,9 @@ The document will serve as a referral document for future software development i
 \subsubsection{Intended Audience}
 This document is designed for:
 \paragraph{New project members:}
-This document designed to be a guide to introduce new Ampersand users to EFA 
+This document is designed to help introduce new Ampersand users to EFA 
 (ECA rules for Ampersand). It provides a basic structure that allows 
 individuals to quickly access the information they seek.
-\edcomm{JG}{In modern English, is it more acceptable to end sentences in 
-prepositions? -- Would it count as a grammar mistake or not?}
    
 \paragraph{Maintainers \& Designers:} The structure of this module guide will 
 help maintainers rationalize where changes should be made in order to 
@@ -190,7 +188,7 @@ It is likely that EFA will require changes to the front-end interface. This
 addition may include a protocol that will connect the front-end interface to 
 back-end functions, which will give the user more control. In addition, ECA 
 rules are not static and may change over time, if changes do take place those 
-changes will need to be incorporated into EFA's future versions. 
+changes will need to be incorporated into EFA's future releases. 
 
 Thus far anticipated changes include:
 
@@ -214,12 +212,11 @@ system, and also changes that would not affect EFA.
     \item[UC1:] There will always be a source of input data external to the 
     software.
     \item[UC2:] Results will always be provably correct.
-    \item[UC3:] Output data must exist.
-    \item[UC4:] The implementation language must be the same as that which is 
+    \item[UC3:] The implementation language must be the same as that which is 
     used for building the Ampersand system.
-    \item[UC5:] The format of initial input data and associated markers for 
+    \item[UC4:] The format of initial input data and associated markers for 
     data association.
-    \item[UC6:] Type of output data will always be a SQL query.
+    \item[UC5:] Type of output data will always be a SQL query.
 \end{description}
 
 
@@ -239,7 +236,7 @@ modifications to the UML class diagram syntax in section~\ref{subsec:ModuleSynta
 Furthermore, the syntax used to describe types and data declarations is not
 actual Haskell syntax. The syntax shares many similarities, but several changes
 to the syntax are made in this document in order to present the module hierarchy
-in a clearer manner. These changes are also detailed, in section~\ref{subsec:HaskellSyntax}. 
+in a clear manner. These changes are also detailed, in section~\ref{subsec:HaskellSyntax}. 
 
 
 \subsection{Haskell-like Syntax Description}\label{subsec:HaskellSyntax}
@@ -276,8 +273,8 @@ The syntax used to denote a ``fake'' dependant type in our model is the same
 as used to denote a real dependant type in Agda. \lstinline!(x : A) -> B! is the function
 from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly looks like a 
 real Haskell type - in Haskell, the syntax would be \texttt{forall (x :: A) . B}. However, 
-the semantics of these two types are vastly different - one can pattern match
-on the value of $x$ in the former case, while this is impossible in the latter case. 
+the semantics of these two types are vastly different - the former can pattern match
+on the value of $x$, while this is impossible in the latter case. 
 
 In certain cases, it may be elucidating to see the \emph{real} Haskell type of
 an entity (function, datatype, etc.). To differentiate the two, they are typeset
@@ -332,7 +329,7 @@ two ways:
 \item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> Exists p}
 \end{itemize} 
 
-Which form is used is chosen based on the circumstances in which the function
+Which form is used is decided based on the circumstances in which the function
 will most likely be used, since whether one form is more convenient than the
 other depends largely on the intended use. However, these two forms are
 completely interchangeable (albiet with some syntactic noise) so the syntax
@@ -569,8 +566,8 @@ figure~\ref{fig:ModExample}.
 This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. 
 
-The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}. Note
-that every module which is part of EFA depends on the
+The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}.
+Note that every module which is part of EFA depends on the
 Haskell ``base'' package (which is the core libraries of Haskell). Also note
 that for the ``base'' package, we only include primitive definitions (i.e. those
 not defined in real Haskell) which may be difficult to track down in the
@@ -589,7 +586,7 @@ directly on only one module from EFA, namely ``ECA2SQL''. Similarly, the
 majority of EFA itself does not depend directly on Ampersand modules outside of
 EFA. This makes EFA very resilient to changes in the core Ampersand system; in
 order to update EFA to work with a modification to Ampersand, only one EFA
-module -- ECA2SQL -- will generally need to be modified. Note
+module -- ECA2SQL -- will generally need to be modified. 
 
 All functions named in the module hierarchy are total - they do not throw
 exceptions, or produce unhandled errors or infinite loops. Therefore, no
@@ -1075,7 +1072,7 @@ run the generated SQL queries when a violation occurs.
 			benefit of query optimization at compile time which results in 
 			better performance. While this is a suggested change, it will 
 			require changes to the existing Ampersand software in order for 
-			this idea to be successfully implement. This anticipated 
+			this idea to be successfully implemented. This anticipated 
 			change will be implemented in the near future.
 			
 	\end{itemize}
@@ -1083,16 +1080,14 @@ run the generated SQL queries when a violation occurs.
 \subsection{Error handling}
 Most of the error handling is done by the underlying Ampersand software. Any 
 human errors (syntactic or semantical) in the input ADL file are handled during 
-the generation of ECA rules. These resulting ECA rules are fed into the EFA 
-project and are determined to be provably correct. \edcomm{JG}{The sentence 
-before this comment, starting with "These resulting ECA rules", there might be 
-a sentence structure problem? It makes sense, but doesnt quite read right?} The 
+the generation of ECA rules. The resulting ECA rules are fed into the EFA 
+project and are determined to be provably correct. The 
 language of implementation (i.e. Haskell), 
 guarantees type level correctness of the EFA project at compile time. 
 \newline
 If any error occurs during runtime, the state of the database is checked 
-before and after the SQL statement has ran. In case of an inconsistency found 
-in the data, the SQL \textbf{rollback} command is issued and that will change 
+before and after the SQL statement has ran. In case an inconsistency is found 
+in the data, the SQL \textbf{rollback} command is issued and will change 
 the database to its previous state. In such a scenario, the user will be 
 notified about the event and can take the necessary action to fix the issue. 
 
@@ -1102,7 +1097,7 @@ The EFA project depends on the following Libraries
 \begin{description}
 	\item \textbf{Ampersand Core Libraries} \newline
 		The EFA project depends on the Ampersand software for the definition of 
-		core Data Structures, (i.e. FSpec, which contains the definition ofo 
+		core Data Structures, (i.e. FSpec, which contains the definition of 
 		the underlying ECA rules). EFA also maintains the relational schema of 
 		the input, and hence, imports Ampersand's existing functions to fetch 
 		the table declarations while generating SQL Statements for the ECA 
@@ -1126,7 +1121,7 @@ The EFA project depends on the following Libraries
 \subsection{Traceability Matrix} \label{SecTM}
 
 %% TODO : Fix position
-Note : The traceability matrix is based on test plan submitted by the EFA team. Removing test cases 11,12,13 which are not feasible at this point. These test cases will be removed from the Test plan in the next update.
+Note : The traceability matrix is based on test plan submitted by the EFA team after removing test cases 11,12,13 which are not feasible at this point. These test cases will be removed from the Test plan in the next update.
 
 \begin{table}[]
 \caption{Traceability Matrix for the EFA Project}
