@@ -417,7 +417,7 @@ This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. 
 
 The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}. Note
-that every module which is part of EFA depends on the ``Trace'' module and the
+that every module which is part of EFA depends on the
 Haskell ``base'' package (which is the core libraries of Haskell). Also note
 that for the ``base'' package, we only include primitive definitions (i.e. those
 not defined in real Haskell) which may be difficult to track down in the
@@ -480,9 +480,9 @@ of the type.
   \end{class}
 
 
-  \begin{class}[text width=3cm]{Trace}{-3.4,-13.5}
-      \hsfunc{$\ldots$}
-  \end{class}
+  %% \begin{class}[text width=3cm]{Trace}{-3.4,-13.5}
+  %%     \hsfunc{$\ldots$}
+  %% \end{class}
 
   \begin{class}[text width=3cm]{Proof Utils}{3.55,-7.5}
       \hsfunc{$\ldots$}
@@ -498,15 +498,21 @@ of the type.
   \end{class}
 
   \renewcommand{\umlfillcolor}{grey}
-  \begin{class}[text width=6cm]{wl-pprint}{-3.4,-8}
+  \begin{class}[text width=6cm]{wl-pprint}{-3.4,-6.5}
     \hstype{Doc : Type} 
     \hstype{instance Show Doc where $\ldots$} 
+    \hstype{class Pretty a where}
+    \hstype[20pt]{pretty :: a -> Doc}
       \hsfunc{$\ldots$}
   \end{class}
 
   \renewcommand{\umlfillcolor}{grey}
-  \begin{class}[text width=5cm]{simple-sql-parser}{-10,-8}
-      \hsfunc{$\ldots$}
+  \begin{class}[text width=7cm]{simple-sql-parser}{-11,-6.5}
+      \hstype{QueryExpr : Type where $\ldots$}
+      \hstype{ValueExpr : Type where $\ldots$}
+      \hstype{Name : Type where $\ldots$}
+      \hsfunc{prettyQueryExpr : QueryExpr -> Doc} 
+      \hsfunc{prettyValueExpr : ValueExpr -> Doc} 
   \end{class}
 
 
@@ -569,10 +575,10 @@ of the type.
 
 
   
-  \node[above = 1cm of Trace] (tracedummy)       {};
-  \node[above = 1.5cm of Trace](tracedummy2)       {};
-  \draw [umlcd style, ->, thick] (tracedummy) -- (Trace); 
-  \draw [umlcd style dashed line, -, thick] (tracedummy2) -- (Trace); 
+  %% \node[above = 1cm of Trace] (tracedummy)       {};
+  %% \node[above = 1.5cm of Trace](tracedummy2)       {};
+  %% \draw [umlcd style, ->, thick] (tracedummy) -- (Trace); 
+  %% \draw [umlcd style dashed line, -, thick] (tracedummy2) -- (Trace); 
   
 
   \draw [umlcd style, ->] (TypedSQL.south west) -- (simple-sql-parser.north east); 
@@ -840,9 +846,11 @@ The module PrettySQL defines pretty printers for each of the types
 corresponding to SQL entities, including SQL types, SQL values, SQL references
 and methods, and SQL statements. These pretty printers produce a value of
 type Doc (which comes from the wl-pprint package), which is like a string
-value, but contains the layout and indentation of all lines of the document,
+, but contains the layout and indentation of all lines of the document,
 allowing for easy composition of Doc values into larger documents, without
-worrying about layout. 
+worrying about layout. The SQL entities are pretty printed in a human
+readable format, complete with SQL comments which indicate the origin
+and motive of generated code. 
 
 
 
@@ -1112,7 +1120,7 @@ The EFA project depends on the following Libraries
 	\item 
 \end{description}
 
-\section{Traceability Matrix} \label{SecTM}
+\subsection{Traceability Matrix} \label{SecTM}
 
 %% TODO : Fix position
 Note : The traceability matrix is based on test plan submitted by the EFA team. Removing test cases 11,12,13 which are not feasible at this point. These test cases will be removed from the Test plan in the next update.
