@@ -167,7 +167,7 @@ The EFA implementation needs to communicate with the front end to be able to run
 \subsection{Error handling}
 Most of the error handling is done by the underlying Ampersand software. Any human errors (syntactic or semantical) in the input ADL file are handled during the generation of the ECA. The resulting ECA rules which are fed into the EFA project are provably correct. The language of implementation (i.e Haskell) guarantees type level correctness of the EFA project at compile time. 
 \newline
-Any error in the generated 
+If any error occurs during runtime, the state of the database will be checked before and after the SQL statement is run. In case of an inconsistency in the data, the SQL \textbf{rollback} command will be issued that will change the database to its previous state. In such a scenario, the user will be notified about the event and can take necessary actions to fix the issue. 
 
 \subsection{Main Module}
 
