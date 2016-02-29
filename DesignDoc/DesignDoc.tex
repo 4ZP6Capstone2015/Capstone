@@ -73,7 +73,7 @@
   {:\~:}{{$\equiv$\,\,}}3
   {\~}{{$\equiv$\,\,}}1
   {`In`}{{$\in$}}1
-  {`.`}{{$\circ$\,\,}}1
+  {.}{{$\circ$\,\,}}1
   ,
   escapeinside={\%*}{*)},
   deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id},
@@ -85,14 +85,15 @@
   breakindent = 0pt,
   breakautoindent = true,
   %moredelim=[is][\itshape]{"}{"},
-  morestring=[b]" 
+  morestring=[b]",
+  mathescape
 }
 
-\newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline{#2}}}
+\newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline[mathescape]!#2!}}
 
-\newcommand{\hstypectr}[1]{\attribute{\hspace*{10pt}\lstinline{#1}}}
+\newcommand{\hstypectr}[1]{\attribute{\hspace*{10pt}\lstinline[mathescape]!#1!}}
 
-\newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline{#2}}}
+\newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline[mathescape]!#2!}}
 
 %% \tikzset{>=latex}
 
@@ -113,6 +114,8 @@
             \textbf{Author} & \textbf{Date} & \textbf{Comments} \\\hline 
             Yash Sapra & 24 / 02 / 2016 & Initial draft\\\hline
 	 Jaeden Guo & 27/ 02 / 2016 & Update and merge \\\hline
+	 Yash Sapra & 28/ 02 / 2016 & Modifications to several sections \\\hline
+	 Yuriy Toporovskyy & 28/ 02 / 2016 & Addition of UML diagrams \\\hline
         \end{tabular}
     \end{center}\end{table}
 \newpage
@@ -218,22 +221,23 @@ contains external libraries.
     \item[M8:] Pretty
 \end{description}
 
+\begin{figure}[!ht]
 \makebox[\textwidth][c]{
-\scalebox{0.5}{
+\scalebox{0.6}{
 \begin{tikzpicture}
 
   %% \begin{class}[text width=13cm]{ECA2SQL}{0,0}
-  %%   \hsfunc{eca2SQL :: Options -> FSpec -> ECArule -> SQLMethod [] SQLBool}
-  %%   \hsfunc{eca2PrettySQL :: Options -> FSpec -> ECArule -> Doc}
+  %%   \hsfunc{eca2SQL : Options -> FSpec -> ECArule -> SQLMethod [] SQLBool}
+  %%   \hsfunc{eca2PrettySQL : Options -> FSpec -> ECArule -> Doc}
   %% \end{class}
 
   \begin{package}{TypedSQL}
 
 
-  \begin{class}[text width=30cm]{TypedSQLStatement}{10,20}
+  \begin{class}[text width=30cm]{TypedSQLStatement}{10,18}
     \hstype{SQLMethod : [SQLType] -> SQLType -> Type where}
-    \hstypectr{MkSQLMethod : (ts : [SQLType]) (o : SQLType)}
-    \hstype[20pt]{-> (Prod (SQLValSem `.` SQLRef) ts -> SQLMthd o) -> SQLMethod ts o}
+    \hstypectr{MkSQLMethod : (ts : [SQLType]) (o : SQLType) -> (Prod (SQLValSem . SQLRef) ts -> SQLMthd o) -> SQLMethod ts o}
+    %% \hstype[20pt]{-> (Prod (SQLValSem . SQLRef) ts -> SQLMthd o) -> SQLMethod ts o}
      
     \hstype{SQLSem : Kind where}
     \hstypectr{Stmt, Mthd : SQLSem}
@@ -242,22 +246,22 @@ contains external libraries.
     \hstype{SQLMthd : SQLRefType -> Type = SQLSt Mthd}
 
     \hstype{SQLSt : SQLSem -> SQLRefType -> Type where} 
-    \hstypectr{Insert :: TableSpec ts -> SQLVal (SQLRel (SQLRow ts)) -> SQLStatement SQLUnit}
-    \hstypectr{Delete :: TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool)}
-    \hstype[20pt]{-> SQLStatement SQLUnit}
-    \hstypectr{Update :: TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool)}
-    \hstype[20pt]{ -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> SQLStatement SQLUnit}
-    \hstypectr{SetRef :: SQLValRef x -> SQLVal x -> SQLStatement SQLUnit}
-    \hstypectr{NewRef :: IsScalarType a \~ True -> SQLTypeS a -> Maybe String}
-    \hstype[20pt]{ -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
-    \hstypectr{MakeTable :: SQLTypeS (SQLRow t) -> SQLStatement (SQLRef (SQLRel (SQLRow t)))}
-    \hstypectr{DropTable :: TableSpec t -> SQLStatement SQLUnit}
-    \hstypectr{IfSQL :: SQLVal SQLBool -> SQLSt t0 a -> SQLSt t1 b -> SQLStatement SQLUnit}
-    \hstypectr{(:>>=) :: SQLStatement a -> (SQLValSem a -> SQLSt x b) -> SQLSt x b}
-    \hstypectr{SQLNoop :: SQLStatement SQLUnit}
-    \hstypectr{SQLRet :: SQLVal a -> SQLSt Mthd (Ty a)}
-    \hstypectr{SQLFunCall :: SQLMethodRef ts out -> Prod SQLVal ts -> SQLStatement (Ty out)}
-    \hstypectr{SQLDefunMethod :: SQLMethod ts out -> SQLStatement (SQLMethod ts out)}
+    \hstypectr{Insert : TableSpec ts -> SQLVal (SQLRel (SQLRow ts)) -> SQLStatement SQLUnit}
+    \hstypectr{Delete : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool) -> SQLStatement SQLUnit}
+    %% \hstype[20pt]{-> SQLStatement SQLUnit}
+    \hstypectr{Update : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool) -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> SQLStatement SQLUnit}
+    %% \hstype[20pt]{ -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> SQLStatement SQLUnit}
+    \hstypectr{SetRef : SQLValRef x -> SQLVal x -> SQLStatement SQLUnit}
+    \hstypectr{NewRef : IsScalarType a \~ True -> SQLTypeS a -> Maybe String -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
+    %% \hstype[20pt]{ -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
+    \hstypectr{MakeTable : SQLTypeS (SQLRow t) -> SQLStatement (SQLRef (SQLRel (SQLRow t)))}
+    \hstypectr{DropTable : TableSpec t -> SQLStatement SQLUnit}
+    \hstypectr{IfSQL : SQLVal SQLBool -> SQLSt t0 a -> SQLSt t1 b -> SQLStatement SQLUnit}
+    \hstypectr{(:>>=) : SQLStatement a -> (SQLValSem a -> SQLSt x b) -> SQLSt x b}
+    \hstypectr{SQLNoop : SQLStatement SQLUnit}
+    \hstypectr{SQLRet : SQLVal a -> SQLSt Mthd (Ty a)}
+    \hstypectr{SQLFunCall : SQLMethodRef ts out -> Prod SQLVal ts -> SQLStatement (Ty out)}
+    \hstypectr{SQLDefunMethod : SQLMethod ts out -> SQLStatement (SQLMethod ts out)}
   \end{class}
 
 
@@ -289,11 +293,11 @@ contains external libraries.
     \hstypectr{SQLRef, SQLUnit : SQLType}
     \hstypectr{SQLMethod : [SQLType] -> SQLType -> SQLRefType}
 
-    \hstype{instance SingKind SQLType where ...}
-    \hstype{instance SingKind SQLRefType where ...}
+    \hstype{instance SingKind SQLType where $\ldots$}
+    \hstype{instance SingKind SQLRefType where $\ldots$}
 
-    \hstype{IsScalarType : SQLType -> Bool where ...}
-    \hstype{IsScalarTypes : [SQLType] -> Bool where ...}
+    \hstype{IsScalarType : SQLType -> Bool where $\ldots$}
+    \hstype{IsScalarTypes : [SQLType] -> Bool where $\ldots$}
 
     \hsfunc{isScalarType : (x : SQLType) -> IsScalarType x}
     \hsfunc{isScalarTypes : (x : [SQLType]) -> IsScalarTypes x}
@@ -348,9 +352,14 @@ contains external libraries.
 
 
   \draw [umlcd style, ->] ([xshift=-60pt]TypedSQLStatement.south) -- ([xshift=-60pt]TypedSQLStatement |- TypedSQLExpr.north); 
-  \draw [umlcd style, ->] ([xshift=10pt]TypedSQLStatement.south) -- ([xshift=10pt]TypedSQLStatement |- TypedSQLTable.north); 
+  \draw [umlcd style, ->] ([xshift=60pt]TypedSQLStatement.south) -- ([xshift=60pt]TypedSQLStatement |- TypedSQLTable.north); 
   \draw [umlcd style, ->] ([xshift=-180pt]TypedSQLStatement.south) -- ([xshift=-180pt]TypedSQLStatement |- TypedSQLLanguage.north); 
   
+
+  \draw [umlcd style, ->] (TypedSQLTable.south) -- (TypedSQLTable |- TypedSQLExpr.north); 
+  \draw [umlcd style, ->] (TypedSQLTable.west) -- (TypedSQLTable -| TypedSQLLanguage.east); 
+  \draw [umlcd style, ->] (TypedSQLExpr.west) -- (TypedSQLExpr -| TypedSQLLanguage.east);
+
   %% \node[inner sep=0,minimum size=0,right of=TypedSQLStatement] (k) {}; % invisible node
   
 %% \draw[umlcd style ,->] (TypedSQLStatement) node[above , sloped ,
@@ -360,7 +369,7 @@ contains external libraries.
 
 \end{tikzpicture}
 }}
-
+\end{figure}
 
 %% \begin{figure}
 %%     \centering
@@ -381,7 +390,7 @@ The key Algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method t
 The EFA implementation needs to communicate with the front end to be able to run the generated SQL when a violation occurs. 
 	\begin{itemize}
 		\item \textbf{Old communication protocol -  PHP engine} \newline
-			In in existing version, Ampersand depends on PHP code to run the generated SQL on the database. However this comes at the cost of human intervention and maintenance cost for the development. 
+			In the existing version, Ampersand depends on PHP code to run the generated SQL on the database. However this comes at the cost of human intervention and maintenance cost for the development. 
 		\item \textbf{New Communication protocol - Stored Procedures} \newline
 			The developments teams of EFA has come to a conclusion that the best way of communicating with the front-end will be to use Stored Procedures\cite{SP}. The Stored Procedures provide the extra benefit of query optimization at compile time which results in better performance. While this is a suggested change, it will require changes to the existing Ampersand software in order to successfully implement this idea. This is an anticipated change and will be implemented in the near future.
 			
