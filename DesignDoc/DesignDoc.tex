@@ -728,7 +728,8 @@ of the type.
 The module hierarchy for the TypedSQL module is show in
 figure~\ref{fig:typedSQL}. The submodules of TypedSQL are quite large, however,
 the majority of the definitions within are type and kind definitions, which correspond 
-precisely to entities defined by MySQL. Only a few
+precisely to entities defined by MySQL. The only exception is SQLRel, which distinguishes
+relations from scalar types - MySQL does not make this distinguishment. Only a few
 helper functions are defined in these modules -- namely, only things which form
 the core interface to TypedSQL and in particular, SQLStatement. These functions
 cannot be defined outside of the module, usually because they use an abstract
@@ -798,41 +799,18 @@ are:
 }}\caption{Module diagram for TypedSQLCombinators} \label{fig:typedSQLComb}
 \end{figure}
 
-
-%% \begin{figure}[!ht]
-%% \makebox[\textwidth][c]{
-%% \scalebox{0.6}{
-%% \begin{tikzpicture}
-  
-%%   \begin{package}{Base}
-    
-%%     \renewcommand{\umlfillcolor}{grey}
-%%     \begin{class}[text width=10cm]{Primitive}{0,3}
-
-%%       \hstype{Nat : Kind} 
-%%       \hstype{Constraint : Kind} 
-%%       \hstype{Type : Kind} 
-%%       \hstype{class $\,\,\text{KnownNat}$ : Nat -> Constraint where $\ldots$} 
-%%       \hstype{Symbol : Kind}
-%%       \hstype{class KnownSymbol : Nat -> Constraint where $\ldots$}  
-%%       \hstype{(\~) : Type -> Type -> Constraint} 
-
-%%     \end{class}
-
-%%     \begin{class}[text width=10cm]{List}{0,5}
-%%       \hstype{$\ldots$}
-%%     \end{class}
-
-%%     \begin{class}[text width=10cm]{Maybe}{0,7}
-%%       \hstype{$\ldots$}
-%%     \end{class}
-
-%%   \end{package}
-
-%% \end{tikzpicture}
-%% }}\caption{Module diagram for \texttt{base} package} \label{fig:basePkg}
-%% \end{figure}
-
+The module TypedSQLCombinators, whose members are given in figure~\ref{fig:typedSQLComb},
+implements a subset of primitive SQL functions on top of the TypedSQL expression type. 
+The data type PrimSQLFunction encodes the specification of each function; the type
+and semantics of each function is that of the corresponding function in MySQL (refer to
+the MySQL manual ~\cite{mySQLman} for details on each function). The only exception
+is the ``Alias'' function, which is a primitive syntactic constructor (not a named entity)
+in MySQL - rows can be aliased with a select statement. Aliasing a row means to change
+the name of each association in the row, but not the shape of the row (i.e. the types of
+each element of the row, as well as their ordering). The single function ``primSQL''
+implements all of the primitive SQL functions. It takes as an argument a specification
+of the primitive function, a tuple of arguments of the correspond types, and returns
+a SQL value, again of the corresponding type. 
 
 
 \begin{figure}[!ht]
