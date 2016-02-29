@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt, svgnames]{article}
 
 \usepackage{fullpage}
 \usepackage[round]{natbib}
@@ -17,6 +17,14 @@
 \usepackage{tabularx}
 \usepackage{amsfonts}
 \usepackage{glossaries}
+\usepackage{listings}
+\usepackage{calc}
+\usepackage{../ltx/pgf-umlcd/pgf-umlcd}
+
+\usetikzlibrary{arrows.meta}
+
+
+
 %\usepackage{amssymb}
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
@@ -30,6 +38,64 @@
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
 \makeglossary
+
+
+% math things
+\newcommand{\ra}{$\rightarrow$}
+
+% 
+\definecolor{grey}{RGB}{185,185,185}
+\lstset{ %
+  language=Haskell, morekeywords = {family, kind, pattern, expression},
+  literate=
+  {+}{{$+$}}1
+  {/}{{$/$}}1 
+  {*}{{$*$}}1 
+  {=}{{$=\,\,\,$}}1
+  {==}{{$==$}}2 
+  %{/=}{{$\not\equiv$}}2
+  {==}{{$\equiv$}}2 
+  {/=}{{$\not\equiv$}}2
+  {>}{{$>$}}1 
+  {<}{{$<$}}1 
+  {\\}{{$\lambda$}}1
+  {\\\\}{{\char`\\\char`\\}}1
+  {>>}{$>>$}2 
+  {:>>=}{{$:>>=$}}2
+  %% {>>=}{{\hspace{6pt}\texttt{$>>=$}\hspace{6pt}}}2
+  {->}{{$\rightarrow$} }2 
+  {>=}{{$\geq$}}2 {<-}{{$\leftarrow$}}2
+  {<=}{{$\leq$}}2 {=>}{{$\Rightarrow$} }2
+  {|}{{$\mid$}}1 
+  {forall}{{$\forall$}}1
+  {exists}{{$\exists$}}1 
+  {Nat}{{$\mathbb{N}$}}3
+  {:\~:}{{$\equiv$\,\,}}3
+  {\~}{{$\equiv$\,\,}}1
+  {`In`}{{$\in$}}1
+  {`.`}{{$\circ$\,\,}}1
+  ,
+  escapeinside={\%*}{*)},
+  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id},
+  morekeywords={forall, ::, :},
+  postbreak={},
+  breaklines=true,                
+  breakatwhitespace=true,
+  %postbreak={  \mbox{\textcolor{grey}{$\rightarrow$}} },
+  breakindent = 0pt,
+  breakautoindent = true,
+  %moredelim=[is][\itshape]{"}{"},
+  morestring=[b]" 
+}
+
+\newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline{#2}}}
+
+\newcommand{\hstypectr}[1]{\attribute{\hspace*{10pt}\lstinline{#1}}}
+
+\newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline{#2}}}
+
+%% \tikzset{>=latex}
+
 \begin{document}
 
 \title{\vspace*{3cm} Module Guide for ECA Rules for Ampersand} 
@@ -68,6 +134,8 @@ commonly accepted practice for this situation is to decompose modules based on
 the principle of abstraction, where unnecessary information in hidden for the 
 benefit of designers and maintainers\citep{modStruct,Parnas1972}.
  
+%% TODO: fix this
+
 Our design follows the principles laid out by \citep{modStruct}, as follows:
 \begin{itemize}
 \item Unnecessary design details are omitted for simplicity
@@ -81,6 +149,7 @@ use will not be provided within the module break-down
 \end{itemize}
 
 \subsection{Scope}
+
 This project aims to improve upon the current Ampersand system by providing a 
 permanent replacement for the exec-engine. EFA automatically restores system 
 invariants according to ECA rules with no manual maintenance required.
@@ -159,11 +228,155 @@ contains external libraries.
     \item[M8:] Pretty
 \end{description}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.95\textwidth]{../DesignDoc/depent_tree}
-    \caption{Dependency graph of EFA modules}~\label{fig:figure1}
-\end{figure}
+\makebox[\textwidth][c]{
+\scalebox{0.5}{
+\begin{tikzpicture}
+
+  %% \begin{class}[text width=13cm]{ECA2SQL}{0,0}
+  %%   \hsfunc{eca2SQL :: Options -> FSpec -> ECArule -> SQLMethod [] SQLBool}
+  %%   \hsfunc{eca2PrettySQL :: Options -> FSpec -> ECArule -> Doc}
+  %% \end{class}
+
+  \begin{package}{TypedSQL}
+
+
+  \begin{class}[text width=30cm]{TypedSQLStatement}{10,20}
+    \hstype{SQLMethod : [SQLType] -> SQLType -> Type where}
+    \hstypectr{MkSQLMethod : (ts : [SQLType]) (o : SQLType)}
+    \hstype[20pt]{-> (Prod (SQLValSem `.` SQLRef) ts -> SQLMthd o) -> SQLMethod ts o}
+     
+    \hstype{SQLSem : Kind where}
+    \hstypectr{Stmt, Mthd : SQLSem}
+
+    \hstype{SQLStatement : SQLRefType -> Type = SQLSt Stmt}
+    \hstype{SQLMthd : SQLRefType -> Type = SQLSt Mthd}
+
+    \hstype{SQLSt : SQLSem -> SQLRefType -> Type where} 
+    \hstypectr{Insert :: TableSpec ts -> SQLVal (SQLRel (SQLRow ts)) -> SQLStatement SQLUnit}
+    \hstypectr{Delete :: TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool)}
+    \hstype[20pt]{-> SQLStatement SQLUnit}
+    \hstypectr{Update :: TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool)}
+    \hstype[20pt]{ -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> SQLStatement SQLUnit}
+    \hstypectr{SetRef :: SQLValRef x -> SQLVal x -> SQLStatement SQLUnit}
+    \hstypectr{NewRef :: IsScalarType a \~ True -> SQLTypeS a -> Maybe String}
+    \hstype[20pt]{ -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
+    \hstypectr{MakeTable :: SQLTypeS (SQLRow t) -> SQLStatement (SQLRef (SQLRel (SQLRow t)))}
+    \hstypectr{DropTable :: TableSpec t -> SQLStatement SQLUnit}
+    \hstypectr{IfSQL :: SQLVal SQLBool -> SQLSt t0 a -> SQLSt t1 b -> SQLStatement SQLUnit}
+    \hstypectr{(:>>=) :: SQLStatement a -> (SQLValSem a -> SQLSt x b) -> SQLSt x b}
+    \hstypectr{SQLNoop :: SQLStatement SQLUnit}
+    \hstypectr{SQLRet :: SQLVal a -> SQLSt Mthd (Ty a)}
+    \hstypectr{SQLFunCall :: SQLMethodRef ts out -> Prod SQLVal ts -> SQLStatement (Ty out)}
+    \hstypectr{SQLDefunMethod :: SQLMethod ts out -> SQLStatement (SQLMethod ts out)}
+  \end{class}
+
+
+  \begin{class}[text width=11cm]{TypedSQLLanguage}{0,5}   
+    \hstype{SQLSizeVariant : Kind where}
+    \hstypectr{SQLSmall, SQLMedium, SQLNormal, SQLBig : SQLSizeVariant}
+
+    \hstype{SQLSign : Kind where}
+    \hstypectr{SQLSigned, SQLUnsigned : SQLSign}
+
+    \hstype{SQLNumeric : Kind where}
+    \hstypectr{SQLFloat, SQLDouble : SQLSign -> SQLNumeric}
+    \hstypectr{SQLInt : SQLSizeVariant -> SQLSign -> SQLNumeric}
+
+    \hstype{SQLRecLabel : Kind where}
+    \hstypectr{(:::) : Symbol -> SQLType -> SQLRecLabel}
+
+    \hstype{SQLType : Kind where}
+    \hstypectr{SQLBool, SQLDate, SQLDateTime, SQLSerial : SQLType}
+    \hstypectr{SQLNumericTy : SQLNumeric -> SQLType}
+    \hstypectr{SQLBlob : SQLSign -> SQLType}
+    \hstypectr{SQLVarChar : Nat -> SQLType}
+    \hstypectr{SQLRel : SQLType -> SQLType}
+    \hstypectr{SQLRow : [SQLRecLabel] -> SQLType}
+    \hstypectr{SQLVec : [SQLType] -> SQLType}
+
+    \hstype{SQLRefType : Kind where}
+    \hstypectr{Ty : SQLType -> SQLRefType}
+    \hstypectr{SQLRef, SQLUnit : SQLType}
+    \hstypectr{SQLMethod : [SQLType] -> SQLType -> SQLRefType}
+
+    \hstype{instance SingKind SQLType where ...}
+    \hstype{instance SingKind SQLRefType where ...}
+
+    \hstype{IsScalarType : SQLType -> Bool where ...}
+    \hstype{IsScalarTypes : [SQLType] -> Bool where ...}
+
+    \hsfunc{isScalarType : (x : SQLType) -> IsScalarType x}
+    \hsfunc{isScalarTypes : (x : [SQLType]) -> IsScalarTypes x}
+  \end{class}
+
+
+  \begin{class}[text width=17.5cm]{TypedSQLExpr}{16,-0.5}
+    \hstype{SQLVal : SQLType -> Type where}
+    \hstypectr{SQLScalarVal : IsScalarType a :\~: True -> ValueExpr -> SQLVal a}
+    \hstypectr{SQLQueryVal  : IsScalarType a :\~: False -> QueryExpr -> SQLVal a}
+
+    \hsfunc{typeOf : SQLVal a -> a}
+    \hsfunc{argOfRel : SQLRel a -> a} 
+
+    \hstype{SQLValSem : SQLRefType -> Type where}
+    \hstypectr{Unit : SQLValSem SQLUnit}
+    \hstypectr{Val : (x : SQLType) -> SQLVal x -> SQLValSem (Ty x)}
+    \hstypectr{pattern Method : Name -> SQLValSem (SQLMethod args out)}
+    \hstypectr{pattern Ref : (x : SQLType) -> Name -> SQLValSem (SQLRef x)}
+
+    \hsfunc{typeOfSem : f `In` [SQLRef, Ty] -> SQLValSem (f x) -> x}
+ 
+    \hsfunc{colsOf : SQLRow xs -> xs}
+
+    \hsfunc{unsafeSqlValFromName : (x : SQLType) -> Name -> SQLVal x}
+    \hsfunc{unsafeSQLValFromQuery : (xs : [SQLRecLabel]) -> NonEmpty xs -> IsSetRec xs -> SQLVal xs}
+    \hsfunc{unsafeRefFromName : (x : SQLType) -> Name -> SQLValRef x}
+
+    \hsfunc{deref : SQLValRef x -> SQLVal x}   
+  \end{class}
+
+
+  \begin{class}[text width=15.6cm]{TypedSQLTable}{17,5}
+    \hstype{TableSpec : [SQLRecLabel] -> Type where}
+    \hstypectr{MkTableSpec : SQLValRef (SQLRel (SQLRow t))  -> TableSpec t}
+    \hstypectr{TableAlias : IsSetRec ns -> TableSpec t -> TableSpec (ZipRec ns (RecAssocs t))}
+    
+    \hsfunc{typeOfTableSpec : TableSpec t -> SQLRow t}
+    \hsfunc{typeOfTableSpec : TableSpec t -> t}
+
+    \hsfunc{tableSpec : Name -> Prod (K String :*: id) tys}
+    \hsfunc[10pt]{ -> exists (ks : [SQLRecLabel]) (Maybe (RecAssocs ks :\~: tys, TableSpec ks))}
+
+  \end{class}
+
+  %% \unidirectionalAssociation{TypedSQLStatement}{}{}{TypedSQLLanguage}
+  %% \unidirectionalAssociation{TypedSQLExpr}{}{}{TypedSQLLanguage}
+  %% \unidirectionalAssociation{TypedSQLTable}{}{}{TypedSQLLanguage}
+
+  %% %% \unidirectionalAssociation{TypedSQLStatement}{}{}{TypedSQLExpr}
+  %% \unidirectionalAssociation{TypedSQLStatement}{}{}{TypedSQLTable}
+
+
+  \draw [umlcd style, ->] ([xshift=-60pt]TypedSQLStatement.south) -- ([xshift=-60pt]TypedSQLStatement |- TypedSQLExpr.north); 
+  \draw [umlcd style, ->] ([xshift=10pt]TypedSQLStatement.south) -- ([xshift=10pt]TypedSQLStatement |- TypedSQLTable.north); 
+  \draw [umlcd style, ->] ([xshift=-180pt]TypedSQLStatement.south) -- ([xshift=-180pt]TypedSQLStatement |- TypedSQLLanguage.north); 
+  
+  %% \node[inner sep=0,minimum size=0,right of=TypedSQLStatement] (k) {}; % invisible node
+  
+%% \draw[umlcd style ,->] (TypedSQLStatement) node[above , sloped ,
+%%   black]{} (TypedSQLExpr);
+
+  \end{package}
+
+\end{tikzpicture}
+}}
+
+
+%% \begin{figure}
+%%     \centering
+%%     \includegraphics[width=0.95\textwidth]{../DesignDoc/depent_tree}
+%%     \caption{Dependency graph of EFA modules}~\label{fig:figure1}
+%% \end{figure}
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
 
@@ -391,6 +604,6 @@ eca2PrettySQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$
 \clearpage
 \printglossaries
 \bibliographystyle {plainnat}
-\bibliography {docDesign}
+\bibliography {DesignDoc}
 
 \end{document}
