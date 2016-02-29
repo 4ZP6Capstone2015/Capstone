@@ -1,0 +1,43 @@
+\begin{thebibliography}{Par72}
+
+\bibitem[DP84]{modStruct}
+D.M.~Weiss D.L.~Parnas, P.C.~Clements.
+\newblock The modular structure of complex systems.
+\newblock {\em Proceeding ICSE '84: Proceedings of the 7th international
+  conference on Software engineering}, 1984.
+
+\bibitem[DP86]{fakeIt}
+P.C.~Clements D.L.~Parnas.
+\newblock A rational design process: How and why to fake it.
+\newblock {\em IEEE Transaction on Software Engineering}, 1986.
+
+\bibitem[Joo07]{AMMBR}
+Stef Joosten.
+\newblock Deriving {Functional} {Specifications} from {Business} {Requirements}
+  with {Ampersand}.
+\newblock {\em CiteSeer}, 2007.
+
+\bibitem[Lei]{wl-pprint}
+Daan Leijen.
+\newblock wl-pprint package.
+\newblock \url{https://hackage.haskell.org/package/wl-pprint-1.2}.
+\newblock Accessed: 2016-02-28.
+
+\bibitem[Ora]{SP}
+Oracle.
+\newblock Mysql reference manual.
+\newblock \url{https://dev.mysql.com/doc/refman/5.7/en/}.
+\newblock Accessed: 2016-02-28.
+
+\bibitem[Par72]{Parnas1972}
+D.L. Parnas.
+\newblock On the criteria to ne used in decomposing systems into modules.
+\newblock {\em Communications of the ACM}, 1972.
+
+\bibitem[Whe]{simple-sql}
+Jake Wheat.
+\newblock simple-sql-parser.
+\newblock \url{https://hackage.haskell.org/package/simple-sql-parser-0.4.1}.
+\newblock Accessed: 2016-02-28.
+
+\end{thebibliography}
