@@ -1,4 +1,5 @@
 \usepackage{ifthen}
+\usepackage{../ltx/edcomms}
 
 %% Comments are enabled and disabled by 'draft' mode. I hacked in my own draft
 %% mode (https://en.wikibooks.org/wiki/LaTeX/Macros) because the LaTeX draft
@@ -14,9 +15,9 @@
 %\edcommstrue %% Dr. Kahl's comment package. Eventually we should migrate all
              %% comments to this.
 }{
+\edcommsfalse 
 \newcommand{\authornote}[3]{}
 \newcommand{\todo}[1]{}
-\edcommsfalse 
 }
 
 % wss = Dr. Smith ; ds = Dr. Szymczak
