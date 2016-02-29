@@ -418,19 +418,25 @@ explanation of each modules' elements.
 
 The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}. Note
 that every module which is part of EFA depends on the ``Trace'' module and the
-Haskell ``base'' package (which is the core libraries of Haskell). In general,
-all modules implicitly depend on base. The primary interface to EFA is the
-function ``eca2PrettySQL'', which takes an FSpec (the abstract syntax of
-Ampersand) and an ECA rule, and returns the pretty printed SQL code for that
-rule. Also note that while the dependencies within EFA modules is relatively
-complex, they depend on the rest of the Ampersand system in a simple manner. The
-modules ``Test'' and ``Prototype'' implement the testing framework and the
-prototype generation, respectively; these modules depend directly on only one
-module from EFA, namely ``ECA2SQL''. Similarly, the majority of EFA itself does
-not depend directly on Ampersand modules outside of EFA. This makes EFA very
-resilient to changes in the core Ampersand system; in order to update EFA
-to work with a modification to Ampersand, only one EFA module -- ECA2SQL -- will generally need 
-to be modified. 
+Haskell ``base'' package (which is the core libraries of Haskell). Also note
+that for the ``base'' package, we only include primitive definitions (i.e. those
+not defined in real Haskell) which may be difficult to track down in the
+documentation. The kinds ``Nat'' and ``Symbol'' correspond to type level natural
+number and string literals, respectively, whose detailed semantics can be found
+in the GHC user guide (\cite{ghcUserGuide}). All other features of GHC are
+detailed in the user guide as well.
+
+The primary interface to EFA is the function ``eca2PrettySQL'', which takes an
+FSpec (the abstract syntax of Ampersand) and an ECA rule, and returns the pretty
+printed SQL code for that rule. Also note that while the dependencies within EFA
+modules is relatively complex, they depend on the rest of the Ampersand system
+in a simple manner. The modules ``Test'' and ``Prototype'' implement the testing
+framework and the prototype generation, respectively; these modules depend
+directly on only one module from EFA, namely ``ECA2SQL''. Similarly, the
+majority of EFA itself does not depend directly on Ampersand modules outside of
+EFA. This makes EFA very resilient to changes in the core Ampersand system; in
+order to update EFA to work with a modification to Ampersand, only one EFA
+module -- ECA2SQL -- will generally need to be modified. Note
 
 All functions named in the module hierarchy are total - they do not throw
 exceptions, or produce unhandled errors or infinite loops. Therefore, no
@@ -483,8 +489,12 @@ of the type.
   \end{class}
 
   \renewcommand{\umlfillcolor}{grey}
-  \begin{class}[text width=3cm]{base}{0,-13.5}
-      \hsfunc{$\ldots$}
+  \begin{class}[text width=8cm]{base}{6,-13.5}
+      \hstype{Nat : Kind} 
+      \hstype{Constraint : Kind} 
+      \hstype{Type : Kind} 
+      \hstype{Symbol : Kind}
+      \hstype{(\~) : Type -> Type -> Constraint} 
   \end{class}
 
   \renewcommand{\umlfillcolor}{grey}
@@ -667,6 +677,9 @@ of the type.
     \hstypectr{Val : (x : SQLType) -> SQLVal x -> SQLValSem (Ty x)}
     \hstypectr{pattern Method : Name -> SQLValSem (SQLMethod args out)}
     \hstypectr{pattern Ref : (x : SQLType) -> Name -> SQLValSem (SQLRef x)}
+    
+    \hstype{SQLVal : SQLType -> Type = $\lambda$ x $.$ SQLValSem (Ty x)}
+    \hstype{SQLValRef : SQLType -> Type = $\lambda$ x $.$ SQLValSem (SQLRef x)}
 
     \hsfunc{typeOfSem : f `In` [SQLRef, Ty] -> SQLValSem (f x) -> x}
  
@@ -709,6 +722,8 @@ of the type.
 \end{tikzpicture}
 }}\caption{Module diagram for TypedSQL} \label{fig:typedSQL}
 \end{figure}
+
+\FloatBarrier
 
 The module hierarchy for the TypedSQL module is show in
 figure~\ref{fig:typedSQL}. The submodules of TypedSQL are quite large, however,
@@ -784,39 +799,39 @@ are:
 \end{figure}
 
 
-\begin{figure}[!ht]
-\makebox[\textwidth][c]{
-\scalebox{0.6}{
-\begin{tikzpicture}
+%% \begin{figure}[!ht]
+%% \makebox[\textwidth][c]{
+%% \scalebox{0.6}{
+%% \begin{tikzpicture}
   
-  \begin{package}{Base}
+%%   \begin{package}{Base}
     
-    \renewcommand{\umlfillcolor}{grey}
-    \begin{class}[text width=10cm]{Primitive}{0,3}
+%%     \renewcommand{\umlfillcolor}{grey}
+%%     \begin{class}[text width=10cm]{Primitive}{0,3}
 
-      \hstype{Nat : Kind} 
-      \hstype{Constraint : Kind} 
-      \hstype{Type : Kind} 
-      \hstype{class $\,\,\text{KnownNat}$ : Nat -> Constraint where $\ldots$} 
-      \hstype{Symbol : Kind}
-      \hstype{class KnownSymbol : Nat -> Constraint where $\ldots$}  
-      \hstype{(\~) : Type -> Type -> Constraint} 
+%%       \hstype{Nat : Kind} 
+%%       \hstype{Constraint : Kind} 
+%%       \hstype{Type : Kind} 
+%%       \hstype{class $\,\,\text{KnownNat}$ : Nat -> Constraint where $\ldots$} 
+%%       \hstype{Symbol : Kind}
+%%       \hstype{class KnownSymbol : Nat -> Constraint where $\ldots$}  
+%%       \hstype{(\~) : Type -> Type -> Constraint} 
 
-    \end{class}
+%%     \end{class}
 
-    \begin{class}[text width=10cm]{List}{0,5}
-      \hstype{$\ldots$}
-    \end{class}
+%%     \begin{class}[text width=10cm]{List}{0,5}
+%%       \hstype{$\ldots$}
+%%     \end{class}
 
-    \begin{class}[text width=10cm]{Maybe}{0,7}
-      \hstype{$\ldots$}
-    \end{class}
+%%     \begin{class}[text width=10cm]{Maybe}{0,7}
+%%       \hstype{$\ldots$}
+%%     \end{class}
 
-  \end{package}
+%%   \end{package}
 
-\end{tikzpicture}
-}}\caption{Module diagram for \texttt{base} package} \label{fig:basePkg}
-\end{figure}
+%% \end{tikzpicture}
+%% }}\caption{Module diagram for \texttt{base} package} \label{fig:basePkg}
+%% \end{figure}
 
 
 
