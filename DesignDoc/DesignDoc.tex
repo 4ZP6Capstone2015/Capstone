@@ -87,7 +87,7 @@
   {.}{{$\circ$\,\,}}1
   ,
   escapeinside={\%*}{*)},
-  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id,Show},
+  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id,Show,Ordering},
   morekeywords={forall, ::, :},
   postbreak={},
   breaklines=true,                
@@ -453,12 +453,12 @@ figure~\ref{fig:ModExample}.
   %%     \hsfunc{$\ldots$}
   %% \end{class}
 
-  \begin{class}[text width=3cm]{Utils}{3.55,-7.5}
+  \begin{class}[text width=3cm]{Proof Utils}{3.55,-7.5}
       \hsfunc{$\ldots$}
   \end{class}
 
   \renewcommand{\umlfillcolor}{grey}
-  \begin{class}[text width=8cm]{base}{6,-13.5}
+  \begin{class}[text width=9cm]{base}{6,-13.5}
       \hstype{Nat : Kind} 
       \hstype{Constraint : Kind} 
       \hstype{Type : Kind} 
@@ -516,7 +516,7 @@ figure~\ref{fig:ModExample}.
   \draw [umlcd style, ->] (ECA2SQL.south) -- (Equality.north east); 
   \draw [umlcd style, ->] (ECA2SQL.south) -- (Singletons.north west); 
   %% \draw [umlcd style, ->] (ECA2SQL.south) -- (Trace.north east); 
-  \draw [umlcd style, ->] (ECA2SQL.south) -- (Utils.north west); 
+  \draw [umlcd style, ->] (ECA2SQL.south) -- (Proof Utils.north west); 
   \draw [umlcd style, ->] (ECA2SQL.south west) -- (PrettyPrinterSQL.north); 
 
 
@@ -525,18 +525,18 @@ figure~\ref{fig:ModExample}.
   \draw [umlcd style, ->, thick] (basedummy) -- (base); 
   \draw [umlcd style dashed line, -, thick] (basedummy2) -- (base); 
 
-  \draw [umlcd style, ->] (Singletons.south) -- (Utils.north); 
+  \draw [umlcd style, ->] (Singletons.south) -- (Proof Utils.north); 
   %% \draw [umlcd style, ->] (Singletons.west) -- (Trace.east); 
   \draw [umlcd style, ->] (TypedSQL.south) -- (Equality.north); 
   %% \draw [umlcd style, ->] (Equality.south) -- (Trace.north); 
   \draw [umlcd style, ->] (TypedSQLCombinators.west) -- (TypedSQL.east); 
   \draw [umlcd style, ->] (Singletons.west) -- (Equality.east); 
-  %% \draw [umlcd style, ->] (Utils.south west) -- (Trace.south east); 
+  %% \draw [umlcd style, ->] (Proof Utils.south west) -- (Trace.south east); 
   \draw [umlcd style, ->] (TypedSQL.south east) -- (AmpersandCore.north west); 
 
   \draw [umlcd style, ->] ([xshift=60pt]TypedSQLCombinators.south) -- ([xshift=30pt]AmpersandCore.north); 
   \draw [umlcd style, ->] (TypedSQLCombinators.south) -- (Singletons.north); 
-  \draw [umlcd style, ->] ([xshift=30pt]TypedSQLCombinators.south) -- (Utils.north east); 
+  \draw [umlcd style, ->] ([xshift=30pt]TypedSQLCombinators.south) -- (Proof Utils.north east); 
 
 
   \draw [umlcd style, ->] ([xshift=-30pt]PrettyPrinterSQL.south east) -- (wl-pprint.north west); 
@@ -563,6 +563,8 @@ figure~\ref{fig:ModExample}.
 }}\caption{Module diagram for EFA as a whole} \label{fig:efaMod}
 \end{figure}
 
+
+\Oldsubsubsection{Coarse module hierarchy}
 
 This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. 
@@ -731,7 +733,8 @@ of the type.
 }}\caption{Module diagram for TypedSQL} \label{fig:typedSQL}
 \end{figure}
 
-%% \FloatBarrier
+
+\Oldsubsubsection{TypedSQL}
 
 The module hierarchy for the TypedSQL module is show in
 figure~\ref{fig:typedSQL}. The submodules of TypedSQL are quite large, however,
@@ -807,6 +810,8 @@ are:
 }}\caption{Module diagram for TypedSQLCombinators} \label{fig:typedSQLComb}
 \end{figure}
 
+\Oldsubsubsection{TypedSQLCombinators}
+
 The module TypedSQLCombinators, whose members are given in figure~\ref{fig:typedSQLComb},
 implements a subset of primitive SQL functions on top of the TypedSQL expression type. 
 The data type PrimSQLFunction encodes the specification of each function; the type
@@ -820,6 +825,23 @@ implements all of the primitive SQL functions. It takes as an argument a specifi
 of the primitive function, a tuple of arguments of the correspond types, and returns
 a SQL value, again of the corresponding type. 
 
+
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+    
+  \begin{class}[text width=22cm]{Singletons}{17,5}
+    \hstype{SingT : k -> Type} 
+    \hstype{class SingKind (k : Kind) where $\ldots$} 
+    \hsfunc{(\%==) : forall (x : k) (y : k) -> SingKind k => x -> y -> DecEq x y}
+
+  \end{class}
+
+\end{tikzpicture}
+}}\caption{Module diagram for Singletons} \label{fig:singletons}
+\end{figure}
 
 \begin{figure}[!ht]
 \makebox[\textwidth][c]{
@@ -840,6 +862,25 @@ a SQL value, again of the corresponding type.
 }}\caption{Module diagram for PrettySQL} \label{fig:prettySQL}
 \end{figure}
 
+
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+    
+  \begin{class}[text width=22cm]{Equality}{17,5}
+    
+
+  \end{class}
+
+\end{tikzpicture}
+}}\caption{Module diagram for Equality} \label{fig:equality}
+\end{figure}
+
+
+\Oldsubsubsection{PrettySQL}
+
 The module PrettySQL defines pretty printers for each of the types
 corresponding to SQL entities, including SQL types, SQL values, SQL references
 and methods, and SQL statements. These pretty printers produce a value of
@@ -857,73 +898,157 @@ and motive of generated code.
 \scalebox{0.6}{
 \begin{tikzpicture}
     
-  \begin{class}[text width=22cm]{Utils}{17,5}
+  \begin{class}[text width=22cm]{ProofUtils}{17,5}
 
    \hstype{Prod : (f : k -> Type) -> (xs : [k]) -> Type} 
    \hstypectr{PNil : Prod f []}
    \hstypectr{PCons : f x -> Prod f xs -> Prod f (x : xs)}
    
-   \hstype{Sum : (f : k -> *) -> (xs : [k]) -> Type}  
+   \hstype{Sum : (f : k -> Type) -> (xs : [k]) -> Type}  
    \hstypectr{SHere : f x -> Sum f (x : xs)}
    \hstypectr{SThere : Sum f xs -> Sum f (x : xs)}
 
    
-   \hstype{class All (c : k -> Constraint) (xs : [k]) where   
-   \hstypectr{mkProdC : Proxy c -> (forall a . c a => p a) -> Prod p xs}
+   \hstype{class All (c : k -> Constraint) (xs : [k]) where}
+   \hstypectr{mkProdC : Proxy c -> (forall a -> c a => p a) -> Prod p xs}
    
    \hstype{instance All (c : k -> Constraint) [] where $\ldots$}
    \hstype{instance (All c xs, c x) => All c (x : xs) where $\ldots$}
 
-   \hstype{Elem : (x : k) -> (xs : [k]) -> Type where
-   \hstypectr{MkElem : Sum ((:\~:) x) xs} 
-   %% \hsfunc{getElem : forall (x : k) xs -> Elem x xs -> Sum ((:\~:) x) xs}
+   \hstype{Elem : k -> [k] -> Type where}
+   \hstypectr{MkElem : Sum (:\~: x) xs -> Elem x xs} 
 
    \hstype{IsElem : (x : k) -> (xs : [k]) -> Constraint where $\ldots$} 
    \hstype{AppliedTo : (x : k) -> (f : k -> Type) -> Type}
    \hstypectr{Ap : f x -> x `AppliedTo` f}
-
    
-   \hstype{(:.:) : (f : k1 -> *) -> (g : k0 -> k1) -> (x : k0) -> Type}
+   \hstype{(:.:) : (f : k1 -> Type) -> (g : k0 -> k1) -> (x : k0) -> Type}
    \hstypectr{Cmp : f (g x) -> (:.:) f g x} 
-   %% \hsfunc{
 
-   \hstype{(:*:) : (f : k0 -> *) -> (g : k0 -> *) -> (x : k0) -> Type} 
+   \hstype{(:*:) : (f : k0 -> Type) -> (g : k0 -> Type) -> (x : k0) -> Type} 
    \hstypectr{(:*:) : f x -> g x -> (:*:) f g x} 
    \hstype{K : (a : Type) -> (x : k) -> Type} 
    \hstypectr{K : a -> K a x} 
    \hstype{Id : (a : Type) -> Id a}
    \hstypectr{Id : a -> Id a} 
 
-   
+   \hstype{Flip : (f : k0 -> k1 -> Type) -> (x : k1) -> (y : k0) -> Type} 
+   \hstypectr{Flp : f y x -> Flip f x y} 
+
    \hstype{(&&) : (x : Bool) -> (y : Bool) -> Bool where $\ldots$} 
-   \hsfunc{(|&&) : (a : Bool) -> (b : Bool) -> a && b}
+   
+   \operation{\lstinline[mathescape]{(|&&) : (a : Bool) -> (b : Bool) -> a && b}}
+
+   \hstype{RecAssocs : [RecLabel a b] -> [b] where $\ldots$} 
+   \hstype{RecLabels : [RecLabel a b] -> [b] where $\ldots$} 
+   
+   \hstype{IsSetRec\_ : [RecLabel a b] -> [a] -> Constraint where $\ldots$} 
+   
+   \hstype{IsSetRec : [RecLabel a b] -> Constraint where $\ldots$} 
+   \hstype{SetRec\_ : [a] -> [RecLabel a b] -> Type} 
+   \hstype{SetRec : [RecLabel a b] -> Type = SetRec\_ []} 
+   
+   
+   \hsfunc{openSetRec : forall (xs : [RecLabel k k']) $\,\,$r0 -> SingKind k => SetRec xs -> (IsSetRec xs => r0) -> r0}
+   
+   \hsfunc{decNotElem : forall (xs : [a]) $\,\,$x -> SingKind a => xs -> x -> Dec (NotElem xs x)}
+   
+   \hsfunc{decSetRec : forall (xs : [RecLabel a b]) -> SingKind a => xs -> Dec (SetRec xs)}
+   
+   \hstype{LookupRecM : [RecLabel Symbol k] -> Symbol -> Maybe k where $\ldots$} 
+   
+   \hsfunc{lookupRecM : forall (xs : [RecLabel Symbol k]) (x : Symbol) -> xs -> x -> LookupRecM xs x}
+   
+   \hstype{ZipRec : [a] -> [b] -> [RecLabel a b] where $\ldots$} 
+
+   \hstype{IsNotElem :  [k] -> k -> Constraint where $\ldots$} 
+   \hstype{NotElem : [k] -> k -> Type}
+   
+   \hstype{IsSetRec : [RecLabel a b] -> Constraint}
    
    \hstype{And : (xs : [Bool]) -> Bool where $\ldots$} 
 
    \hsfunc{and\_t : (xs : [Bool]) -> And xs}
 
    \hsfunc{compareSymbol : (x : Symbol) -> (y : Symbol) -> CmpSymbol x y}
-
    
-   \hstype{Flip : (f : k0 -> k1 -> *) -> (x : k1) -> (y : k0) -> Type} 
-   \hstypectr{Flp : f y x -> Flip f x y} 
    
    \hstype{NonEmpty : (xs : [k]) -> Constraint where} 
    \hstypectr{NonEmpty (x : xs) = ()} 
    
    \hsfunc{prod2sing : forall (xs : [k]) -> SingKind k => Prod SingT xs -> SingT xs} 
    \hsfunc{sing2prod : forall (xs : [k]) -> SingKind k => SingT xs -> Prod SingT xs} 
-   \hsfunc{foldrProd : forall acc (f : k -> Type) xs -> acc -> (forall q . f q -> acc -> acc) -> Prod f xs -> acc}
-   \hsfunc{foldlProd : forall acc (f : k -> Type) xs -> acc -> (forall q . f q -> acc -> acc) -> Prod f xs -> acc}
-   \hsfunc{mapProd : forall (f : k -> Type) g -> (forall x . f x -> g x) -> Prod f xs -> Prod g xs}
-   \hsfunc{foldrProd' : forall (f : k -> Type) xs1 -> (forall x xs . f x -> Prod g xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g xs1 }
+   \hsfunc{foldrProd : forall acc (f : k -> Type)$\,\,$xs -> acc -> (forall q . f q -> acc -> acc) -> Prod f xs -> acc}
+   \hsfunc{foldlProd : forall acc (f : k -> Type)$\,\,$xs -> acc -> (forall q . f q -> acc -> acc) -> Prod f xs -> acc}
+   \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g -> (forall x . f x -> g x) -> Prod f xs -> Prod g xs}
+   \hsfunc{foldrProd' : forall (f : k -> Type)$\,\,$xs1 -> (forall x xs . f x -> Prod g xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g xs1 }
    \hsfunc{someProd : [Exists f] -> Exists (Prod f)}
 
   \end{class}
 
 \end{tikzpicture}
-}}\caption{Module diagram for Utils} \label{fig:utilsMod}
+}}\caption{Module diagram for ProofUtils} \label{fig:utilsMod}
 \end{figure}
+
+\Oldsubsubsection{Proof Utils}
+
+The ProofUtils modules, shown in figure~\ref{fig:utilsMod} provides various
+utilities for proving compile time invariants, including the definitions of
+various predicates used in other modules, as well as the value-level functions
+which prove or disprove those predicates. Generally speaking, a predicate is a
+type level function which returns either a true or false value, or has kind
+\lstinline{Constraint}, in which case truth corresponds to a satisfied
+constraint, while false to an unsatisfied one. Many predicates have value level
+witnesses as well; these are datatypes which are inhabitted if and only if the
+predicate is true.  Therefore, pattern matching on the predicate witness can be
+used to recover a proof of the predicate at run time.
+
+The function of the most imporant 
+predicates and types is briefly summarized as follows. 
+\begin{description}
+\item[\texttt{Prod}] The type \lstinline{Prod f xs} represents the $n$-ary product of the type
+  level list $xs$, with each $x \in xs$ being mapped to the type \lstinline{f x}. This 
+  type is accompanied by the functions \lstinline{prod2sing, sing2prod} which convert
+  between singletons and products; the functions \lstinline{foldrProd, foldlProd, foldrProd'}, 
+  which are all eliminators for \lstinline{Prod} (several eliminators are needed because the 
+  most general eliminator is not well typed in Haskell). 
+\item[\texttt{Sum}] The same as above, but the $n$-ary sum as opposed to product. 
+\item[\texttt{All}] The constraint \lstinline{All c xs} holds if and only if \lstinline{c x} holds for all $x \in xs$. 
+\item[\texttt{Elem, IsElem}] \lstinline{IsElem x xs} holds precisely when $x \in xs$. \lstinline{Elem} is the witness of \lstinline{IsElem}. 
+\item[\texttt{AppliedTo, Ap, :.:, Cmp, :*:, K, Id, Flip}] Categorical data types which encode
+a generalized view of algebraic data types. This approach is largely standardized (and is only
+replicated here to avoid incurring a large dependency) -- for more information, see~\cite{alacarte}. 
+\item[\texttt{RecAssocs, RecLabels, ZipRec}] Type level functions for working with type level records. 
+A record in this context is a list of types of some kind, each associated with a unique string label. 
+\lstinline{RecAssocs, RecLabels} retrieve the associations and labels of a record, respecively, 
+while \lstinline{ZipRec} constructs such a record from the associations and labels. It is the case
+that \lstinline{ZipRec (RecAssocs x) (RecLabels x) == x} for all \lstinline{x} .
+\item[\texttt{IsSetRec, SetRec}] The predicate \lstinline{IsSetRec x} holds precisely if \lstinline{x}
+  is a valid record type, whose labels are all unique. \lstinline{SetRec} is the witness for \lstinline{IsSetRec}. 
+\item[\texttt{IsNotElem, NotElem}] The predicate \lstinline{IsNotElem x xs} holds precisely if $\lnot x \in xs$.
+  \lstinline{NotElem} is the witnss for \lstinline{IsNotElem}. 
+\item[\texttt{\&\&,And}] Binary and $n$-ary boolen conjunction, with the usual semantics. 
+\end{description}
+
+
+\Oldsubsubsection{Singletons}
+
+The Singletons module (figure ~\ref{fig:singletons}) is not fully detailed here;
+instead, a vastly simplified version of the Singletons module is presented. The
+\lstinline{SingT} type denotes a generic singleton for any kind which implements
+\lstinline{SingKind} -- then, the main operation of interest on singletons is
+decidable equality, which is realized by the function \lstinline{%==}. The
+  detailed implementation is omitted because the singletons approach in Haskell
+  is well known and well documented~\cite{singletons}. We re-implement
+  singletons instead of using the well established ``singletons'' library
+  because, while this library is very well written, it relies very heavily on
+  Template Haskell~\cite{th}, which is essentially string-based
+  metaprogramming. Template Haskell is extremely error prone and very difficult
+  to maintain. As one of our primary goals is long-term maintainability, and
+  Template Haskell changes, sometimes drastically, with every new release of
+  GHC, including it in this project was deemed not worth the
+  headache. Therefore, we have reimplemented singletons without Template
+  Haskell, at the cost of having to write slightly more boilerplate.
 
 
 \subsection{Key Algorithm}
