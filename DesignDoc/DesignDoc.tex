@@ -124,10 +124,6 @@
 \section{Introduction}
 %TODO: edit for grammar, spelling, context, flow, watch for contractions
 \subsection{Description}
-The document outlines the design decision for the EFA project. 
-EFA is responsible for generating SQL Statements from ECA rules that will 
-be used to fixed any data inconsistencies in the Ampersand Database.
-
 This document follows the principle set by Parnas and Clements\citep{fakeIt}. 
 EFA is currently in development where changes occur frequently, a 
 commonly accepted practice for this situation is to decompose modules based on 
@@ -139,20 +135,20 @@ benefit of designers and maintainers\citep{modStruct,Parnas1972}.
 Our design follows the principles laid out by \citep{modStruct}, as follows:
 \begin{itemize}
 \item Unnecessary design details are omitted for simplicity
-\item Each data structure is only in one module
-\item Any other program that requires information stored in a module's data
-  structures must obtain it by calling access programs belonging to that module.
-Additionally: 
-\item Each module is broken down based on hierarchy
-\item Reference material are provided for external libraries but details of its 
-use will not be provided within the module break-down
+\item Each module is broken down based on hierarchy with no overlap of functionality
+\item All our modules are Open Modules i.e they are available for extension in the future
+\item Reference material are provided for external libraries
+%% but details of its use will not be provided within the module break-down
 \end{itemize}
 
-\subsection{Scope}
+The language of implementation is Haskell.
 
-This project aims to improve upon the current Ampersand system by providing a 
-permanent replacement for the exec-engine. EFA automatically restores system 
-invariants according to ECA rules with no manual maintenance required.
+\subsection{Scope}
+The purpose of this document is to outline the implementation details of the EFA project described in the Problem Statement.
+%The document outlines the design decision for the EFA project. 
+EFA is responsible for generating SQL Statements from ECA rules that will 
+be used to fixed any data inconsistencies in the Ampersand Database. 
+The document will serve as a referral document for future Software Development in the Ampersand project.
 
 \subsubsection{Intended Audience}
 This document is designed for:
@@ -182,13 +178,8 @@ Thus far anticipated changes include:
     \item[AC3:] The algorithm used for EFA.
     \item[AC4:] The format of output.
     \item[AC5:] The format of input parameters.
-    \item[AC6:] The format of initial input data and associated markers for 
-    data association.
-    \item[AC7:] Integration of front-end interface to back-end modules.
-    \item[AC8:] Implementation of SQL data structure
-    \item[AC9:] Testing for individual modules and internal systems
-    \item[AC10:] Software requirements for running Ampersand and by extension 
-    EFA
+    \item[AC6:] Integration of front-end interface to back-end modules.
+    \item[AC7:] Testing for individual modules and internal systems.
     
 \end{description}
 
@@ -199,15 +190,14 @@ system, and also changes that would not affect EFA.
 
 \begin{description}
     \item[UC1:] There will always be a source of input data external to the 
-    software. 
-    \item[UC2:] Results will always be provably correct. 
-    \item[UC3:] The goal of EFA is to automatically correct system invariants
-    \item[UC4:] Output data must exist
-    \item[UC5:] The implementation language must be the same as that which is 
-    used for building the Ampersand system
-    \item[UC6:] The format of initial input data and associated markers for 
-    data association. 
-    \item[UC7:] Type of output data will always be SQL.
+    software.
+    \item[UC2:] Results will always be provably correct.
+    \item[UC3:] Output data must exist.
+    \item[UC4:] The implementation language must be the same as that which is 
+    used for building the Ampersand system.
+    \item[UC5:] The format of initial input data and associated markers for 
+    data association.
+    \item[UC6:] Type of output data will always be a SQL procedure.
 \end{description}
 
 \section{Module Hierarchy}
@@ -378,15 +368,29 @@ contains external libraries.
 %%     \caption{Dependency graph of EFA modules}~\label{fig:figure1}
 %% \end{figure}
 
-\section{Connection Between Requirements and Design} \label{SecConnection}
+%%%%%%%%%%%%%%%%%%%%%
+%%% Section - System Architecture %%%%%
+%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{System Architecture} \label{SystemArch}
 
-\section{Module Decomposition} \label{SecMD}
-Modules are located in their respective subsections (i.e. main module, support 
-modules and external library modules). Each module is decomposed based on their 
-use while hiding implementation details. 
-\\ \newline
-\textit{Please see glossary for math references and clarification of uncommon 
-terms}
+\subsection{Key Algorithm}
+The key Algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method that allows organization to build information systems that comply to their business requirements in a provable manner. This Algorithm is implemented in Ampersand and is responsible for translating the business requirements into ECA rules. These ECA rules contain information on how to fix any data violation and are translated into SQL in our EFA project.
+
+\subsection{Communication Protocol}
+The EFA implementation needs to communicate with the front end to be able to run the generated SQL when a violation occurs. 
+	\begin{itemize}
+		\item \textbf{Old communication protocol -  PHP engine} \newline
+			In in existing version, Ampersand depends on PHP code to run the generated SQL on the database. However this comes at the cost of human intervention and maintenance cost for the development. 
+		\item \textbf{New Communication protocol - Stored Procedures} \newline
+			The developments teams of EFA has come to a conclusion that the best way of communicating with the front-end will be to use Stored Procedures\cite{SP}. The Stored Procedures provide the extra benefit of query optimization at compile time which results in better performance. While this is a suggested change, it will require changes to the existing Ampersand software in order to successfully implement this idea. This is an anticipated change and will be implemented in the near future.
+			
+	\end{itemize}
+
+\subsection{Error handling}
+Most of the error handling is done by the underlying Ampersand software. Any human errors (syntactic or semantical) in the input ADL file are handled during the generation of the ECA. The resulting ECA rules which are fed into the EFA project are provably correct. The language of implementation (i.e Haskell) guarantees type level correctness of the EFA project at compile time. 
+\newline
+If any error occurs during runtime, the state of the database will be checked before and after the SQL statement is run. In case of an inconsistency in the data, the SQL \textbf{rollback} command will be issued that will change the database to its previous state. In such a scenario, the user will be notified about the event and can take necessary actions to fix the issue. 
 
 \subsection{Main Module}
 
@@ -398,8 +402,6 @@ terms}
         Main function & eca2SQL
         \\  Input & Options, FSpec, ECARule
         \\  Output & Doc
-        \\	Secrets & The algorithm and data structures used to implement ECA 
-        Rules.
         \\	Services & Produces the final product by using supporting modules 
         as tools in translating ECA rules to SQL statements which can be 
         applied to a database.
@@ -418,10 +420,9 @@ eca2SQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
         M2 & eca2SQL \\ 
         \midrule       
         \\  Requires Modules & ProofUtils, Trace, Singleton
-        \\	Secrets & Implements a type language for SQL through pattern 
+        \\	Services & Implements a type language for SQL through pattern 
         matches where the representation of SQL references types which can 
-        appear in SQL statements.
-        \\	Services & Contains Base which implements a typed SQL query 
+        appear in SQL statements. Contains Base which implements a typed SQL query 
         language and a type SQL statement.
         \\         
         \vspace{12pt}
@@ -469,7 +470,7 @@ types
  SQLNumericTy : SQLNumeric $\rightarrow$ SQLType  \\
  SQLBlob : SQLSign $\rightarrow$ SQLType \\
  
- SQLVarChar : \Gls{N} $\rightarrow$ SQLType 
+ SQLVarChar : N $\rightarrow$ SQLType 
  SQLRel : SQLType $\rightarrow$ SQLType \\
  
  SQLRow : [SQLRecLabel] $\rightarrow$ SQLType 
@@ -511,8 +512,7 @@ types
         \midrule
         
         Contains functions  &  not, cong, elimNeg and more
-        \\	Secrets & Various utilities functions
-        \\	Services &  The module contains utility functions that are being used in the Singletons and Utils module to provide type level security for the TypedSQL with an aim to make it total.
+        \\	Services &  The module contains utility functions that are being used in the Singletons and Utils module to provide type 		level security for the TypedSQL with an aim to make it total. It implements a primitive strict negation type, a strict decidable equality type,  and various equality proof function
         \\       
         \vspace{12pt}
     \end{tabularx}
@@ -524,8 +524,9 @@ types
         \midrule
         
         Main function  &  No functions exported
-        \\	Secrets & Extension to the Haskell Singleton Library Singleton Types and promoted functions
-        \\	Services &  
+        \\	Services &  Singletons contains an implementation of singletons (types which are inhabited by precisely one value)
+  in a kind-generic way. This is used in contrast to the `singletons' package which makes heavy use of 
+  Template Haskell. To avoid this massive pitfall, we have reimplemented singletons without Template Haskell.
         \\       
         \vspace{12pt}
     \end{tabularx}\vspace{3em}
@@ -536,7 +537,6 @@ types
         \midrule
         
         Main function  & 
-        \\	Secrets & Varies Utilities Functions
         \\	Services &  The module also contains some utility functions used by the ECA2SQL module
         \\       
         \vspace{12pt}
@@ -548,8 +548,7 @@ types
         \midrule
         
         Main function  &  getTraceInfo 
-        \\	Secrets & Creates a function for tracing the output
-        \\	Services &  The modules contains support for tracing back the ECA rule. Tracing is used for development and debugging purpose
+        \\	Services &  The modules contains support for tracing back the ECA rule. It implements a proper error message (with line numbers and function name). Tracing is used for development and debugging purpose
         \\       
         \vspace{12pt}
     \end{tabularx}\vspace{3em}
@@ -560,7 +559,6 @@ types
         \midrule
         
         Main function  & No functions exported
-        \\	Secrets &  Combinator Logic for TypedSQL
         \\	Services &  This module contains Combinatory Logic for our TypedSQL module. The module defines SQL primitives such as AND, OR, NOT and the primitive SQL functions such as the EXISTS, GROUP BY, SORT BY.
         \\       
         \vspace{12pt}
@@ -572,29 +570,42 @@ types
             \midrule
             
             Main function  & eca2PrettySQL
-            \\	Secrets & Pretty prints the generated SQL
-            \\	Services &  The function takes in the FSpec as an input with an ECA rule and runs the eca2SQL function to generate SQLSt(SQL Statements). The generated SQL statement are pretty printed using a Pretty Printer Library.
+            \\	Services &  The module contains a pretty printer for the Typed SQL types. The intended purpose of this pretty printer is to produce human-readable SQL Statements.
             \\       
             \vspace{12pt}
         \end{tabularx}\vspace{3em}
 \underline{Internal Description}\\ \\
 eca2PrettySQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
+
+\section{Module Decomposition} \label{SecMD}
+Modules are located in their respective subsections (i.e. main module, support 
+modules and external library modules). Each module is decomposed based on their 
+use while hiding implementation details. 
+\\ \newline
+\textit{Please see glossary for math references and clarification of uncommon 
+terms}
+
         
 \subsection{External Libraries}
-\begin{tabular}{ | m{4cm} | m{11cm} |}
-    \hline
-    \bfseries{Library} & \bfseries{Reference}  \\
-    \hline
-    item 21  & item 22   \\
-    item 21  & item 22   \\
-    item 21  & item 22   \\
-    item 21  & item 22   \\
-    \hline
-    \end{tabular}
+The EFA project depends on the following Libraries 
+\begin{description}
+	\item \textbf{Ampersand Core Libraries} \newline
+		The EFA project depends on the Ampersand software for the definition of core Data Structures, i.e FSpec (which contains the definition to the underlying ECA rules). EFA also maintains the relational schema of the input and hence imports Ampersand's existing functions to fetch the table declarations while generating SQL Statements for the ECA rules. AMMBR \cite{AMMBR} which is the key algorithm responsible for translating business requirements into ECA rules is an intergral part of Ampersand.
+	\item \textbf{Simple-sql-parser} \newline
+		The pretty printer of the EFA project depends directly on this library for pretty printing the SQL statements in the console. This is important from a development and debugging perspective.\cite{simple-sql}
+	\item \textbf{wl-pprint} \newline
+		The wl-pprint library\cite{wl-pprint} is a pretty printer based on the pretty printing combinators described by Philip Wadler (1997). EFA uses this library in combination with the simple-sql-pretty to output the SQL statements in a human readable format.
+	\item 
+\end{description}
 
+
+
+%% TODO
 \section{Traceability Matrix} \label{SecTM}
 
-\section{Use Hierarchy Between Modules} \label{SecUse}
+
+
+%%%\section{Use Hierarchy Between Modules} \label{SecUse}
 
 
 
