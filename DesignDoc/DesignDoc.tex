@@ -20,10 +20,14 @@
 \usepackage{listings}
 \usepackage{calc}
 \usepackage[simplified]{../ltx/pgf-umlcd/pgf-umlcd}
+\usepackage[section]{placeins}
 
 \usetikzlibrary{arrows.meta}
 
-
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
 
 %\usepackage{amssymb}
 \newcounter{acnum}
@@ -45,6 +49,7 @@
 
 % 
 \definecolor{grey}{RGB}{185,185,185}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
 \lstset{ %
   language=Haskell, morekeywords = {family, kind, pattern, expression},
   literate=
@@ -278,8 +283,8 @@ is detailed further on, in section~\ref{subsec:Singletons}.
 
 The syntax \lstinline!forall (x : A) -> B! is used to denote the regular
 Haskell type \texttt{forall (x :: A) . B}. As is customary in Haskell, the quantification
-may be dropped when the kind $A$ is clear from the context: \lstinline!forall (x : A) -> P x!,
-\lstinline!forall x -> P x!, and \lstinline!x -> P x! all denote the type \texttt{forall (x :: A) . P x}.
+may be dropped when the kind $A$ is clear from the context: \lstinline!forall (x : A) -> P x! and
+\lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
 
 \subsubsection*{Constraints}
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
@@ -308,8 +313,40 @@ to construct a value of that type. This is denoted by the syntax
 convention - the use of this constructor in expressions will be strictly
 forbidden by Haskell.
 
+\subsubsection*{Existential quantification}
+The type \lstinline!exists (x : A) (P x)! indicates that there exists some $x$
+of kind $A$ which satisfies the predicate $P$. Unfortunately, Haskell does not
+have first class existential quantification. It must be encoded in one of
+two ways:
+
+\begin{itemize}
+\item With a function (by DeMorgan's law): \\ \texttt{(forall (x :: A) . P x -> r) -> r}
+\item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> Exists p}
+\end{itemize} 
+
+Which form is used is chosen based on the circumstances in which the function
+will most likely be used, since whether one form is more convenient than the
+other depends largely on the intended use. However, these two forms are
+completely interchangeable (albiet with some syntactic noise) so the syntax
+presented here does not distinguish between the two. 
+
 \subsection{Module Diagram Syntax Description}\label{subsec:ModuleSyntax}
 
+The module hierarchy is broken down into multiple levels to better describe the
+system.  A coarse module hierarchy is given, and each module is further broken
+into submodules.  A dependency between two modules $A$ and $B$ indicates that
+each submodule in $A$ depends on all of $B$. There is no necessity to break
+down modules into submodule, if they do not have any interesting submodule 
+structure. 
+
+External dependencies, which are modules which come from an external pacakge,
+are indicated in {\color{grey}grey}. System modules, which are modules part of
+Ampersand, but not written specifically for EFA (or, on which EFA depends, but
+few or no changes have been made from the original module before the existance
+of EFA), are indicated in {\color{applegreen}green}. The module heirarchy of
+these modules is not described here; they are included simply to indicate which
+symbols are imported from these modules. An example of the syntax is found in
+figure~\ref{fig:ModExample}.
 
 \begin{figure}[!ht]
 \makebox[\textwidth][c]{
@@ -327,17 +364,35 @@ forbidden by Haskell.
       \hstypectr{Ctr$_2$ : E -> Data$_1$}
     \end{class}
 
-    \begin{class}[text width=10cm]{Submodule$_1$}{0,-7}
+    \begin{class}[text width=10cm]{Submodule$_1$}{0,-5}
       \attribute{\emph{Type level namespace}}
       \operation{\emph{Value level namespace}}
     \end{class}
     
-
     \draw [umlcd style, ->] (Submodule$_0$.south) -- (Submodule$_0$ |- Submodule$_1$.north); 
-
   \end{package}
+
+  \begin{class}[text width=3cm]{Module$_0$}{10,-3.5}
+  \end{class}
+
+  \begin{class}[text width=3cm]{Module$_1$}{10,-5.5}
+  \end{class}
+
+  \begin{class}[text width=3cm]{Module$_2$}{15,-5.5}
+  \end{class}
+
+  \draw [umlcd style, ->] (Module$_0$.south) -- (Module$_0$ |- Module$_1$.north); 
+  \draw [umlcd style, ->] (Module$_1$.east) -- (Module$_1$ -| Module$_2$.west); 
+
   \renewcommand{\umlfillcolor}{grey}
     \begin{class}[text width=10cm]{Dependency}{12,0.5}
+      \hstype{$\ldots$}
+      \hsfunc{$\ldots$}
+    \end{class}
+
+
+  \renewcommand{\umlfillcolor}{applegreen}
+    \begin{class}[text width=10cm]{System Module}{12,-1.5}
       \hstype{$\ldots$}
       \hsfunc{$\ldots$}
     \end{class}
@@ -371,13 +426,10 @@ forbidden by Haskell.
     \hstype{SQLSt : SQLSem -> SQLRefType -> Type where} 
     \hstypectr{Insert : TableSpec ts -> SQLVal (SQLRel (SQLRow ts)) -> SQLStatement SQLUnit}
     \hstypectr{Delete : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool) -> SQLStatement SQLUnit}
-    %% \hstype[20pt]{-> SQLStatement SQLUnit}
     \hstypectr{Update : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal SQLBool) -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> SQLStatement SQLUnit}
-    %% \hstype[20pt]{ -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> SQLStatement SQLUnit}
     \hstypectr{SetRef : SQLValRef x -> SQLVal x -> SQLStatement SQLUnit}
-    \hstypectr{NewRef : IsScalarType a \~ True -> SQLTypeS a -> Maybe String -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
-    %% \hstype[20pt]{ -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
-    \hstypectr{MakeTable : SQLTypeS (SQLRow t) -> SQLStatement (SQLRef (SQLRel (SQLRow t)))}
+    \hstypectr{NewRef : (a : SQLType) -> IsScalarType a \~ True -> Maybe String -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
+    \hstypectr{MakeTable : SQLRow t -> SQLStatement (SQLRef (SQLRel (SQLRow t)))}
     \hstypectr{DropTable : TableSpec t -> SQLStatement SQLUnit}
     \hstypectr{IfSQL : SQLVal SQLBool -> SQLSt t0 a -> SQLSt t1 b -> SQLStatement SQLUnit}
     \hstypectr{(:>>=) : SQLStatement a -> (SQLValSem a -> SQLSt x b) -> SQLSt x b}
@@ -445,8 +497,9 @@ forbidden by Haskell.
  
     \hsfunc{colsOf : SQLRow xs -> xs}
 
-    \hsfunc{unsafeSqlValFromName : (x : SQLType) -> Name -> SQLVal x}
-    \hsfunc{unsafeSQLValFromQuery : (xs : [SQLRecLabel]) -> NonEmpty xs -> IsSetRec xs -> SQLVal xs}
+    \hsfunc{unsafeSQLValFromName : (x : SQLType) -> Name -> SQLVal x}
+    \hsfunc{unsafeSQLValFromQuery : (xs : [SQLRecLabel]) -> NonEmpty xs}
+    \hsfunc[10pt]{ -> IsSetRec xs -> SQLVal (SQLRel (SQLRow xs))}
     \hsfunc{unsafeRefFromName : (x : SQLType) -> Name -> SQLValRef x}
 
     \hsfunc{deref : SQLValRef x -> SQLVal x}   
@@ -456,12 +509,13 @@ forbidden by Haskell.
   \begin{class}[text width=15.6cm]{TypedSQLTable}{17,5}
     \hstype{TableSpec : [SQLRecLabel] -> Type where}
     \hstypectr{MkTableSpec : SQLValRef (SQLRel (SQLRow t))  -> TableSpec t}
-    \hstypectr{TableAlias : IsSetRec ns -> TableSpec t -> TableSpec (ZipRec ns (RecAssocs t))}
-    
+    \hstypectr{TableAlias : (ns : [Symbol]) -> IsSetRec ns }
+    \hstype[20pt]{-> TableSpec t -> TableSpec (ZipRec ns (RecAssocs t))}
+
     \hsfunc{typeOfTableSpec : TableSpec t -> SQLRow t}
     \hsfunc{typeOfTableSpec : TableSpec t -> t}
 
-    \hsfunc{tableSpec : Name -> Prod (K String :*: id) tys}
+    \hsfunc{tableSpec : Name -> Prod (K String :*: Id) tys}
     \hsfunc[10pt]{ -> exists (ks : [SQLRecLabel]) (Maybe (RecAssocs ks :\~: tys, TableSpec ks))}
 
   \end{class}
@@ -500,198 +554,198 @@ Most of the error handling is done by the underlying Ampersand software. Any hum
 \newline
 If any error occurs during runtime, the state of the database will be checked before and after the SQL statement is run. In case of an inconsistency in the data, the SQL \textbf{rollback} command will be issued that will change the database to its previous state. In such a scenario, the user will be notified about the event and can take necessary actions to fix the issue. 
 
-\subsection{Main Module}
+%% \subsection{Main Module}
 
-%% ------------------------------M1: ECA2SQL -------------------------------%%
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
-        M1 & eca2SQL \\ 
-        \midrule 
-        Main function & eca2SQL
-        \\  Input & Options, FSpec, ECARule
-        \\  Output & Doc
-        \\	Services & Produces the final product by using supporting modules 
-        as tools in translating ECA rules to SQL statements which can be 
-        applied to a database.
-        \\     
-         \vspace{12pt}
-     \end{tabularx}
-\\
-\underline{Internal Description}\\ \\
-eca2SQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
+%% %% ------------------------------M1: ECA2SQL -------------------------------%%
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+%%         M1 & eca2SQL \\ 
+%%         \midrule 
+%%         Main function & eca2SQL
+%%         \\  Input & Options, FSpec, ECARule
+%%         \\  Output & Doc
+%%         \\	Services & Produces the final product by using supporting modules 
+%%         as tools in translating ECA rules to SQL statements which can be 
+%%         applied to a database.
+%%         \\     
+%%          \vspace{12pt}
+%%      \end{tabularx}
+%% \\
+%% \underline{Internal Description}\\ \\
+%% eca2SQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
 
-%% ------------------------------M2: TypedSQL -------------------------------%%
-\subsection{Support Modules}
+%% %% ------------------------------M2: TypedSQL -------------------------------%%
+%% \subsection{Support Modules}
 
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
-        M2 & eca2SQL \\ 
-        \midrule       
-        \\  Requires Modules & ProofUtils, Trace, Singleton
-        \\	Services & Implements a type language for SQL through pattern 
-        matches where the representation of SQL references types which can 
-        appear in SQL statements. Contains Base which implements a typed SQL query 
-        language and a type SQL statement.
-        \\         
-        \vspace{12pt}
-    \end{tabularx} 
-
-
-\setlength{\parindent}{0pt}
-\underline{Internal Description}\\
-
-Read as: \textit{function: input $\rightarrow$ input2 $\rightarrow$ 
-output}\newline
-
-Where a function may require multiple inputs of different types to produce the 
-necessary output type.\\
-
-\textit{function (type and value level): (x:A) $\rightarrow$ output}
-This indicates the function of a certain type and its value level, this is seen 
-on SQL types. (x:A) is used to indicate a variable x of type A (e.g. x=9, (x:A) 
-is a type of integer). (function::) is used to define a function and its input 
-types 
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+%%         M2 & eca2SQL \\ 
+%%         \midrule       
+%%         \\  Requires Modules & ProofUtils, Trace, Singleton
+%%         \\	Services & Implements a type language for SQL through pattern 
+%%         matches where the representation of SQL references types which can 
+%%         appear in SQL statements. Contains Base which implements a typed SQL query 
+%%         language and a type SQL statement.
+%%         \\         
+%%         \vspace{12pt}
+%%     \end{tabularx} 
 
 
+%% \setlength{\parindent}{0pt}
+%% \underline{Internal Description}\\
 
-\newglossaryentry{N}{name=N, description= $\mathbb{N}$ represents 
-    the 
-    set of natural numbers}
+%% Read as: \textit{function: input $\rightarrow$ input2 $\rightarrow$ 
+%% output}\newline
 
- (:::) : Symbol $\rightarrow$ SQLType $\rightarrow$ SQLRecLabel \\
- 
- SQLSizeVariant : Kind \\
- SQLSmall, SQLMedium, SQLNormal, SQLBig :SQLSizeVariant \\ \\
- 
- SQLSign : Kind \\
- SQLSigned, SQLUnsigned : SQLSign  \\
- 
- SQLNumeric : Kind \\
- SQLFloat, SQLDouble : SQLSign $\rightarrow$ SQLNumeric \\
- 
- SQLInt : SQLSizeVariant $\rightarrow$ SQLSign $\rightarrow$ SQLNumeric \\
- SQLRecLabel : Kind \\
+%% Where a function may require multiple inputs of different types to produce the 
+%% necessary output type.\\
 
- SQLType : Kind \\
- SQLBool, SQLDate, SQLDateTime, SQLSerial : SQLType \\
+%% \textit{function (type and value level): (x:A) $\rightarrow$ output}
+%% This indicates the function of a certain type and its value level, this is seen 
+%% on SQL types. (x:A) is used to indicate a variable x of type A (e.g. x=9, (x:A) 
+%% is a type of integer). (function::) is used to define a function and its input 
+%% types 
+
+
+
+%% \newglossaryentry{N}{name=N, description= $\mathbb{N}$ represents 
+%%     the 
+%%     set of natural numbers}
+
+%%  (:::) : Symbol $\rightarrow$ SQLType $\rightarrow$ SQLRecLabel \\
  
- SQLNumericTy : SQLNumeric $\rightarrow$ SQLType  \\
- SQLBlob : SQLSign $\rightarrow$ SQLType \\
+%%  SQLSizeVariant : Kind \\
+%%  SQLSmall, SQLMedium, SQLNormal, SQLBig :SQLSizeVariant \\ \\
  
- SQLVarChar : N $\rightarrow$ SQLType 
- SQLRel : SQLType $\rightarrow$ SQLType \\
+%%  SQLSign : Kind \\
+%%  SQLSigned, SQLUnsigned : SQLSign  \\
  
- SQLRow : [SQLRecLabel] $\rightarrow$ SQLType 
- SQLVec : [SQLType]$\rightarrow$ SQLType \\
+%%  SQLNumeric : Kind \\
+%%  SQLFloat, SQLDouble : SQLSign $\rightarrow$ SQLNumeric \\
  
- SQLRef, SQLUnit: SQLType \\
- SQLRefType: Kind\\
+%%  SQLInt : SQLSizeVariant $\rightarrow$ SQLSign $\rightarrow$ SQLNumeric \\
+%%  SQLRecLabel : Kind \\
+
+%%  SQLType : Kind \\
+%%  SQLBool, SQLDate, SQLDateTime, SQLSerial : SQLType \\
  
- SQLMethod: [SQLType] $\rightarrow$ SQLType $\rightarrow$ SQLRefType \\
- SQLVal: SQLType $\rightarrow$ Type \\
+%%  SQLNumericTy : SQLNumeric $\rightarrow$ SQLType  \\
+%%  SQLBlob : SQLSign $\rightarrow$ SQLType \\
  
- SQLScalarVal: IsScalarType a $\equiv$ True $\rightarrow$ Sm.ValueExpr 
- $\rightarrow$ SQLVal a \\
- SQLQueryVal: IsScalarType a $\equiv$ False $\rightarrow$ Sm.QueryExpr 
- $\rightarrow$ SQLVal a \\
+%%  SQLVarChar : N $\rightarrow$ SQLType 
+%%  SQLRel : SQLType $\rightarrow$ SQLType \\
  
- SQLValSem: SQLRefType $\rightarrow$ Type\\
+%%  SQLRow : [SQLRecLabel] $\rightarrow$ SQLType 
+%%  SQLVec : [SQLType]$\rightarrow$ SQLType \\
+ 
+%%  SQLRef, SQLUnit: SQLType \\
+%%  SQLRefType: Kind\\
+ 
+%%  SQLMethod: [SQLType] $\rightarrow$ SQLType $\rightarrow$ SQLRefType \\
+%%  SQLVal: SQLType $\rightarrow$ Type \\
+ 
+%%  SQLScalarVal: IsScalarType a $\equiv$ True $\rightarrow$ Sm.ValueExpr 
+%%  $\rightarrow$ SQLVal a \\
+%%  SQLQueryVal: IsScalarType a $\equiv$ False $\rightarrow$ Sm.QueryExpr 
+%%  $\rightarrow$ SQLVal a \\
+ 
+%%  SQLValSem: SQLRefType $\rightarrow$ Type\\
 
  
- Ty: SQLType $\rightarrow$ SQLRefType \\
+%%  Ty: SQLType $\rightarrow$ SQLRefType \\
 
- IsScalarType: SQLType $\rightarrow$ Bool \\
- isScalarType: (x:SQLType) $\rightarrow$ IsScalarType x \\
- IsScalarTypes: [SQLType] $\rightarrow$ Bool \\
- isScalarTypes: (X:[SQLType]) $\rightarrow$ IsScalarTypes x \\
+%%  IsScalarType: SQLType $\rightarrow$ Bool \\
+%%  isScalarType: (x:SQLType) $\rightarrow$ IsScalarType x \\
+%%  IsScalarTypes: [SQLType] $\rightarrow$ Bool \\
+%%  isScalarTypes: (X:[SQLType]) $\rightarrow$ IsScalarTypes x \\
  
- typeOf: SQLVal a $\rightarrow$ a \\
- argOfRel: SQLRel a $\rightarrow$ a\\
+%%  typeOf: SQLVal a $\rightarrow$ a \\
+%%  argOfRel: SQLRel a $\rightarrow$ a\\
  
- Unit: SQLValSem SQLUnit\\
- Val:: SQLVal x $\rightarrow$ SQLValSem ('Ty x)
+%%  Unit: SQLValSem SQLUnit\\
+%%  Val:: SQLVal x $\rightarrow$ SQLValSem ('Ty x)
  
  
 
-%% ------------------------------M3: Equality -------------------------------%%
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
-        M3 & Equality \\ 
-        \midrule
+%% %% ------------------------------M3: Equality -------------------------------%%
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+%%         M3 & Equality \\ 
+%%         \midrule
         
-        Contains functions  &  not, cong, elimNeg and more
-        \\	Services &  The module contains utility functions that are being used in the Singletons and Utils module to provide type 		level security for the TypedSQL with an aim to make it total. It implements a primitive strict negation type, a strict decidable equality type,  and various equality proof function
-        \\       
-        \vspace{12pt}
-    \end{tabularx}
-    \vspace{3em}
-%% ------------------------------M4: Singleton -------------------------------%%
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
-        M4 & Singleton \\ 
-        \midrule
+%%         Contains functions  &  not, cong, elimNeg and more
+%%         \\	Services &  The module contains utility functions that are being used in the Singletons and Utils module to provide type 		level security for the TypedSQL with an aim to make it total. It implements a primitive strict negation type, a strict decidable equality type,  and various equality proof function
+%%         \\       
+%%         \vspace{12pt}
+%%     \end{tabularx}
+%%     \vspace{3em}
+%% %% ------------------------------M4: Singleton -------------------------------%%
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+%%         M4 & Singleton \\ 
+%%         \midrule
         
-        Main function  &  No functions exported
-        \\	Services &  Singletons contains an implementation of singletons (types which are inhabited by precisely one value)
-  in a kind-generic way. This is used in contrast to the `singletons' package which makes heavy use of 
-  Template Haskell. To avoid this massive pitfall, we have reimplemented singletons without Template Haskell.
-        \\       
-        \vspace{12pt}
-    \end{tabularx}\vspace{3em}
-%% ------------------------------M5: Utils -------------------------------%%
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
-        M5 & Utils \\ 
-        \midrule
+%%         Main function  &  No functions exported
+%%         \\	Services &  Singletons contains an implementation of singletons (types which are inhabited by precisely one value)
+%%   in a kind-generic way. This is used in contrast to the `singletons' package which makes heavy use of 
+%%   Template Haskell. To avoid this massive pitfall, we have reimplemented singletons without Template Haskell.
+%%         \\       
+%%         \vspace{12pt}
+%%     \end{tabularx}\vspace{3em}
+%% %% ------------------------------M5: Utils -------------------------------%%
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+%%         M5 & Utils \\ 
+%%         \midrule
         
-        Main function  & 
-        \\	Services &  The module also contains some utility functions used by the ECA2SQL module
-        \\       
-        \vspace{12pt}
-    \end{tabularx}\vspace{3em}
-%% ------------------------------M6: Trace -------------------------------%%
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
-        M6 & Trace \\ 
-        \midrule
+%%         Main function  & 
+%%         \\	Services &  The module also contains some utility functions used by the ECA2SQL module
+%%         \\       
+%%         \vspace{12pt}
+%%     \end{tabularx}\vspace{3em}
+%% %% ------------------------------M6: Trace -------------------------------%%
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{4cm}X}
+%%         M6 & Trace \\ 
+%%         \midrule
         
-        Main function  &  getTraceInfo 
-        \\	Services &  The modules contains support for tracing back the ECA rule. It implements a proper error message (with line numbers and function name). Tracing is used for development and debugging purpose
-        \\       
-        \vspace{12pt}
-    \end{tabularx}\vspace{3em}
-%% ------------------------------M7: Combinators------------------------------%%
-{\setlength{\tabcolsep}{6pt} 
-    \begin{tabularx}{\textwidth}{>{\bfseries}m{5cm}X}
-        M7 & Combinators \\ 
-        \midrule
+%%         Main function  &  getTraceInfo 
+%%         \\	Services &  The modules contains support for tracing back the ECA rule. It implements a proper error message (with line numbers and function name). Tracing is used for development and debugging purpose
+%%         \\       
+%%         \vspace{12pt}
+%%     \end{tabularx}\vspace{3em}
+%% %% ------------------------------M7: Combinators------------------------------%%
+%% {\setlength{\tabcolsep}{6pt} 
+%%     \begin{tabularx}{\textwidth}{>{\bfseries}m{5cm}X}
+%%         M7 & Combinators \\ 
+%%         \midrule
         
-        Main function  & No functions exported
-        \\	Services &  This module contains Combinatory Logic for our TypedSQL module. The module defines SQL primitives such as AND, OR, NOT and the primitive SQL functions such as the EXISTS, GROUP BY, SORT BY.
-        \\       
-        \vspace{12pt}
-    \end{tabularx}\vspace{3em}
-%% ----------------------------- M8: Pretty    ------------------------------%%
-    {\setlength{\tabcolsep}{6pt} 
-        \begin{tabularx}{\textwidth}{>{\bfseries}m{5cm}X}
-            M8 & Pretty \\ 
-            \midrule
+%%         Main function  & No functions exported
+%%         \\	Services &  This module contains Combinatory Logic for our TypedSQL module. The module defines SQL primitives such as AND, OR, NOT and the primitive SQL functions such as the EXISTS, GROUP BY, SORT BY.
+%%         \\       
+%%         \vspace{12pt}
+%%     \end{tabularx}\vspace{3em}
+%% %% ----------------------------- M8: Pretty    ------------------------------%%
+%%     {\setlength{\tabcolsep}{6pt} 
+%%         \begin{tabularx}{\textwidth}{>{\bfseries}m{5cm}X}
+%%             M8 & Pretty \\ 
+%%             \midrule
             
-            Main function  & eca2PrettySQL
-            \\	Services &  The module contains a pretty printer for the Typed SQL types. The intended purpose of this pretty printer is to produce human-readable SQL Statements.
-            \\       
-            \vspace{12pt}
-        \end{tabularx}\vspace{3em}
-\underline{Internal Description}\\ \\
-eca2PrettySQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
+%%             Main function  & eca2PrettySQL
+%%             \\	Services &  The module contains a pretty printer for the Typed SQL types. The intended purpose of this pretty printer is to produce human-readable SQL Statements.
+%%             \\       
+%%             \vspace{12pt}
+%%         \end{tabularx}\vspace{3em}
+%% \underline{Internal Description}\\ \\
+%% eca2PrettySQL :: Options $\rightarrow$ FSpec $\rightarrow$ ECArule $\rightarrow$ Doc
 
-\section{Module Decomposition} \label{SecMD}
-Modules are located in their respective subsections (i.e. main module, support 
-modules and external library modules). Each module is decomposed based on their 
-use while hiding implementation details. 
-\\ \newline
-\textit{Please see glossary for math references and clarification of uncommon 
-terms}
+%% \section{Module Decomposition} \label{SecMD}
+%% Modules are located in their respective subsections (i.e. main module, support 
+%% modules and external library modules). Each module is decomposed based on their 
+%% use while hiding implementation details. 
+%% \\ \newline
+%% \textit{Please see glossary for math references and clarification of uncommon 
+%% terms}
 
         
 \subsection{External Libraries}
