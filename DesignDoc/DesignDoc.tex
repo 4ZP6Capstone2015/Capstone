@@ -132,6 +132,7 @@
 	 Yuriy Toporovskyy & 28/ 02 / 2016 & Addition of UML diagrams \\\hline
 	 Yuriy Toporovskyy & 29/ 02 / 2016 & Major changes (diagrams, explanations, organization) \\\hline
 	 Yash Sapra & 29/ 02 / 2016 & Proof reading \\\hline
+	 Yuriy Toporovskyy & 29/ 02 / 2016 & Formatting and references \\\hline
         \end{tabular}
     \end{center}\end{table}
 \newpage
@@ -263,7 +264,7 @@ as a reference - in many cases, the meaning of a type is self-evident.
 \subsubsection*{Types and kinds}
 In the way that a type classifies a set of values, a kind classifies a set of
 types. Haskell permits one to define algebraic data types, which are then ``promoted''
-to the kind level. This permits the type constructor of the datatype to be used
+to the kind level \cite{promotion}. This permits the type constructor of the datatype to be used
 as a kind constructor, and for the value constructors to be used as type constructors. 
 In every case in our system, when we define a datatype and use the promoted version,
 we never use the \emph{unpromoted} version. That is, we define types which are never
@@ -574,12 +575,12 @@ This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. 
 
 The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}.  Note
-that every module which is part of EFA depends on the Haskell ``base'' package
-(which is the core libraries of Haskell). Also note that for the ``base''
+that every module which is part of EFA depends on the Haskell \texttt{base} package
+(which is the core libraries of Haskell). Also note that for the \texttt{base}
 package, we only include primitive definitions (i.e. those not defined in real
 Haskell) which may be difficult to track down in the documentation. The kinds
-``Nat'' and ``Symbol'' correspond to type level natural number and string
-literals, respectively. The kind ``Constraint'' is the kind of class and
+ \lstinline{Nat} and \lstinline{Symbol} correspond to type level natural number and string
+literals, respectively. The kind \lstinline{Constraint} is the kind of class and
 equality constraints, for example, things like \lstinline{Show x} and \lstinline[mathescape]|Int $\sim$ Bool|.  
 Note that \texttt{Show} itself does \emph{not} have kind Constraint --
 its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
@@ -589,13 +590,13 @@ mentioned in, nor required to understand, the module description.
 %% All other features of GHC are
 %% detailed in the user guide as well, but no other
 
-The primary interface to EFA is the function ``eca2PrettySQL'', which takes an
+The primary interface to EFA is the function \lstinline{eca2PrettySQL}, which takes an
 FSpec (the abstract syntax of Ampersand) and an ECA rule, and returns the pretty
 printed SQL code for that rule. Also note that while the dependencies within EFA
 modules is relatively complex, they depend on the rest of the Ampersand system
-in a simple manner. The modules ``Test'' and ``Prototype'' implement the testing
+in a simple manner. The modules \lstinline{Test} and \lstinline{Prototype} implement the testing
 framework and the prototype generation, respectively; these modules depend
-directly on only one module from EFA, namely ``ECA2SQL''. Similarly, the
+directly on only one module from EFA, namely \lstinline{ECA2SQL}. Similarly, the
 majority of EFA itself does not depend directly on Ampersand modules outside of
 EFA. This makes EFA very resilient to changes in the core Ampersand system; in
 order to update EFA to work with a modification to Ampersand, only one EFA
@@ -837,10 +838,10 @@ implements a subset of primitive SQL functions on top of the TypedSQL expression
 The data type PrimSQLFunction encodes the specification of each function; the type
 and semantics of each function is that of the corresponding function in MySQL (refer to
 the MySQL manual ~\cite{mySQLman} for details on each function). The only exception
-is the ``Alias'' function, which is a primitive syntactic constructor (not a named entity)
+is the \lstinline{Alias} function, which is a primitive syntactic constructor (not a named entity)
 in MySQL - rows can be aliased with a select statement. Aliasing a row means to change
 the name of each association in the row, but not the shape of the row (i.e. the types of
-each element of the row, as well as their ordering). The single function ``primSQL''
+each element of the row, as well as their ordering). The single function \lstinline{primSQL}
 implements all of the primitive SQL functions. It takes as an argument a specification
 of the primitive function, a tuple of arguments of the correspond types, and returns
 a SQL value, again of the corresponding type. 
@@ -1139,7 +1140,7 @@ instead, a vastly simplified version of the Singletons module is presented. The
 decidable equality, which is realized by the function \lstinline{%==}. The
   detailed implementation is omitted because the singletons approach in Haskell
   is well known and well documented~\cite{singletons}. We re-implement
-  singletons instead of using the well established ``singletons'' library
+  singletons instead of using the well established \texttt{singletons} library
   because, while this library is very well written, it relies very heavily on
   Template Haskell~\cite{th}, which is essentially string-based
   metaprogramming. Template Haskell is extremely error prone and very difficult
