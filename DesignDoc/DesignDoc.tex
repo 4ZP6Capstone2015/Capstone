@@ -1,5 +1,7 @@
 \documentclass[12pt, svgnames]{article}
 
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{fullpage}
 \usepackage[round,numbers]{natbib}
 \usepackage{multirow}
@@ -34,7 +36,6 @@
 \let\Oldsubsubsection\subsubsection
 \renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
 
-%\usepackage{amssymb}
 \newcounter{acnum}
 \newcommand{\actheacnum}{AC\theacnum}
 \newcommand{\acref}[1]{AC\ref{#1}}
@@ -89,7 +90,7 @@
   ,
   escapeinside={\%*}{*)},
   deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool
-    ,True,False,Maybe,id,Show,Ordering,Void,Just,Nothing},
+    ,True,False,Maybe,id,Show,Ordering,Void,Just,Nothing,Int},
   morekeywords={forall, ::, :},
   postbreak={},
   breaklines=true,                
@@ -572,15 +573,21 @@ figure~\ref{fig:ModExample}.
 This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. 
 
-The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}.
-Note that every module which is part of EFA depends on the
-Haskell ``base'' package (which is the core libraries of Haskell). Also note
-that for the ``base'' package, we only include primitive definitions (i.e. those
-not defined in real Haskell) which may be difficult to track down in the
-documentation. The kinds ``Nat'' and ``Symbol'' correspond to type level natural
-number and string literals, respectively, whose detailed semantics can be found
-in the GHC user guide~\cite{ghcUserGuide}. All other features of GHC are
-detailed in the user guide as well.
+The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}.  Note
+that every module which is part of EFA depends on the Haskell ``base'' package
+(which is the core libraries of Haskell). Also note that for the ``base''
+package, we only include primitive definitions (i.e. those not defined in real
+Haskell) which may be difficult to track down in the documentation. The kinds
+``Nat'' and ``Symbol'' correspond to type level natural number and string
+literals, respectively. The kind ``Constraint'' is the kind of class and
+equality constraints, for example, things like \lstinline{Show x} and \lstinline[mathescape]|Int $\sim$ Bool|.  
+Note that \texttt{Show} itself does \emph{not} have kind Constraint --
+its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
+primitive entities can be found in the GHC user guide~\cite{ghcUserGuide}. While
+many modern features of GHC are used in the actual implementation, they are not
+mentioned in, nor required to understand, the module description.
+%% All other features of GHC are
+%% detailed in the user guide as well, but no other
 
 The primary interface to EFA is the function ``eca2PrettySQL'', which takes an
 FSpec (the abstract syntax of Ampersand) and an ECA rule, and returns the pretty
