@@ -88,7 +88,8 @@
   {.}{{$\circ$\,\,}}1
   ,
   escapeinside={\%*}{*)},
-  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool,True,False,Maybe,id,Show,Ordering},
+  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool
+    ,True,False,Maybe,id,Show,Ordering,Void,Just,Nothing},
   morekeywords={forall, ::, :},
   postbreak={},
   breaklines=true,                
@@ -297,6 +298,9 @@ may be dropped when the kind $A$ is clear from the context: \lstinline!forall (x
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
 \texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> a -> String!.
+In certain casees, a constraint is intended to be used only in an implicit fashion 
+(i.e. as an actual constraint), in which case the constraint is written with 
+the typical \lstinline{=>} syntax. 
 
 \subsubsection*{Overloading}
 Haskell supports overloaded function names through type classes. When we use a type 
@@ -880,12 +884,93 @@ a SQL value, again of the corresponding type.
     
   \begin{class}[text width=22cm]{Equality}{17,5}
     
+    \hsfunc{cong : f :\~: g -> a :\~: b -> f a :\~: g b}
+    \hsfunc{cong2 : f :\~: g -> a :\~: a' -> b :\~: b' -> f a b :\~: g a' b'}
+    \hsfunc{cong3 : f :\~: g -> a :\~: a' -> b :\~: b' -> c :\~: c' -> f a b c :\~: g a' b' c'}
 
+    \hstype{Dict : Constraint -> Type}
+    \hstypectr{Dict : p => Dict p}
+
+    \hstype{Exists : (k -> Type) -> Type} 
+    \hstypectr{Ex : p x -> Exists p}
+
+    \hsfunc{($\#$>>) :: Exists p -> (forall x -> p x -> r) -> r}
+
+    \hstype{Not : Type -> Type} 
+
+    \hstype{class NFData a}
+
+    \hstype{doubleneg : NFData a => a -> Not (Not a)} 
+
+    %% Why is this particular defintion off by about 2pt? Very strange...
+    \hstype[-2pt]{triviallyTrue : Not (Not ())}
+
+    \hstype{mapNeg : (NFData a, NFData b) => (b -> a) -> Not a -> Not b}
+
+    \hstype{elimNeg : NFData a => Not a -> a -> Void}
+
+    \hstype{data Void where}
+
+    \hstype{data Dec : Type -> Type}
+    \hstypectr{Yes : !p -> Dec p}
+    \hstypectr{No  : !(Not p) -> Dec p}
+
+    \hstype{DecEq : k -> k -> Type = $\lambda$ a b$.$ Dec (a :\~: b)}
+
+    \hsfunc{mapDec : (p -> q) -> (Not p -> Not q) -> Dec p -> Dec q}
+
+    \hsfunc{liftDec2 :: Dec p -> Dec q -> (p -> q -> r) -> (Not p -> Not r) -> (Not q -> Not r) -> Dec r}
+
+    \hsfunc{dec2bool :: DecEq a b -> Bool}
+    
   \end{class}
 
 \end{tikzpicture}
 }}\caption{Module diagram for Equality} \label{fig:equality}
 \end{figure}
+
+\Oldsubsubsection{Equality}
+
+The Equality module (\ref{fig:equality}) defines several utilities for working
+with proof-like values, including the existential quantification data type,
+proofs of congruence of propositional equality of various arities --
+\lstinline{cong, cong2, cong3} -- and the Dec type, which encodes the concept of
+a decidable proposition. The most important element of this module, however is
+the abstract \lstinline{Not} type. We must prove certain things about our
+program to the Haskell type system. For example, if one attempts to construct a
+scalar SQLVal for some SQLType $S$, one must first prove that that type is a
+scalar type. The main use of this is decidable equality, which is similair to
+regular equality, but additionally to giving a ``yes'' or ``no'' answer, it also
+stores a \emph{proof} of that answer.
+
+ The view of propositions as types comes from the Curry-Howard
+ isomorphism \cite{props}; however, this is not quite sound in Haskell, because
+ every type is inhabited by $\bot$, which corresponds to \texttt{undefined}, an
+ exception, or non-termination. Due to laziness, an unevaluated $\bot$ can be
+ silently ignored. At worst, this corresponds to a sound use of
+ \lstinline{unsafeCoerce} leaking into the ``outside world'', that is, allowing
+ a user to accidently expose the use of an \lstinline{unsafeCoerce}. One can
+ usually work around this by evaluating all proof-like values to normal form
+ before working with them (this is accomplished by the \lstinline{NFData} class,
+ which stands for normal form data). The normal form of most datatypes contains
+ precisely one ``type'' of bottom -- namely the value $\bot$, as opposed to
+ $\bot$ wrapped in a constructor, for example \lstinline{Just $\bot$}. This
+ bottom can then be removed with the Haskell primitive \lstinline{seq},
+ producing a value which can soundly be used as a proof.
+
+A problem arises when we consider the negation of a proposition. $\lnot p$ is
+typically encoded in Haskell as \lstinline{p -> $\bot$}, where the type $\bot$
+can be represented by any uninhabited type, typically called
+\lstinline{Void}. However, the normal form of a function can contain any number
+of $\bot$ hidden deep inside the function, because evaluating a function to
+normal form only evaluates up to the outermost binder.  To prevent any
+unsoundness which this might cause, values of type \lstinline{Not p} are reduced
+to normal form as they are built, starting with a canonical value which is known
+to be in normal form - the value \lstinline{triviallyTrue}.  This is the role of
+NFData in the type signature of \lstinline{mapNeg}.  As mentioned previously,
+the type \lstinline{Not} is abstract, so the provided interface, which is known
+to be sound, is the only way to construct and eliminate values of type
+\lstinline{Not p}.
 
 
 \Oldsubsubsection{PrettySQL}
