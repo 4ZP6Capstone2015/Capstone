@@ -22,6 +22,7 @@
 \usepackage{calc}
 \usepackage[simplified]{pgf-umlcd}
 \usepackage[section]{placeins}
+\usepackage{enumitem}
 
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
@@ -127,6 +128,8 @@
 	 Jaeden Guo & 27/ 02 / 2016 & Update and merge \\\hline
 	 Yash Sapra & 28/ 02 / 2016 & Modifications to several sections \\\hline
 	 Yuriy Toporovskyy & 28/ 02 / 2016 & Addition of UML diagrams \\\hline
+	 Yuriy Toporovskyy & 29/ 02 / 2016 & Major changes (diagrams, explanations, organization) \\\hline
+	 Yash Sapra & 29/ 02 / 2016 & Proof reading \\\hline
         \end{tabular}
     \end{center}\end{table}
 \newpage
@@ -192,32 +195,31 @@ changes will need to be incorporated into EFA's future releases.
 
 Thus far anticipated changes include:
 
-\begin{description}
-    \item[AC1:] New front-end interface.
-    \item[AC2:] Addition or elimination of ECA rules.
-    \item[AC3:] The algorithm used for EFA.
-    \item[AC4:] The format of output.
-    \item[AC5:] The format of input parameters.
-    \item[AC6:] Integration of front-end interface to back-end modules.
-    \item[AC7:] Testing for individual modules and internal systems.
-    
-\end{description}
+\begin{enumerate}[label=\textbf{AC\arabic*:}]
+    \item New front-end interface.
+    \item Addition or elimination of ECA rules.
+    \item The algorithm used for EFA.
+    \item The format of output.
+    \item The format of input parameters.
+    \item Integration of front-end interface to back-end modules.
+    \item Testing for individual modules and internal systems.
+\end{enumerate}
 
 \subsection{Unlikely Changes} 
 
 These unlikely changes include the things that will remain unchanged in the 
 system, and also changes that would not affect EFA. 
 
-\begin{description}
-    \item[UC1:] There will always be a source of input data external to the 
+\begin{enumerate}[label=\textbf{UC\arabic*:}]
+    \item There will always be a source of input data external to the 
     software.
-    \item[UC2:] Results will always be provably correct.
-    \item[UC3:] The implementation language must be the same as that which is 
+    \item Results will always be provably correct.
+    \item The implementation language must be the same as that which is 
     used for building the Ampersand system.
-    \item[UC4:] The format of initial input data and associated markers for 
+    \item The format of initial input data and associated markers for 
     data association.
-    \item[UC5:] Type of output data will always be a SQL query.
-\end{description}
+    \item Type of output data will always be a SQL query.
+\end{enumerate}
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -274,7 +276,7 @@ as used to denote a real dependant type in Agda. \lstinline!(x : A) -> B! is the
 from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly looks like a 
 real Haskell type - in Haskell, the syntax would be \texttt{forall (x :: A) . B}. However, 
 the semantics of these two types are vastly different - the former can pattern match
-on the value of $x$, while this is impossible in the latter case. 
+on the value of $x$, while the latter cannot. 
 
 In certain cases, it may be elucidating to see the \emph{real} Haskell type of
 an entity (function, datatype, etc.). To differentiate the two, they are typeset
@@ -573,7 +575,7 @@ that for the ``base'' package, we only include primitive definitions (i.e. those
 not defined in real Haskell) which may be difficult to track down in the
 documentation. The kinds ``Nat'' and ``Symbol'' correspond to type level natural
 number and string literals, respectively, whose detailed semantics can be found
-in the GHC user guide (\cite{ghcUserGuide}). All other features of GHC are
+in the GHC user guide~\cite{ghcUserGuide}. All other features of GHC are
 detailed in the user guide as well.
 
 The primary interface to EFA is the function ``eca2PrettySQL'', which takes an
@@ -733,7 +735,7 @@ of the type.
 
 \Oldsubsubsection{TypedSQL}
 
-The module hierarchy for the TypedSQL module is show in
+The module hierarchy for the TypedSQL module is shown in
 figure~\ref{fig:typedSQL}. The submodules of TypedSQL are quite large, however,
 the majority of the definitions within are type and kind definitions, which correspond 
 precisely to entities defined by MySQL. The only exception is SQLRel, which distinguishes
@@ -743,7 +745,7 @@ the core interface to TypedSQL and in particular, SQLStatement. These functions
 cannot be defined outside of the module, usually because they use an abstract
 constructor. By making the core interface to TypedSQL very small, maintaining 
 the TypedSQL language definition separately from the implementation of 
-EFA is simplified. All of the types and functions in TypedSQL are correct by 
+EFA is simplified. All of the data types in TypedSQL are correct by 
 construction, with the exception of the functions explicitly labeled ``unsafe''.
 These functions (unsafeSQLValFromName, unsafeSQLValFromQuery, and unsafeRefFromName)
 are required only when implementing a new SQL primitive on top of the SQL
@@ -766,12 +768,22 @@ are:
   this constructor denotes that a method ``defined'' within another statement must 
   first be loaded as a MySQL Stored Procedure ~\cite{mySQLman}.
 \item[\texttt{:>>=}] This constructor corresponds to sequencing statements. This constructor
-  embeds scope checking of MySQL statements in the Haskell compiler - ill-formed statements
+  embeds scope checking of MySQL statements in the Haskell compiler -- ill-formed statements
   containing variables which are not defined (i.e. not in scope) will be rejected by the Haskell
   compiler. 
 \end{description}
 
-
+The SQLSt data type also distinguishes between two varieties of statements:
+SQLStatement and SQLMthd. The former is the type of regular statements, while
+the latter is the type of ``almost'' complete methods - methods whose formal
+parameters have not yet been bound. This is done in order to statically
+guarantee that a SQL method always returns a value. Due to the type of
+\lstinline{:>>=}, this also rules out SQL programs which contain dead code -- no
+code can follow SQLRet, which is always guaranteed to return from the function.
+While this does rule out some valid programs (for example, an if statement in
+which both branches end with a return, but there is no return following the if
+statment, will be rejected), these programs can be written in an equivalent
+way in our language without any loss of generality.
 
 \begin{figure}[!ht]
 \makebox[\textwidth][c]{
@@ -792,7 +804,7 @@ are:
     \hstypectr{Max, Min, Sum, Avg : IsSQLNumeric a -> PrimSQLFunction [ SQLRel a ] a }
     \hstypectr{Alias : (RecAssocs ts :~: RecAssocs ts') -> PrimSQLFunction [ SQLRel (SQLRow ts) ] (SQLRel (SQLRow ts'))}
 
-    \hsfunc{primSQL : PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
+    \hsfunc{primSQL : forall (args : [SQLType]) (out : SQLType) -> PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
 
     \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i :\~: r -> SQLVal (SQLRow xs) -> SingT i -> SQLVal r}
     \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i :\~: r -> SQLVal (SQLRel (SQLRow xs)) -> SingT i -> SQLVal r}
@@ -961,8 +973,6 @@ and motive of generated code.
    \hstype{IsNotElem :  [k] -> k -> Constraint where $\ldots$} 
    \hstype{NotElem : [k] -> k -> Type}
    
-   \hstype{IsSetRec : [RecLabel a b] -> Constraint}
-   
    \hstype{And : (xs : [Bool]) -> Bool where $\ldots$} 
 
    \hsfunc{and\_t : (xs : [Bool]) -> And xs}
@@ -975,10 +985,10 @@ and motive of generated code.
    
    \hsfunc{prod2sing : forall (xs : [k]) -> SingKind k => Prod SingT xs -> SingT xs} 
    \hsfunc{sing2prod : forall (xs : [k]) -> SingKind k => SingT xs -> Prod SingT xs} 
-   \hsfunc{foldrProd : forall acc (f : k -> Type)$\,\,$xs -> acc -> (forall q . f q -> acc -> acc) -> Prod f xs -> acc}
-   \hsfunc{foldlProd : forall acc (f : k -> Type)$\,\,$xs -> acc -> (forall q . f q -> acc -> acc) -> Prod f xs -> acc}
-   \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g -> (forall x . f x -> g x) -> Prod f xs -> Prod g xs}
-   \hsfunc{foldrProd' : forall (f : k -> Type)$\,\,$xs1 -> (forall x xs . f x -> Prod g xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g xs1 }
+   \hsfunc{foldrProd : forall acc (f : k -> Type)$\,\,$xs -> acc -> (forall q -> f q -> acc -> acc) -> Prod f xs -> acc}
+   \hsfunc{foldlProd : forall acc (f : k -> Type)$\,\,$xs -> acc -> (forall q -> f q -> acc -> acc) -> Prod f xs -> acc}
+   \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g -> (forall x -> f x -> g x) -> Prod f xs -> Prod g xs}
+   \hsfunc{foldrProd' : forall (f : k -> Type)$\,\,$xs1 -> (forall x xs -> f x -> Prod g xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g xs1 }
    \hsfunc{someProd : [Exists f] -> Exists (Prod f)}
 
   \end{class}
@@ -1028,7 +1038,7 @@ that \lstinline{ZipRec (RecAssocs x) (RecLabels x) == x} for all \lstinline{x} .
 \end{description}
 
 
-\Oldsubsubsection{Singletons}
+\Oldsubsubsection{Singletons}\label{subsec:Singletons}
 
 The Singletons module (figure ~\ref{fig:singletons}) is not fully detailed here;
 instead, a vastly simplified version of the Singletons module is presented. The
@@ -1060,12 +1070,12 @@ are translated into SQL queries in our EFA project.
 The EFA implementation needs to communicate with the front end to be able to 
 run the generated SQL queries when a violation occurs. 
 	\begin{itemize}
-		\item \textbf{Old communication protocol -  PHP engine} \newline
+		\item \textbf{Old communication protocol -  PHP engine} \\
 			In the existing version, Ampersand depends on PHP code to run the 
 			generated SQL on the database. However, this comes at the cost of 
 			human intervention, which results in manual maintenance when 
 			changes occur during development. 
-		\item \textbf{New Communication protocol - Stored Procedures} \newline
+		\item \textbf{New Communication protocol - Stored Procedures} \\
 			The developments teams of EFA has come to a conclusion that the 
 			best way of communicating with the front-end will be to use Stored 
 			Procedures\cite{SP}. These Stored Procedures provide the extra 
@@ -1084,10 +1094,11 @@ the generation of ECA rules. The resulting ECA rules are fed into the EFA
 project and are determined to be provably correct. The 
 language of implementation (i.e. Haskell), 
 guarantees type level correctness of the EFA project at compile time. 
-\newline
+%%YT: don't use ``\newline'', use a literal new line. \newline breaks paragraphs
+
 If any error occurs during runtime, the state of the database is checked 
 before and after the SQL statement has ran. In case an inconsistency is found 
-in the data, the SQL \textbf{rollback} command is issued and will change 
+in the data, the SQL rollback command is issued and will change 
 the database to its previous state. In such a scenario, the user will be 
 notified about the event and can take the necessary action to fix the issue. 
 
