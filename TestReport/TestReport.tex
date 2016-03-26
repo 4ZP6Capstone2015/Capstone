@@ -1,0 +1,93 @@
+\documentclass[12pt, svgnames]{article}
+
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage[round,numbers]{natbib}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{../ltx/edcomms}
+%%\usepackage{../ltx/setupComments}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{changepage}
+\usepackage{adjustbox}
+\usepackage{graphicx}
+\usepackage[section]{placeins} % Prevents floats from floating across sections
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{glossaries}
+\usepackage{multirow} %% Used for Traceability matrix
+\usepackage{listings}
+\usepackage{calc}
+\usepackage[simplified]{pgf-umlcd}
+\usepackage[section]{placeins}
+\usepackage{enumitem}
+
+\newif\ifcomments\commentstrue
+\ifcomments
+\newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\else
+\newcommand{\authornote}[3]{}
+\newcommand{\todo}[1]{}
+\fi
+\newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
+\newcommand{\ds}[1]{\authornote{blue}{DS}{#1}}
+
+
+\begin{document}
+
+
+
+\title{\vspace*{3cm} Test Report for ECA Rules for Ampersand} 
+\author{Yuriy Toporovskyy (toporoy)\\ Yash Sapra (sapray) \\ Jaeden Guo (guoy34)}
+\date{March 25th,\ 2016} 
+
+
+\maketitle
+\newpage
+\vspace*{1cm}
+\begin{table}[ht!]\begin{center}
+        \caption{Revision History}  
+        \begin{tabular}{|c|c|c|}\hline
+            \textbf{Author} & \textbf{Date} & \textbf{Comments} \\\hline 
+            Yash Sapra & 24 / 03 / 2016 & Initial draft\\\hline
+
+        \end{tabular}
+    \end{center}\end{table}
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction}\label{intro}
+\subsection{Description}
+
+This document details the test results of EFA.
+This document uses the test description mentioned in the test plan.
+EFA, as well as the core Ampersand system, is
+currently in active development where changes occur frequently.
+For this reason few tests could not performed. 
+A second phase of testing will be performed 
+once the EFA project is integrated into the core Ampersand.
+
+\subsection{Scope}
+The purpose of this document is to outline the implementation details of the 
+EFA project described in the Problem Statement.
+EFA is responsible for generating SQL Statements from ECA rules that will 
+be used to fixed any violated invariants in the Ampersand prototype. 
+The document will serve as a referral document for future software Testing and integration of EFA in the Ampersand project.
+
+%%\clearpage
+\printglossaries
+\bibliographystyle{alpha}
+\bibliography{}
+
+\end{document}
+
+%%  LocalWords:  UML
