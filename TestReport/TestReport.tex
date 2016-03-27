@@ -6,6 +6,7 @@
 \usepackage{fullpage}
 \usepackage[round,numbers]{natbib}
 \usepackage{multirow}
+\usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{float}
@@ -38,6 +39,9 @@
 \newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
 \newcommand{\ds}[1]{\authornote{blue}{DS}{#1}}
 
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+%%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+%%\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 
 \begin{document}
 
@@ -82,6 +86,90 @@ EFA project described in the Problem Statement.
 EFA is responsible for generating SQL Statements from ECA rules that will 
 be used to fixed any violated invariants in the Ampersand prototype. 
 The document will serve as a referral document for future software Testing and integration of EFA in the Ampersand project.
+
+\section{Non-Functional Testing}
+
+%%% Performance Table %%%%%
+\begin{longtable}{|L{0.5cm}|L{5cm}|L{4cm}|L{4cm}|}
+\hline
+\textbf{No.} & \textbf{Input File}  & \textbf{Run-Time Without EFA project} & \textbf{Run-Time With EFA project}\\
+\hline
+1 & ProjectAdmin.adl	& 5.85 & 7.63\\
+\hline
+2 & Delivery.adl & 5.33 & 6.01\\
+\hline
+3 & Try1.adl  & 6.16	& 6.93\\
+\hline
+4 & Try2.adl & 5.95 & 6.45\\
+\hline
+5 & Try3.adl & 6.28 & 7.01\\
+\hline
+6 & Try4.adl & 6.78 & 7.44\\
+\hline
+7 & Try5.adl & 6.13 & 7.1\\
+\hline
+8 & Try6.adl & 6.16 & 7.65\\
+\hline
+9 & Try7.adl & 6.98 & 8.01\\
+\hline
+10 & Try8.adl & 7.5 & 8.65\\
+\hline
+11 & Try9.adl & 7.2 & 8.22\\
+\hline
+12 & Try10.adl & 6.33 & 7.88\\
+\hline
+13 & Try11.adl & 6.47 & 7.57\\
+\hline
+14 & Try12.adl & 7.88 & 8.68\\
+\hline
+15 & Try13.adl & 7.56 & 8.92\\
+\hline
+16 & Try14.adl & 7.11 & 8.75\\
+\hline
+17 & Try15.adl & 7.13 & 9.01\\
+\hline
+18 & Try16.adl & 6.15 & 8.01\\
+\hline
+19 & Try17.adl & 6.39 & 7.66\\
+\hline
+20 & Try18.adl & 6.04 & 7.32\\
+\hline
+21 & Try19.adl & 6 & 6.9\\
+\hline
+22 & Try20.adl & 5.62 & 6.81\\
+\hline
+\end{longtable}
+%%%%%%
+
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.3\textwidth]{./Chart1}
+\caption{Run Time chart for test case 1 to 10.}~\label{fig:figure1}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.3\textwidth]{./Chart2}
+\caption{Run Time chart for test case 11 to 22.}~\label{fig:figure2}
+\end{figure}
+
+
+
+%
+%\begin{longtable}{|L{1cm}|L{1.5cm}|L{1.5cm}|L{3.5cm}|L{4cm}|L{2cm}|L{1.5cm}|}
+%\hline
+%\textbf{No.} & \textbf{Test Case}  & \textbf{Initial State} & \textbf{Input} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result}\\
+%\hline
+%1.1 & User Registration & Landing page. Empty fields. & Email and password entered. Clicks register. & Redirected to application main page. & As expected. & PASS \\
+%\hline
+%1.2 & User Registration & Landing page. Empty fields. & Empty field(s). Clicks register. & Stays on the same page. Error message appears. Empty field is highlighted. & As expected. & PASS \\
+%\hline
+%1.3 & User Registration & Landing page. Empty fields. & Email address already stored in database. Clicks register. & Stays on the same page. Error message appears. Email field is highlighted. & As expected. & PASS \\
+%\hline
+%\end{longtable}
+
 
 %%\clearpage
 \printglossaries
