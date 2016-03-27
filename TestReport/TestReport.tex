@@ -60,7 +60,7 @@
         \begin{tabular}{|c|c|c|}\hline
             \textbf{Author} & \textbf{Date} & \textbf{Comments} \\\hline 
             Yash Sapra & 24 / 03 / 2016 & Initial draft\\\hline
-
+	    Yash Sapra & 24 / 03 / 2016 & Performance Testing\\\hline
         \end{tabular}
     \end{center}\end{table}
 \newpage
@@ -70,9 +70,10 @@
 \newpage
 
 \section{Introduction}\label{intro}
+
 \subsection{Description}
 
-This document details the test results of EFA.
+This document details the test results of the EFA project.
 This document uses the test description mentioned in the test plan.
 EFA, as well as the core Ampersand system, is
 currently in active development where changes occur frequently.
@@ -87,9 +88,17 @@ EFA is responsible for generating SQL Statements from ECA rules that will
 be used to fixed any violated invariants in the Ampersand prototype. 
 The document will serve as a referral document for future software Testing and integration of EFA in the Ampersand project.
 
+\subsection{Test Cases}
+For the purpose of testing, the EFA team uses the .adl files from the ampersand-models repository. This repository contains various input files for the Ampersand Core project. Any files that compiles and runs with the core Ampersand software should also run accordingly with the EFA project.
+
 \section{Non-Functional Testing}
 
+\subsection{Usability}
+After intense usability testing, the EFA team decided to format the generated SQL using a pretty printer library. The formatted SQL is indented for better readability. 
+From a usability perspective EFA project integrates seamlessly into the current version of core Ampersand. User can use --help flag to view different options they've while generating a prototype. The ``- -print-eca-info'' flag prints the generated SQL for each ECA rule in the console. This can be useful from a development perspective in future. The Developers and Maintainers of Ampersand can use this flag to evaluate the underlying SQL accompanying each ECA rule described in the .adl file.
+
 %%% Performance Table %%%%%
+\subsection{Performance Testing}
 \begin{longtable}{|L{0.5cm}|L{5cm}|L{4cm}|L{4cm}|}
 \hline
 \textbf{No.} & \textbf{Input File}  & \textbf{Run-Time Without EFA project} & \textbf{Run-Time With EFA project}\\
@@ -155,6 +164,18 @@ The document will serve as a referral document for future software Testing and i
 \caption{Run Time chart for test case 11 to 22.}~\label{fig:figure2}
 \end{figure}
 
+After measuring the performance of the current version of Ampersand compared to the EFA project we found out that there is a overhead cost of generating SQL statements from the ECA rules. The average overhead time of running EFA project is 1.16 sec. 
+
+Calculate using the formula : 
+\begin{equation}
+	Overhead Time(s) =\frac{\left ( \sum  Run Time with EFA - Run Time without EFA\right )}{ No. of Test Cases}
+\end{equation}
+
+Figure\ref{fig:figure1} and Figure\ref{fig:figure2} shows a comparison of running time for all the test cases. The overhead cost of integrating EFA into Ampersand will add roughly about 1 second to the time it takes to generate a prototype. However the overall running time is still under 9 seconds for all the test cases so the waiting time for the end user is still very small compared to cost and time required to create an information system otherwise.
+
+
+\subsection{Robustness}
+The language dependency of using Haskell for this project allows the Developers to pattern match against all possible inputs. The Project was tested using the `' - -Wall'' flag to turn on all the warning options in Haskell. This allowed the team to pattern match against all possible inputs, this way the project does not rely on the test cases reachable through the Ampersand test input files.	
 
 
 %
@@ -162,7 +183,7 @@ The document will serve as a referral document for future software Testing and i
 %\hline
 %\textbf{No.} & \textbf{Test Case}  & \textbf{Initial State} & \textbf{Input} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result}\\
 %\hline
-%1.1 & User Registration & Landing page. Empty fields. & Email and password entered. Clicks register. & Redirected to application main page. & As expected. & PASS \\
+%1.1 & User Registration & Landing page. Empty fields. & Email and passwoinrd entered. Clicks register. & Redirected to application main page. & As expected. & PASS \\
 %\hline
 %1.2 & User Registration & Landing page. Empty fields. & Empty field(s). Clicks register. & Stays on the same page. Error message appears. Empty field is highlighted. & As expected. & PASS \\
 %\hline
