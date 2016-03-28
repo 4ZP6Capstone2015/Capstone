@@ -175,7 +175,7 @@ Software Requirements Specification. Document regarding requirements,
 constraints, and project objectives.
 
 \subsection*{QuickCheck}
-QuickCheck is testing framework used to run blackbox tests on Haskell code; it 
+QuickCheck is testing framework used to run black-box tests on Haskell code; it 
 is used directly from the Haskell prompt. It generates 100 random test values 
 based on the properties of our function, and checks if the returned values are 
 correct \cite{rwhaskell}.
@@ -278,7 +278,7 @@ Calculate using the formula :
 	Overhead Time(s) =\frac{\left ( \sum  Run Time with EFA - Run Time without EFA\right )}{ No. of Test Cases}
 \end{equation}
 
-Figure\ref{fig:figure1} and Figure\ref{fig:figure2} shows a comparison of running time for all the test cases. The overhead cost of integrating EFA into Ampersand will add roughly about 1 second to the time it takes to generate a prototype. However the overall running time is still under 9 seconds for all the test cases so the waiting time for the end user is still very small compared to cost and time required to create an information system otherwise.
+Figure\ref{fig:figure1} and Figure\ref{fig:figure2} shows a comparison of running time for all the test cases. The overhead cost of integrating EFA into Ampersand will add roughly about 1 second to the time it takes to generate a prototype. However the overall running time is still under 9 seconds for all the test cases so the waiting time for the end user is very small compared to cost and time required to create an information system otherwise.
 
 %%%%%%%%%%%%%
 \subsection{Robustness}
@@ -292,15 +292,10 @@ types of data used in these tests are correct if the tests pass and the
 functions work as intended. The passed tests matches the output type with the 
 expected output type.
 \subsection{Unit Tests}
-These tests compared function output and expected output, readProcess was used 
+These tests compared function output to the expected output, readProcess was used 
 to read the output of these function. If assumptions were correct, returned 
 type should be equivalent to expected type. When these modules are compiled and 
-the functions are called, the cabal system also tests for type correctness. 
-Correctness is assumed from type correctness, and the types are identified by 
-their associated properties. Lastly, the tests that failed due to in the input 
-of false parameters or breaking restrictions placed on the data types were 
-excluded from the tests because they do not speak to the correctness of these 
-functions and were caused by human error.\\
+the functions are called, the Haskell compiler also tests for type correctness. \\
 \begin{adjustwidth}{-0.5cm}{}
 
 \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
@@ -439,16 +434,13 @@ functions and were caused by human error.\\
 \subsection{Randomized Testing}
 QuickCheck is a  testing tool that uses type-based testing, it uses invariants 
 to check for specific properties that should be retained in a purely functional 
-program such as idempotency, where applying a function twice has the same 
-result as applying it only once. QuickCheck generates tests data and passes it 
+program. It generates tests data and passes it 
 to the property chosen by the user; the type of property determines which data 
 generator can be used. Each of the tests for functions are usually prefixed 
 with \textit{prop\_} to distinguish them from the real functions. For functions 
-that are similar to build in functions. If a function is similar in behaviour 
-to a build-in function, testing against the model (i.e., the build-in function) 
-can be done to validate its correctness, but that is not used here due to the 
-unique properties of these functions which could not be easily decomposed into 
-simpler forms.
+that are similar to built in functions. If a function is similar in behavior 
+to a built-in function, testing against the model (i.e., the built-in function) 
+can be done to validate its correctness, but that is not used here because it wasn't feasible to decompose because of high dependencies.
 \begin{adjustwidth}{-0.5cm}{}   
 \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
     \hline
@@ -629,13 +621,11 @@ tests have been completed but both produce identical results.\\
 \section{System Tests}
 In this section we document the result of parsing ADL files through the EFA project.   
 
-\subsection {Testing Issues}
+\subsection {Core Ampersand Tests}
 Imported data structures were assumed to be correct from the original Ampersand 
-design because they have been through rigorous testing. The data structures 
-that were created specifically to represent SQL data structures were assumed to 
-be correct if the generated SQL queries was not rejected by the test database. 
-The cabal systems assures semantic correctness when these programs are compiled 
-or otherwise it would not run, thus no further was testing was done on this 
+design. The semantic correctness of the input file is assured by the core Ampersand. Hence no tests were performed on the core Ampersand.
+The cabal systems assures syntactic correctness when these programs are compiled 
+or otherwise it would not run, thus no further testing was done on this 
 front.
 
 \subsection{Ampersand generates ASQL}
@@ -651,9 +641,9 @@ front.
 \hline
 \end{longtable}
 
-\subsection{ASQL is valid}
-\begin{longtable}{|L{0.5cm}|L{2.5cm}|L{2.5cm}|L{2.25cm}|L{3cm}|L{1.75cm}|L{1.5cm}|}
-\hline
+%\subsection{ASQL is valid}
+%\begin{longtable}{|L{0.5cm}|L{2.5cm}|L{2.5cm}|L{2.25cm}|L{3cm}|L{1.75cm}|L{1.5cm}|}
+%\hline
 %\textbf{No.} & \textbf{Test Case}  & \textbf{Initial State} & \textbf{Input} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result}\\ 
 %\hline
 %1 & Ampersand generates ASQL & Installed EFA Ampersand &ProjectAdmin.adl & Annotated SQL & As Expected & PASS \\ 
@@ -662,7 +652,7 @@ front.
 %\hline
 %3 &Ampersand generates ASQL & Installed EFA Ampersand &Case.adl & Annotated SQL & As Expected & PASS \\ 
 %\hline
-\end{longtable}
+%\end{longtable}
 
 \subsection{EFA System Compatibility}
 \begin{longtable}{|L{0.5cm}|L{2.5cm}|L{2.5cm}|L{2.25cm}|L{3cm}|L{1.75cm}|L{1.5cm}|}
@@ -681,7 +671,7 @@ front.
 Since all functions written in
 Haskell are pure, and the  Haskell type checker accepts our program hence the test is passed.
 
-\subsection{EFA gives appropiate feedback}
+\subsection{EFA gives appropriate feedback}
 This feature will be implemented on the front-end after integration into the core Ampersand project. When the prototype is run, and a violation occurs, the resulting output will look like :
 
 \begin{verbatim}
@@ -696,7 +686,7 @@ Violation occurred because rule "who's cast in roles" was not
 \end{verbatim}
 
 \subsection{EFA code walk-through}
-With reference to T9 test in the test report (see page 19 of the test plan). EFA team will be doing a code walk-through with the product owners. This walk-through is not scheduled at this point. The Ampersand Team will be invited to attend the final demonstration which is to be scheduled in April.
+With reference to T9 test in the test report (see page 19 of the test plan). EFA team will be doing a code walk-through with the product owners. The date for the walk-through is not scheduled at this point. The Ampersand Team will be invited to attend the final demonstration which is to be scheduled in April.
 
 \subsection{Sentinel Test}
 After review and acceptance of the EFA project. EFA will be ran on the sentinel (see test case T13 on page 18 of Test Plan). The sentinel test is performed at regular intervals and emails developers about any failed test. This will serve as automated testing of EFA project in the future.
@@ -706,7 +696,7 @@ After review and acceptance of the EFA project. EFA will be ran on the sentinel 
 \section{Changes Made After testing}
 After intense usability testing, the EFA team decided to format the generated SQL using a pretty printer library. The formatted SQL is indented for better readability and thereby increasing the overall usability of the EFA project.
 
-\bibliographystyle{ieeetran}
+\bibliographystyle{alpha}
 \bibliography{references}
 
 \end{document}
