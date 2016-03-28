@@ -1,5 +1,4 @@
 \documentclass[12pt, svgnames]{article}
-
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{amssymb}
@@ -41,7 +40,24 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 %%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 %%\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+\begin{filecontents*}{references.bib}
+@book{rwhaskell,
+    author = {Bryan O'Sullivan, Don Stewart, and John Goerzen},
+    title = {Real World Haskell},
+    date = {November 2008},
+    publisher = {O'Reilly Media},
+    location = {USA},
+    isbn = {978-0-596-51498-3},
+    pagetotal = {712},
+}
+@online{hackage,
+    title = {hackage},
+    date = {2016},
+    url = {https://hackage.haskell.org/},
+}
 
+
+\end{filecontents*}
 \begin{document}
 
 
@@ -92,10 +108,6 @@ For the purpose of testing, the EFA team uses the .adl files from the ampersand-
 %%%%%%%%%%%%%%%%%%%%% SECTION 2 : DEFINITIONS %%%%%%%%%%%%%%%%%%%%%
 \section{Definitions}\label{sec:Abbrev}
 
- \subsubsection*{Sentinel}
-A test server accessible through the Ampersand website which executes a set of 
-randomly generated tests on Ampersand on a daily basis.
-
 \subsubsection*{ECA Rule}
  Event-Condition-Action Rule. A rule which describes how to handle a constraint
  violation in a database. The syntax of ECA rules is as follows:
@@ -108,7 +120,8 @@ ECArule ::= 'On' ('Ins' | 'Del')
 \end{lstlisting}
 
 \subsection*{HUnit}
-Hunit is a testing framework for Haskell and can be found on hackage.
+Hunit is a testing framework for Haskell and can be found on 
+hackage\cite{rwhaskell}.
 
 \textit{available at:} https://hackage.haskell.org/
 
@@ -165,7 +178,7 @@ constraints, and project objectives.
 QuickCheck is testing framework used to run blackbox tests on Haskell code; it 
 is used directly from the Haskell prompt. It generates 100 random test values 
 based on the properties of our function, and checks if the returned values are 
-correct.
+correct \cite{rwhaskell}.
 
 \textit{available at:} https://hackage.haskell.org/
 \subsection*{Sentinel}
@@ -247,14 +260,14 @@ The performance test refers to the T10 test case of the EFA project test plan. T
 
 \begin{figure}
   \centering
-%    \includegraphics[width=1.3\textwidth]{../Chart1}
+    \includegraphics[width=1.3\textwidth]{Chart1}
 \caption{Run Time chart for test case 1 to 10.}~\label{fig:figure1}
 \end{figure}
 
 
 \begin{figure}
   \centering
-%    \includegraphics[width=1.3\textwidth]{../Chart2}
+    \includegraphics[width=1.3\textwidth]{Chart2}
 \caption{Run Time chart for test case 11 to 22.}~\label{fig:figure2}
 \end{figure}
 
@@ -693,8 +706,8 @@ After review and acceptance of the EFA project. EFA will be ran on the sentinel 
 \section{Changes Made After testing}
 After intense usability testing, the EFA team decided to format the generated SQL using a pretty printer library. The formatted SQL is indented for better readability and thereby increasing the overall usability of the EFA project.
 
-\bibliographystyle{alpha}
-\bibliography{}
+\bibliographystyle{ieeetran}
+\bibliography{references}
 
 \end{document}
 
