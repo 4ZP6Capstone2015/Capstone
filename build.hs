@@ -24,6 +24,7 @@ targets =
   , (defOpts "SoftwareRequirementSpecification/SRS.tex") { hasBib = True }
   , (defOpts "DesignDoc/DesignDoc.tex") { hasBib = True }
   , (defOpts "TestPlan/TestPlan.tex") { hasBib = True }
+  , (defOpts "TestReport/TestReport.tex") -- { hasBib = True }
   , defOpts "ProofOfConceptPlan/ProofOfConcept.tex"
   ]
 
