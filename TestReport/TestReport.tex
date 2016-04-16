@@ -24,7 +24,7 @@
 \usepackage{listings}
 \usepackage{calc}
 \usepackage[simplified]{pgf-umlcd}
-\usepackage[section]{placeins}
+x\usepackage[section]{placeins}
 \usepackage{enumitem}
 \newif\ifcomments\commentstrue
 \ifcomments
@@ -92,6 +92,7 @@ This document uses the test description mentioned in the test plan.
 EFA, as well as the core Ampersand system, is
 currently in active development where changes occur frequently.
 For this reason few tests could not performed. 
+\ds{``could not be performed"?}
 A second phase of testing will be performed 
 once the EFA project is integrated into the core Ampersand. The original test plan is available in the github repository and is being actively revised in team meetings. Changes to test plan will follow soon.
 
@@ -100,10 +101,13 @@ The purpose of this document is to outline the implementation details of the
 EFA project described in the Problem Statement.
 EFA is responsible for generating SQL Statements from ECA rules that will 
 be used to fixed any violated invariants in the Ampersand prototype. 
-The document will serve as a referral document for future software Testing and integration of EFA in the Ampersand project.
+The document will serve as a referral
+\ds{``reference"?}
+document for future software Testing and integration of EFA in the Ampersand project.
 
 \subsection{Test Cases}
-For the purpose of testing, the EFA team uses the .adl files from the ampersand-models repository. This repository contains various input files for the Ampersand Core project. Any files that compiles and runs with the core Ampersand software should also run accordingly with the EFA project.
+For the purpose of testing, the EFA team uses the .adl files from the ampersand-models repository. This repository contains various input files for the Ampersand Core project. Any files that compiles and runs with the core Ampersand software should also run accordingly with the EFA project. 
+\ds{Awkward. Change ``files" to ``file" OR ``compiles and runs" to ``compile and run".}
 
 %%%%%%%%%%%%%%%%%%%%% SECTION 2 : DEFINITIONS %%%%%%%%%%%%%%%%%%%%%
 \section{Definitions}\label{sec:Abbrev}
@@ -124,6 +128,7 @@ Hunit is a testing framework for Haskell and can be found on
 hackage\cite{rwhaskell}.
 
 \textit{available at:} https://hackage.haskell.org/
+\ds{formatting}
 
 \subsubsection*{PA}
 Process algebra. The mathematical language used by ECA rules to describe the
@@ -173,6 +178,8 @@ where ``RExpr'' represents RA expressions, and ``RAtom'' (RA atom) represents
 \subsubsection*{SRS}
 Software Requirements Specification. Document regarding requirements, 
 constraints, and project objectives.
+\ds{This doesn't require a definition, just write 
+``Software Requirements Specification (SRS)" the first time you use the term.}
 
 \subsection*{QuickCheck}
 QuickCheck is testing framework used to run black-box tests on Haskell code; it 
@@ -204,7 +211,11 @@ This test follows with the test case T11 and completed the functional requiremen
 
 %%% Performance Table %%%%%
 \subsection{Performance Testing}
-The performance test refers to the T10 test case of the EFA project test plan. The EFA team planned to perform a degradation test to performance degradation if any. All the files were compiled with the latest version of core Ampersand and then with the EFA. The results are documented in this section. 
+The performance test refers to the T10 test case of the EFA project test plan. The EFA team planned to perform a degradation test to performance degradation if any.
+\ds{Awkward.} 
+All the files were compiled with the latest version of core Ampersand and then with the EFA. The results are documented in this section. 
+
+\ds{Where are your table captions?}
 
 \begin{longtable}{|L{0.5cm}|L{5cm}|L{4cm}|L{4cm}|}
 \hline
@@ -282,7 +293,11 @@ Figure\ref{fig:figure1} and Figure\ref{fig:figure2} shows a comparison of runnin
 
 %%%%%%%%%%%%%
 \subsection{Robustness}
-The language dependency of using Haskell for this project allows the Developers to pattern match against all possible inputs. The Project was tested using the `' - -Wall'' flag to turn on all the warning options in Haskell. This allowed the team to pattern match against all possible inputs, this way the project does not rely on the test cases reachable through the Ampersand test input files. 
+The language dependency of using Haskell for this project allows the Developers to pattern match against all possible inputs. The Project was tested using the `' - -Wall''
+\ds{You may want to use \verb|``~-~-Wall''| in your \LaTeX source 
+(Note: I can't typeset your pdf, so I'm assuming what I wrote will display correctly. 
+If it doesn't, let me know).}
+flag to turn on all the warning options in Haskell. This allowed the team to pattern match against all possible inputs, this way the project does not rely on the test cases reachable through the Ampersand test input files. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%SECTION: UNIT TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{EFA Tests}
