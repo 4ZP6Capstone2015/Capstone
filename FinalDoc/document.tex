@@ -1,0 +1,186 @@
+\documentclass[journal,12pt,onecolumn,draftclsnofoot]{IEEEtran} %draftclsnofoot 
+%for 
+%double spacing
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\usepackage[round,numbers]{natbib}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{../ltx/edcomms}
+\usepackage{../ltx/setupComments}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{changepage}
+\usepackage{adjustbox}
+\usepackage{graphicx}
+\usepackage[section]{placeins} % Prevents floats from floating across sections
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{glossaries}
+\usepackage{multirow} %% Used for Traceability matrix
+\usepackage{listings}
+\usepackage{calc}
+\usepackage[simplified]{pgf-umlcd}
+\usepackage[section]{placeins}
+\usepackage{enumitem}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+
+% ---------------------------
+%  Modularized Sections
+%---------------------------
+\usepackage{subfiles}
+\usepackage[noadjust]{cite}
+% \input{filename.tex}      %will format input document according to base doc, 
+%%can nest
+% \include{filename.tex} % cant nest
+% \subfile{filename.tex} % used to load child docs
+% \usepackage{standalone} %used for importing preamble of child docs
+% \usepackage[final]{pdfpages.pdf} %used to insert pdf files; final 
+%%format[pages=3-6]
+%---------------------------
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+\let\Oldsubsubsection\subsubsection
+\renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+
+\newcounter{acnum}
+\newcommand{\actheacnum}{AC\theacnum}
+\newcommand{\acref}[1]{AC\ref{#1}}
+
+\newcounter{ucnum}
+\newcommand{\uctheucnum}{UC\theucnum}
+\newcommand{\uref}[1]{UC\ref{#1}}
+
+\newcounter{mnum}
+\newcommand{\mthemnum}{M\themnum}
+\newcommand{\mref}[1]{M\ref{#1}}
+\makeglossary
+
+
+% math things
+\newcommand{\ra}{$\rightarrow$}
+
+
+
+% 
+\definecolor{grey}{RGB}{185,185,185}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\lstset{ %
+  language=Haskell, morekeywords = {family, kind, pattern, expression},
+  literate=
+  {+}{{$+$}}1
+  {/}{{$/$}}1 
+  {*}{{$*$}}1 
+  {=}{{$=\,\,\,$}}1
+  {==}{{$==$}}1 
+  %{/=}{{$\not\equiv$}}2
+  {==}{{$\equiv$}}2
+  {/=}{{$\not\equiv$}}2
+  {>}{{$>$}}1 
+  {<}{{$<$}}1 
+  {\\}{{$\lambda$}}1
+  {\\\\}{{\char`\\\char`\\}}1
+  {>>}{$>>$}2 
+  {:>>=}{{$:>>=$}}2
+  %% {>>=}{{\hspace{6pt}\texttt{$>>=$}\hspace{6pt}}}2
+  {->}{{$\rightarrow$} }2 
+  {>=}{{$\geq$}}2 {<-}{{$\leftarrow$}}2
+  {<=}{{$\leq$}}2 {=>}{{$\Rightarrow$} }2
+  {|}{{$\mid$}}1 
+  {forall}{{$\forall$}}1
+  {exists}{{$\exists$}}1 
+  {Nat}{{$\mathbb{N}$}}1
+  {:\~:}{{$\equiv$}}2
+  {\~}{{$\equiv$}}2
+  {`In`}{{$\in$}}1
+  {.}{{$\circ$\,\,}}1
+  ,
+  escapeinside={\%*}{*)},
+  deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool
+    ,True,False,Maybe,id,Show,Ordering,Void,Just,Nothing,Int},
+  morekeywords={forall, ::, :},
+  postbreak={},
+  breaklines=true,                
+  breakatwhitespace=true,
+  %postbreak={  \mbox{\textcolor{grey}{$\rightarrow$}} },
+  breakindent = 0pt,
+  breakautoindent = true,
+  %moredelim=[is][\itshape]{"}{"},
+  morestring=[b]",
+  mathescape
+}
+
+\newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline[mathescape]|#2|}}
+
+\newcommand{\hstypectr}[1]{\attribute{\hspace*{10pt}\lstinline[mathescape]|#1|}}
+
+\newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline[mathescape]|#2|}}
+
+%% \tikzset{>=latex}
+\title{\vspace*{3cm} Event control action rules for Ampersand} 
+\author{Yuriy Toporovskyy (toporoy)\\ Yash Sapra (sapray) \\ Jaeden Guo 
+    (guoy34)}
+%%Yuriy Toporovskyy (toporoy) \\ Yash Sapra (sapray) \\ Jaeden Guo (guoy34)}
+\date{February 24th,\ 2016} 
+
+%-----------------------------------------------------------
+%               BIBLIOGRAPHY INCLUDED IN DOC
+%-----------------------------------------------------------
+\begin{filecontents*}{references.bib} 
+\end{filecontents*}
+\begin{document}
+\maketitle
+\newpage
+
+
+\begin{abstract}
+%light description
+Ampersand Tarski is a tool used to produce functional software documents based 
+on business process requirements. At times, logical 
+discrepancies arise when system changes occur which violate the 
+restrictions set forth by the user. When a system violation occurs, one of two 
+things can happen: the change that is meant to take place is adjusted so it no 
+longer violates the restrictions or the changes are discarded. The purpose of 
+Event condition action rules for Ampersand (EFA) was to replace the exec-engine 
+that is currently used to deal with violations; unlike the exec-engine, EFA is 
+automated and provides proof of correctness embedded in the code, it able to 
+type SQL statements and assure no "dead-ends" occur when queries are executed.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+\newpage
+\section{Introduction}\label{Intro}
+
+This document is a meant as a guide for EFA that includes the motivations taken 
+from a business perspective, the mathematical and software foundations that 
+resulted in the logical flow of EFA's design, and the testing that took place 
+to assure EFA's functionality and correctness.
+
+Currently, Ampersand is readily accessible to the public through Github and it 
+is equipped with the ability to assess logical 
+discrepancies on sets of data based on user-specified restrictions. Logical 
+discrepancies arise when system changes occur which violate the 
+restrictions set forth by the user. When a system violation occurs, one of two 
+things can happen: the change that is meant to take place is adjusted so it no 
+longer violates the restrictions or the changes are discarded. Ampersand is 
+used to manipulate data and generate prototypes, although there is a debugger, 
+certain errors still slip through. When the system rules are changed by the 
+user, all data which are inconsistent with the new system must be eliminated or 
+rehabilitated so it can be returned back into the system. Data inconsistencies 
+are persistent bugs that can distort the product that Ampersand seeks to 
+provide. 
+
+These data inconsistencies are corrected through ECA rules which use process 
+algebra (PA) to correct or discard data using violations. EFA is used to 
+translate these ECA rules, execute SQL queries to correct violations and 
+safeguards the database from illegal transactions.
+\subsection*{Ampersand}
+\subsection*{Objectives}
+\subsection*{Document Guide}
+\end{document}
