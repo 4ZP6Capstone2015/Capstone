@@ -29,7 +29,8 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
-
+%package for index
+\usepackage{makeidx}
 % ---------------------------
 %  Modularized Sections
 %---------------------------
@@ -126,6 +127,10 @@
 
 %\newcommand{\@supervisor}{}
 \newcommand{\supervisor}[1]{\renewcommand{\@supervisor}{#1}}
+
+
+%%\end{filecontents*}
+\makeindex
 
 \begin{document}
 %\maketitle %% Title page included from Title.tex
