@@ -3,6 +3,7 @@
 \section{System Architecture and Module Hierarchy}
 
 \subsection{System Architecture}\label{SystemArch}
+
 This section provides an overview of system architecture and module hierarchy. 
 The 
 initial section introduces term and tools used in the making of each EFA 
@@ -21,6 +22,7 @@ in a clear manner. These changes are also detailed, in
 section%~\ref{subsec:HaskellSyntax}. 
 
 \subsection{Partner or Collaborative Applications}\label{subsec:Collaborative}
+
 This section provides a brief description of the modules that EFA uses. More 
 details are provided in the Module Guide for EFA.
 
@@ -155,6 +157,7 @@ as a reference - in many cases, the meaning of a type is self-evident.
 
 \noindent
 \subsection{Description of Types and Kinds}
+
 In the way that a type classifies a set of values, a kind classifies a set of
 types. Haskell permits one to define algebraic data types, which are then 
 ``promoted''
@@ -177,6 +180,7 @@ which is used exclusively as a kind.
 
 \noindent
 \subsection{Description of Dependant types}
+
 The syntax used to denote a ``fake'' dependent type in our model is the same 
 as used to denote a real dependent type in Agda. \lstinline!(x : A) -> B! is 
 the function
@@ -195,7 +199,7 @@ differently, as in this example.
 The real type of a function whose type is given as \lstinline!(x : A) -> B! in
 our model is \texttt{forall (x :: A) . SingT x -> B}. \texttt{SingT :: A -> 
 Type}
-denotes the singleton type for the kind $A$, which is inhabitted by precisely
+denotes the singleton type for the kind $A$, which is inhabited by precisely
 one value for each type which inhabits $A$. The role and use of singleton types
 is detailed further on, in section~\ref{subsec:Singletons}. 
 
@@ -208,6 +212,7 @@ and
 \lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
 
 \subsection{Constraints}
+
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
 \texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> a -> String!
@@ -218,12 +223,14 @@ fashion
 the typical \lstinline{=>} syntax. 
 
 \subsubsection{Existential quantification}
+
 The type \lstinline!exists (x : A) (P x)! indicates that there exists some $x$
 of kind $A$ which satisfies the predicate $P$. Unfortunately, Haskell does not
 have first class existential quantification. It must be encoded in one of
 two ways:
 
 \subsubsection{Types, kinds, and type synonyms}
+
 Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is 
 the name
 of the type synonym, $K$ is its kind, and $X$ its implementation. This is to 
@@ -232,6 +239,7 @@ from type families, which are written as
 \lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
 
 \subsubsection{Overloading}
+
 Haskell supports overloaded function names through type classes. When we use a 
 type 
 class to simply overload a function name, we simply write the function name
@@ -242,6 +250,7 @@ inference.
 
 
 \subsubsection{Omitted implementations}
+
 When the implementation of a type synonym, or any other entity, is omitted, it
 is replaced by ``$\ldots$''. This is to differentiate from a declaration of the 
 form
@@ -338,8 +347,8 @@ structure. Arrows between modules and submodules denote a dependency.
 External dependencies, which are modules which come from an external pacakge,
 are indicated in {\color{grey}grey}. System modules, which are modules part of
 Ampersand, but not written specifically for EFA (or, on which EFA depends, but
-few or no changes have been made from the original module before the existance
-of EFA), are indicated in {\color{applegreen}green}. The module heirarchy of
+few or no changes have been made from the original module before the existence
+of EFA), are indicated in {\color{applegreen}green}. The module hierarchy of
 these modules is not described here; they are included simply to indicate which
 symbols are imported from these modules. An example of the syntax is found in
 figure%~\ref{fig:ModExample}.
@@ -720,14 +729,13 @@ TypedSQLLanguage.east);
 
 
 \subsubsection{TypedSQL}
+
 The module hierarchy for the TypedSQL module is shown in
 figure \ref{fig:typedSQL}. The submodules of TypedSQL are quite large, 
-however,
-the majority of the definitions within are type and kind definitions, which 
-correspond 
-precisely to entities defined by MySQL. The only exception is SQLRel, which 
-distinguishes
-relations from scalar types - MySQL does not make this distinguishment. 
+however, the majority of the definitions within are type and kind definitions, 
+which correspond precisely to entities defined by MySQL. The only exception is 
+SQLRel, which distinguishes relations from scalar types - MySQL does not make 
+this distinguishment. 
 Only a few
 helper functions are defined in these modules -- namely, only things which 
 form
@@ -740,8 +748,7 @@ maintaining
 the TypedSQL language definition separately from the implementation of 
 EFA is simplified. All of the data types in TypedSQL are correct by 
 construction, with the exception of the functions explicitly labeled 
-``unsafe''.
-These functions (unsafeSQLValFromName, unsafeSQLValFromQuery, and 
+``unsafe''. These functions (unsafeSQLValFromName, unsafeSQLValFromQuery, and 
 unsafeRefFromName)
 are required only when implementing a new SQL primitive on top of the SQL
 language - they are not intended for regular use. 
@@ -777,12 +784,10 @@ compiler.
 
 The SQLSt data type also distinguishes between two varieties of statements:
 SQLStatement and SQLMthd. The former is the type of regular statements, 
-while
-the latter is the type of ``almost'' complete methods - methods whose formal
-parameters have not yet been bound. This is done in order to statically
+while the latter is the type of ``almost'' complete methods - methods whose 
+formal parameters have not yet been bound. This is done in order to statically
 guarantee that a SQL method always returns a value. Due to the type of
-\lstinline{:>>=}, this also rules out SQL programs which contain dead code 
--- no
+\lstinline{:>>=}, this also rules out SQL programs which contain dead code -- no
 code can follow SQLRet, which is always guaranteed to return from the 
 function.
 While this does rule out some valid programs (for example, an if statement 
@@ -791,49 +796,8 @@ which both branches end with a return, but there is no return following the
 if
 statement, will be rejected), these programs can be written in an equivalent
 way in our language without any loss of generality.    
-\begin{figure}[!ht]
-\makebox[\textwidth][c]{
-\scalebox{0.6}{
-\begin{tikzpicture}
 
-%% \begin{package}{TypedSQL}
-\begin{class}[text width=22cm]{TypedSQLCombinators}{17,5}
-\hstype{PrimSQLFunction : [SQLType] -> SQLType -> Type}
-\hstypectr{PTrue, PFalse : PrimSQLFunction [] SQLBool}
-\hstypectr{Not : PrimSQLFunction [ SQLBool ] SQLBool}
-\hstypectr{Or, And : PrimSQLFunction [ SQLBool, SQLBool ] 
-SQLBool}
-\hstypectr{In, NotIn : PrimSQLFunction [ a, SQLRel a ] SQLBool}
-\hstypectr{Exists : PrimSQLFunction [ SQLRel a ] SQLBool}
-\hstypectr{GroupBy : PrimSQLFunction [ SQLRel a, a ] (SQLRel 
-(SQLRel a))}
-\hstypectr{SortBy  : PrimSQLFunction [ SQLRel a, a ] (SQLRel a)}
-\hstypectr{Max, Min, Sum, Avg : IsSQLNumeric a -> 
-PrimSQLFunction [ SQLRel a ] a }
-\hstypectr{Alias : (RecAssocs ts :~: RecAssocs ts') -> 
-PrimSQLFunction [ SQLRel (SQLRow ts) ] (SQLRel (SQLRow ts'))}
-
-\hsfunc{primSQL : forall (args : [SQLType]) (out : SQLType) -> 
-PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
-
-\hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
-:\~: r -> SQLVal (SQLRow xs) -> SingT i -> SQLVal r}
-\hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
-:\~: r -> SQLVal (SQLRel (SQLRow xs)) -> SingT i -> SQLVal r}
-\hsfunc{(!) : (xs : [SQLType]) (i : Nat) -> LookupIx t i :\~: r 
--> SQLVal (SQLVec t) -> SingT i -> SQLVal r}
-
-
-\end{class}
-
-%% \end{package}
-
-\end{tikzpicture}
-}}\caption{Module diagram for TypedSQLCombinators} 
-\label{fig:typedSQLComb}
-\end{figure}
-
-\Oldsubsubsection{TypedSQLCombinators}
+\subsubsection{TypedSQLCombinators}
 
 The module TypedSQLCombinators, whose members are given in 
 figure~\ref{fig:typedSQLComb},
@@ -859,50 +823,191 @@ of the primitive function, a tuple of arguments of the correspond
 types, and returns
 a SQL value, again of the corresponding type. 
 
-
-
 \begin{figure}[!ht]
-\makebox[\textwidth][c]{
-\scalebox{0.6}{
-    \begin{tikzpicture}
-    
-    \begin{class}[text width=22cm]{Singletons}{17,5}
-    \hstype{SingT : k -> Type} 
-    \hstype{class SingKind (k : Kind) where $\ldots$} 
-    \hsfunc{(\%==) : forall (x : k) (y : k) -> SingKind k => x 
-    -> y -> DecEq x y}
-    
-    \end{class}
-    
-    \end{tikzpicture}
-}}\caption{Module diagram for Singletons} \label{fig:singletons}
+    \makebox[\textwidth][c]{
+        \scalebox{0.6}{
+            \begin{tikzpicture}
+            
+            %% \begin{package}{TypedSQL}
+            \begin{class}[text width=22cm]{TypedSQLCombinators}{17,5}
+            \hstype{PrimSQLFunction : [SQLType] -> SQLType -> Type}
+            \hstypectr{PTrue, PFalse : PrimSQLFunction [] SQLBool}
+            \hstypectr{Not : PrimSQLFunction [ SQLBool ] SQLBool}
+            \hstypectr{Or, And : PrimSQLFunction [ SQLBool, SQLBool ] 
+                SQLBool}
+            \hstypectr{In, NotIn : PrimSQLFunction [ a, SQLRel a ] SQLBool}
+            \hstypectr{Exists : PrimSQLFunction [ SQLRel a ] SQLBool}
+            \hstypectr{GroupBy : PrimSQLFunction [ SQLRel a, a ] (SQLRel 
+                (SQLRel a))}
+            \hstypectr{SortBy  : PrimSQLFunction [ SQLRel a, a ] (SQLRel a)}
+            \hstypectr{Max, Min, Sum, Avg : IsSQLNumeric a -> 
+                PrimSQLFunction [ SQLRel a ] a }
+            \hstypectr{Alias : (RecAssocs ts :~: RecAssocs ts') -> 
+                PrimSQLFunction [ SQLRel (SQLRow ts) ] (SQLRel (SQLRow ts'))}
+            
+            \hsfunc{primSQL : forall (args : [SQLType]) (out : SQLType) -> 
+                PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
+            
+            \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
+                :\~: r -> SQLVal (SQLRow xs) -> SingT i -> SQLVal r}
+            \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
+                :\~: r -> SQLVal (SQLRel (SQLRow xs)) -> SingT i -> SQLVal r}
+            \hsfunc{(!) : (xs : [SQLType]) (i : Nat) -> LookupIx t i :\~: r 
+                -> SQLVal (SQLVec t) -> SingT i -> SQLVal r}
+            
+            
+            \end{class}
+            
+            %% \end{package}
+            
+            \end{tikzpicture}
+        }}\caption{Module diagram for TypedSQLCombinators} 
+        \label{fig:typedSQLComb}
 \end{figure}
+
+
+
+
 
 \begin{figure}[!ht]
 \makebox[\textwidth][c]{
     \scalebox{0.6}{
         \begin{tikzpicture}
         
-        \begin{class}[text width=22cm]{PrettySQL}{17,5}
+        \begin{class}[text width=22cm]{Equality}{17,5}
         
-        \hstype{instance Pretty (SQLTypeS x) $\,\,$ where 
-        $\ldots$}
-        \hstype{instance Pretty (SQLVal x)  $\,\,$ where 
-        $\ldots$}
-        \hstype{instance Pretty (SQLValSem x)  $\,\,$ where 
-        $\ldots$}
-        \hstype{instance Pretty (SQLSt k x)  $\,\,$ where 
-        $\ldots$}
-        \hstype{instance (str \~ String) => Pretty (str, 
-        SQLMethod args out)  $\,\,$ where $\ldots$}
+        \hsfunc{cong : f :\~: g -> a :\~: b -> f a :\~: g b}
+        \hsfunc{cong2 : f :\~: g -> a :\~: a' -> b :\~: b' 
+        -> f a b :\~: g a' b'}
+        \hsfunc{cong3 : f :\~: g -> a :\~: a' -> b :\~: b' 
+        -> c :\~: c' -> f a b c :\~: g a' b' c'}
+        
+        \hstype{Dict : Constraint -> Type}
+        \hstypectr{Dict : p => Dict p}
+        
+        \hstype{Exists : (k -> Type) -> Type} 
+        \hstypectr{Ex : p x -> Exists p}
+        
+        \hsfunc{($\#$>>) :: Exists p -> (forall x -> p x -> 
+        r) -> r}
+        
+        \hstype{Not : Type -> Type} 
+        
+        \hstype{class NFData a}
+        
+        \hstype{doubleneg : NFData a => a -> Not (Not a)} 
+        
+        %% Why is this particular defintion off by about 
+        %%2pt? Very strange...
+        \hstype[-2pt]{triviallyTrue : Not (Not ())}
+        
+        \hstype{mapNeg : (NFData a, NFData b) => (b -> a) 
+        -> Not a -> Not b}
+        
+        \hstype{elimNeg : NFData a => Not a -> a -> Void}
+        
+        \hstype{data Void where}
+        
+        \hstype{data Dec : Type -> Type}
+        \hstypectr{Yes : !p -> Dec p}
+        \hstypectr{No  : !(Not p) -> Dec p}
+        
+        \hstype{DecEq : k -> k -> Type = $\lambda$ a b$.$ 
+        Dec (a :\~: b)}
+        
+        \hsfunc{mapDec : (p -> q) -> (Not p -> Not q) -> 
+        Dec p -> Dec q}
+        
+        \hsfunc{liftDec2 :: Dec p -> Dec q -> (p -> q -> r) 
+        -> (Not p -> Not r) -> (Not q -> Not r) -> Dec r}
+        
+        \hsfunc{dec2bool :: DecEq a b -> Bool}
         
         \end{class}
         
         \end{tikzpicture}
-    }}\caption{Module diagram for PrettySQL} 
-    \label{fig:prettySQL}
+    }}\caption{Module diagram for Equality} 
+    \label{fig:equality}
 \end{figure}
 
+\subsubsection{Equality}
+
+The Equality module (\ref{fig:equality}) defines several 
+utilities for working
+with proof-like values, including the existential 
+quantification data type,
+proofs of congruence of propositional equality of various 
+arities --
+\lstinline{cong, cong2, cong3} -- and the Dec type, which 
+encodes the concept of
+a decidable proposition. The most important element of this 
+module, however is
+the abstract \lstinline{Not} type. We must prove certain 
+things about our
+program to the Haskell type system. For example, if one 
+attempts to construct a
+scalar SQLVal for some SQLType $S$, one must first prove 
+that that type is a
+scalar type. The main use of this is decidable equality, 
+which is similar to
+regular equality, but additionally to giving a ``yes'' or 
+``no'' answer, it also
+stores a \emph{proof} of that answer.
+
+The view of propositions as types comes from the 
+Curry-Howard
+isomorphism \cite{props}; however, this is not quite sound 
+in Haskell, because
+every type is inhabited by $\bot$, which corresponds to 
+\texttt{undefined}, an
+exception, or non-termination. Due to laziness, an 
+unevaluated $\bot$ can be
+silently ignored. At worst, this corresponds to a sound use 
+of
+\lstinline{unsafeCoerce} leaking into the ``outside 
+world'', that is, allowing
+a user to accidently expose the use of an 
+\lstinline{unsafeCoerce}. One can
+usually work around this by evaluating all proof-like 
+values to normal form
+before working with them (this is accomplished by the 
+\lstinline{NFData} class,
+which stands for normal form data). The normal form of most 
+datatypes contains
+precisely one ``type'' of bottom -- namely the value 
+$\bot$, as opposed to
+$\bot$ wrapped in a constructor, for example 
+\lstinline{Just $\bot$}. This
+bottom can then be removed with the Haskell primitive 
+\lstinline{seq},
+producing a value which can soundly be used as a proof.
+
+A problem arises when we consider the negation of a proposition. $\lnot p$ 
+istypically encoded in Haskell as \lstinline{p -> $\bot$}, where the type $\bot$
+can be represented by any uninhabited type, typically called\lstinline{Void}. 
+However, the normal form of a function can contain any number of $\bot$ hidden 
+deep inside the function, because evaluating a function to normal form only 
+evaluates up to the outermost binder.  To prevent any
+unsoundness which this might cause, values of type \lstinline{Not p} are reduced
+to normal form as they are built, starting with a canonical value which is known
+to be in normal form - the value \lstinline{triviallyTrue}.  This is the role of
+NFData in the type signature of \lstinline{mapNeg}.  As mentioned previously,
+the type \lstinline{Not} is abstract, so the provided interface, which is known
+to be sound, is the only way to construct and eliminate values of type
+\lstinline{Not p}.
+
+
+\subsubsection{PrettySQL}
+
+The module PrettySQL defines pretty printers for each of the types
+corresponding to SQL entities, including SQL types, SQL values, SQL references
+and methods, and SQL statements. These pretty printers produce a value of
+type Doc (which comes from the wl-pprint package), which is like a string
+, but contains the layout and indentation of all lines of the document,
+allowing for easy composition of Doc values into larger documents, without
+worrying about layout. The SQL entities are pretty printed in a human
+readable format, complete with SQL comments which indicate the origin
+and motive of generated code. 
 
 
 \begin{figure}[!ht]
@@ -910,421 +1015,302 @@ a SQL value, again of the corresponding type.
         \scalebox{0.6}{
             \begin{tikzpicture}
             
-            \begin{class}[text width=22cm]{Equality}{17,5}
+            \begin{class}[text width=22cm]{PrettySQL}{17,5}
             
-            \hsfunc{cong : f :\~: g -> a :\~: b -> f a :\~: g b}
-            \hsfunc{cong2 : f :\~: g -> a :\~: a' -> b :\~: b' 
-            -> f a b :\~: g a' b'}
-            \hsfunc{cong3 : f :\~: g -> a :\~: a' -> b :\~: b' 
-            -> c :\~: c' -> f a b c :\~: g a' b' c'}
-            
-            \hstype{Dict : Constraint -> Type}
-            \hstypectr{Dict : p => Dict p}
-            
-            \hstype{Exists : (k -> Type) -> Type} 
-            \hstypectr{Ex : p x -> Exists p}
-            
-            \hsfunc{($\#$>>) :: Exists p -> (forall x -> p x -> 
-            r) -> r}
-            
-            \hstype{Not : Type -> Type} 
-            
-            \hstype{class NFData a}
-            
-            \hstype{doubleneg : NFData a => a -> Not (Not a)} 
-            
-            %% Why is this particular defintion off by about 
-            %%2pt? Very strange...
-            \hstype[-2pt]{triviallyTrue : Not (Not ())}
-            
-            \hstype{mapNeg : (NFData a, NFData b) => (b -> a) 
-            -> Not a -> Not b}
-            
-            \hstype{elimNeg : NFData a => Not a -> a -> Void}
-            
-            \hstype{data Void where}
-            
-            \hstype{data Dec : Type -> Type}
-            \hstypectr{Yes : !p -> Dec p}
-            \hstypectr{No  : !(Not p) -> Dec p}
-            
-            \hstype{DecEq : k -> k -> Type = $\lambda$ a b$.$ 
-            Dec (a :\~: b)}
-            
-            \hsfunc{mapDec : (p -> q) -> (Not p -> Not q) -> 
-            Dec p -> Dec q}
-            
-            \hsfunc{liftDec2 :: Dec p -> Dec q -> (p -> q -> r) 
-            -> (Not p -> Not r) -> (Not q -> Not r) -> Dec r}
-            
-            \hsfunc{dec2bool :: DecEq a b -> Bool}
+            \hstype{instance Pretty (SQLTypeS x) $\,\,$ where 
+                $\ldots$}
+            \hstype{instance Pretty (SQLVal x)  $\,\,$ where 
+                $\ldots$}
+            \hstype{instance Pretty (SQLValSem x)  $\,\,$ where 
+                $\ldots$}
+            \hstype{instance Pretty (SQLSt k x)  $\,\,$ where 
+                $\ldots$}
+            \hstype{instance (str \~ String) => Pretty (str, 
+                SQLMethod args out)  $\,\,$ where $\ldots$}
             
             \end{class}
             
             \end{tikzpicture}
-        }}\caption{Module diagram for Equality} 
-        \label{fig:equality}
+        }}\caption{Module diagram for PrettySQL} 
+        \label{fig:prettySQL}
     \end{figure}
-    
-    \Oldsubsubsection{Equality}
-    
-    The Equality module (\ref{fig:equality}) defines several 
-    utilities for working
-    with proof-like values, including the existential 
-    quantification data type,
-    proofs of congruence of propositional equality of various 
-    arities --
-    \lstinline{cong, cong2, cong3} -- and the Dec type, which 
-    encodes the concept of
-    a decidable proposition. The most important element of this 
-    module, however is
-    the abstract \lstinline{Not} type. We must prove certain 
-    things about our
-    program to the Haskell type system. For example, if one 
-    attempts to construct a
-    scalar SQLVal for some SQLType $S$, one must first prove 
-    that that type is a
-    scalar type. The main use of this is decidable equality, 
-    which is similair to
-    regular equality, but additionally to giving a ``yes'' or 
-    ``no'' answer, it also
-    stores a \emph{proof} of that answer.
-    
-    The view of propositions as types comes from the 
-    Curry-Howard
-    isomorphism \cite{props}; however, this is not quite sound 
-    in Haskell, because
-    every type is inhabited by $\bot$, which corresponds to 
-    \texttt{undefined}, an
-    exception, or non-termination. Due to laziness, an 
-    unevaluated $\bot$ can be
-    silently ignored. At worst, this corresponds to a sound use 
-    of
-    \lstinline{unsafeCoerce} leaking into the ``outside 
-    world'', that is, allowing
-    a user to accidently expose the use of an 
-    \lstinline{unsafeCoerce}. One can
-    usually work around this by evaluating all proof-like 
-    values to normal form
-    before working with them (this is accomplished by the 
-    \lstinline{NFData} class,
-    which stands for normal form data). The normal form of most 
-    datatypes contains
-    precisely one ``type'' of bottom -- namely the value 
-    $\bot$, as opposed to
-    $\bot$ wrapped in a constructor, for example 
-    \lstinline{Just $\bot$}. This
-    bottom can then be removed with the Haskell primitive 
-    \lstinline{seq},
-    producing a value which can soundly be used as a proof.
-    
-    A problem arises when we consider the negation of a 
-    proposition. $\lnot p$ is
-    typically encoded in Haskell as \lstinline{p -> $\bot$}, 
-    where the type $\bot$
-    can be represented by any uninhabited type, typically called
-    \lstinline{Void}. However, the normal form of a function 
-    can contain any number
-    of $\bot$ hidden deep inside the function, because 
-    evaluating a function to
-    normal form only evaluates up to the outermost binder.  To 
-    prevent any
-    unsoundness which this might cause, values of type 
-    \lstinline{Not p} are reduced
-    to normal form as they are built, starting with a canonical 
-    value which is known
-    to be in normal form - the value 
-    \lstinline{triviallyTrue}.  This is the role of
-    NFData in the type signature of \lstinline{mapNeg}.  As 
-    mentioned previously,
-    the type \lstinline{Not} is abstract, so the provided 
-    interface, which is known
-    to be sound, is the only way to construct and eliminate 
-    values of type
-    \lstinline{Not p}.
-    
-    
-    \Oldsubsubsection{PrettySQL}
-    
-    The module PrettySQL defines pretty printers for each of 
-    the types
-    corresponding to SQL entities, including SQL types, SQL 
-    values, SQL references
-    and methods, and SQL statements. These pretty printers 
-    produce a value of
-    type Doc (which comes from the wl-pprint package), which is 
-    like a string
-    , but contains the layout and indentation of all lines of 
-    the document,
-    allowing for easy composition of Doc values into larger 
-    documents, without
-    worrying about layout. The SQL entities are pretty printed 
-    in a human
-    readable format, complete with SQL comments which indicate 
-    the origin
-    and motive of generated code. 
-    
-    
-    
-    \begin{figure}[!ht]
-        \makebox[\textwidth][c]{
-            \scalebox{0.6}{
-                \begin{tikzpicture}
-                
-                \begin{class}[text width=22cm]{ProofUtils}{17,5}
-                
-                \hstype{Prod : (f : k -> Type) -> (xs : [k]) -> 
-                Type} 
-                \hstypectr{PNil : Prod f []}
-                \hstypectr{PCons : f x -> Prod f xs -> Prod f 
-                (x : xs)}
-                
-                \hstype{Sum : (f : k -> Type) -> (xs : [k]) -> 
-                Type}  
-                \hstypectr{SHere : f x -> Sum f (x : xs)}
-                \hstypectr{SThere : Sum f xs -> Sum f (x : xs)}
-                
-                
-                \hstype{class All (c : k -> Constraint) (xs : 
-                [k]) where}
-                \hstypectr{mkProdC : Proxy c -> (forall a -> c 
-                a => p a) -> Prod p xs}
-                
-                \hstype{instance All (c : k -> Constraint) [] 
-                where $\ldots$}
-                \hstype{instance (All c xs, c x) => All c (x : 
-                xs) where $\ldots$}
-                
-                \hstype{Elem : k -> [k] -> Type where}
-                \hstypectr{MkElem : Sum (:\~: x) xs -> Elem x 
-                xs} 
-                
-                \hstype{IsElem : (x : k) -> (xs : [k]) -> 
-                Constraint where $\ldots$} 
-                \hstype{AppliedTo : (x : k) -> (f : k -> Type) 
-                -> Type}
-                \hstypectr{Ap : f x -> x `AppliedTo` f}
-                
-                \hstype{(:.:) : (f : k1 -> Type) -> (g : k0 -> 
-                k1) -> (x : k0) -> Type}
-                \hstypectr{Cmp : f (g x) -> (:.:) f g x} 
-                
-                \hstype{(:*:) : (f : k0 -> Type) -> (g : k0 -> 
-                Type) -> (x : k0) -> Type} 
-                \hstypectr{(:*:) : f x -> g x -> (:*:) f g x} 
-                \hstype{K : (a : Type) -> (x : k) -> Type} 
-                \hstypectr{K : a -> K a x} 
-                \hstype{Id : (a : Type) -> Id a}
-                \hstypectr{Id : a -> Id a} 
-                
-                \hstype{Flip : (f : k0 -> k1 -> Type) -> (x : 
-                k1) -> (y : k0) -> Type} 
-                \hstypectr{Flp : f y x -> Flip f x y} 
-                
-                \hstype{(&&) : (x : Bool) -> (y : Bool) -> Bool 
-                where $\ldots$} 
-                
-                \operation{\lstinline[mathescape]{(|&&) : (a : 
+
+\subsubsection{Proof Utils}
+
+The ProofUtils modules, shown in 
+figure~\ref{fig:utilsMod} provides various
+utilities for proving compile time invariants, 
+including the definitions of
+various predicates used in other modules, as well as 
+the value-level functions
+which prove or disprove those predicates. Generally 
+speaking, a predicate is a
+type level function which returns either a true or 
+false value, or has kind
+\lstinline{Constraint}, in which case truth corresponds 
+to a satisfied
+constraint, while false to an unsatisfied one. Many 
+predicates have value level
+witnesses as well; these are datatypes which are 
+inhabited if and only if the
+predicate is true.  Therefore, pattern matching on the 
+predicate witness can be used to recover a proof of the predicate at run time.
+
+The function of the most important predicates and types is briefly summarized 
+as follows. 
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+    \scalebox{0.6}{
+        \begin{tikzpicture}
+        
+        \begin{class}[text width=22cm]{ProofUtils}{17,5}
+        
+        \hstype{Prod : (f : k -> Type) -> (xs : [k]) -> 
+            Type} 
+        \hstypectr{PNil : Prod f []}
+        \hstypectr{PCons : f x -> Prod f xs -> Prod f 
+            (x : xs)}
+        
+        \hstype{Sum : (f : k -> Type) -> (xs : [k]) -> 
+            Type}  
+        \hstypectr{SHere : f x -> Sum f (x : xs)}
+        \hstypectr{SThere : Sum f xs -> Sum f (x : xs)}
+        
+        
+        \hstype{class All (c : k -> Constraint) (xs : 
+            [k]) where}
+        \hstypectr{mkProdC : Proxy c -> (forall a -> c 
+            a => p a) -> Prod p xs}
+        
+        \hstype{instance All (c : k -> Constraint) [] 
+            where $\ldots$}
+        \hstype{instance (All c xs, c x) => All c (x : 
+            xs) where $\ldots$}
+        
+        \hstype{Elem : k -> [k] -> Type where}
+        \hstypectr{MkElem : Sum (:\~: x) xs -> Elem x 
+            xs} 
+        
+        \hstype{IsElem : (x : k) -> (xs : [k]) -> 
+            Constraint where $\ldots$} 
+        \hstype{AppliedTo : (x : k) -> (f : k -> Type) 
+            -> Type}
+        \hstypectr{Ap : f x -> x `AppliedTo` f}
+        
+        \hstype{(:.:) : (f : k1 -> Type) -> (g : k0 -> 
+            k1) -> (x : k0) -> Type}
+        \hstypectr{Cmp : f (g x) -> (:.:) f g x} 
+        
+        \hstype{(:*:) : (f : k0 -> Type) -> (g : k0 -> 
+            Type) -> (x : k0) -> Type} 
+        \hstypectr{(:*:) : f x -> g x -> (:*:) f g x} 
+        \hstype{K : (a : Type) -> (x : k) -> Type} 
+        \hstypectr{K : a -> K a x} 
+        \hstype{Id : (a : Type) -> Id a}
+        \hstypectr{Id : a -> Id a} 
+        
+        \hstype{Flip : (f : k0 -> k1 -> Type) -> (x : 
+            k1) -> (y : k0) -> Type} 
+        \hstypectr{Flp : f y x -> Flip f x y} 
+        
+        \hstype{(&&) : (x : Bool) -> (y : Bool) -> Bool 
+            where $\ldots$} 
+        
+        \operation{\lstinline[mathescape]{(|&&) : (a : 
                 Bool) -> (b : Bool) -> a && b}}
-                
-                \hstype{RecAssocs : [RecLabel a b] -> [b] where 
-                $\ldots$} 
-                \hstype{RecLabels : [RecLabel a b] -> [b] where 
-                $\ldots$} 
-                
-                \hstype{IsSetRec\_ : [RecLabel a b] -> [a] -> 
-                Constraint where $\ldots$} 
-                
-                \hstype{IsSetRec : [RecLabel a b] -> Constraint 
-                where $\ldots$} 
-                \hstype{SetRec\_ : [a] -> [RecLabel a b] -> 
-                Type} 
-                \hstype{SetRec : [RecLabel a b] -> Type = 
-                SetRec\_ []} 
-                
-                
-                \hsfunc{openSetRec : forall (xs : [RecLabel k 
-                k']) $\,\,$r0 -> SingKind k => SetRec xs -> 
-                (IsSetRec xs => r0) -> r0}
-                
-                \hsfunc{decNotElem : forall (xs : [a]) $\,\,$x 
-                -> SingKind a => xs -> x -> Dec (NotElem xs x)}
-                
-                \hsfunc{decSetRec : forall (xs : [RecLabel a 
-                b]) -> SingKind a => xs -> Dec (SetRec xs)}
-                
-                \hstype{LookupRecM : [RecLabel Symbol k] -> 
-                Symbol -> Maybe k where $\ldots$} 
-                
-                \hsfunc{lookupRecM : forall (xs : [RecLabel 
-                Symbol k]) (x : Symbol) -> xs -> x -> 
-                LookupRecM xs x}
-                
-                \hstype{ZipRec : [a] -> [b] -> [RecLabel a b] 
-                where $\ldots$} 
-                
-                \hstype{IsNotElem :  [k] -> k -> Constraint 
-                where $\ldots$} 
-                \hstype{NotElem : [k] -> k -> Type}
-                
-                \hstype{And : (xs : [Bool]) -> Bool where 
-                $\ldots$} 
-                
-                \hsfunc{and\_t : (xs : [Bool]) -> And xs}
-                
-                \hsfunc{compareSymbol : (x : Symbol) -> (y : 
-                Symbol) -> CmpSymbol x y}
-                
-                
-                \hstype{NonEmpty : (xs : [k]) -> Constraint 
-                where} 
-                \hstypectr{NonEmpty (x : xs) = ()} 
-                
-                \hsfunc{prod2sing : forall (xs : [k]) -> 
-                SingKind k => Prod SingT xs -> SingT xs} 
-                \hsfunc{sing2prod : forall (xs : [k]) -> 
-                SingKind k => SingT xs -> Prod SingT xs} 
-                \hsfunc{foldrProd : forall acc (f : k -> 
-                Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
-                -> acc) -> Prod f xs -> acc}
-                \hsfunc{foldlProd : forall acc (f : k -> 
-                Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
-                -> acc) -> Prod f xs -> acc}
-                \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g 
-                -> (forall x -> f x -> g x) -> Prod f xs -> 
-                Prod g xs}
-                \hsfunc{foldrProd' : forall (f : k -> 
-                Type)$\,\,$xs1 -> (forall x xs -> f x -> Prod g 
-                xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g 
-                xs1 }
-                \hsfunc{someProd : [Exists f] -> Exists (Prod 
-                f)}
-                
-                \end{class}
-                
-                \end{tikzpicture}
-            }}\caption{Module diagram for ProofUtils} 
-            \label{fig:utilsMod}
-        \end{figure}
         
-        \Oldsubsubsection{Proof Utils}
+        \hstype{RecAssocs : [RecLabel a b] -> [b] where 
+            $\ldots$} 
+        \hstype{RecLabels : [RecLabel a b] -> [b] where 
+            $\ldots$} 
         
-        The ProofUtils modules, shown in 
-        figure~\ref{fig:utilsMod} provides various
-        utilities for proving compile time invariants, 
-        including the definitions of
-        various predicates used in other modules, as well as 
-        the value-level functions
-        which prove or disprove those predicates. Generally 
-        speaking, a predicate is a
-        type level function which returns either a true or 
-        false value, or has kind
-        \lstinline{Constraint}, in which case truth corresponds 
-        to a satisfied
-        constraint, while false to an unsatisfied one. Many 
-        predicates have value level
-        witnesses as well; these are datatypes which are 
-        inhabitted if and only if the
-        predicate is true.  Therefore, pattern matching on the 
-        predicate witness can be
-        used to recover a proof of the predicate at run time.
+        \hstype{IsSetRec\_ : [RecLabel a b] -> [a] -> 
+            Constraint where $\ldots$} 
         
-        The function of the most imporant 
-        predicates and types is briefly summarized as follows. 
-        \begin{description}
-            \item[\texttt{Prod}] The type \lstinline{Prod f xs} 
-            represents the $n$-ary product of the type
-            level list $xs$, with each $x \in xs$ being mapped 
-            to the type \lstinline{f x}. This 
-            type is accompanied by the functions 
-            \lstinline{prod2sing, sing2prod} which convert
-            between singletons and products; the functions 
-            \lstinline{foldrProd, foldlProd, foldrProd'}, 
-            which are all eliminators for \lstinline{Prod} 
-            (several eliminators are needed because the 
-            most general eliminator is not well typed in 
-            Haskell). 
-            \item[\texttt{Sum}] The same as above, but the 
-            $n$-ary sum as opposed to product. 
-            \item[\texttt{All}] The constraint 
-            \lstinline{All c xs} holds if and only if 
-            \lstinline{c x} holds for 
-            all $x \in xs$. 
-            \item[\texttt{Elem, IsElem}]
-            \lstinline{IsElem x xs} holds precisely when $x \in 
-            xs$. 
-            \lstinline{Elem} is the witness of 
-            \lstinline{IsElem}. 
-            \item[\texttt{AppliedTo, Ap, :.:, Cmp, :*:, K, Id, 
-            Flip}] Categorical data types which encode
-            a generalized view of algebraic data types. This 
-            approach is largely standardized (and is only
-            replicated here to avoid incurring a large 
-            dependency) -- for more information, 
-            see~\cite{alacarte}. 
-            \item[\texttt{RecAssocs, RecLabels, ZipRec}] Type 
-            level functions for working with type level 
-            records. 
-            A record in this context is a list of types of some 
-            kind, each associated with a unique string label. 
-            \lstinline{RecAssocs, RecLabels} retrieve the 
-            associations and labels of a record, respecively, 
-            while \lstinline{ZipRec} constructs such a record 
-            from the associations and labels. It is the case
-            that 
-            \lstinline{ZipRec (RecAssocs x) (RecLabels x) == x} for all 
-            \lstinline{x} .
-            \item[\texttt{IsSetRec, SetRec}] The predicate 
-            \lstinline{IsSetRec x} holds precisely if 
-            \lstinline{x}
-            is a valid record type, whose labels are all 
-            unique. \lstinline{SetRec} is the witness for 
-            \lstinline{IsSetRec}. 
-            \item[\texttt{IsNotElem, NotElem}] The predicate 
-            \lstinline{IsNotElem x xs} holds precisely if 
-            $\lnot x \in xs$.
-            \lstinline{NotElem} is the witnss for 
-            \lstinline{IsNotElem}. 
-            \item[\texttt{\&\&,And}] Binary and $n$-ary boolen 
-            conjunction, with the usual semantics. 
-        \end{description}
+        \hstype{IsSetRec : [RecLabel a b] -> Constraint 
+            where $\ldots$} 
+        \hstype{SetRec\_ : [a] -> [RecLabel a b] -> 
+            Type} 
+        \hstype{SetRec : [RecLabel a b] -> Type = 
+            SetRec\_ []} 
         
         
-        \Oldsubsubsection{Singletons}\label{subsec:Singletons}
+        \hsfunc{openSetRec : forall (xs : [RecLabel k 
+            k']) $\,\,$r0 -> SingKind k => SetRec xs -> 
+            (IsSetRec xs => r0) -> r0}
         
-        The Singletons module (figure ~\ref{fig:singletons}) is 
-        not fully detailed here;
-        instead, a vastly simplified version of the Singletons 
-        module is presented. The
-        \lstinline{SingT} type denotes a generic singleton for 
-        any kind which implements
-        \lstinline{SingKind} -- then, the main operation of 
-        interest on singletons is
-        decidable equality, which is realized by the function 
-        \lstinline{%==}. The
-            detailed implementation is omitted because the 
-            singletons approach in Haskell
-            is well known and well 
-            documented~\cite{singletons}. We re-implement
-            singletons instead of using the well established 
-            \texttt{singletons} library
-            because, while this library is very well written, 
-            it relies very heavily on
-            Template Haskell~\cite{th}, which is essentially 
-            string-based
-            metaprogramming. Template Haskell is extremely 
-            error prone and very difficult
-            to maintain. As one of our primary goals is 
-            long-term maintainability, and
-            Template Haskell changes, sometimes drastically, 
-            with every new release of
-            GHC, including it in this project was deemed not 
-            worth the
-            headache. Therefore, we have reimplemented 
-            singletons without Template
-            Haskell, at the cost of having to write slightly 
-            more boilerplate.
+        \hsfunc{decNotElem : forall (xs : [a]) $\,\,$x 
+            -> SingKind a => xs -> x -> Dec (NotElem xs x)}
+        
+        \hsfunc{decSetRec : forall (xs : [RecLabel a 
+            b]) -> SingKind a => xs -> Dec (SetRec xs)}
+        
+        \hstype{LookupRecM : [RecLabel Symbol k] -> 
+            Symbol -> Maybe k where $\ldots$} 
+        
+        \hsfunc{lookupRecM : forall (xs : [RecLabel 
+            Symbol k]) (x : Symbol) -> xs -> x -> 
+            LookupRecM xs x}
+        
+        \hstype{ZipRec : [a] -> [b] -> [RecLabel a b] 
+            where $\ldots$} 
+        
+        \hstype{IsNotElem :  [k] -> k -> Constraint 
+            where $\ldots$} 
+        \hstype{NotElem : [k] -> k -> Type}
+        
+        \hstype{And : (xs : [Bool]) -> Bool where 
+            $\ldots$} 
+        
+        \hsfunc{and\_t : (xs : [Bool]) -> And xs}
+        
+        \hsfunc{compareSymbol : (x : Symbol) -> (y : 
+            Symbol) -> CmpSymbol x y}
+        
+        
+        \hstype{NonEmpty : (xs : [k]) -> Constraint 
+            where} 
+        \hstypectr{NonEmpty (x : xs) = ()} 
+        
+        \hsfunc{prod2sing : forall (xs : [k]) -> 
+            SingKind k => Prod SingT xs -> SingT xs} 
+        \hsfunc{sing2prod : forall (xs : [k]) -> 
+            SingKind k => SingT xs -> Prod SingT xs} 
+        \hsfunc{foldrProd : forall acc (f : k -> 
+            Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
+            -> acc) -> Prod f xs -> acc}
+        \hsfunc{foldlProd : forall acc (f : k -> 
+            Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
+            -> acc) -> Prod f xs -> acc}
+        \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g 
+            -> (forall x -> f x -> g x) -> Prod f xs -> 
+            Prod g xs}
+        \hsfunc{foldrProd' : forall (f : k -> 
+            Type)$\,\,$xs1 -> (forall x xs -> f x -> Prod g 
+            xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g 
+            xs1 }
+        \hsfunc{someProd : [Exists f] -> Exists (Prod 
+            f)}
+        
+        \end{class}
+        
+        \end{tikzpicture}
+    }}\caption{Module diagram for ProofUtils} 
+    \label{fig:utilsMod}
+\end{figure}
+
+\begin{description}
+    \item[\texttt{Prod}] The type \lstinline{Prod f xs} 
+    represents the $n$-ary product of the type
+    level list $xs$, with each $x \in xs$ being mapped 
+    to the type \lstinline{f x}. This 
+    type is accompanied by the functions 
+    \lstinline{prod2sing, sing2prod} which convert
+    between singletons and products; the functions 
+    \lstinline{foldrProd, foldlProd, foldrProd'}, 
+    which are all eliminators for \lstinline{Prod} 
+    (several eliminators are needed because the 
+    most general eliminator is not well typed in 
+    Haskell). 
+    \item[\texttt{Sum}] The same as above, but the 
+    $n$-ary sum as opposed to product. 
+    \item[\texttt{All}] The constraint 
+    \lstinline{All c xs} holds if and only if 
+    \lstinline{c x} holds for 
+    all $x \in xs$. 
+    \item[\texttt{Elem, IsElem}]
+    \lstinline{IsElem x xs} holds precisely when $x \in 
+    xs$. 
+    \lstinline{Elem} is the witness of 
+    \lstinline{IsElem}. 
+    \item[\texttt{AppliedTo, Ap, :.:, Cmp, :*:, K, Id, 
+    Flip}] Categorical data types which encode
+    a generalized view of algebraic data types. This 
+    approach is largely standardized (and is only
+    replicated here to avoid incurring a large 
+    dependency) -- for more information, 
+    see~\cite{alacarte}. 
+    \item[\texttt{RecAssocs, RecLabels, ZipRec}] Type 
+    level functions for working with type level 
+    records. 
+    A record in this context is a list of types of some 
+    kind, each associated with a unique string label. 
+    \lstinline{RecAssocs, RecLabels} retrieve the 
+    associations and labels of a record, respectively, 
+    while \lstinline{ZipRec} constructs such a record 
+    from the associations and labels. It is the case
+    that 
+    \lstinline{ZipRec (RecAssocs x) (RecLabels x) == x} for all 
+    \lstinline{x} .
+    \item[\texttt{IsSetRec, SetRec}] The predicate 
+    \lstinline{IsSetRec x} holds precisely if 
+    \lstinline{x}
+    is a valid record type, whose labels are all 
+    unique. \lstinline{SetRec} is the witness for 
+    \lstinline{IsSetRec}. 
+    \item[\texttt{IsNotElem, NotElem}] The predicate 
+    \lstinline{IsNotElem x xs} holds precisely if 
+    $\lnot x \in xs$.
+    \lstinline{NotElem} is the witnss for 
+    \lstinline{IsNotElem}. 
+    \item[\texttt{\&\&,And}] Binary and $n$-ary boolen 
+    conjunction, with the usual semantics. 
+\end{description}
+    
+    
+\subsubsection{Singletons}\label{subsec:Singletons}
+
+The Singletons module (figure ~\ref{fig:singletons}) is 
+not fully detailed here;
+instead, a vastly simplified version of the Singletons 
+module is presented. The
+\lstinline{SingT} type denotes a generic singleton for 
+any kind which implements
+\lstinline{SingKind} -- then, the main operation of 
+interest on singletons is
+decidable equality, which is realized by the function 
+\lstinline{%==}. The
+    detailed implementation is omitted because the 
+    singletons approach in Haskell
+    is well known and well 
+    documented~\cite{singletons}. We re-implement
+    singletons instead of using the well established 
+    \texttt{singletons} library
+    because, while this library is very well written, 
+    it relies very heavily on
+    Template Haskell~\cite{th}, which is essentially 
+    string-based
+    metaprogramming. Template Haskell is extremely 
+    error prone and very difficult
+    to maintain. As one of our primary goals is 
+    long-term maintainability, and
+    Template Haskell changes, sometimes drastically, 
+    with every new release of
+    GHC, including it in this project was deemed not 
+    worth the
+    headache. Therefore, we have reimplemented 
+    singletons without Template
+    Haskell, at the cost of having to write slightly 
+    more boilerplate.
+
+
+\begin{figure}[!ht]
+    \makebox[\textwidth][c]{
+        \scalebox{0.6}{
+            \begin{tikzpicture}
             
+            \begin{class}[text width=22cm]{Singletons}{17,5}
+            \hstype{SingT : k -> Type} 
+            \hstype{class SingKind (k : Kind) where $\ldots$} 
+            \hsfunc{(\%==) : forall (x : k) (y : k) -> SingKind k => x 
+                -> y -> DecEq x y}
             
+            \end{class}
+            
+            \end{tikzpicture}
+        }}\caption{Module diagram for Singletons} \label{fig:singletons}
+    \end{figure}
+        
 
 
