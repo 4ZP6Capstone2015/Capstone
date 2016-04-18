@@ -123,8 +123,8 @@ which is used exclusively as a kind.
 
 \noindent
 \subsection{Description of Dependant types}
-The syntax used to denote a ``fake'' dependant type in our model is the same 
-as used to denote a real dependant type in Agda. \lstinline!(x : A) -> B! is 
+The syntax used to denote a ``fake'' dependent type in our model is the same 
+as used to denote a real dependent type in Agda. \lstinline!(x : A) -> B! is 
 the function
 from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly 
 looks like a 
@@ -163,20 +163,21 @@ fashion
 (i.e. as an actual constraint), in which case the constraint is written with 
 the typical \lstinline{=>} syntax. 
 
-\subsubsection*{Existential quantification}
+\subsubsection{Existential quantification}
 The type \lstinline!exists (x : A) (P x)! indicates that there exists some $x$
 of kind $A$ which satisfies the predicate $P$. Unfortunately, Haskell does not
 have first class existential quantification. It must be encoded in one of
 two ways:
 
-\subsubsection*{Types, kinds, and type synonyms}
+\subsubsection{Types, kinds, and type synonyms}
 Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is 
 the name
 of the type synonym, $K$ is its kind, and $X$ its implementation. This is to 
 differentiate
-from type families, which are written as \lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
+from type families, which are written as 
+\lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
 
-\subsubsection*{Overloading}
+\subsubsection{Overloading}
 Haskell supports overloaded function names through type classes. When we use a 
 type 
 class to simply overload a function name, we simply write the function name
@@ -186,7 +187,7 @@ inference.
 
  
 
-\subsubsection*{Omitted implementations}
+\subsubsection{Omitted implementations}
 When the implementation of a type synonym, or any other entity, is omitted, it
 is replaced by ``$\ldots$''. This is to differentiate from a declaration of the 
 form
@@ -249,9 +250,9 @@ equality constraints, for example, things like \lstinline{Show x} and
 Note that \texttt{Show} itself does \emph{not} have kind Constraint --
 its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
 primitive entities can be found in the GHC user guide~\cite{ghcUserGuide}. While
-%% many modern features of GHC are used in the actual implementation, they are not
+many modern features of GHC are used in the actual implementation, they are not
+mentioned in, nor required to understand, the module description.
 
-%% mentioned in, nor required to understand, the module description.
 %% %% All other features of GHC are
 %% %% detailed in the user guide as well, but no other
 

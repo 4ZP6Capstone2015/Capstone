@@ -120,11 +120,14 @@
 
 \newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline[mathescape]|#2|}}
 
+
 %\newcommand{\@supervisor}{}
 \newcommand{\supervisor}[1]{\renewcommand{\@supervisor}{#1}}
-\begin{filecontents*}{references.bib}
 
-\end{filecontents*}
+
+%%\end{filecontents*}
+\makeindex
+
 \begin{document}
 %\maketitle %% Title page included from Title.tex
 \input{title}
@@ -176,10 +179,17 @@ safeguards the database from illegal transactions.
 \subsection*{Ampersand}
 \subsection*{Objectives}
 \subsection*{Document Guide}
+
+\section{Business}\label{BusinessSect}
+\input{bus-section}
+
+
 \include{design-section}
 
 \newpage
+
 \bibliographystyle{alpha}
 \bibliography{references}
 \end{document}
+
 
