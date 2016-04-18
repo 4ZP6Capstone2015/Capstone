@@ -111,9 +111,13 @@ constructors. In every case in our system, when we define a datatype and use
 the promoted version, we never use the \emph{unpromoted} version. That is, we 
 define types which are never used as types, only as kinds, and constructors 
 which are never used as value constructors,only type constructors. We write 
-\,\,\,\lstinline!X : A -> B -> $\ldots$ -> 
-Type!\,\,\, to denote
-a regular data type, and \,\,\,\lstinline!Y : A -> B -> $\ldots$ -> Kind!\,\,\, 
+\,\,\,
+\lstinline!X : A -> B -> $\ldots$ -> Type!
+\,\,\, 
+to denote a regular data type, and 
+\,\,\,
+\lstinline!Y : A -> B -> $\ldots$ -> Kind!
+\,\,\, 
 to denote a datatype
 which is used exclusively as a kind. 
 
@@ -144,15 +148,16 @@ is detailed further on, in section~\ref{subsec:Singletons}.
 The syntax \lstinline!forall (x : A) -> B! is used to denote the regular
 Haskell type \texttt{forall (x :: A) . B}. As is customary in Haskell, the 
 quantification
-may be dropped when the kind $A$ is clear from the context: \lstinline!forall 
-(x : A) -> P x! and
+may be dropped when the kind $A$ is clear from the context: 
+\lstinline!forall (x : A) -> P x! 
+and
 \lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
 
 \subsection{Constraints}
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
-\texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> 
-a -> String!.
+\texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> a -> String!
+.
 In certain casees, a constraint is intended to be used only in an implicit 
 fashion 
 (i.e. as an actual constraint), in which case the constraint is written with 
@@ -169,8 +174,7 @@ Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is
 the name
 of the type synonym, $K$ is its kind, and $X$ its implementation. This is to 
 differentiate
-from type families, which are written as \lstinline!Ty : K where Ty $\ldots$ = 
-$\ldots$!.
+from type families, which are written as \lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
 
 \subsubsection*{Overloading}
 Haskell supports overloaded function names through type classes. When we use a 
@@ -245,10 +249,11 @@ equality constraints, for example, things like \lstinline{Show x} and
 Note that \texttt{Show} itself does \emph{not} have kind Constraint --
 its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
 primitive entities can be found in the GHC user guide~\cite{ghcUserGuide}. While
-many modern features of GHC are used in the actual implementation, they are not
-mentioned in, nor required to understand, the module description.
-%% All other features of GHC are
-%% detailed in the user guide as well, but no other
+%% many modern features of GHC are used in the actual implementation, they are not
+
+%% mentioned in, nor required to understand, the module description.
+%% %% All other features of GHC are
+%% %% detailed in the user guide as well, but no other
 
 The primary interface to EFA is the function \lstinline{eca2PrettySQL}, which 
 takes an
