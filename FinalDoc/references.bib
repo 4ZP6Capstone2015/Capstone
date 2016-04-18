@@ -1,20 +1,67 @@
+
+@article{Parnas1972,
+    author = {D.L. Parnas},
+    title = {On the Criteria To Ne Used in Decomposing Systems into Modules},
+    journal = {Communications of the ACM},
+    year = {1972}
+}
 @article{modStruct,
     author = {D.L. Parnas, P.C. Clements, D.M. Weiss},
     title = {The modular structure of complex systems},
-    journal = {Proceeding ICSE '84: Proceedings of the 7th international
-        conference on Software engineering},
+    journal = {Proceeding ICSE '84: Proceedings of the 7th international 
+    conference on Software engineering},
     year = {1984}
 }
-@misc{agda,
-    author = {Norell U., Danielsson N. A., A. Andreas},
-    title = {{The} {Agda} {Wiki}},
-    howpublished = {\url{http://wiki.portal.chalmers.se/agda/pmwiki.php}},
+@article{fakeIt,
+    author = {D.L. Parnas, P.C. Clements},
+    title = {A Rational Design Process: How and Why to Fake It},
+    journal = {IEEE Transaction on Software Engineering},
+    year = {1986}
+}
+
+
+@article{AMMBR,
+    author = {Stef Joosten},
+    title = {Deriving {Functional} {Specifications} from {Business} 
+    {Requirements} with {Ampersand}},
+    journal = {CiteSeer},
+    year = {2007},
+    url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.118.4137}
+}
+
+
+@misc{simple-sql,
+    author = {Jake Wheat},
+    title = {simple-sql-parser},
+    howpublished = 
+    {\url{https://hackage.haskell.org/package/simple-sql-parser-0.4.1}},
     note = {Accessed: 2016-02-28}
 }
 
+@misc{wl-pprint,
+    author = {Daan Leijen},
+    title = {wl-pprint package},
+    howpublished = {\url{https://hackage.haskell.org/package/wl-pprint-1.2}},
+    note = {Accessed: 2016-02-28}
+}
+
+@misc{SP,
+    author = {Oracle},
+    title = {MySQL Reference Manual},
+    howpublished = {\url{https://dev.mysql.com/doc/refman/5.7/en/}},
+    note = {Accessed: 2016-02-28}
+}
+
+@misc{agda, 
+    author = {Norell U., Danielsson N. A., A. Andreas},
+    title = {{The} {Agda} {Wiki}}, 
+    howpublished = {\url{http://wiki.portal.chalmers.se/agda/pmwiki.php}}, 
+    note = {Accessed: 2016-02-28} 
+} 
+
 @article{hasochism,
     author = {Lindley, Sam and McBride, Conor},
-    title = {Hasochism: The Pleasure and Pain of Dependently Typed Haskell
+    title = {Hasochism: The Pleasure and Pain of Dependently Typed Haskell 
     Programming},
     journal = {SIGPLAN Not.},
     issue_date = {December 2013},
@@ -30,6 +77,110 @@
     acmid = {2503786},
     publisher = {ACM},
     address = {New York, NY, USA},
-    keywords = {data type promotion, dependent types, invariants, proof search,
+    keywords = {data type promotion, dependent types, invariants, proof search, 
     singletons},
+} 
+
+
+@manual{mySQLman,
+    author = {Oracle Corporation},
+    title = {MySQL 5.7 Reference Manual},
+    date = {2016-02-29},
+    language = {English},
+    version = {revision: 46777},
+    pubstate = {2016-02-29},
+}
+
+@manual{ghcUserGuide,
+    author = {The University Court of the University of Glasgow}, 
+    title = {The Glorious Glasgow Haskell Compilation System User's Guide}, 
+    language = {English},
+    version = {version 7.10.3},
+    note = {Accessed: 2016-02-29}
+}
+
+@article{alacarte,
+    author = {Wouter Swierstra},
+    title = {Data types à la carte},
+    journal = {Cambridge University Press},
+    year = {2008},
+    url = {http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.101.4131}
+}
+
+@article{singletons,
+    author = {Eisenberg, Richard A. and Weirich, Stephanie},
+    title = {Dependently Typed Programming with Singletons},
+    journal = {SIGPLAN Not.},
+    issue_date = {December 2012},
+    volume = {47},
+    number = {12},
+    month = sep,
+    year = {2012},
+    issn = {0362-1340},
+    pages = {117--130},
+    numpages = {14},
+    url = {http://doi.acm.org/10.1145/2430532.2364522},
+    doi = {10.1145/2430532.2364522},
+    acmid = {2364522},
+    publisher = {ACM},
+    address = {New York, NY, USA},
+    keywords = {dependently typed programming, gadts, haskell, singletons},
+} 
+
+@article{th,
+    author = {Sheard, Tim and Jones, Simon Peyton},
+    title = {Template Meta-programming for Haskell},
+    journal = {SIGPLAN Not.},
+    issue_date = {December 2002},
+    volume = {37},
+    number = {12},
+    month = dec,
+    year = {2002},
+    issn = {0362-1340},
+    pages = {60--75},
+    numpages = {16},
+    url = {http://doi.acm.org/10.1145/636517.636528},
+    doi = {10.1145/636517.636528},
+    acmid = {636528},
+    publisher = {ACM},
+    address = {New York, NY, USA},
+    keywords = {Meta programming, templates},
+} 
+
+@article{props,
+    title = {Propositions as Types},
+    author = {Philip Wadler},
+    journal = {Communications of the AC},
+    volume = {58},
+    number = {12},
+    pages = {75–84},
+    year = 2015,
+    month = December,
+    url = 
+    {http://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-types/propositions-as-types.pdf}
+}
+
+@inproceedings{promotion,
+    author = {Yorgey, Brent A. and Weirich, Stephanie and Cretin, Julien and 
+    Peyton Jones, Simon and Vytiniotis, Dimitrios and Magalh\~{a}es, Jos{\'e} 
+    Pedro},
+    title = {Giving Haskell a Promotion},
+    booktitle = {Proceedings of the 8th ACM SIGPLAN Workshop on Types in 
+    Language Design and Implementation},
+    series = {TLDI '12},
+    year = {2012},
+    isbn = {978-1-4503-1120-5},
+    location = {Philadelphia, Pennsylvania, USA},
+    pages = {53--66},
+    numpages = {14},
+    url = {http://doi.acm.org/10.1145/2103786.2103795},
+    doi = {10.1145/2103786.2103795},
+    acmid = {2103795},
+    publisher = {ACM},
+    address = {New York, NY, USA},
+    keywords = {haskell, kinds, polymorphism, promotion},
+} 
+@misc{hackage,
+    title={Hackage},
+    url={https://hackage.haskell.org}
 }

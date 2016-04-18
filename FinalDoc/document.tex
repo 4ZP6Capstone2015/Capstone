@@ -178,11 +178,61 @@ These data inconsistencies are corrected through ECA rules which use process
 algebra (PA) to correct or discard data using violations. EFA is used to 
 translate these ECA rules, execute SQL queries to correct violations and 
 safeguards the database from illegal transactions.
-\subsection*{Ampersand}
-\subsection*{Objectives}
-\subsection*{Document Guide}
-\include{design-section}
+\subsection{Ampersand}
+\subsection{Objectives}
+\subsection{Document Guide}
+\subsection{Naming Conventions and Terminology}\label{sec:Naming} 
+\begin{description}
+    \item[ECA] Stands for Event-Condition Action. The rule structure used for 
+    data
+    bases and commonly used in market ready business rule engines. ECA rules are
+    used in Ampersand to describe how a database should be modified in response 
+    to
+    a system constraint becoming untrue. 
+    
+    \item [ADL] Stands for ``Abstract Data Language'' (\cite[13]{derFun}). From 
+    a
+    given set of formally defined business requirements, Ampersand generates a
+    functional specification consisting of a data model, a service catalog, a
+    formal specification of the services, and a function point analysis. An ADL
+    script acts as an input for Ampersand. An ADL file consists of a plain ASCII
+    text file.
+    
+    \item [Ampersand] Ampersand is the name of this project. It is used to 
+    refer to
+    both the method of generating functional specification from formalized
+    business requirements, and the software tool which implements this method.
+    
+    \item [Business requirements] Requirements which exist due to some real 
+    world 
+    constraints (i.e. financial, logistic, physical or safety constraints). 
+    
+    \item [Business rules] See \emph{Business Requirements}.
+    
+    \item [EFA] Stands for ``ECA (see above) for Ampersand''. This term is used 
+    to 
+    refer to the contribution of this project. 
+    
+    \item [Functional specification] A \emph{formal} document which details the 
+    operation,
+    capabilities, and appearance of a software system. 
+    
+    \item [Natural language] Language written in a manner similar to that of 
+    human 
+    communication; language intended to be interpreted and understood by 
+    humans, as 
+    opposed to machines. 
+    
+    \item [Requirements engineering] The process of translating business
+    requirements into a functional specification. 
+    
+    \item [Prototype] Ampersand generates a prototype for the user that 
+    provides a 
+    front-end interface that connects to a back-end database.
+    
+\end{description}
 
+\include{design-section}
 \newpage
 \bibliographystyle{alpha}
 \bibliography{references}
