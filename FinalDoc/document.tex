@@ -4,6 +4,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{fullpage}
+\usepackage[sectionbib]{chapterbib}
+\usepackage{subfiles}
+\usepackage[noadjust]{cite}
 \usepackage[round,numbers]{natbib}
 \usepackage{multirow}
 \usepackage{booktabs}
@@ -29,14 +32,7 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
-%package for index
-\usepackage{makeidx}
-% ---------------------------
-%  Modularized Sections
-%---------------------------
-\usepackage[sectionbib]{chapterbib}
-\usepackage{subfiles}
-\usepackage[noadjust]{cite}
+
 
 % \input{filename.tex}      %will format input document according to base doc, 
 %%can nest
@@ -124,12 +120,14 @@
 
 \newcommand{\hsfunc}[2][0pt]{\operation{\hspace*{#1}\lstinline[mathescape]|#2|}}
 
+
 %\newcommand{\@supervisor}{}
 \newcommand{\supervisor}[1]{\renewcommand{\@supervisor}{#1}}
-\begin{filecontents*}{references.bib}
 
-\end{filecontents*}
+
+%%\end{filecontents*}
 \makeindex
+
 \begin{document}
 %\maketitle %% Title page included from Title.tex
 \input{title}
@@ -178,6 +176,7 @@ These data inconsistencies are corrected through ECA rules which use process
 algebra (PA) to correct or discard data using violations. EFA is used to 
 translate these ECA rules, execute SQL queries to correct violations and 
 safeguards the database from illegal transactions.
+<<<<<<< HEAD
 \subsection{Ampersand}
 \subsection{Objectives}
 \subsection{Document Guide}
@@ -231,10 +230,20 @@ safeguards the database from illegal transactions.
     front-end interface that connects to a back-end database.
     
 \end{description}
+=======
+\subsection*{Ampersand}
+\subsection*{Objectives}
+\subsection*{Document Guide}
 
-\include{design-section}
+\section{Business}\label{BusinessSect}
+\input{bus-section}
+
+
+\input{design-section}
 \newpage
+
 \bibliographystyle{alpha}
 \bibliography{references}
 \end{document}
+
 

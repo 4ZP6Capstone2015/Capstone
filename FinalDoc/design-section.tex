@@ -25,110 +25,110 @@ This section provides a brief description of the modules that EFA uses. More
 details are provided in the Module Guide for EFA.
 
 \begin{adjustbox}{center}
-    \begin{tabular}{ |p{3.2cm}|p{11cm}|  }
-        \hline
-        \multicolumn{2}{|c|}{\bfseries{\large{Ampersand Core Modules}}} \\ 
-        \hline\hline
-        \bfseries{Module Name} & \bfseries{Description}\\
-        \hline
-        AbstractSyntaxTree   & Ampersand's abstract representation of input 
-        from 
-        ADL.   \\
-        \hline
-        FSpec &   A module that represents the F-Spec structure.\\
-        \hline
-        Basics & An Ampersand internal module that provides basic functions for 
-        data manipulation.\\
-        \hline
-        ParseTree    & Ampersand parse tree for ADL script; concrete 
-        representation 
-        of the input, and retains all information of the input. \\
-        \hline
-    \end{tabular}
+\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
+\hline
+\multicolumn{2}{|c|}{\bfseries{\large{Ampersand Core Modules}}} \\ 
+\hline\hline
+\bfseries{Module Name} & \bfseries{Description}\\
+\hline
+AbstractSyntaxTree   & Ampersand's abstract representation of input 
+from 
+ADL.   \\
+\hline
+FSpec &   A module that represents the F-Spec structure.\\
+\hline
+Basics & An Ampersand internal module that provides basic functions for 
+data manipulation.\\
+\hline
+ParseTree    & Ampersand parse tree for ADL script; concrete 
+representation 
+of the input, and retains all information of the input. \\
+\hline
+\end{tabular}
 \end{adjustbox}
 
 
 \begin{adjustbox}{center}
-    \begin{tabular}{ |p{3.2cm}|p{11cm}|  }
-        \hline
-        \multicolumn{2}{|c|}{\bfseries{\large{External Haskell Modules}}} \\
-        \hline\hline
-        \bfseries{Module Name} & \bfseries{Description}\\
-        \hline
-        GHC.TypeLits   & Internal GHC module used in the implementation of 
-        type-level natural numbers \cite{hackage}    \\ 
-        \hline
-        Data.List & A module that provides support for operations on list 
-        structures.  \\
-        \hline
-        Data.Char &  A module that provides support for characters and 
-        operations 
-        on characters.  \\
-        \hline
-        Data.Coerce  & Provides safe coercions between data types; allows user 
-        to 
-        safely convert between values of type that have the same representation 
-        with no run-time overhead \cite{hackage}.\\
-        \hline
-        Debug.Trace &  Interface for tracing and monitoring execution, used for 
-        investigating bugs and other performance issues \cite{hackage}. \\ 
-        \hline 
-        GHC.TypeLits & Internal GHC module that declares the constants used in 
-        type-level implementation of natural numbers \cite{hackage}.  \\ 
-        \hline  
-        SimpleSQL.Syntax&   The AST for SQL queries \cite{hackage}\\ 
-        \hline
-        Text.PrettyPrint .Leijen & A pretty printer module based 
-        off of Philip Wadler's 1997 "A prettier printer", used to show SQL 
-        queries 
-        in a readable manner to humans \cite{hackage}.\\ 
-        \hline
-        GHC.Exts & This module provides access to types, classes, and functions 
-        necessary to use GHC extensions. \\ 
-        \hline
-        Unsafe.Coerce &  A helper module that converts a value from any type to 
-        any 
-        other type.This is used in the translation of ECA rules to SQL using 
-        user-defined data types. \\ 
-        \hline
-        System.IO.Unsafe & IO computation must be free of side effects and 
-        independent of its environment to be considered safe. Any I/O 
-        computation 
-        that is wrapped in unsafePerformIO performs side effects. \\
-        \hline
-    \end{tabular}
+\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
+\hline
+\multicolumn{2}{|c|}{\bfseries{\large{External Haskell Modules}}} \\
+\hline\hline
+\bfseries{Module Name} & \bfseries{Description}\\
+\hline
+GHC.TypeLits   & Internal GHC module used in the implementation of 
+type-level natural numbers \cite{hackage}    \\ 
+\hline
+Data.List & A module that provides support for operations on list 
+structures.  \\
+\hline
+Data.Char &  A module that provides support for characters and 
+operations 
+on characters.  \\
+\hline
+Data.Coerce  & Provides safe coercions between data types; allows user 
+to 
+safely convert between values of type that have the same representation 
+with no run-time overhead \cite{hackage}.\\
+\hline
+Debug.Trace &  Interface for tracing and monitoring execution, used for 
+investigating bugs and other performance issues \cite{hackage}. \\ 
+\hline 
+GHC.TypeLits & Internal GHC module that declares the constants used in 
+type-level implementation of natural numbers \cite{hackage}.  \\ 
+\hline  
+SimpleSQL.Syntax&   The AST for SQL queries \cite{hackage}\\ 
+\hline
+Text.PrettyPrint .Leijen & A pretty printer module based 
+off of Philip Wadler's 1997 "A prettier printer", used to show SQL 
+queries 
+in a readable manner to humans \cite{hackage}.\\ 
+\hline
+GHC.Exts & This module provides access to types, classes, and functions 
+necessary to use GHC extensions. \\ 
+\hline
+Unsafe.Coerce &  A helper module that converts a value from any type to 
+any 
+other type.This is used in the translation of ECA rules to SQL using 
+user-defined data types. \\ 
+\hline
+System.IO.Unsafe & IO computation must be free of side effects and 
+independent of its environment to be considered safe. Any I/O 
+computation 
+that is wrapped in unsafePerformIO performs side effects. \\
+\hline
+\end{tabular}
 \end{adjustbox}
 
 \begin{adjustbox}{center}
-    \begin{tabular}{ |p{3.2cm}|p{11cm}|  }
-        \hline
-        \multicolumn{2}{|c|}{\bfseries{\large{EFA Modules}}} \\
-        \hline\hline
-        \bfseries{Module Name} & \bfseries{Description}\\
-        \hline
-        ECA2SQL & The top-level module that takes ECA rules from FSpec and 
-        converts it into SQL queries.    \\ 
-        \hline
-        Equality & Various utilities related to type level equality   \\ 
-        \hline
-        PrettyPrinterSQL & Prints SQl queries in human-readable format    \\ 
-        \hline
-        Singletons & Module for Singleton datatypes, the module defines 
-        singleton for a kind in terms of an isomorphism between a type and a 
-        type representation   \\ 
-        \hline
-        Trace & Provides trace messages and various utilities used by 
-        ECA2SQL    \\ 
-        \hline
-        TSQLCombinators & Uses an overloaded operator for indexing and 
-        implements SQL as a primitive data type.   \\ 
-        \hline
-        TypedSQL & Contains basic SQL types represented in Haskell.    \\ 
-        \hline
-        Utils & Provides utility functions for ECA2SQL and contains type 
-        families    \\ 
-        \hline
-    \end{tabular}
+\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
+\hline
+\multicolumn{2}{|c|}{\bfseries{\large{EFA Modules}}} \\
+\hline\hline
+\bfseries{Module Name} & \bfseries{Description}\\
+\hline
+ECA2SQL & The top-level module that takes ECA rules from FSpec and 
+converts it into SQL queries.    \\ 
+\hline
+Equality & Various utilities related to type level equality   \\ 
+\hline
+PrettyPrinterSQL & Prints SQl queries in human-readable format    \\ 
+\hline
+Singletons & Module for Singleton datatypes, the module defines 
+singleton for a kind in terms of an isomorphism between a type and a 
+type representation   \\ 
+\hline
+Trace & Provides trace messages and various utilities used by 
+ECA2SQL    \\ 
+\hline
+TSQLCombinators & Uses an overloaded operator for indexing and 
+implements SQL as a primitive data type.   \\ 
+\hline
+TypedSQL & Contains basic SQL types represented in Haskell.    \\ 
+\hline
+Utils & Provides utility functions for ECA2SQL and contains type 
+families    \\ 
+\hline
+\end{tabular}
 \end{adjustbox}
 
 \noindent
@@ -137,7 +137,7 @@ details are provided in the Module Guide for EFA.
 This section details the syntax used to describe the module system of
 Ampersand. This syntax largely borrows from actual Haskell syntax, and from the
 Agda programming language%\cite{agda}.
- Agda is a dependently typed functional
+Agda is a dependently typed functional
 language, and since a large part of our work deals with ``faking'' dependent
 types, the syntax of Agda is conducive to easy communication of our module 
 system. The
@@ -165,8 +165,13 @@ constructors. In every case in our system, when we define a datatype and use
 the promoted version, we never use the \emph{unpromoted} version. That is, we 
 define types which are never used as types, only as kinds, and constructors 
 which are never used as value constructors,only type constructors. We write 
-\,\,\,\lstinline!X : A -> B -> $\ldots$ -> Type!\,\,\, to denote
-a regular data type, and \,\,\,\lstinline!Y : A -> B -> $\ldots$ -> Kind!\,\,\, 
+\,\,\,
+\lstinline!X : A -> B -> $\ldots$ -> Type!
+\,\,\, 
+to denote a regular data type, and 
+\,\,\,
+\lstinline!Y : A -> B -> $\ldots$ -> Kind!
+\,\,\, 
 to denote a datatype
 which is used exclusively as a kind. 
 
@@ -198,14 +203,15 @@ The syntax \lstinline!forall (x : A) -> B! is used to denote the regular
 Haskell type \texttt{forall (x :: A) . B}. As is customary in Haskell, the 
 quantification
 may be dropped when the kind $A$ is clear from the context: 
-\lstinline!forall (x : A) -> P x! and
+\lstinline!forall (x : A) -> P x! 
+and
 \lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
 
 \subsection{Constraints}
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
-\texttt{Show a => a -> String} would be written simply as 
-\lstinline!Show a -> a -> String!.
+\texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> a -> String!
+.
 In certain casees, a constraint is intended to be used only in an implicit 
 fashion 
 (i.e. as an actual constraint), in which case the constraint is written with 
@@ -233,7 +239,7 @@ multiple times with different types. The motivation for this is that often the
 real type will be exceeding complex, because it must be so to get good type 
 inference. 
 
- 
+
 
 \subsubsection{Omitted implementations}
 When the implementation of a type synonym, or any other entity, is omitted, it
@@ -249,10 +255,10 @@ forbidden by Haskell.
 
 
 \begin{itemize}
-    \item With a function (by DeMorgan's law): \\ \texttt{(forall (x :: A) . P 
-    x -> r) -> r}
-    \item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> 
-    Exists p}
+\item With a function (by DeMorgan's law): \\ \texttt{(forall (x :: A) . P 
+x -> r) -> r}
+\item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> 
+Exists p}
 \end{itemize} 
 
 Choice of form is based on the circumstances in which the function
@@ -263,62 +269,62 @@ presented here does not distinguish between the two.
 
 
 \begin{figure}[!ht]
-    \makebox[\textwidth][c]{
-        \scalebox{0.6}{
-            \begin{tikzpicture}
-            
-            \begin{package}{Module}
-            
-            \begin{class}[text width=10cm]{Submodule$_0$}{0,0}
-            \hstype{Data$_0$ : Type where}
-            \hstypectr{Ctr$_0$ : A -> Data$_0$}
-            \hstypectr{pattern Ctr$_1$ : B -> Data$_0$}
-            \hsfunc{func$_0$ : B -> C -> D} 
-            \hstype{Data$_1$ : Kind where}
-            \hstypectr{Ctr$_2$ : E -> Data$_1$}
-            \end{class}
-            
-            \begin{class}[text width=10cm]{Submodule$_1$}{0,-5}
-            \attribute{\emph{Type level namespace}}
-            \operation{\emph{Value level namespace}}
-            \end{class}
-            
-            \draw [umlcd style, ->] (Submodule$_0$.south) -- (Submodule$_0$ |- 
-            Submodule$_1$.north); 
-            \end{package}
-            
-            \begin{class}[text width=3cm]{Module$_0$}{10,-3.5}
-            \end{class}
-            
-            \begin{class}[text width=3cm]{Module$_1$}{10,-5.5}
-            \end{class}
-            
-            \begin{class}[text width=3cm]{Module$_2$}{15,-5.5}
-            \end{class}
-            
-            \draw [umlcd style, ->] (Module$_0$.south) -- (Module$_0$ |- 
-            Module$_1$.north); 
-            \draw [umlcd style, ->] (Module$_1$.east) -- (Module$_1$ -| 
-            Module$_2$.west); 
-            
-            \renewcommand{\umlfillcolor}{grey}
-            \begin{class}[text width=10cm]{Package Dependency}{12,0.5}
-            \hstype{$\ldots$}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            
-            \renewcommand{\umlfillcolor}{applegreen}
-            \begin{class}[text width=10cm]{System Module}{12,-1.5}
-            \hstype{$\ldots$}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \end{tikzpicture}
-        }}\caption{Example of module diagram syntax}\label{fig:ModExample}
-    \end{figure}
-    
-    
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+
+\begin{package}{Module}
+
+\begin{class}[text width=10cm]{Submodule$_0$}{0,0}
+\hstype{Data$_0$ : Type where}
+\hstypectr{Ctr$_0$ : A -> Data$_0$}
+\hstypectr{pattern Ctr$_1$ : B -> Data$_0$}
+\hsfunc{func$_0$ : B -> C -> D} 
+\hstype{Data$_1$ : Kind where}
+\hstypectr{Ctr$_2$ : E -> Data$_1$}
+\end{class}
+
+\begin{class}[text width=10cm]{Submodule$_1$}{0,-5}
+\attribute{\emph{Type level namespace}}
+\operation{\emph{Value level namespace}}
+\end{class}
+
+\draw [umlcd style, ->] (Submodule$_0$.south) -- (Submodule$_0$ |- 
+Submodule$_1$.north); 
+\end{package}
+
+\begin{class}[text width=3cm]{Module$_0$}{10,-3.5}
+\end{class}
+
+\begin{class}[text width=3cm]{Module$_1$}{10,-5.5}
+\end{class}
+
+\begin{class}[text width=3cm]{Module$_2$}{15,-5.5}
+\end{class}
+
+\draw [umlcd style, ->] (Module$_0$.south) -- (Module$_0$ |- 
+Module$_1$.north); 
+\draw [umlcd style, ->] (Module$_1$.east) -- (Module$_1$ -| 
+Module$_2$.west); 
+
+\renewcommand{\umlfillcolor}{grey}
+\begin{class}[text width=10cm]{Package Dependency}{12,0.5}
+\hstype{$\ldots$}
+\hsfunc{$\ldots$}
+\end{class}
+
+
+\renewcommand{\umlfillcolor}{applegreen}
+\begin{class}[text width=10cm]{System Module}{12,-1.5}
+\hstype{$\ldots$}
+\hsfunc{$\ldots$}
+\end{class}
+
+\end{tikzpicture}
+}}\caption{Example of module diagram syntax}\label{fig:ModExample}
+\end{figure}
+
+
 
 \subsection{A Description of Module Diagram Syntax}\label{subsec:ModuleSyntax}
 
@@ -355,11 +361,12 @@ equality constraints, for example, things like \lstinline{Show x} and
 \lstinline[mathescape]|Int $\sim$ Bool|.  
 Note that \texttt{Show} itself does \emph{not} have kind Constraint --
 its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
-primitive entities can be found in the GHC user guide\citep{ghcUserGuide}. While
+primitive entities can be found in the GHC user guide~\cite{ghcUserGuide}. While
 many modern features of GHC are used in the actual implementation, they are not
 mentioned in, nor required to understand, the module description.
-%% All other features of GHC are
-%% detailed in the user guide as well, but no other
+
+%% %% All other features of GHC are
+%% %% detailed in the user guide as well, but no other
 
 The primary interface to EFA is the function \lstinline{eca2PrettySQL}, which 
 takes an FSpec (the abstract syntax of Ampersand) and an ECA rule, and returns 
@@ -383,335 +390,335 @@ inputs and outputs of the function -- they are precisely the inputs and outputs
 of the type.
 
 \begin{figure}[!ht]
-    \makebox[\textwidth][c]{
-        \scalebox{0.6}{
-            \begin{tikzpicture}
-            
-            %% \begin{package}{TypedSQL}
-            %% fwQcGWGGF
-            
-            \begin{class}[text width=16.6cm]{ECA2SQL}{0,2}
-            \hsfunc{eca2SQL : FSpec -> ECArule -> exists (a : [SQLType]) 
-            (SQLMethod a SQLBool)}
-            \hsfunc{eca2PrettySQL : FSpec -> ECArule -> Doc}
-            %% \hsfunc{$\ldots$}
-            \end{class}
-            
-            \begin{class}[text width=3cm]{TypedSQL}{-3.4, -2.5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \begin{class}[text width=4.5cm]{PrettyPrinterSQL}{-9, -2.5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \begin{class}[text width=6cm]{TypedSQLCombinators}{5,-2.5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            
-            \begin{class}[text width=3cm]{Equality}{-3.4,-5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \begin{class}[text width=3cm]{Singletons}{3.55,-5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            
-            %% \begin{class}[text width=3cm]{Trace}{-3.4,-13.5}
-            %%     \hsfunc{$\ldots$}
-            %% \end{class}
-            
-            \begin{class}[text width=3cm]{Proof Utils}{3.55,-7.5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \renewcommand{\umlfillcolor}{grey}
-            \begin{class}[text width=9cm]{base}{6,-13.5}
-            \hstype{Nat : Kind} 
-            \hstype{Constraint : Kind} 
-            \hstype{Type : Kind} 
-            \hstype{Symbol : Kind}
-            \hstype{CmpSymbol : Symbol -> Symbol -> Ordering} 
-            \hstype{(\~) : Type -> Type -> Constraint} 
-            \end{class}
-            
-            \renewcommand{\umlfillcolor}{grey}
-            \begin{class}[text width=6cm]{wl-pprint}{-3.4,-6.5}
-            \hstype{Doc : Type} 
-            \hstype{instance Show Doc where $\ldots$} 
-            \hstype{class Pretty a where}
-            \hstype[20pt]{pretty :: a -> Doc}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \renewcommand{\umlfillcolor}{grey}
-            \begin{class}[text width=7cm]{simple-sql-parser}{-11,-6.5}
-            \hstype{QueryExpr : Type where $\ldots$}
-            \hstype{ValueExpr : Type where $\ldots$}
-            \hstype{Name : Type where $\ldots$}
-            \hsfunc{prettyQueryExpr : QueryExpr -> Doc} 
-            \hsfunc{prettyValueExpr : ValueExpr -> Doc} 
-            \end{class}
-            
-            
-            \renewcommand{\umlfillcolor}{applegreen}
-            \begin{class}[text width=4.9cm]{AmpersandCore}{4,-10}
-            \hstype{ECArule : Type where $\ldots$} 
-            %% \hsfunc{$\ldots$}
-            \end{class}
-            
-            \renewcommand{\umlfillcolor}{applegreen}
-            \begin{class}[text width=3cm]{Test}{-2,5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \renewcommand{\umlfillcolor}{applegreen}
-            \begin{class}[text width=3cm]{Prototype}{2,5}
-            \hsfunc{$\ldots$}
-            \end{class}
-            
-            \renewcommand{\umlfillcolor}{applegreen}
-            \begin{class}[text width=4.5cm]{FSpec}{10.4,-10}
-            \hstype{FSpec : Type where $\ldots$} 
-            %% \hsfunc{$\ldots$}
-            \end{class}
-            
-            \unidirectionalAssociation{Prototype}{}{}{ECA2SQL}
-            \unidirectionalAssociation{Test}{}{}{ECA2SQL}
-            
-            \draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south 
-            west)$) -- (TypedSQL.north); 
-            \draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south 
-            east)$) -- (TypedSQLCombinators.north); 
-            \draw [umlcd style, ->] (ECA2SQL.south) -- (Equality.north east); 
-            \draw [umlcd style, ->] (ECA2SQL.south) -- (Singletons.north west); 
-            %% \draw [umlcd style, ->] (ECA2SQL.south) -- (Trace.north east); 
-            \draw [umlcd style, ->] (ECA2SQL.south) -- (Proof Utils.north 
-            west); 
-            \draw [umlcd style, ->] (ECA2SQL.south west) -- 
-            (PrettyPrinterSQL.north); 
-            
-            
-            \node[above = 1cm of base] (basedummy)       {};
-            \node[above = 1.5cm of base](basedummy2)       {};
-            \draw [umlcd style, ->, thick] (basedummy) -- (base); 
-            \draw [umlcd style dashed line, -, thick] (basedummy2) -- (base); 
-            
-            \draw [umlcd style, ->] (Singletons.south) -- (Proof Utils.north); 
-            %% \draw [umlcd style, ->] (Singletons.west) -- (Trace.east); 
-            \draw [umlcd style, ->] (TypedSQL.south) -- (Equality.north); 
-            %% \draw [umlcd style, ->] (Equality.south) -- (Trace.north); 
-            \draw [umlcd style, ->] (TypedSQLCombinators.west) -- 
-            (TypedSQL.east); 
-            \draw [umlcd style, ->] (Singletons.west) -- (Equality.east); 
-            %% \draw [umlcd style, ->] (Proof Utils.south west) -- (Trace.south 
-            %%east); 
-            \draw [umlcd style, ->] (TypedSQL.south east) -- 
-            (AmpersandCore.north west); 
-            
-            \draw [umlcd style, ->] ([xshift=60pt]TypedSQLCombinators.south) -- 
-            ([xshift=30pt]AmpersandCore.north); 
-            \draw [umlcd style, ->] (TypedSQLCombinators.south) -- 
-            (Singletons.north); 
-            \draw [umlcd style, ->] ([xshift=30pt]TypedSQLCombinators.south) -- 
-            (Proof Utils.north east); 
-            
-            
-            \draw [umlcd style, ->] ([xshift=-30pt]PrettyPrinterSQL.south east) 
-            -- (wl-pprint.north west); 
-            %% \draw [umlcd style, ->] (PrettyPrinterSQL.south east) -- 
-            %%(Trace.west); 
-            \draw [umlcd style, ->] (PrettyPrinterSQL.east) -- (TypedSQL.west); 
-            
-            %% \node[above = 1cm of Trace] (tracedummy)       {};
-            %% \node[above = 1.5cm of Trace](tracedummy2)       {};
-            %% \draw [umlcd style, ->, thick] (tracedummy) -- (Trace); 
-            %% \draw [umlcd style dashed line, -, thick] (tracedummy2) -- 
-            %%(Trace); 
-            
-            \draw [umlcd style, ->] (TypedSQL.south west) -- 
-            (simple-sql-parser.north east); 
-            
-            \draw  [umlcd style, ->, fill opacity=0]  
-            ([xshift=70pt]TypedSQLCombinators.south) --++ (0cm,-8cm) -| 
-            (simple-sql-parser.south);
-            
-            
-            \draw[umlcd style ,->, fill opacity=0] (ECA2SQL.east) -| node[above 
-            , sloped , black]{} (FSpec.north);
-            
-            \draw[umlcd style ,->, fill opacity=0] (ECA2SQL.south) |- 
-            node[above , sloped , black]{} (AmpersandCore.west);
-            
-            \unidirectionalAssociation{PrettyPrinterSQL}{}{}{simple-sql-parser}
-            
-            \end{tikzpicture}
-        }}\caption{Module diagram for EFA as a whole} \label{fig:efaMod}
-    \end{figure}
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+
+%% \begin{package}{TypedSQL}
+%% fwQcGWGGF
+
+\begin{class}[text width=16.6cm]{ECA2SQL}{0,2}
+\hsfunc{eca2SQL : FSpec -> ECArule -> exists (a : [SQLType]) 
+(SQLMethod a SQLBool)}
+\hsfunc{eca2PrettySQL : FSpec -> ECArule -> Doc}
+%% \hsfunc{$\ldots$}
+\end{class}
+
+\begin{class}[text width=3cm]{TypedSQL}{-3.4, -2.5}
+\hsfunc{$\ldots$}
+\end{class}
+
+\begin{class}[text width=4.5cm]{PrettyPrinterSQL}{-9, -2.5}
+\hsfunc{$\ldots$}
+\end{class}
+
+\begin{class}[text width=6cm]{TypedSQLCombinators}{5,-2.5}
+\hsfunc{$\ldots$}
+\end{class}
+
+
+\begin{class}[text width=3cm]{Equality}{-3.4,-5}
+\hsfunc{$\ldots$}
+\end{class}
+
+\begin{class}[text width=3cm]{Singletons}{3.55,-5}
+\hsfunc{$\ldots$}
+\end{class}
+
+
+%% \begin{class}[text width=3cm]{Trace}{-3.4,-13.5}
+%%     \hsfunc{$\ldots$}
+%% \end{class}
+
+\begin{class}[text width=3cm]{Proof Utils}{3.55,-7.5}
+\hsfunc{$\ldots$}
+\end{class}
+
+\renewcommand{\umlfillcolor}{grey}
+\begin{class}[text width=9cm]{base}{6,-13.5}
+\hstype{Nat : Kind} 
+\hstype{Constraint : Kind} 
+\hstype{Type : Kind} 
+\hstype{Symbol : Kind}
+\hstype{CmpSymbol : Symbol -> Symbol -> Ordering} 
+\hstype{(\~) : Type -> Type -> Constraint} 
+\end{class}
+
+\renewcommand{\umlfillcolor}{grey}
+\begin{class}[text width=6cm]{wl-pprint}{-3.4,-6.5}
+\hstype{Doc : Type} 
+\hstype{instance Show Doc where $\ldots$} 
+\hstype{class Pretty a where}
+\hstype[20pt]{pretty :: a -> Doc}
+\hsfunc{$\ldots$}
+\end{class}
+
+\renewcommand{\umlfillcolor}{grey}
+\begin{class}[text width=7cm]{simple-sql-parser}{-11,-6.5}
+\hstype{QueryExpr : Type where $\ldots$}
+\hstype{ValueExpr : Type where $\ldots$}
+\hstype{Name : Type where $\ldots$}
+\hsfunc{prettyQueryExpr : QueryExpr -> Doc} 
+\hsfunc{prettyValueExpr : ValueExpr -> Doc} 
+\end{class}
+
+
+\renewcommand{\umlfillcolor}{applegreen}
+\begin{class}[text width=4.9cm]{AmpersandCore}{4,-10}
+\hstype{ECArule : Type where $\ldots$} 
+%% \hsfunc{$\ldots$}
+\end{class}
+
+\renewcommand{\umlfillcolor}{applegreen}
+\begin{class}[text width=3cm]{Test}{-2,5}
+\hsfunc{$\ldots$}
+\end{class}
+
+\renewcommand{\umlfillcolor}{applegreen}
+\begin{class}[text width=3cm]{Prototype}{2,5}
+\hsfunc{$\ldots$}
+\end{class}
+
+\renewcommand{\umlfillcolor}{applegreen}
+\begin{class}[text width=4.5cm]{FSpec}{10.4,-10}
+\hstype{FSpec : Type where $\ldots$} 
+%% \hsfunc{$\ldots$}
+\end{class}
+
+\unidirectionalAssociation{Prototype}{}{}{ECA2SQL}
+\unidirectionalAssociation{Test}{}{}{ECA2SQL}
+
+\draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south 
+west)$) -- (TypedSQL.north); 
+\draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south 
+east)$) -- (TypedSQLCombinators.north); 
+\draw [umlcd style, ->] (ECA2SQL.south) -- (Equality.north east); 
+\draw [umlcd style, ->] (ECA2SQL.south) -- (Singletons.north west); 
+%% \draw [umlcd style, ->] (ECA2SQL.south) -- (Trace.north east); 
+\draw [umlcd style, ->] (ECA2SQL.south) -- (Proof Utils.north 
+west); 
+\draw [umlcd style, ->] (ECA2SQL.south west) -- 
+(PrettyPrinterSQL.north); 
+
+
+\node[above = 1cm of base] (basedummy)       {};
+\node[above = 1.5cm of base](basedummy2)       {};
+\draw [umlcd style, ->, thick] (basedummy) -- (base); 
+\draw [umlcd style dashed line, -, thick] (basedummy2) -- (base); 
+
+\draw [umlcd style, ->] (Singletons.south) -- (Proof Utils.north); 
+%% \draw [umlcd style, ->] (Singletons.west) -- (Trace.east); 
+\draw [umlcd style, ->] (TypedSQL.south) -- (Equality.north); 
+%% \draw [umlcd style, ->] (Equality.south) -- (Trace.north); 
+\draw [umlcd style, ->] (TypedSQLCombinators.west) -- 
+(TypedSQL.east); 
+\draw [umlcd style, ->] (Singletons.west) -- (Equality.east); 
+%% \draw [umlcd style, ->] (Proof Utils.south west) -- (Trace.south 
+%%east); 
+\draw [umlcd style, ->] (TypedSQL.south east) -- 
+(AmpersandCore.north west); 
+
+\draw [umlcd style, ->] ([xshift=60pt]TypedSQLCombinators.south) -- 
+([xshift=30pt]AmpersandCore.north); 
+\draw [umlcd style, ->] (TypedSQLCombinators.south) -- 
+(Singletons.north); 
+\draw [umlcd style, ->] ([xshift=30pt]TypedSQLCombinators.south) -- 
+(Proof Utils.north east); 
+
+
+\draw [umlcd style, ->] ([xshift=-30pt]PrettyPrinterSQL.south east) 
+-- (wl-pprint.north west); 
+%% \draw [umlcd style, ->] (PrettyPrinterSQL.south east) -- 
+%%(Trace.west); 
+\draw [umlcd style, ->] (PrettyPrinterSQL.east) -- (TypedSQL.west); 
+
+%% \node[above = 1cm of Trace] (tracedummy)       {};
+%% \node[above = 1.5cm of Trace](tracedummy2)       {};
+%% \draw [umlcd style, ->, thick] (tracedummy) -- (Trace); 
+%% \draw [umlcd style dashed line, -, thick] (tracedummy2) -- 
+%%(Trace); 
+
+\draw [umlcd style, ->] (TypedSQL.south west) -- 
+(simple-sql-parser.north east); 
+
+\draw  [umlcd style, ->, fill opacity=0]  
+([xshift=70pt]TypedSQLCombinators.south) --++ (0cm,-8cm) -| 
+(simple-sql-parser.south);
+
+
+\draw[umlcd style ,->, fill opacity=0] (ECA2SQL.east) -| node[above 
+, sloped , black]{} (FSpec.north);
+
+\draw[umlcd style ,->, fill opacity=0] (ECA2SQL.south) |- 
+node[above , sloped , black]{} (AmpersandCore.west);
+
+\unidirectionalAssociation{PrettyPrinterSQL}{}{}{simple-sql-parser}
+
+\end{tikzpicture}
+}}\caption{Module diagram for EFA as a whole} \label{fig:efaMod}
+\end{figure}
 
 
 \FloatBarrier
 
 \begin{figure}[!ht]
-    \makebox[\textwidth][c]{
-        \scalebox{0.6}{
-            \begin{tikzpicture}
-            
-            \begin{package}{TypedSQL}
-            
-            \begin{class}[text width=30cm]{TypedSQLStatement}{10,18}
-            \hstype{SQLMethod : [SQLType] -> SQLType -> Type where}
-            \hstypectr{MkSQLMethod : (ts : [SQLType]) (o : SQLType) -> (Prod 
-            (SQLValSem . SQLRef) ts -> SQLMthd o) -> SQLMethod ts o}
-            %% \hstype[20pt]{-> (Prod (SQLValSem . SQLRef) ts -> SQLMthd o) -> 
-            %%SQLMethod ts o}
-            
-            \hstype{SQLSem : Kind where}
-            \hstypectr{Stmt, Mthd : SQLSem}
-            
-            \hstype{SQLStatement : SQLRefType -> Type = SQLSt Stmt}
-            \hstype{SQLMthd : SQLRefType -> Type = SQLSt Mthd}
-            
-            \hstype{SQLSt : SQLSem -> SQLRefType -> Type where} 
-            \hstypectr{Insert : TableSpec ts -> SQLVal (SQLRel (SQLRow ts)) -> 
-            SQLStatement SQLUnit}
-            \hstypectr{Delete : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal 
-            SQLBool) -> SQLStatement SQLUnit}
-            \hstypectr{Update : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal 
-            SQLBool) -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> 
-            SQLStatement SQLUnit}
-            \hstypectr{SetRef : SQLValRef x -> SQLVal x -> SQLStatement SQLUnit}
-            \hstypectr{NewRef : (a : SQLType) -> IsScalarType a \~ True -> 
-            Maybe String -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
-            \hstypectr{MakeTable : SQLRow t -> SQLStatement (SQLRef (SQLRel 
-            (SQLRow t)))}
-            \hstypectr{DropTable : TableSpec t -> SQLStatement SQLUnit}
-            \hstypectr{IfSQL : SQLVal SQLBool -> SQLSt t0 a -> SQLSt t1 b -> 
-            SQLStatement SQLUnit}
-            \hstypectr{(:>>=) : SQLStatement a -> (SQLValSem a -> SQLSt x b) -> 
-            SQLSt x b}
-            \hstypectr{SQLNoop : SQLStatement SQLUnit}
-            \hstypectr{SQLRet : SQLVal a -> SQLSt Mthd (Ty a)}
-            \hstypectr{SQLFunCall : SQLMethodRef ts out -> Prod SQLVal ts -> 
-            SQLStatement (Ty out)}
-            \hstypectr{SQLDefunMethod : SQLMethod ts out -> SQLStatement 
-            (SQLMethod ts out)}
-            \end{class}
-            
-            
-            \begin{class}[text width=11cm]{TypedSQLLanguage}{0,5}   
-            \hstype{SQLSizeVariant : Kind where}
-            \hstypectr{SQLSmall, SQLMedium, SQLNormal, SQLBig : SQLSizeVariant}
-            
-            \hstype{SQLSign : Kind where}
-            \hstypectr{SQLSigned, SQLUnsigned : SQLSign}
-            
-            \hstype{SQLNumeric : Kind where}
-            \hstypectr{SQLFloat, SQLDouble : SQLSign -> SQLNumeric}
-            \hstypectr{SQLInt : SQLSizeVariant -> SQLSign -> SQLNumeric}
-            
-            \hstype{SQLRecLabel : Kind where}
-            \hstypectr{(:::) : Symbol -> SQLType -> SQLRecLabel}
-            
-            \hstype{SQLType : Kind where}
-            \hstypectr{SQLBool, SQLDate, SQLDateTime, SQLSerial : SQLType}
-            \hstypectr{SQLNumericTy : SQLNumeric -> SQLType}
-            \hstypectr{SQLBlob : SQLSign -> SQLType}
-            \hstypectr{SQLVarChar : Nat -> SQLType}
-            \hstypectr{SQLRel : SQLType -> SQLType}
-            \hstypectr{SQLRow : [SQLRecLabel] -> SQLType}
-            \hstypectr{SQLVec : [SQLType] -> SQLType}
-            
-            \hstype{SQLRefType : Kind where}
-            \hstypectr{Ty : SQLType -> SQLRefType}
-            \hstypectr{SQLRef, SQLUnit : SQLType}
-            \hstypectr{SQLMethod : [SQLType] -> SQLType -> SQLRefType}
-            
-            \hstype{instance SingKind SQLType where $\ldots$}
-            \hstype{instance SingKind SQLRefType where $\ldots$}
-            
-            \hstype{IsScalarType : SQLType -> Bool where $\ldots$}
-            \hstype{IsScalarTypes : [SQLType] -> Bool where $\ldots$}
-            
-            \hsfunc{isScalarType : (x : SQLType) -> IsScalarType x}
-            \hsfunc{isScalarTypes : (x : [SQLType]) -> IsScalarTypes x}
-            \end{class}
-            
-            
-            \begin{class}[text width=17.5cm]{TypedSQLExpr}{16,-0.5}
-            \hstype{SQLVal : SQLType -> Type where}
-            \hstypectr{pattern SQLScalarVal : IsScalarType a :\~: True -> 
-            ValueExpr -> SQLVal a}
-            \hstypectr{pattern SQLQueryVal  : IsScalarType a :\~: False -> 
-            QueryExpr -> SQLVal a}
-            
-            \hsfunc{typeOf : SQLVal a -> a}
-            \hsfunc{argOfRel : SQLRel a -> a} 
-            
-            \hstype{SQLValSem : SQLRefType -> Type where}
-            \hstypectr{Unit : SQLValSem SQLUnit}
-            \hstypectr{Val : (x : SQLType) -> SQLVal x -> SQLValSem (Ty x)}
-            \hstypectr{pattern Method : Name -> SQLValSem (SQLMethod args out)}
-            \hstypectr{pattern Ref : (x : SQLType) -> Name -> SQLValSem (SQLRef 
-            x)}
-            
-            \hstype{SQLVal : SQLType -> Type = $\lambda$ x $.$ SQLValSem (Ty x)}
-            \hstype{SQLValRef : SQLType -> Type = $\lambda$ x $.$ SQLValSem 
-            (SQLRef x)}
-            
-            \hsfunc{typeOfSem : f `In` [SQLRef, Ty] -> SQLValSem (f x) -> x}
-            
-            \hsfunc{colsOf : SQLRow xs -> xs}
-            
-            \hsfunc{unsafeSQLValFromName : (x : SQLType) -> Name -> SQLVal x}
-            \hsfunc{unsafeSQLValFromQuery : (xs : [SQLRecLabel]) -> NonEmpty xs}
-            \hsfunc[10pt]{ -> IsSetRec xs -> SQLVal (SQLRel (SQLRow xs))}
-            \hsfunc{unsafeRefFromName : (x : SQLType) -> Name -> SQLValRef x}
-            
-            \hsfunc{deref : SQLValRef x -> SQLVal x}   
-            \end{class}
-            
-            
-            \begin{class}[text width=15.6cm]{TypedSQLTable}{17,5}
-            \hstype{TableSpec : [SQLRecLabel] -> Type where}
-            \hstypectr{MkTableSpec : SQLValRef (SQLRel (SQLRow t))  -> 
-            TableSpec t}
-            \hstypectr{TableAlias : (ns : [Symbol]) -> IsSetRec ns }
-            \hstype[20pt]{-> TableSpec t -> TableSpec (ZipRec ns (RecAssocs t))}
-            
-            \hsfunc{typeOfTableSpec : TableSpec t -> SQLRow t}
-            \hsfunc{typeOfTableSpec : TableSpec t -> t}
-            
-            \hsfunc{tableSpec : Name -> Prod (K String :*: Id) tys}
-            \hsfunc[10pt]{ -> exists (ks : [SQLRecLabel]) (Maybe (RecAssocs ks 
-            :\~: tys, TableSpec ks))}
-            
-            \end{class}
-            
-            \draw [umlcd style, ->] ([xshift=-60pt]TypedSQLStatement.south) -- 
-            ([xshift=-60pt]TypedSQLStatement |- TypedSQLExpr.north); 
-            \draw [umlcd style, ->] ([xshift=60pt]TypedSQLStatement.south) -- 
-            ([xshift=60pt]TypedSQLStatement |- TypedSQLTable.north); 
-            \draw [umlcd style, ->] ([xshift=-180pt]TypedSQLStatement.south) -- 
-            ([xshift=-180pt]TypedSQLStatement |- TypedSQLLanguage.north); 
-            
-            
-            \draw [umlcd style, ->] (TypedSQLTable.south) -- (TypedSQLTable |- 
-            TypedSQLExpr.north); 
-            \draw [umlcd style, ->] (TypedSQLTable.west) -- (TypedSQLTable -| 
-            TypedSQLLanguage.east); 
-            \draw [umlcd style, ->] (TypedSQLExpr.west) -- (TypedSQLExpr -| 
-            TypedSQLLanguage.east);
-            
-            \end{package}
-            
-            \end{tikzpicture}
-   }}\caption{Module diagram for TypedSQL} \label{fig:typedSQL}
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+
+\begin{package}{TypedSQL}
+
+\begin{class}[text width=30cm]{TypedSQLStatement}{10,18}
+\hstype{SQLMethod : [SQLType] -> SQLType -> Type where}
+\hstypectr{MkSQLMethod : (ts : [SQLType]) (o : SQLType) -> (Prod 
+(SQLValSem . SQLRef) ts -> SQLMthd o) -> SQLMethod ts o}
+%% \hstype[20pt]{-> (Prod (SQLValSem . SQLRef) ts -> SQLMthd o) -> 
+%%SQLMethod ts o}
+
+\hstype{SQLSem : Kind where}
+\hstypectr{Stmt, Mthd : SQLSem}
+
+\hstype{SQLStatement : SQLRefType -> Type = SQLSt Stmt}
+\hstype{SQLMthd : SQLRefType -> Type = SQLSt Mthd}
+
+\hstype{SQLSt : SQLSem -> SQLRefType -> Type where} 
+\hstypectr{Insert : TableSpec ts -> SQLVal (SQLRel (SQLRow ts)) -> 
+SQLStatement SQLUnit}
+\hstypectr{Delete : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal 
+SQLBool) -> SQLStatement SQLUnit}
+\hstypectr{Update : TableSpec ts -> (SQLVal (SQLRow ts) -> SQLVal 
+SQLBool) -> (SQLVal (SQLRow ts) -> SQLVal (SQLRow ts)) -> 
+SQLStatement SQLUnit}
+\hstypectr{SetRef : SQLValRef x -> SQLVal x -> SQLStatement SQLUnit}
+\hstypectr{NewRef : (a : SQLType) -> IsScalarType a \~ True -> 
+Maybe String -> Maybe (SQLVal a) -> SQLStatement (SQLRef a)}
+\hstypectr{MakeTable : SQLRow t -> SQLStatement (SQLRef (SQLRel 
+(SQLRow t)))}
+\hstypectr{DropTable : TableSpec t -> SQLStatement SQLUnit}
+\hstypectr{IfSQL : SQLVal SQLBool -> SQLSt t0 a -> SQLSt t1 b -> 
+SQLStatement SQLUnit}
+\hstypectr{(:>>=) : SQLStatement a -> (SQLValSem a -> SQLSt x b) -> 
+SQLSt x b}
+\hstypectr{SQLNoop : SQLStatement SQLUnit}
+\hstypectr{SQLRet : SQLVal a -> SQLSt Mthd (Ty a)}
+\hstypectr{SQLFunCall : SQLMethodRef ts out -> Prod SQLVal ts -> 
+SQLStatement (Ty out)}
+\hstypectr{SQLDefunMethod : SQLMethod ts out -> SQLStatement 
+(SQLMethod ts out)}
+\end{class}
+
+
+\begin{class}[text width=11cm]{TypedSQLLanguage}{0,5}   
+\hstype{SQLSizeVariant : Kind where}
+\hstypectr{SQLSmall, SQLMedium, SQLNormal, SQLBig : SQLSizeVariant}
+
+\hstype{SQLSign : Kind where}
+\hstypectr{SQLSigned, SQLUnsigned : SQLSign}
+
+\hstype{SQLNumeric : Kind where}
+\hstypectr{SQLFloat, SQLDouble : SQLSign -> SQLNumeric}
+\hstypectr{SQLInt : SQLSizeVariant -> SQLSign -> SQLNumeric}
+
+\hstype{SQLRecLabel : Kind where}
+\hstypectr{(:::) : Symbol -> SQLType -> SQLRecLabel}
+
+\hstype{SQLType : Kind where}
+\hstypectr{SQLBool, SQLDate, SQLDateTime, SQLSerial : SQLType}
+\hstypectr{SQLNumericTy : SQLNumeric -> SQLType}
+\hstypectr{SQLBlob : SQLSign -> SQLType}
+\hstypectr{SQLVarChar : Nat -> SQLType}
+\hstypectr{SQLRel : SQLType -> SQLType}
+\hstypectr{SQLRow : [SQLRecLabel] -> SQLType}
+\hstypectr{SQLVec : [SQLType] -> SQLType}
+
+\hstype{SQLRefType : Kind where}
+\hstypectr{Ty : SQLType -> SQLRefType}
+\hstypectr{SQLRef, SQLUnit : SQLType}
+\hstypectr{SQLMethod : [SQLType] -> SQLType -> SQLRefType}
+
+\hstype{instance SingKind SQLType where $\ldots$}
+\hstype{instance SingKind SQLRefType where $\ldots$}
+
+\hstype{IsScalarType : SQLType -> Bool where $\ldots$}
+\hstype{IsScalarTypes : [SQLType] -> Bool where $\ldots$}
+
+\hsfunc{isScalarType : (x : SQLType) -> IsScalarType x}
+\hsfunc{isScalarTypes : (x : [SQLType]) -> IsScalarTypes x}
+\end{class}
+
+
+\begin{class}[text width=17.5cm]{TypedSQLExpr}{16,-0.5}
+\hstype{SQLVal : SQLType -> Type where}
+\hstypectr{pattern SQLScalarVal : IsScalarType a :\~: True -> 
+ValueExpr -> SQLVal a}
+\hstypectr{pattern SQLQueryVal  : IsScalarType a :\~: False -> 
+QueryExpr -> SQLVal a}
+
+\hsfunc{typeOf : SQLVal a -> a}
+\hsfunc{argOfRel : SQLRel a -> a} 
+
+\hstype{SQLValSem : SQLRefType -> Type where}
+\hstypectr{Unit : SQLValSem SQLUnit}
+\hstypectr{Val : (x : SQLType) -> SQLVal x -> SQLValSem (Ty x)}
+\hstypectr{pattern Method : Name -> SQLValSem (SQLMethod args out)}
+\hstypectr{pattern Ref : (x : SQLType) -> Name -> SQLValSem (SQLRef 
+x)}
+
+\hstype{SQLVal : SQLType -> Type = $\lambda$ x $.$ SQLValSem (Ty x)}
+\hstype{SQLValRef : SQLType -> Type = $\lambda$ x $.$ SQLValSem 
+(SQLRef x)}
+
+\hsfunc{typeOfSem : f `In` [SQLRef, Ty] -> SQLValSem (f x) -> x}
+
+\hsfunc{colsOf : SQLRow xs -> xs}
+
+\hsfunc{unsafeSQLValFromName : (x : SQLType) -> Name -> SQLVal x}
+\hsfunc{unsafeSQLValFromQuery : (xs : [SQLRecLabel]) -> NonEmpty xs}
+\hsfunc[10pt]{ -> IsSetRec xs -> SQLVal (SQLRel (SQLRow xs))}
+\hsfunc{unsafeRefFromName : (x : SQLType) -> Name -> SQLValRef x}
+
+\hsfunc{deref : SQLValRef x -> SQLVal x}   
+\end{class}
+
+
+\begin{class}[text width=15.6cm]{TypedSQLTable}{17,5}
+\hstype{TableSpec : [SQLRecLabel] -> Type where}
+\hstypectr{MkTableSpec : SQLValRef (SQLRel (SQLRow t))  -> 
+TableSpec t}
+\hstypectr{TableAlias : (ns : [Symbol]) -> IsSetRec ns }
+\hstype[20pt]{-> TableSpec t -> TableSpec (ZipRec ns (RecAssocs t))}
+
+\hsfunc{typeOfTableSpec : TableSpec t -> SQLRow t}
+\hsfunc{typeOfTableSpec : TableSpec t -> t}
+
+\hsfunc{tableSpec : Name -> Prod (K String :*: Id) tys}
+\hsfunc[10pt]{ -> exists (ks : [SQLRecLabel]) (Maybe (RecAssocs ks 
+:\~: tys, TableSpec ks))}
+
+\end{class}
+
+\draw [umlcd style, ->] ([xshift=-60pt]TypedSQLStatement.south) -- 
+([xshift=-60pt]TypedSQLStatement |- TypedSQLExpr.north); 
+\draw [umlcd style, ->] ([xshift=60pt]TypedSQLStatement.south) -- 
+([xshift=60pt]TypedSQLStatement |- TypedSQLTable.north); 
+\draw [umlcd style, ->] ([xshift=-180pt]TypedSQLStatement.south) -- 
+([xshift=-180pt]TypedSQLStatement |- TypedSQLLanguage.north); 
+
+
+\draw [umlcd style, ->] (TypedSQLTable.south) -- (TypedSQLTable |- 
+TypedSQLExpr.north); 
+\draw [umlcd style, ->] (TypedSQLTable.west) -- (TypedSQLTable -| 
+TypedSQLLanguage.east); 
+\draw [umlcd style, ->] (TypedSQLExpr.west) -- (TypedSQLExpr -| 
+TypedSQLLanguage.east);
+
+\end{package}
+
+\end{tikzpicture}
+}}\caption{Module diagram for TypedSQL} \label{fig:typedSQL}
 \end{figure}
-    
-    
+
+
 \subsubsection{TypedSQL}
 The module hierarchy for the TypedSQL module is shown in
 figure \ref{fig:typedSQL}. The submodules of TypedSQL are quite large, 
@@ -752,569 +759,572 @@ there is a one-to-one correspondence between the semantics of the
 constructor,
 and the semantics of the SQL statement with the same name. The exceptions 
 are:     
-    \begin{description}
-        \item[\texttt{SQLNoop}] MySQL does not have a primitive no-op statement
-        \item[\texttt{SQLDefunMethod}]  MySQL does not allow defining 
-        procedures within procedures; 
-        this constructor denotes that a method ``defined'' within another 
-        statement must 
-        first be loaded as a MySQL Stored Procedure \citep{mySQLman}.
-        \item[\texttt{:>>=}] This constructor corresponds to sequencing 
-        statements. This constructor
-        embeds scope checking of MySQL statements in the Haskell compiler -- 
-        ill-formed statements
-        containing variables which are not defined (i.e. not in scope) will be 
-        rejected by the Haskell
-        compiler. 
-    \end{description}
+\begin{description}
+\item[\texttt{SQLNoop}] MySQL does not have a primitive no-op statement
+\item[\texttt{SQLDefunMethod}]  MySQL does not allow defining 
+procedures within procedures; 
+this constructor denotes that a method ``defined'' within another 
+statement must 
+first be loaded as a MySQL Stored Procedure \citep{mySQLman}.
+\item[\texttt{:>>=}] This constructor corresponds to sequencing 
+statements. This constructor
+embeds scope checking of MySQL statements in the Haskell compiler -- 
+ill-formed statements
+containing variables which are not defined (i.e. not in scope) will be 
+rejected by the Haskell
+compiler. 
+\end{description}
+
+The SQLSt data type also distinguishes between two varieties of statements:
+SQLStatement and SQLMthd. The former is the type of regular statements, 
+while
+the latter is the type of ``almost'' complete methods - methods whose formal
+parameters have not yet been bound. This is done in order to statically
+guarantee that a SQL method always returns a value. Due to the type of
+\lstinline{:>>=}, this also rules out SQL programs which contain dead code 
+-- no
+code can follow SQLRet, which is always guaranteed to return from the 
+function.
+While this does rule out some valid programs (for example, an if statement 
+in
+which both branches end with a return, but there is no return following the 
+if
+statement, will be rejected), these programs can be written in an equivalent
+way in our language without any loss of generality.    
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+\begin{tikzpicture}
+
+%% \begin{package}{TypedSQL}
+\begin{class}[text width=22cm]{TypedSQLCombinators}{17,5}
+\hstype{PrimSQLFunction : [SQLType] -> SQLType -> Type}
+\hstypectr{PTrue, PFalse : PrimSQLFunction [] SQLBool}
+\hstypectr{Not : PrimSQLFunction [ SQLBool ] SQLBool}
+\hstypectr{Or, And : PrimSQLFunction [ SQLBool, SQLBool ] 
+SQLBool}
+\hstypectr{In, NotIn : PrimSQLFunction [ a, SQLRel a ] SQLBool}
+\hstypectr{Exists : PrimSQLFunction [ SQLRel a ] SQLBool}
+\hstypectr{GroupBy : PrimSQLFunction [ SQLRel a, a ] (SQLRel 
+(SQLRel a))}
+\hstypectr{SortBy  : PrimSQLFunction [ SQLRel a, a ] (SQLRel a)}
+\hstypectr{Max, Min, Sum, Avg : IsSQLNumeric a -> 
+PrimSQLFunction [ SQLRel a ] a }
+\hstypectr{Alias : (RecAssocs ts :~: RecAssocs ts') -> 
+PrimSQLFunction [ SQLRel (SQLRow ts) ] (SQLRel (SQLRow ts'))}
+
+\hsfunc{primSQL : forall (args : [SQLType]) (out : SQLType) -> 
+PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
+
+\hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
+:\~: r -> SQLVal (SQLRow xs) -> SingT i -> SQLVal r}
+\hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
+:\~: r -> SQLVal (SQLRel (SQLRow xs)) -> SingT i -> SQLVal r}
+\hsfunc{(!) : (xs : [SQLType]) (i : Nat) -> LookupIx t i :\~: r 
+-> SQLVal (SQLVec t) -> SingT i -> SQLVal r}
+
+
+\end{class}
+
+%% \end{package}
+
+\end{tikzpicture}
+}}\caption{Module diagram for TypedSQLCombinators} 
+\label{fig:typedSQLComb}
+\end{figure}
+
+\Oldsubsubsection{TypedSQLCombinators}
+
+The module TypedSQLCombinators, whose members are given in 
+figure~\ref{fig:typedSQLComb},
+implements a subset of primitive SQL functions on top of the TypedSQL 
+expression type. 
+The data type PrimSQLFunction encodes the specification of each 
+function; the type
+and semantics of each function is that of the corresponding function in 
+MySQL (refer to
+the MySQL manual ~\cite{mySQLman} for details on each function). The 
+only exception
+is the \lstinline{Alias} function, which is a primitive syntactic 
+constructor (not a named entity)
+in MySQL - rows can be aliased with a select statement. Aliasing a row 
+means to change
+the name of each association in the row, but not the shape of the row 
+(i.e. the types of
+each element of the row, as well as their ordering). The single 
+function \lstinline{primSQL}
+implements all of the primitive SQL functions. It takes as an argument 
+a specification
+of the primitive function, a tuple of arguments of the correspond 
+types, and returns
+a SQL value, again of the corresponding type. 
+
+
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+\scalebox{0.6}{
+    \begin{tikzpicture}
     
-    The SQLSt data type also distinguishes between two varieties of statements:
-    SQLStatement and SQLMthd. The former is the type of regular statements, 
-    while
-    the latter is the type of ``almost'' complete methods - methods whose formal
-    parameters have not yet been bound. This is done in order to statically
-    guarantee that a SQL method always returns a value. Due to the type of
-    \lstinline{:>>=}, this also rules out SQL programs which contain dead code 
-    -- no
-    code can follow SQLRet, which is always guaranteed to return from the 
-    function.
-    While this does rule out some valid programs (for example, an if statement 
-    in
-    which both branches end with a return, but there is no return following the 
-    if
-    statement, will be rejected), these programs can be written in an equivalent
-    way in our language without any loss of generality.    
+    \begin{class}[text width=22cm]{Singletons}{17,5}
+    \hstype{SingT : k -> Type} 
+    \hstype{class SingKind (k : Kind) where $\ldots$} 
+    \hsfunc{(\%==) : forall (x : k) (y : k) -> SingKind k => x 
+    -> y -> DecEq x y}
+    
+    \end{class}
+    
+    \end{tikzpicture}
+}}\caption{Module diagram for Singletons} \label{fig:singletons}
+\end{figure}
+
+\begin{figure}[!ht]
+\makebox[\textwidth][c]{
+    \scalebox{0.6}{
+        \begin{tikzpicture}
+        
+        \begin{class}[text width=22cm]{PrettySQL}{17,5}
+        
+        \hstype{instance Pretty (SQLTypeS x) $\,\,$ where 
+        $\ldots$}
+        \hstype{instance Pretty (SQLVal x)  $\,\,$ where 
+        $\ldots$}
+        \hstype{instance Pretty (SQLValSem x)  $\,\,$ where 
+        $\ldots$}
+        \hstype{instance Pretty (SQLSt k x)  $\,\,$ where 
+        $\ldots$}
+        \hstype{instance (str \~ String) => Pretty (str, 
+        SQLMethod args out)  $\,\,$ where $\ldots$}
+        
+        \end{class}
+        
+        \end{tikzpicture}
+    }}\caption{Module diagram for PrettySQL} 
+    \label{fig:prettySQL}
+\end{figure}
+
+
+
+\begin{figure}[!ht]
+    \makebox[\textwidth][c]{
+        \scalebox{0.6}{
+            \begin{tikzpicture}
+            
+            \begin{class}[text width=22cm]{Equality}{17,5}
+            
+            \hsfunc{cong : f :\~: g -> a :\~: b -> f a :\~: g b}
+            \hsfunc{cong2 : f :\~: g -> a :\~: a' -> b :\~: b' 
+            -> f a b :\~: g a' b'}
+            \hsfunc{cong3 : f :\~: g -> a :\~: a' -> b :\~: b' 
+            -> c :\~: c' -> f a b c :\~: g a' b' c'}
+            
+            \hstype{Dict : Constraint -> Type}
+            \hstypectr{Dict : p => Dict p}
+            
+            \hstype{Exists : (k -> Type) -> Type} 
+            \hstypectr{Ex : p x -> Exists p}
+            
+            \hsfunc{($\#$>>) :: Exists p -> (forall x -> p x -> 
+            r) -> r}
+            
+            \hstype{Not : Type -> Type} 
+            
+            \hstype{class NFData a}
+            
+            \hstype{doubleneg : NFData a => a -> Not (Not a)} 
+            
+            %% Why is this particular defintion off by about 
+            %%2pt? Very strange...
+            \hstype[-2pt]{triviallyTrue : Not (Not ())}
+            
+            \hstype{mapNeg : (NFData a, NFData b) => (b -> a) 
+            -> Not a -> Not b}
+            
+            \hstype{elimNeg : NFData a => Not a -> a -> Void}
+            
+            \hstype{data Void where}
+            
+            \hstype{data Dec : Type -> Type}
+            \hstypectr{Yes : !p -> Dec p}
+            \hstypectr{No  : !(Not p) -> Dec p}
+            
+            \hstype{DecEq : k -> k -> Type = $\lambda$ a b$.$ 
+            Dec (a :\~: b)}
+            
+            \hsfunc{mapDec : (p -> q) -> (Not p -> Not q) -> 
+            Dec p -> Dec q}
+            
+            \hsfunc{liftDec2 :: Dec p -> Dec q -> (p -> q -> r) 
+            -> (Not p -> Not r) -> (Not q -> Not r) -> Dec r}
+            
+            \hsfunc{dec2bool :: DecEq a b -> Bool}
+            
+            \end{class}
+            
+            \end{tikzpicture}
+        }}\caption{Module diagram for Equality} 
+        \label{fig:equality}
+    \end{figure}
+    
+    \Oldsubsubsection{Equality}
+    
+    The Equality module (\ref{fig:equality}) defines several 
+    utilities for working
+    with proof-like values, including the existential 
+    quantification data type,
+    proofs of congruence of propositional equality of various 
+    arities --
+    \lstinline{cong, cong2, cong3} -- and the Dec type, which 
+    encodes the concept of
+    a decidable proposition. The most important element of this 
+    module, however is
+    the abstract \lstinline{Not} type. We must prove certain 
+    things about our
+    program to the Haskell type system. For example, if one 
+    attempts to construct a
+    scalar SQLVal for some SQLType $S$, one must first prove 
+    that that type is a
+    scalar type. The main use of this is decidable equality, 
+    which is similair to
+    regular equality, but additionally to giving a ``yes'' or 
+    ``no'' answer, it also
+    stores a \emph{proof} of that answer.
+    
+    The view of propositions as types comes from the 
+    Curry-Howard
+    isomorphism \cite{props}; however, this is not quite sound 
+    in Haskell, because
+    every type is inhabited by $\bot$, which corresponds to 
+    \texttt{undefined}, an
+    exception, or non-termination. Due to laziness, an 
+    unevaluated $\bot$ can be
+    silently ignored. At worst, this corresponds to a sound use 
+    of
+    \lstinline{unsafeCoerce} leaking into the ``outside 
+    world'', that is, allowing
+    a user to accidently expose the use of an 
+    \lstinline{unsafeCoerce}. One can
+    usually work around this by evaluating all proof-like 
+    values to normal form
+    before working with them (this is accomplished by the 
+    \lstinline{NFData} class,
+    which stands for normal form data). The normal form of most 
+    datatypes contains
+    precisely one ``type'' of bottom -- namely the value 
+    $\bot$, as opposed to
+    $\bot$ wrapped in a constructor, for example 
+    \lstinline{Just $\bot$}. This
+    bottom can then be removed with the Haskell primitive 
+    \lstinline{seq},
+    producing a value which can soundly be used as a proof.
+    
+    A problem arises when we consider the negation of a 
+    proposition. $\lnot p$ is
+    typically encoded in Haskell as \lstinline{p -> $\bot$}, 
+    where the type $\bot$
+    can be represented by any uninhabited type, typically called
+    \lstinline{Void}. However, the normal form of a function 
+    can contain any number
+    of $\bot$ hidden deep inside the function, because 
+    evaluating a function to
+    normal form only evaluates up to the outermost binder.  To 
+    prevent any
+    unsoundness which this might cause, values of type 
+    \lstinline{Not p} are reduced
+    to normal form as they are built, starting with a canonical 
+    value which is known
+    to be in normal form - the value 
+    \lstinline{triviallyTrue}.  This is the role of
+    NFData in the type signature of \lstinline{mapNeg}.  As 
+    mentioned previously,
+    the type \lstinline{Not} is abstract, so the provided 
+    interface, which is known
+    to be sound, is the only way to construct and eliminate 
+    values of type
+    \lstinline{Not p}.
+    
+    
+    \Oldsubsubsection{PrettySQL}
+    
+    The module PrettySQL defines pretty printers for each of 
+    the types
+    corresponding to SQL entities, including SQL types, SQL 
+    values, SQL references
+    and methods, and SQL statements. These pretty printers 
+    produce a value of
+    type Doc (which comes from the wl-pprint package), which is 
+    like a string
+    , but contains the layout and indentation of all lines of 
+    the document,
+    allowing for easy composition of Doc values into larger 
+    documents, without
+    worrying about layout. The SQL entities are pretty printed 
+    in a human
+    readable format, complete with SQL comments which indicate 
+    the origin
+    and motive of generated code. 
+    
+    
+    
     \begin{figure}[!ht]
         \makebox[\textwidth][c]{
             \scalebox{0.6}{
                 \begin{tikzpicture}
                 
-                %% \begin{package}{TypedSQL}
-                \begin{class}[text width=22cm]{TypedSQLCombinators}{17,5}
-                \hstype{PrimSQLFunction : [SQLType] -> SQLType -> Type}
-                \hstypectr{PTrue, PFalse : PrimSQLFunction [] SQLBool}
-                \hstypectr{Not : PrimSQLFunction [ SQLBool ] SQLBool}
-                \hstypectr{Or, And : PrimSQLFunction [ SQLBool, SQLBool ] 
-                SQLBool}
-                \hstypectr{In, NotIn : PrimSQLFunction [ a, SQLRel a ] SQLBool}
-                \hstypectr{Exists : PrimSQLFunction [ SQLRel a ] SQLBool}
-                \hstypectr{GroupBy : PrimSQLFunction [ SQLRel a, a ] (SQLRel 
-                (SQLRel a))}
-                \hstypectr{SortBy  : PrimSQLFunction [ SQLRel a, a ] (SQLRel a)}
-                \hstypectr{Max, Min, Sum, Avg : IsSQLNumeric a -> 
-                PrimSQLFunction [ SQLRel a ] a }
-                \hstypectr{Alias : (RecAssocs ts :~: RecAssocs ts') -> 
-                PrimSQLFunction [ SQLRel (SQLRow ts) ] (SQLRel (SQLRow ts'))}
+                \begin{class}[text width=22cm]{ProofUtils}{17,5}
                 
-                \hsfunc{primSQL : forall (args : [SQLType]) (out : SQLType) -> 
-                PrimSQLFunction args out -> Prod SQLVal args -> SQLVal out}
+                \hstype{Prod : (f : k -> Type) -> (xs : [k]) -> 
+                Type} 
+                \hstypectr{PNil : Prod f []}
+                \hstypectr{PCons : f x -> Prod f xs -> Prod f 
+                (x : xs)}
                 
-                \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
-                :\~: r -> SQLVal (SQLRow xs) -> SingT i -> SQLVal r}
-                \hsfunc{(!) : (xs : [SQLType]) (i : Symbol) -> LookupRec xs i 
-                :\~: r -> SQLVal (SQLRel (SQLRow xs)) -> SingT i -> SQLVal r}
-                \hsfunc{(!) : (xs : [SQLType]) (i : Nat) -> LookupIx t i :\~: r 
-                -> SQLVal (SQLVec t) -> SingT i -> SQLVal r}
+                \hstype{Sum : (f : k -> Type) -> (xs : [k]) -> 
+                Type}  
+                \hstypectr{SHere : f x -> Sum f (x : xs)}
+                \hstypectr{SThere : Sum f xs -> Sum f (x : xs)}
                 
+                
+                \hstype{class All (c : k -> Constraint) (xs : 
+                [k]) where}
+                \hstypectr{mkProdC : Proxy c -> (forall a -> c 
+                a => p a) -> Prod p xs}
+                
+                \hstype{instance All (c : k -> Constraint) [] 
+                where $\ldots$}
+                \hstype{instance (All c xs, c x) => All c (x : 
+                xs) where $\ldots$}
+                
+                \hstype{Elem : k -> [k] -> Type where}
+                \hstypectr{MkElem : Sum (:\~: x) xs -> Elem x 
+                xs} 
+                
+                \hstype{IsElem : (x : k) -> (xs : [k]) -> 
+                Constraint where $\ldots$} 
+                \hstype{AppliedTo : (x : k) -> (f : k -> Type) 
+                -> Type}
+                \hstypectr{Ap : f x -> x `AppliedTo` f}
+                
+                \hstype{(:.:) : (f : k1 -> Type) -> (g : k0 -> 
+                k1) -> (x : k0) -> Type}
+                \hstypectr{Cmp : f (g x) -> (:.:) f g x} 
+                
+                \hstype{(:*:) : (f : k0 -> Type) -> (g : k0 -> 
+                Type) -> (x : k0) -> Type} 
+                \hstypectr{(:*:) : f x -> g x -> (:*:) f g x} 
+                \hstype{K : (a : Type) -> (x : k) -> Type} 
+                \hstypectr{K : a -> K a x} 
+                \hstype{Id : (a : Type) -> Id a}
+                \hstypectr{Id : a -> Id a} 
+                
+                \hstype{Flip : (f : k0 -> k1 -> Type) -> (x : 
+                k1) -> (y : k0) -> Type} 
+                \hstypectr{Flp : f y x -> Flip f x y} 
+                
+                \hstype{(&&) : (x : Bool) -> (y : Bool) -> Bool 
+                where $\ldots$} 
+                
+                \operation{\lstinline[mathescape]{(|&&) : (a : 
+                Bool) -> (b : Bool) -> a && b}}
+                
+                \hstype{RecAssocs : [RecLabel a b] -> [b] where 
+                $\ldots$} 
+                \hstype{RecLabels : [RecLabel a b] -> [b] where 
+                $\ldots$} 
+                
+                \hstype{IsSetRec\_ : [RecLabel a b] -> [a] -> 
+                Constraint where $\ldots$} 
+                
+                \hstype{IsSetRec : [RecLabel a b] -> Constraint 
+                where $\ldots$} 
+                \hstype{SetRec\_ : [a] -> [RecLabel a b] -> 
+                Type} 
+                \hstype{SetRec : [RecLabel a b] -> Type = 
+                SetRec\_ []} 
+                
+                
+                \hsfunc{openSetRec : forall (xs : [RecLabel k 
+                k']) $\,\,$r0 -> SingKind k => SetRec xs -> 
+                (IsSetRec xs => r0) -> r0}
+                
+                \hsfunc{decNotElem : forall (xs : [a]) $\,\,$x 
+                -> SingKind a => xs -> x -> Dec (NotElem xs x)}
+                
+                \hsfunc{decSetRec : forall (xs : [RecLabel a 
+                b]) -> SingKind a => xs -> Dec (SetRec xs)}
+                
+                \hstype{LookupRecM : [RecLabel Symbol k] -> 
+                Symbol -> Maybe k where $\ldots$} 
+                
+                \hsfunc{lookupRecM : forall (xs : [RecLabel 
+                Symbol k]) (x : Symbol) -> xs -> x -> 
+                LookupRecM xs x}
+                
+                \hstype{ZipRec : [a] -> [b] -> [RecLabel a b] 
+                where $\ldots$} 
+                
+                \hstype{IsNotElem :  [k] -> k -> Constraint 
+                where $\ldots$} 
+                \hstype{NotElem : [k] -> k -> Type}
+                
+                \hstype{And : (xs : [Bool]) -> Bool where 
+                $\ldots$} 
+                
+                \hsfunc{and\_t : (xs : [Bool]) -> And xs}
+                
+                \hsfunc{compareSymbol : (x : Symbol) -> (y : 
+                Symbol) -> CmpSymbol x y}
+                
+                
+                \hstype{NonEmpty : (xs : [k]) -> Constraint 
+                where} 
+                \hstypectr{NonEmpty (x : xs) = ()} 
+                
+                \hsfunc{prod2sing : forall (xs : [k]) -> 
+                SingKind k => Prod SingT xs -> SingT xs} 
+                \hsfunc{sing2prod : forall (xs : [k]) -> 
+                SingKind k => SingT xs -> Prod SingT xs} 
+                \hsfunc{foldrProd : forall acc (f : k -> 
+                Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
+                -> acc) -> Prod f xs -> acc}
+                \hsfunc{foldlProd : forall acc (f : k -> 
+                Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
+                -> acc) -> Prod f xs -> acc}
+                \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g 
+                -> (forall x -> f x -> g x) -> Prod f xs -> 
+                Prod g xs}
+                \hsfunc{foldrProd' : forall (f : k -> 
+                Type)$\,\,$xs1 -> (forall x xs -> f x -> Prod g 
+                xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g 
+                xs1 }
+                \hsfunc{someProd : [Exists f] -> Exists (Prod 
+                f)}
                 
                 \end{class}
                 
-                %% \end{package}
-                
                 \end{tikzpicture}
-            }}\caption{Module diagram for TypedSQLCombinators} 
-            \label{fig:typedSQLComb}
+            }}\caption{Module diagram for ProofUtils} 
+            \label{fig:utilsMod}
         \end{figure}
         
-        \Oldsubsubsection{TypedSQLCombinators}
+        \Oldsubsubsection{Proof Utils}
         
-        The module TypedSQLCombinators, whose members are given in 
-        figure~\ref{fig:typedSQLComb},
-        implements a subset of primitive SQL functions on top of the TypedSQL 
-        expression type. 
-        The data type PrimSQLFunction encodes the specification of each 
-        function; the type
-        and semantics of each function is that of the corresponding function in 
-        MySQL (refer to
-        the MySQL manual ~\cite{mySQLman} for details on each function). The 
-        only exception
-        is the \lstinline{Alias} function, which is a primitive syntactic 
-        constructor (not a named entity)
-        in MySQL - rows can be aliased with a select statement. Aliasing a row 
-        means to change
-        the name of each association in the row, but not the shape of the row 
-        (i.e. the types of
-        each element of the row, as well as their ordering). The single 
-        function \lstinline{primSQL}
-        implements all of the primitive SQL functions. It takes as an argument 
-        a specification
-        of the primitive function, a tuple of arguments of the correspond 
-        types, and returns
-        a SQL value, again of the corresponding type. 
+        The ProofUtils modules, shown in 
+        figure~\ref{fig:utilsMod} provides various
+        utilities for proving compile time invariants, 
+        including the definitions of
+        various predicates used in other modules, as well as 
+        the value-level functions
+        which prove or disprove those predicates. Generally 
+        speaking, a predicate is a
+        type level function which returns either a true or 
+        false value, or has kind
+        \lstinline{Constraint}, in which case truth corresponds 
+        to a satisfied
+        constraint, while false to an unsatisfied one. Many 
+        predicates have value level
+        witnesses as well; these are datatypes which are 
+        inhabitted if and only if the
+        predicate is true.  Therefore, pattern matching on the 
+        predicate witness can be
+        used to recover a proof of the predicate at run time.
+        
+        The function of the most imporant 
+        predicates and types is briefly summarized as follows. 
+        \begin{description}
+            \item[\texttt{Prod}] The type \lstinline{Prod f xs} 
+            represents the $n$-ary product of the type
+            level list $xs$, with each $x \in xs$ being mapped 
+            to the type \lstinline{f x}. This 
+            type is accompanied by the functions 
+            \lstinline{prod2sing, sing2prod} which convert
+            between singletons and products; the functions 
+            \lstinline{foldrProd, foldlProd, foldrProd'}, 
+            which are all eliminators for \lstinline{Prod} 
+            (several eliminators are needed because the 
+            most general eliminator is not well typed in 
+            Haskell). 
+            \item[\texttt{Sum}] The same as above, but the 
+            $n$-ary sum as opposed to product. 
+            \item[\texttt{All}] The constraint 
+            \lstinline{All c xs} holds if and only if 
+            \lstinline{c x} holds for 
+            all $x \in xs$. 
+            \item[\texttt{Elem, IsElem}]
+            \lstinline{IsElem x xs} holds precisely when $x \in 
+            xs$. 
+            \lstinline{Elem} is the witness of 
+            \lstinline{IsElem}. 
+            \item[\texttt{AppliedTo, Ap, :.:, Cmp, :*:, K, Id, 
+            Flip}] Categorical data types which encode
+            a generalized view of algebraic data types. This 
+            approach is largely standardized (and is only
+            replicated here to avoid incurring a large 
+            dependency) -- for more information, 
+            see~\cite{alacarte}. 
+            \item[\texttt{RecAssocs, RecLabels, ZipRec}] Type 
+            level functions for working with type level 
+            records. 
+            A record in this context is a list of types of some 
+            kind, each associated with a unique string label. 
+            \lstinline{RecAssocs, RecLabels} retrieve the 
+            associations and labels of a record, respecively, 
+            while \lstinline{ZipRec} constructs such a record 
+            from the associations and labels. It is the case
+            that 
+            \lstinline{ZipRec (RecAssocs x) (RecLabels x) == x} for all 
+            \lstinline{x} .
+            \item[\texttt{IsSetRec, SetRec}] The predicate 
+            \lstinline{IsSetRec x} holds precisely if 
+            \lstinline{x}
+            is a valid record type, whose labels are all 
+            unique. \lstinline{SetRec} is the witness for 
+            \lstinline{IsSetRec}. 
+            \item[\texttt{IsNotElem, NotElem}] The predicate 
+            \lstinline{IsNotElem x xs} holds precisely if 
+            $\lnot x \in xs$.
+            \lstinline{NotElem} is the witnss for 
+            \lstinline{IsNotElem}. 
+            \item[\texttt{\&\&,And}] Binary and $n$-ary boolen 
+            conjunction, with the usual semantics. 
+        \end{description}
         
         
+        \Oldsubsubsection{Singletons}\label{subsec:Singletons}
         
-        \begin{figure}[!ht]
-            \makebox[\textwidth][c]{
-                \scalebox{0.6}{
-                    \begin{tikzpicture}
-                    
-                    \begin{class}[text width=22cm]{Singletons}{17,5}
-                    \hstype{SingT : k -> Type} 
-                    \hstype{class SingKind (k : Kind) where $\ldots$} 
-                    \hsfunc{(\%==) : forall (x : k) (y : k) -> SingKind k => x 
-                    -> y -> DecEq x y}
-                    
-                    \end{class}
-                    
-                    \end{tikzpicture}
-                }}\caption{Module diagram for Singletons} \label{fig:singletons}
-            \end{figure}
+        The Singletons module (figure ~\ref{fig:singletons}) is 
+        not fully detailed here;
+        instead, a vastly simplified version of the Singletons 
+        module is presented. The
+        \lstinline{SingT} type denotes a generic singleton for 
+        any kind which implements
+        \lstinline{SingKind} -- then, the main operation of 
+        interest on singletons is
+        decidable equality, which is realized by the function 
+        \lstinline{%==}. The
+            detailed implementation is omitted because the 
+            singletons approach in Haskell
+            is well known and well 
+            documented~\cite{singletons}. We re-implement
+            singletons instead of using the well established 
+            \texttt{singletons} library
+            because, while this library is very well written, 
+            it relies very heavily on
+            Template Haskell~\cite{th}, which is essentially 
+            string-based
+            metaprogramming. Template Haskell is extremely 
+            error prone and very difficult
+            to maintain. As one of our primary goals is 
+            long-term maintainability, and
+            Template Haskell changes, sometimes drastically, 
+            with every new release of
+            GHC, including it in this project was deemed not 
+            worth the
+            headache. Therefore, we have reimplemented 
+            singletons without Template
+            Haskell, at the cost of having to write slightly 
+            more boilerplate.
             
-            \begin{figure}[!ht]
-                \makebox[\textwidth][c]{
-                    \scalebox{0.6}{
-                        \begin{tikzpicture}
-                        
-                        \begin{class}[text width=22cm]{PrettySQL}{17,5}
-                        
-                        \hstype{instance Pretty (SQLTypeS x) $\,\,$ where 
-                        $\ldots$}
-                        \hstype{instance Pretty (SQLVal x)  $\,\,$ where 
-                        $\ldots$}
-                        \hstype{instance Pretty (SQLValSem x)  $\,\,$ where 
-                        $\ldots$}
-                        \hstype{instance Pretty (SQLSt k x)  $\,\,$ where 
-                        $\ldots$}
-                        \hstype{instance (str \~ String) => Pretty (str, 
-                        SQLMethod args out)  $\,\,$ where $\ldots$}
-                        
-                        \end{class}
-                        
-                        \end{tikzpicture}
-                    }}\caption{Module diagram for PrettySQL} 
-                    \label{fig:prettySQL}
-                \end{figure}
-                
-                
-                
-                \begin{figure}[!ht]
-                    \makebox[\textwidth][c]{
-                        \scalebox{0.6}{
-                            \begin{tikzpicture}
-                            
-                            \begin{class}[text width=22cm]{Equality}{17,5}
-                            
-                            \hsfunc{cong : f :\~: g -> a :\~: b -> f a :\~: g b}
-                            \hsfunc{cong2 : f :\~: g -> a :\~: a' -> b :\~: b' 
-                            -> f a b :\~: g a' b'}
-                            \hsfunc{cong3 : f :\~: g -> a :\~: a' -> b :\~: b' 
-                            -> c :\~: c' -> f a b c :\~: g a' b' c'}
-                            
-                            \hstype{Dict : Constraint -> Type}
-                            \hstypectr{Dict : p => Dict p}
-                            
-                            \hstype{Exists : (k -> Type) -> Type} 
-                            \hstypectr{Ex : p x -> Exists p}
-                            
-                            \hsfunc{($\#$>>) :: Exists p -> (forall x -> p x -> 
-                            r) -> r}
-                            
-                            \hstype{Not : Type -> Type} 
-                            
-                            \hstype{class NFData a}
-                            
-                            \hstype{doubleneg : NFData a => a -> Not (Not a)} 
-                            
-                            %% Why is this particular defintion off by about 
-                            %%2pt? Very strange...
-                            \hstype[-2pt]{triviallyTrue : Not (Not ())}
-                            
-                            \hstype{mapNeg : (NFData a, NFData b) => (b -> a) 
-                            -> Not a -> Not b}
-                            
-                            \hstype{elimNeg : NFData a => Not a -> a -> Void}
-                            
-                            \hstype{data Void where}
-                            
-                            \hstype{data Dec : Type -> Type}
-                            \hstypectr{Yes : !p -> Dec p}
-                            \hstypectr{No  : !(Not p) -> Dec p}
-                            
-                            \hstype{DecEq : k -> k -> Type = $\lambda$ a b$.$ 
-                            Dec (a :\~: b)}
-                            
-                            \hsfunc{mapDec : (p -> q) -> (Not p -> Not q) -> 
-                            Dec p -> Dec q}
-                            
-                            \hsfunc{liftDec2 :: Dec p -> Dec q -> (p -> q -> r) 
-                            -> (Not p -> Not r) -> (Not q -> Not r) -> Dec r}
-                            
-                            \hsfunc{dec2bool :: DecEq a b -> Bool}
-                            
-                            \end{class}
-                            
-                            \end{tikzpicture}
-                        }}\caption{Module diagram for Equality} 
-                        \label{fig:equality}
-                    \end{figure}
-                    
-                    \Oldsubsubsection{Equality}
-                    
-                    The Equality module (\ref{fig:equality}) defines several 
-                    utilities for working
-                    with proof-like values, including the existential 
-                    quantification data type,
-                    proofs of congruence of propositional equality of various 
-                    arities --
-                    \lstinline{cong, cong2, cong3} -- and the Dec type, which 
-                    encodes the concept of
-                    a decidable proposition. The most important element of this 
-                    module, however is
-                    the abstract \lstinline{Not} type. We must prove certain 
-                    things about our
-                    program to the Haskell type system. For example, if one 
-                    attempts to construct a
-                    scalar SQLVal for some SQLType $S$, one must first prove 
-                    that that type is a
-                    scalar type. The main use of this is decidable equality, 
-                    which is similair to
-                    regular equality, but additionally to giving a ``yes'' or 
-                    ``no'' answer, it also
-                    stores a \emph{proof} of that answer.
-                    
-                    The view of propositions as types comes from the 
-                    Curry-Howard
-                    isomorphism \cite{props}; however, this is not quite sound 
-                    in Haskell, because
-                    every type is inhabited by $\bot$, which corresponds to 
-                    \texttt{undefined}, an
-                    exception, or non-termination. Due to laziness, an 
-                    unevaluated $\bot$ can be
-                    silently ignored. At worst, this corresponds to a sound use 
-                    of
-                    \lstinline{unsafeCoerce} leaking into the ``outside 
-                    world'', that is, allowing
-                    a user to accidently expose the use of an 
-                    \lstinline{unsafeCoerce}. One can
-                    usually work around this by evaluating all proof-like 
-                    values to normal form
-                    before working with them (this is accomplished by the 
-                    \lstinline{NFData} class,
-                    which stands for normal form data). The normal form of most 
-                    datatypes contains
-                    precisely one ``type'' of bottom -- namely the value 
-                    $\bot$, as opposed to
-                    $\bot$ wrapped in a constructor, for example 
-                    \lstinline{Just $\bot$}. This
-                    bottom can then be removed with the Haskell primitive 
-                    \lstinline{seq},
-                    producing a value which can soundly be used as a proof.
-                    
-                    A problem arises when we consider the negation of a 
-                    proposition. $\lnot p$ is
-                    typically encoded in Haskell as \lstinline{p -> $\bot$}, 
-                    where the type $\bot$
-                    can be represented by any uninhabited type, typically called
-                    \lstinline{Void}. However, the normal form of a function 
-                    can contain any number
-                    of $\bot$ hidden deep inside the function, because 
-                    evaluating a function to
-                    normal form only evaluates up to the outermost binder.  To 
-                    prevent any
-                    unsoundness which this might cause, values of type 
-                    \lstinline{Not p} are reduced
-                    to normal form as they are built, starting with a canonical 
-                    value which is known
-                    to be in normal form - the value 
-                    \lstinline{triviallyTrue}.  This is the role of
-                    NFData in the type signature of \lstinline{mapNeg}.  As 
-                    mentioned previously,
-                    the type \lstinline{Not} is abstract, so the provided 
-                    interface, which is known
-                    to be sound, is the only way to construct and eliminate 
-                    values of type
-                    \lstinline{Not p}.
-                    
-                    
-                    \Oldsubsubsection{PrettySQL}
-                    
-                    The module PrettySQL defines pretty printers for each of 
-                    the types
-                    corresponding to SQL entities, including SQL types, SQL 
-                    values, SQL references
-                    and methods, and SQL statements. These pretty printers 
-                    produce a value of
-                    type Doc (which comes from the wl-pprint package), which is 
-                    like a string
-                    , but contains the layout and indentation of all lines of 
-                    the document,
-                    allowing for easy composition of Doc values into larger 
-                    documents, without
-                    worrying about layout. The SQL entities are pretty printed 
-                    in a human
-                    readable format, complete with SQL comments which indicate 
-                    the origin
-                    and motive of generated code. 
-                    
-                    
-                    
-                    \begin{figure}[!ht]
-                        \makebox[\textwidth][c]{
-                            \scalebox{0.6}{
-                                \begin{tikzpicture}
-                                
-                                \begin{class}[text width=22cm]{ProofUtils}{17,5}
-                                
-                                \hstype{Prod : (f : k -> Type) -> (xs : [k]) -> 
-                                Type} 
-                                \hstypectr{PNil : Prod f []}
-                                \hstypectr{PCons : f x -> Prod f xs -> Prod f 
-                                (x : xs)}
-                                
-                                \hstype{Sum : (f : k -> Type) -> (xs : [k]) -> 
-                                Type}  
-                                \hstypectr{SHere : f x -> Sum f (x : xs)}
-                                \hstypectr{SThere : Sum f xs -> Sum f (x : xs)}
-                                
-                                
-                                \hstype{class All (c : k -> Constraint) (xs : 
-                                [k]) where}
-                                \hstypectr{mkProdC : Proxy c -> (forall a -> c 
-                                a => p a) -> Prod p xs}
-                                
-                                \hstype{instance All (c : k -> Constraint) [] 
-                                where $\ldots$}
-                                \hstype{instance (All c xs, c x) => All c (x : 
-                                xs) where $\ldots$}
-                                
-                                \hstype{Elem : k -> [k] -> Type where}
-                                \hstypectr{MkElem : Sum (:\~: x) xs -> Elem x 
-                                xs} 
-                                
-                                \hstype{IsElem : (x : k) -> (xs : [k]) -> 
-                                Constraint where $\ldots$} 
-                                \hstype{AppliedTo : (x : k) -> (f : k -> Type) 
-                                -> Type}
-                                \hstypectr{Ap : f x -> x `AppliedTo` f}
-                                
-                                \hstype{(:.:) : (f : k1 -> Type) -> (g : k0 -> 
-                                k1) -> (x : k0) -> Type}
-                                \hstypectr{Cmp : f (g x) -> (:.:) f g x} 
-                                
-                                \hstype{(:*:) : (f : k0 -> Type) -> (g : k0 -> 
-                                Type) -> (x : k0) -> Type} 
-                                \hstypectr{(:*:) : f x -> g x -> (:*:) f g x} 
-                                \hstype{K : (a : Type) -> (x : k) -> Type} 
-                                \hstypectr{K : a -> K a x} 
-                                \hstype{Id : (a : Type) -> Id a}
-                                \hstypectr{Id : a -> Id a} 
-                                
-                                \hstype{Flip : (f : k0 -> k1 -> Type) -> (x : 
-                                k1) -> (y : k0) -> Type} 
-                                \hstypectr{Flp : f y x -> Flip f x y} 
-                                
-                                \hstype{(&&) : (x : Bool) -> (y : Bool) -> Bool 
-                                where $\ldots$} 
-                                
-                                \operation{\lstinline[mathescape]{(|&&) : (a : 
-                                Bool) -> (b : Bool) -> a && b}}
-                                
-                                \hstype{RecAssocs : [RecLabel a b] -> [b] where 
-                                $\ldots$} 
-                                \hstype{RecLabels : [RecLabel a b] -> [b] where 
-                                $\ldots$} 
-                                
-                                \hstype{IsSetRec\_ : [RecLabel a b] -> [a] -> 
-                                Constraint where $\ldots$} 
-                                
-                                \hstype{IsSetRec : [RecLabel a b] -> Constraint 
-                                where $\ldots$} 
-                                \hstype{SetRec\_ : [a] -> [RecLabel a b] -> 
-                                Type} 
-                                \hstype{SetRec : [RecLabel a b] -> Type = 
-                                SetRec\_ []} 
-                                
-                                
-                                \hsfunc{openSetRec : forall (xs : [RecLabel k 
-                                k']) $\,\,$r0 -> SingKind k => SetRec xs -> 
-                                (IsSetRec xs => r0) -> r0}
-                                
-                                \hsfunc{decNotElem : forall (xs : [a]) $\,\,$x 
-                                -> SingKind a => xs -> x -> Dec (NotElem xs x)}
-                                
-                                \hsfunc{decSetRec : forall (xs : [RecLabel a 
-                                b]) -> SingKind a => xs -> Dec (SetRec xs)}
-                                
-                                \hstype{LookupRecM : [RecLabel Symbol k] -> 
-                                Symbol -> Maybe k where $\ldots$} 
-                                
-                                \hsfunc{lookupRecM : forall (xs : [RecLabel 
-                                Symbol k]) (x : Symbol) -> xs -> x -> 
-                                LookupRecM xs x}
-                                
-                                \hstype{ZipRec : [a] -> [b] -> [RecLabel a b] 
-                                where $\ldots$} 
-                                
-                                \hstype{IsNotElem :  [k] -> k -> Constraint 
-                                where $\ldots$} 
-                                \hstype{NotElem : [k] -> k -> Type}
-                                
-                                \hstype{And : (xs : [Bool]) -> Bool where 
-                                $\ldots$} 
-                                
-                                \hsfunc{and\_t : (xs : [Bool]) -> And xs}
-                                
-                                \hsfunc{compareSymbol : (x : Symbol) -> (y : 
-                                Symbol) -> CmpSymbol x y}
-                                
-                                
-                                \hstype{NonEmpty : (xs : [k]) -> Constraint 
-                                where} 
-                                \hstypectr{NonEmpty (x : xs) = ()} 
-                                
-                                \hsfunc{prod2sing : forall (xs : [k]) -> 
-                                SingKind k => Prod SingT xs -> SingT xs} 
-                                \hsfunc{sing2prod : forall (xs : [k]) -> 
-                                SingKind k => SingT xs -> Prod SingT xs} 
-                                \hsfunc{foldrProd : forall acc (f : k -> 
-                                Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
-                                -> acc) -> Prod f xs -> acc}
-                                \hsfunc{foldlProd : forall acc (f : k -> 
-                                Type)$\,\,$xs -> acc -> (forall q -> f q -> acc 
-                                -> acc) -> Prod f xs -> acc}
-                                \hsfunc{mapProd : forall (f : k -> Type)$\,\,$g 
-                                -> (forall x -> f x -> g x) -> Prod f xs -> 
-                                Prod g xs}
-                                \hsfunc{foldrProd' : forall (f : k -> 
-                                Type)$\,\,$xs1 -> (forall x xs -> f x -> Prod g 
-                                xs -> Prod g (x : xs)) -> Prod f xs1 -> Prod g 
-                                xs1 }
-                                \hsfunc{someProd : [Exists f] -> Exists (Prod 
-                                f)}
-                                
-                                \end{class}
-                                
-                                \end{tikzpicture}
-                            }}\caption{Module diagram for ProofUtils} 
-                            \label{fig:utilsMod}
-                        \end{figure}
-                        
-                        \Oldsubsubsection{Proof Utils}
-                        
-                        The ProofUtils modules, shown in 
-                        figure~\ref{fig:utilsMod} provides various
-                        utilities for proving compile time invariants, 
-                        including the definitions of
-                        various predicates used in other modules, as well as 
-                        the value-level functions
-                        which prove or disprove those predicates. Generally 
-                        speaking, a predicate is a
-                        type level function which returns either a true or 
-                        false value, or has kind
-                        \lstinline{Constraint}, in which case truth corresponds 
-                        to a satisfied
-                        constraint, while false to an unsatisfied one. Many 
-                        predicates have value level
-                        witnesses as well; these are datatypes which are 
-                        inhabitted if and only if the
-                        predicate is true.  Therefore, pattern matching on the 
-                        predicate witness can be
-                        used to recover a proof of the predicate at run time.
-                        
-                        The function of the most imporant 
-                        predicates and types is briefly summarized as follows. 
-                        \begin{description}
-                            \item[\texttt{Prod}] The type \lstinline{Prod f xs} 
-                            represents the $n$-ary product of the type
-                            level list $xs$, with each $x \in xs$ being mapped 
-                            to the type \lstinline{f x}. This 
-                            type is accompanied by the functions 
-                            \lstinline{prod2sing, sing2prod} which convert
-                            between singletons and products; the functions 
-                            \lstinline{foldrProd, foldlProd, foldrProd'}, 
-                            which are all eliminators for \lstinline{Prod} 
-                            (several eliminators are needed because the 
-                            most general eliminator is not well typed in 
-                            Haskell). 
-                            \item[\texttt{Sum}] The same as above, but the 
-                            $n$-ary sum as opposed to product. 
-                            \item[\texttt{All}] The constraint \lstinline{All c 
-                            xs} holds if and only if \lstinline{c x} holds for 
-                            all $x \in xs$. 
-                            \item[\texttt{Elem, IsElem}] \lstinline{IsElem x 
-                            xs} holds precisely when $x \in xs$. 
-                            \lstinline{Elem} is the witness of 
-                            \lstinline{IsElem}. 
-                            \item[\texttt{AppliedTo, Ap, :.:, Cmp, :*:, K, Id, 
-                            Flip}] Categorical data types which encode
-                            a generalized view of algebraic data types. This 
-                            approach is largely standardized (and is only
-                            replicated here to avoid incurring a large 
-                            dependency) -- for more information, 
-                            see~\cite{alacarte}. 
-                            \item[\texttt{RecAssocs, RecLabels, ZipRec}] Type 
-                            level functions for working with type level 
-                            records. 
-                            A record in this context is a list of types of some 
-                            kind, each associated with a unique string label. 
-                            \lstinline{RecAssocs, RecLabels} retrieve the 
-                            associations and labels of a record, respecively, 
-                            while \lstinline{ZipRec} constructs such a record 
-                            from the associations and labels. It is the case
-                            that \lstinline{ZipRec (RecAssocs x) (RecLabels x) 
-                            == x} for all \lstinline{x} .
-                            \item[\texttt{IsSetRec, SetRec}] The predicate 
-                            \lstinline{IsSetRec x} holds precisely if 
-                            \lstinline{x}
-                            is a valid record type, whose labels are all 
-                            unique. \lstinline{SetRec} is the witness for 
-                            \lstinline{IsSetRec}. 
-                            \item[\texttt{IsNotElem, NotElem}] The predicate 
-                            \lstinline{IsNotElem x xs} holds precisely if 
-                            $\lnot x \in xs$.
-                            \lstinline{NotElem} is the witnss for 
-                            \lstinline{IsNotElem}. 
-                            \item[\texttt{\&\&,And}] Binary and $n$-ary boolen 
-                            conjunction, with the usual semantics. 
-                        \end{description}
-                        
-                        
-                        \Oldsubsubsection{Singletons}\label{subsec:Singletons}
-                        
-                        The Singletons module (figure ~\ref{fig:singletons}) is 
-                        not fully detailed here;
-                        instead, a vastly simplified version of the Singletons 
-                        module is presented. The
-                        \lstinline{SingT} type denotes a generic singleton for 
-                        any kind which implements
-                        \lstinline{SingKind} -- then, the main operation of 
-                        interest on singletons is
-                        decidable equality, which is realized by the function 
-                        \lstinline{%==}. The
-                            detailed implementation is omitted because the 
-                            singletons approach in Haskell
-                            is well known and well 
-                            documented~\cite{singletons}. We re-implement
-                            singletons instead of using the well established 
-                            \texttt{singletons} library
-                            because, while this library is very well written, 
-                            it relies very heavily on
-                            Template Haskell~\cite{th}, which is essentially 
-                            string-based
-                            metaprogramming. Template Haskell is extremely 
-                            error prone and very difficult
-                            to maintain. As one of our primary goals is 
-                            long-term maintainability, and
-                            Template Haskell changes, sometimes drastically, 
-                            with every new release of
-                            GHC, including it in this project was deemed not 
-                            worth the
-                            headache. Therefore, we have reimplemented 
-                            singletons without Template
-                            Haskell, at the cost of having to write slightly 
-                            more boilerplate.
-                            
-                            
+            
 
- 
+
