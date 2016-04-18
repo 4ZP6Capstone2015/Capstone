@@ -132,7 +132,7 @@ The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
 \texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> a -> String!
 .
-In certain casees, a constraint is intended to be used only in an implicit 
+In certain cases, a constraint is intended to be used only in an implicit 
 fashion 
 (i.e. as an actual constraint), in which case the constraint is written with 
 the typical \lstinline{=>} syntax. 
@@ -155,7 +155,7 @@ two ways:
 Which form is used is decided based on the circumstances in which the function
 will most likely be used, since whether one form is more convenient than the
 other depends largely on the intended use. However, these two forms are
-completely interchangeable (albiet with some syntactic noise) so the syntax
+completely interchangeable (albeit with some syntactic noise) so the syntax
 presented here does not distinguish between the two. 
 
 \subsubsection*{Types, kinds, and type synonyms}
@@ -273,7 +273,7 @@ each submodule in $A$ depends on all of $B$. There is no necessity to break
 down modules into submodule, if they do not have any interesting submodule 
 structure. Arrows between modules and submodules denote a dependency. 
 
-External dependencies, which are modules which come from an external pacakge,
+External dependencies, which are modules which come from an external package,
 are indicated in {\color{grey}grey}. System modules, which are modules part of
 Ampersand, but not written specifically for EFA (or, on which EFA depends, but
 few or no changes have been made from the original module before the existence
@@ -285,7 +285,8 @@ figure%~\ref{fig:ModExample}.
 \subsection{Module Hierarchy}
 
 This section contains a hierarchal breakdown of each module, as well as a brief
-explanation of each modules' elements. The module heiarchy of EFA as a whole is 
+explanation of each modules' elements. The module hierarchy of EFA as a whole 
+is 
 given in figure~\ref{fig:efaMod}.  Note
 that every module which is part of EFA depends on the Haskell \texttt{base} 
 package
@@ -866,8 +867,7 @@ utilities for working
 with proof-like values, including the existential 
 quantification data type,
 proofs of congruence of propositional equality of various 
-arities --
-\lstinline{cong, cong2, cong3} -- and the Dec type, which 
+arities -- \lstinline{cong, cong2, cong3} -- and the Dec type, which 
 encodes the concept of
 a decidable proposition. The most important element of this 
 module, however is
@@ -912,7 +912,8 @@ bottom can then be removed with the Haskell primitive
 producing a value which can soundly be used as a proof.
 
 A problem arises when we consider the negation of a proposition. $\lnot p$ 
-istypically encoded in Haskell as \lstinline{p -> $\bot$}, where the type $\bot$
+is typically encoded in Haskell as \lstinline{p -> $\bot$}, where the type 
+$\bot$
 can be represented by any uninhabited type, typically called\lstinline{Void}. 
 However, the normal form of a function can contain any number of $\bot$ hidden 
 deep inside the function, because evaluating a function to normal form only 
@@ -1239,7 +1240,41 @@ decidable equality, which is realized by the function
             
             \end{tikzpicture}
         }}\caption{Module diagram for Singletons} \label{fig:singletons}
-    \end{figure}
+\end{figure}
+
+\subsection{Key Algorithm}
+The key algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method 
+that allow organizations to build information systems that comply to their 
+business requirements in a provable manner. This algorithm is implemented in 
+Ampersand and is responsible for translating the business requirements into ECA 
+rules. These ECA rules contain information on how to fix any data violation and 
+are translated into SQL queries in our EFA project.
+
+\subsection{Communication Protocol}
+The EFA implementation needs to communicate with the front end to be able to 
+run the generated SQL queries when a violation occurs. 
+\begin{itemize}
+    \item \textbf{Old communication protocol -  PHP engine} \\
+    In the existing version, Ampersand depends on PHP code to run the 
+    generated SQL on the database. However, this comes at the cost of 
+    human intervention, which results in manual maintenance when 
+    changes occur during development. 
+    \item \textbf{New Communication protocol - Stored Procedures} \\
+    The developments teams of EFA has come to a conclusion that the 
+    best way of communicating with the front-end will be to use Stored 
+    Procedures\cite{SP}. These Stored Procedures provide the extra 
+    benefit of query optimization at compile time which results in 
+    better performance. While this is a suggested change, it will 
+    require changes to the existing Ampersand software in order for 
+    this idea to be successfully implemented. This anticipated 
+    change will be implemented in the near future.
+    
+\end{itemize}
+
+\subsection{Problems}
+ 
+
+
         
 
 
