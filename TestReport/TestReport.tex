@@ -26,7 +26,10 @@
 \usepackage[simplified]{pgf-umlcd}
 \usepackage[section]{placeins}
 \usepackage{enumitem}
-\newif\ifcomments\commentstrue
+
+%%% Comments are also included through setupComments.sty
+%%% in all our other files.
+\newif\ifcomments\commentsfalse
 \ifcomments
 \newcommand{\authornote}[3]{\textcolor{#1}{[#3 ---#2]}}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
@@ -36,6 +39,7 @@
 \fi
 \newcommand{\wss}[1]{\authornote{magenta}{SS}{#1}}
 \newcommand{\ds}[1]{\authornote{blue}{DS}{#1}}
+\newcommand{\ys}[1]{\authornote{green}{YS}{#1}}
 
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 %%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
@@ -91,7 +95,9 @@ This document details the test results of the EFA project.
 This document uses the test description mentioned in the test plan.
 EFA, as well as the core Ampersand system, is
 currently in active development where changes occur frequently.
-For this reason few tests could not performed. 
+For this reason few tests could not be performed. 
+\ds{``could not be performed"?}
+\ys{Issue Closed'}
 A second phase of testing will be performed 
 once the EFA project is integrated into the core Ampersand. The original test plan is available in the github repository and is being actively revised in team meetings. Changes to test plan will follow soon.
 
@@ -100,11 +106,15 @@ The purpose of this document is to outline the implementation details of the
 EFA project described in the Problem Statement.
 EFA is responsible for generating SQL Statements from ECA rules that will 
 be used to fixed any violated invariants in the Ampersand prototype. 
-The document will serve as a referral document for future software Testing and integration of EFA in the Ampersand project.
+The document will serve as a reference
+\ds{``reference"?}
+\ys{Issue Closed}
+document for future software Testing and integration of EFA in the Ampersand project.
 
 \subsection{Test Cases}
-For the purpose of testing, the EFA team uses the .adl files from the ampersand-models repository. This repository contains various input files for the Ampersand Core project. Any files that compiles and runs with the core Ampersand software should also run accordingly with the EFA project.
-
+For the purpose of testing, the EFA team uses the .adl files from the ampersand-models repository. This repository contains various input files for the Ampersand Core project. Any file that compiles and runs with the core Ampersand software should also run accordingly with the EFA project. 
+\ds{Awkward. Change ``files" to ``file" OR ``compiles and runs" to ``compile and run".}
+\ys{Issue Closed}
 %%%%%%%%%%%%%%%%%%%%% SECTION 2 : DEFINITIONS %%%%%%%%%%%%%%%%%%%%%
 \section{Definitions}\label{sec:Abbrev}
 
@@ -120,10 +130,10 @@ ECArule ::= 'On' ('Ins' | 'Del')
 \end{lstlisting}
 
 \subsection*{HUnit}
-Hunit is a testing framework for Haskell and can be found on 
-hackage\cite{rwhaskell}.
-
-\textit{available at:} https://hackage.haskell.org/
+Hunit is a testing framework for Haskell and can be found on the
+hackage website \cite{rwhaskell}.
+\ds{formatting}
+\ys{Issue Closed}
 
 \subsubsection*{PA}
 Process algebra. The mathematical language used by ECA rules to describe the
@@ -170,9 +180,10 @@ where ``RExpr'' represents RA expressions, and ``RAtom'' (RA atom) represents
     this document, however, we will make the simplest ``choice'' possible, which
     generally means an arbitrary choice. 
 
-\subsubsection*{SRS}
-Software Requirements Specification. Document regarding requirements, 
-constraints, and project objectives.
+\ds{This doesn't require a definition, just write 
+``Software Requirements Specification (SRS)" the first time you use the term.}
+\ys{removed subsection SRS}
+\ys{Issue Closed}
 
 \subsection*{QuickCheck}
 QuickCheck is testing framework used to run black-box tests on Haskell code; it 
@@ -204,11 +215,19 @@ This test follows with the test case T11 and completed the functional requiremen
 
 %%% Performance Table %%%%%
 \subsection{Performance Testing}
-The performance test refers to the T10 test case of the EFA project test plan. The EFA team planned to perform a degradation test to performance degradation if any. All the files were compiled with the latest version of core Ampersand and then with the EFA. The results are documented in this section. 
+The performance test refers to the T10 test case of the EFA project test plan.
+All the files were compiled with the latest version of core Ampersand and then with the EFA. The results are documented in this section. 
 
+\ds{Where are your table captions?}
+\ys{Issue Closed}
+
+\begin{center}
+\begin{table}[h]
+\caption{Performance Testing of EFA project}  
 \begin{longtable}{|L{0.5cm}|L{5cm}|L{4cm}|L{4cm}|}
+
 \hline
-\textbf{No.} & \textbf{Input File}  & \textbf{Run-Time Without EFA project} & \textbf{Run-Time With EFA project}\\
+{\bf No} & {\bf Input File}  & {\bf Run-Time Without EFA project} & {\bf Run-Time With EFA project}\\
 \hline
 1 & ProjectAdmin.adl	& 5.85 & 7.63\\
 \hline
@@ -255,7 +274,8 @@ The performance test refers to the T10 test case of the EFA project test plan. T
 22 & Try20.adl & 5.62 & 6.81\\
 \hline
 \end{longtable}
-
+\end{table}
+\end{center}
 
 
 \begin{figure}
@@ -278,13 +298,19 @@ Calculate using the formula :
 	Overhead Time(s) =\frac{\left ( \sum  Run Time with EFA - Run Time without EFA\right )}{ No. of Test Cases}
 \end{equation}
 
-Figure\ref{fig:figure1} and Figure\ref{fig:figure2} shows a comparison of running time for all the test cases. The overhead cost of integrating EFA into Ampersand will add roughly about 1 second to the time it takes to generate a prototype. However the overall running time is still under 9 seconds for all the test cases so the waiting time for the end user is very small compared to cost and time required to create an information system otherwise.
+Figure\citep{fig:figure1} and Figure\citep{fig:figure2} shows a comparison of running time for all the test cases. The overhead cost of integrating EFA into Ampersand will add roughly about 1 second to the time it takes to generate a prototype. However the overall running time is still under 9 seconds for all the test cases so the waiting time for the end user is very small compared to cost and time required to create an information system otherwise.
 
 %%%%%%%%%%%%%
 \subsection{Robustness}
-The language dependency of using Haskell for this project allows the Developers to pattern match against all possible inputs. The Project was tested using the `' - -Wall'' flag to turn on all the warning options in Haskell. This allowed the team to pattern match against all possible inputs, this way the project does not rely on the test cases reachable through the Ampersand test input files. 
+The language dependency of using Haskell for this project allows the Developers to pattern match against all possible inputs. The Project was tested using the  \verb|``~-~-Wall''|
+\ds{You may want to use }% \verb|``~-~-Wall''| in your \LaTeX source }
+\ys{Issue Closed}
+flag to turn on all the warning options in Haskell. This allowed the team to pattern match against all possible inputs, this way the project does not rely on the test cases reachable through the Ampersand test input files. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SECTION: UNIT TESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%
+%%SECTION: UNIT TESTS %%%%
+%%%%%%%%%%%%%%%%%
+
 \section{EFA Tests}
 Disclaimer: Although some functions were unit tested, the types used as inputs 
 for those functions were not individually tested. We have assumed that the 
@@ -296,9 +322,12 @@ These tests compared function output to the expected output, readProcess was use
 to read the output of these function. If assumptions were correct, returned 
 type should be equivalent to expected type. When these modules are compiled and 
 the functions are called, the Haskell compiler also tests for type correctness. \\
-\begin{adjustwidth}{-0.5cm}{}
 
-\begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
+
+\begin{center}
+\begin{table}[H]
+
+\begin{tabular}[H]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
     
     \hline
     \multicolumn{4}{|c|}{Utils.hs} \\
@@ -326,13 +355,18 @@ the functions are called, the Haskell compiler also tests for type correctness. 
     recLabels& 5  & 0&100\\
     if\_pure& 5  & 0&100\\
     if\_ap& 5  & 0&100\\
-    freshNames& 5  & 0 &100\\
     \hline
-\end{tabular}
+\end{tabular} 
+ \caption{Unit Test results for Utils.hs} 
+\end{table}
+\end{center}
 
-\end{adjustwidth}
 
-\begin{adjustwidth}{-0.5cm}{}    
+
+
+\begin{center}
+\begin{table}[h]
+\caption{Unit Test results for TypedSQL.hs}     
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
@@ -358,11 +392,17 @@ the functions are called, the Haskell compiler also tests for type correctness. 
         lookupRec& 5  & 0&100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
+\end{table}
+\end{center}
+
+
 
 \begin{adjustwidth}{-0.5cm}{}    
+\begin{center}
+\begin{table}[h]
+\caption{Unit Test results for TSQLCombinators.hs}  
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
-        
+	      
         \hline
         \multicolumn{4}{|c|}{TSQLCombinators.hs} \\
         \hline
@@ -372,9 +412,15 @@ the functions are called, the Haskell compiler also tests for type correctness. 
         sql       & 10  & 0&   100\\
         \hline
     \end{tabular}
+    \end{table}
+    \end{center}
 \end{adjustwidth}
 
+
 \begin{adjustwidth}{-0.5cm}{}    
+\begin{center}
+\begin{table}[h]
+\caption{Unit Test results for Trace.hs}  
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
@@ -387,9 +433,14 @@ the functions are called, the Haskell compiler also tests for type correctness. 
         impossible & 10 & 0&  100\\
         \hline
     \end{tabular}
+    \end{table}
+    \end{center}
 \end{adjustwidth}
 
-\begin{adjustwidth}{-0.5cm}{}    
+
+\begin{center}
+\begin{table}[h]
+\caption{Unit Test results for Singletons.hs}   
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }      
         \hline
         \multicolumn{4}{|c|}{Singletons.hs} \\
@@ -409,11 +460,16 @@ the functions are called, the Haskell compiler also tests for type correctness. 
         elimSingT& 5  & 0&100\\
         (\%==) & 5  & 0&100\\
         \hline
-    \end{tabular}
-\end{adjustwidth}
+\end{tabular}
+\end{table}
+\end{center}
 
-\begin{adjustwidth}{-0.5cm}{}    
-    \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
+
+
+\begin{center}
+\begin{table}[h]
+\caption{Unit Test results for Equality.hs}   
+\begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
         \multicolumn{4}{|c|}{Equality.hs} \\
@@ -429,8 +485,13 @@ the functions are called, the Haskell compiler also tests for type correctness. 
         dec2bool & 3  & 0& 100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SECTION: BLACKBOX TEST %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{table}
+\end{center}
+
+%%%%%%%%%%%%%%%%%
+%   SECTION: BLACKBOX TEST    % 
+%%%%%%%%%%%%%%%%%
+
 \subsection{Randomized Testing}
 QuickCheck is a  testing tool that uses type-based testing, it uses invariants 
 to check for specific properties that should be retained in a purely functional 
@@ -441,7 +502,9 @@ with \textit{prop\_} to distinguish them from the real functions. For functions
 that are similar to built in functions. If a function is similar in behavior 
 to a built-in function, testing against the model (i.e., the built-in function) 
 can be done to validate its correctness, but that is not used here because it wasn't feasible to decompose because of high dependencies.
-\begin{adjustwidth}{-0.5cm}{}   
+
+\begin{center}
+\begin{table}
 \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
     \hline
     \multicolumn{4}{|c|}{Utils.hs} \\
@@ -472,9 +535,12 @@ can be done to validate its correctness, but that is not used here because it wa
     freshNames& 100  & 0 &100\\
     \hline
 \end{tabular}
-\end{adjustwidth}
+	\caption {Randomized Testing results for Utils.hs}
+\end{table}
+\end{center}
 
-\begin{adjustwidth}{-0.5cm}{}    
+\begin{center}
+\begin{table}
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
@@ -500,9 +566,12 @@ can be done to validate its correctness, but that is not used here because it wa
         lookupRec& 100  & 0&100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
+	\caption {Randomized Testing results for TypedSQL.hs}
+\end{table}
+\end{center}
 
-\begin{adjustwidth}{-0.5cm}{}    
+\begin{center}
+\begin{table}
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
@@ -514,9 +583,12 @@ can be done to validate its correctness, but that is not used here because it wa
         sql       & 100  & 0&   100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
+	\caption {Randomized Testing results for TSQLCombinators.hs}
+\end{table}
+\end{center}
 
-\begin{adjustwidth}{-0.5cm}{}    
+\begin{center}
+\begin{table} 
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
@@ -529,9 +601,12 @@ can be done to validate its correctness, but that is not used here because it wa
         impossible & 100 & 0&  100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
+	\caption {Randomized Testing results for Trace.hs}
+\end{table}
+\end{center}
 
-\begin{adjustwidth}{-0.5cm}{}    
+\begin{center}
+\begin{table} 
     \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }      
         \hline
         \multicolumn{4}{|c|}{Singletons.hs} \\
@@ -552,10 +627,13 @@ can be done to validate its correctness, but that is not used here because it wa
         (\%==) & 100  & 0&100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
+	\caption {Randomized Testing results for Singletons.hs}
+\end{table}
+\end{center}
 
-\begin{adjustwidth}{-0.5cm}{}    
-    \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
+\begin{center}
+\begin{table}    
+    \begin{tabular}[ht!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
         
         \hline
         \multicolumn{4}{|c|}{Equality.hs} \\
@@ -570,27 +648,34 @@ can be done to validate its correctness, but that is not used here because it wa
         liftDec2 & 100  & 0   &100\\
         dec2bool & 100  & 0& 100\\
         \hline
-    \end{tabular}
-\end{adjustwidth}
+   \end{tabular}
+	\caption {Randomized Testing results for Equality.hs}
+\end{table}
+\end{center}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SECTION: SQL CORRECTNESS%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+%%  SECTION: SQL CORRECTNESS  %%
+%%%ript (.adl) & SQL Accepted & Number of Tries & Success Rate\\%%%%%%%%%%%%%%%%
+
 \subsection{SQL Output Tests}
 Workbench was used to test the syntactic correctness of SQL queries. The same 
 scripts will repeated generate the exact same SQL queries, only two cycles of 
-tests have been completed but both produce identical results.\\
+tests have been completed but both produce identical results.
+\\
 \begin{figure}[H]
 
 \includegraphics[width=\textwidth]{workbench_linux}
 \caption{This is an example of what Workbench looks like using ProjectAdmin as 
     the prototype}
 \end{figure}
-\begin{adjustwidth}{-0.5cm}{}   
-    \begin{tabular}[h!]{ |p{5cm}||p{3cm}|p{3cm}|p{3cm}|  }
+
+\begin{center}
+\begin{table}  
+    \begin{tabular}[h!]{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
         \hline
         \multicolumn{4}{|c|}{Generated SQL Test Table} \\
         \hline
-        Test Script (.adl) & SQL Accepted & Number of Tries & Success Rate\\
-        \hline
+        Test Script (.adl) & SQL Accepted & Number of Tries & Success Rate\\ \hline
         ProjectAdmin & Yes    &2&   100\\
         Delivery&   Yes  & 2   &100\\
         Try1 &Yes & 2&  100\\
@@ -615,9 +700,14 @@ tests have been completed but both produce identical results.\\
         Try20& Yes  & 2 &100\\
         \hline
     \end{tabular}
-\end{adjustwidth}
+	\caption {Testing for SQL correctness}
+\end{table}
+\end{center}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SECTION: SQL CORRECTNESS%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%
+%  SECTION: SQL CORRECTNESS  %%
+%%%%%%%%%%%%%%%%%%
+
 \section{System Tests}
 In this section we document the result of parsing ADL files through the EFA project.   
 
@@ -629,7 +719,10 @@ or otherwise it would not run, thus no further testing was done on this
 front.
 
 \subsection{Ampersand generates ASQL}
-\begin{longtable}{|L{0.5cm}|L{2.5cm}|L{2.5cm}|L{2.25cm}|L{3cm}|L{1.75cm}|L{1.5cm}|}
+
+\begin{center}
+\begin{table}[H]
+\begin{longtable}{|L{0.5cm}|L{2.2cm}|L{2.0cm}|L{2.0cm}|L{2.7cm}|L{1.7cm}|L{1.4cm}|}
 \hline
 \textbf{No.} & \textbf{Test Case}  & \textbf{Initial State} & \textbf{Input} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result}\\ 
 \hline
@@ -640,22 +733,15 @@ front.
 3 &Ampersand generates ASQL & Installed EFA Ampersand &Case.adl & Annotated SQL & As Expected & PASS \\ 
 \hline
 \end{longtable}
+	\caption {Test Results of EFA project }
+\end{table}
+\end{center}
 
-%\subsection{ASQL is valid}
-%\begin{longtable}{|L{0.5cm}|L{2.5cm}|L{2.5cm}|L{2.25cm}|L{3cm}|L{1.75cm}|L{1.5cm}|}
-%\hline
-%\textbf{No.} & \textbf{Test Case}  & \textbf{Initial State} & \textbf{Input} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result}\\ 
-%\hline
-%1 & Ampersand generates ASQL & Installed EFA Ampersand &ProjectAdmin.adl & Annotated SQL & As Expected & PASS \\ 
-%\hline
-%2 & Ampersand generates ASQL & Installed EFA Ampersand &Delivery.adl & Annotated SQL & As Expected & PASS \\ 
-%\hline
-%3 &Ampersand generates ASQL & Installed EFA Ampersand &Case.adl & Annotated SQL & As Expected & PASS \\ 
-%\hline
-%\end{longtable}
 
 \subsection{EFA System Compatibility}
-\begin{longtable}{|L{0.5cm}|L{2.5cm}|L{2.5cm}|L{2.25cm}|L{3cm}|L{1.75cm}|L{1.5cm}|}
+\begin{center}
+\begin{table}[H]
+\begin{longtable}{|L{0.5cm}|L{2.2cm}|L{2.0cm}|L{2.0cm}|L{2.7cm}|L{1.69cm}|L{1.4cm}|}
 \hline
 \textbf{No.} & \textbf{Test Case}  & \textbf{Initial State} & \textbf{Input} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result}\\ 
 \hline
@@ -666,6 +752,9 @@ front.
 3 & System Compatibility & Installed EFA Ampersand &Case.adl & No exception during generation of prototype & As Expected & PASS \\ 
 \hline
 \end{longtable}
+	\caption {Test Results from the System Compatibility test}
+\end{table}
+\end{center}
 
 \subsection{EFA is a pure function}
 Since all functions written in
@@ -695,6 +784,30 @@ After review and acceptance of the EFA project. EFA will be ran on the sentinel 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Changes Made After testing}
 After intense usability testing, the EFA team decided to format the generated SQL using a pretty printer library. The formatted SQL is indented for better readability and thereby increasing the overall usability of the EFA project.
+
+\section{Changes since Revision 0} \label{TAcomment}
+\begin{center}
+\begin{table}[h]
+\caption{Changes made to the document based on the comments and marks obtained}  
+\begin{tabular}{|L{5cm}|L{5cm}|L{2cm}|}
+\hline
+            	{ \bf TA's Comment} & {\bf Changes} & {\bf Date} \\\hline 
+			All pdf and tex files should include commands for TA's comments & Already include from		 			setupComments.sty package  in all documents
+			 &16/ 04 / 2016\\\hline
+			 
+			 Grammatical Errors & Fixed all grammatical errors
+			 &16/ 04 / 2016\\\hline
+	  		
+	  		All Tables should have caption & Added Caption to all the tables
+			 &16/ 04 / 2016\\\hline
+	  
+	  		Unnecessary section `` Software Requirement Specification'' & Removed section
+			 &16/ 04 / 2016\\\hline
+\end{tabular}
+\end{table}
+\end{center}
+
+
 
 \bibliographystyle{alpha}
 \bibliography{references}
