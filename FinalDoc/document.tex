@@ -1,4 +1,4 @@
-\documentclass[12pt, svgnames]{article} %draftclsnofoot 
+\documentclass[journal,12pt,onecolumn,draftclsnofoot]{article}
 %for 
 %double spacing
 \usepackage{amsmath}
@@ -33,8 +33,10 @@
 % ---------------------------
 %  Modularized Sections
 %---------------------------
+\usepackage[sectionbib]{chapterbib}
 \usepackage{subfiles}
 \usepackage[noadjust]{cite}
+
 % \input{filename.tex}      %will format input document according to base doc, 
 %%can nest
 % \include{filename.tex} % cant nest
@@ -123,8 +125,9 @@
 
 %\newcommand{\@supervisor}{}
 \newcommand{\supervisor}[1]{\renewcommand{\@supervisor}{#1}}
+\begin{filecontents*}{references.bib}
 
-
+\end{filecontents*}
 \begin{document}
 %\maketitle %% Title page included from Title.tex
 \input{title}
@@ -176,7 +179,9 @@ safeguards the database from illegal transactions.
 \subsection*{Ampersand}
 \subsection*{Objectives}
 \subsection*{Document Guide}
+\include{design-section}
 
+\newpage
 \bibliographystyle{alpha}
 \bibliography{references}
 \end{document}

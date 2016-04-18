@@ -1,3 +1,442 @@
-\documentclass[document.tex]{subfiles}
-\begin{document}
-\end{document}
+%\documentclass[document.tex]{subfiles}
+\noindent
+\section{System Architecture and Module Hierarchy}
+\subsection{System Architecture}\label{SystemArch}
+This section provides an overview of system architecture and module hierarchy. 
+The 
+initial section introduces term and tools used in the making of each EFA 
+module. The module design is detailed with UML-like class diagrams. However, 
+UML class diagrams are typically
+used to describe the module systems of object-oriented programs, as opposed to
+functional programs. Many of the components of the traditional UML class
+diagram are inapplicable to functional programs; therefore, we detail our
+modifications to the UML class diagram syntax in 
+section%~\ref{subsec:ModuleSyntax}. 
+
+Furthermore, the syntax used to describe types and data declarations is not
+actual Haskell syntax. The syntax shares many similarities, but several changes
+to the syntax are made in this document in order to present the module hierarchy
+in a clear manner. These changes are also detailed, in 
+section%~\ref{subsec:HaskellSyntax}. 
+
+\begin{figure}[!ht]
+    \makebox[\textwidth][c]{
+        \scalebox{0.6}{
+            \begin{tikzpicture}
+            
+            \begin{package}{Module}
+            
+            \begin{class}[text width=10cm]{Submodule$_0$}{0,0}
+            \hstype{Data$_0$ : Type where}
+            \hstypectr{Ctr$_0$ : A -> Data$_0$}
+            \hstypectr{pattern Ctr$_1$ : B -> Data$_0$}
+            \hsfunc{func$_0$ : B -> C -> D} 
+            \hstype{Data$_1$ : Kind where}
+            \hstypectr{Ctr$_2$ : E -> Data$_1$}
+            \end{class}
+            
+            \begin{class}[text width=10cm]{Submodule$_1$}{0,-5}
+            \attribute{\emph{Type level namespace}}
+            \operation{\emph{Value level namespace}}
+            \end{class}
+            
+            \draw [umlcd style, ->] (Submodule$_0$.south) -- (Submodule$_0$ |- 
+            Submodule$_1$.north); 
+            \end{package}
+            
+            \begin{class}[text width=3cm]{Module$_0$}{10,-3.5}
+            \end{class}
+            
+            \begin{class}[text width=3cm]{Module$_1$}{10,-5.5}
+            \end{class}
+            
+            \begin{class}[text width=3cm]{Module$_2$}{15,-5.5}
+            \end{class}
+            
+            \draw [umlcd style, ->] (Module$_0$.south) -- (Module$_0$ |- 
+            Module$_1$.north); 
+            \draw [umlcd style, ->] (Module$_1$.east) -- (Module$_1$ -| 
+            Module$_2$.west); 
+            
+            \renewcommand{\umlfillcolor}{grey}
+            \begin{class}[text width=10cm]{Package Dependency}{12,0.5}
+            \hstype{$\ldots$}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            
+            \renewcommand{\umlfillcolor}{applegreen}
+            \begin{class}[text width=10cm]{System Module}{12,-1.5}
+            \hstype{$\ldots$}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \end{tikzpicture}
+        }}\caption{Example of module diagram syntax}\label{fig:ModExample}
+    \end{figure}
+
+
+
+\noindent
+\subsection{A Description of Haskell-Similar Syntax}\label{subsec:HaskellSyntax}
+
+This section details the syntax used to describe the module system of
+Ampersand. This syntax largely borrows from actual Haskell syntax, and from the
+Agda programming language%\cite{agda}.
+ Agda is a dependently typed functional
+language, and since a large part of our work deals with ``faking'' dependent
+types, the syntax of Agda is conducive to easy communication of our module 
+system. The
+principle of faking dependent types in Haskell is detailed in
+Hasochism \citep{hasochism} 
+(a portmanteau of Haskell and masochism, because
+purportedly wanting to fake dependent types in Haskell is masochism). While the
+implementation has since been refined many times over, the general approach is 
+still the
+same, and will not be detailed here.
+While the changes made to the Haskell syntax are reasonably complex, the 
+ensuing 
+module description becomes vastly simplified. This section is meant to be used
+as a reference - in many cases, the meaning of a type is self-evident. 
+
+\noindent
+\subsection{Description of Types and Kinds}
+In the way that a type classifies a set of values, a kind classifies a set of
+types. Haskell permits one to define algebraic data types, which are then 
+``promoted''
+to the kind level \citep{promotion}. 
+This permits the type constructor of the datatype to be used
+as a kind constructor, and for the value constructors to be used as type 
+constructors. In every case in our system, when we define a datatype and use 
+the promoted version, we never use the \emph{unpromoted} version. That is, we 
+define types which are never used as types, only as kinds, and constructors 
+which are never used as value constructors,only type constructors. We write 
+\,\,\,\lstinline!X : A -> B -> $\ldots$ -> 
+Type!\,\,\, to denote
+a regular data type, and \,\,\,\lstinline!Y : A -> B -> $\ldots$ -> Kind!\,\,\, 
+to denote a datatype
+which is used exclusively as a kind. 
+
+\noindent
+\subsection{Description of Dependant types}
+The syntax used to denote a ``fake'' dependant type in our model is the same 
+as used to denote a real dependant type in Agda. \lstinline!(x : A) -> B! is 
+the function
+from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly 
+looks like a 
+real Haskell type - in Haskell, the syntax would be \texttt{forall (x :: A) . 
+B}. However, 
+the semantics of these two types are vastly different - the former can pattern 
+match
+on the value of $x$, while the latter cannot. 
+
+In certain cases, it may be elucidating to see the \emph{real} Haskell type of
+an entity (function, datatype, etc.). To differentiate the two, they are typeset
+differently, as in this example.
+
+The real type of a function whose type is given as \lstinline!(x : A) -> B! in
+our model is \texttt{forall (x :: A) . SingT x -> B}. \texttt{SingT :: A -> 
+Type}
+denotes the singleton type for the kind $A$, which is inhabitted by precisely
+one value for each type which inhabits $A$. The role and use of singleton types
+is detailed further on, in section~\ref{subsec:Singletons}. 
+
+The syntax \lstinline!forall (x : A) -> B! is used to denote the regular
+Haskell type \texttt{forall (x :: A) . B}. As is customary in Haskell, the 
+quantification
+may be dropped when the kind $A$ is clear from the context: \lstinline!forall 
+(x : A) -> P x! and
+\lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
+
+\subsection{Constraints}
+The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
+we use the arrow to additionally denote constraints. For example, the function
+\texttt{Show a => a -> String} would be written simply as \lstinline!Show a -> 
+a -> String!.
+In certain casees, a constraint is intended to be used only in an implicit 
+fashion 
+(i.e. as an actual constraint), in which case the constraint is written with 
+the typical \lstinline{=>} syntax. 
+
+\subsubsection*{Existential quantification}
+The type \lstinline!exists (x : A) (P x)! indicates that there exists some $x$
+of kind $A$ which satisfies the predicate $P$. Unfortunately, Haskell does not
+have first class existential quantification. It must be encoded in one of
+two ways:
+
+\subsubsection*{Types, kinds, and type synonyms}
+Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is 
+the name
+of the type synonym, $K$ is its kind, and $X$ its implementation. This is to 
+differentiate
+from type families, which are written as \lstinline!Ty : K where Ty $\ldots$ = 
+$\ldots$!.
+
+\subsubsection*{Overloading}
+Haskell supports overloaded function names through type classes. When we use a 
+type 
+class to simply overload a function name, we simply write the function name
+multiple times with different types. The motivation for this is that often the 
+real type will be exceeding complex, because it must be so to get good type 
+inference. 
+
+ 
+
+\subsubsection*{Omitted implementations}
+When the implementation of a type synonym, or any other entity, is omitted, it
+is replaced by ``$\ldots$''. This is to differentiate from a declaration of the 
+form
+\lstinline!Ty : Type!, which is an abstract type whose constructors cannot be
+accessed. Furthermore, types may have pattern-match-only constructors; that is,
+constructors which can only be used in the context of a pattern match, and not
+to construct a value of that type. This is denoted by the syntax
+``\lstinline!pattern Ctr : Ty!''. Furthermore, it is not a simple matter of
+convention - the use of this constructor in expressions will be strictly
+forbidden by Haskell.
+
+
+\begin{itemize}
+    \item With a function (by DeMorgan's law): \\ \texttt{(forall (x :: A) . P 
+    x -> r) -> r}
+    \item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> 
+    Exists p}
+\end{itemize} 
+
+Choice of form is based on the circumstances in which the function
+will most likely be used, since whether one form is more convenient than the
+other depends largely on the intended use. However, these two forms are
+completely interchangeable (albeit with some syntactic noise) so the syntax
+presented here does not distinguish between the two. 
+
+\section{Module Hierarchy}
+\subsection{A Description of Module Diagram Syntax}\label{subsec:ModuleSyntax}
+
+The module hierarchy is broken down into multiple levels to better describe the
+system.  A coarse module hierarchy is given, and each module is further broken
+into submodules.  A dependency between two modules $A$ and $B$ indicates that
+each submodule in $A$ depends on all of $B$. There is no necessity to break
+down modules into submodule, if they do not have any interesting submodule 
+structure. Arrows between modules and submodules denote a dependency. 
+
+External dependencies, which are modules which come from an external pacakge,
+are indicated in {\color{grey}grey}. System modules, which are modules part of
+Ampersand, but not written specifically for EFA (or, on which EFA depends, but
+few or no changes have been made from the original module before the existance
+of EFA), are indicated in {\color{applegreen}green}. The module heirarchy of
+these modules is not described here; they are included simply to indicate which
+symbols are imported from these modules. An example of the syntax is found in
+figure%~\ref{fig:ModExample}.
+
+%----------------------------------------------------------
+This section contains a hierarchal breakdown of each module, as well as a brief
+explanation of each modules' elements. 
+
+The module heiarchy of EFA as a whole is given in figure~\ref{fig:efaMod}.  Note
+that every module which is part of EFA depends on the Haskell \texttt{base} 
+package
+(which is the core libraries of Haskell). Also note that for the \texttt{base}
+package, we only include primitive definitions (i.e. those not defined in real
+Haskell) which may be difficult to track down in the documentation. The kinds
+\lstinline{Nat} and \lstinline{Symbol} correspond to type level natural number 
+and string
+literals, respectively. The kind \lstinline{Constraint} is the kind of class and
+equality constraints, for example, things like \lstinline{Show x} and 
+\lstinline[mathescape]|Int $\sim$ Bool|.  
+Note that \texttt{Show} itself does \emph{not} have kind Constraint --
+its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
+primitive entities can be found in the GHC user guide~\cite{ghcUserGuide}. While
+many modern features of GHC are used in the actual implementation, they are not
+mentioned in, nor required to understand, the module description.
+%% All other features of GHC are
+%% detailed in the user guide as well, but no other
+
+The primary interface to EFA is the function \lstinline{eca2PrettySQL}, which 
+takes an
+FSpec (the abstract syntax of Ampersand) and an ECA rule, and returns the pretty
+printed SQL code for that rule. Also note that while the dependencies within EFA
+modules is relatively complex, they depend on the rest of the Ampersand system
+in a simple manner. The modules \lstinline{Test} and \lstinline{Prototype} 
+implement the testing
+framework and the prototype generation, respectively; these modules depend
+directly on only one module from EFA, namely \lstinline{ECA2SQL}. Similarly, the
+majority of EFA itself does not depend directly on Ampersand modules outside of
+EFA. This makes EFA very resilient to changes in the core Ampersand system; in
+order to update EFA to work with a modification to Ampersand, only one EFA
+module -- ECA2SQL -- will generally need to be modified. 
+
+All functions named in the module hierarchy are total - they do not throw
+exceptions, or produce unhandled errors or infinite loops. Therefore, no
+additional information past the type of the function is required to deduce the
+inputs and ouputs of the function -- they are precisely the inputs and outputs
+of the type.
+
+\begin{figure}[!ht]
+    \makebox[\textwidth][c]{
+        \scalebox{0.6}{
+            \begin{tikzpicture}
+            
+            %% \begin{package}{TypedSQL}
+            %% fwQcGWGGF
+            
+            \begin{class}[text width=16.6cm]{ECA2SQL}{0,2}
+            \hsfunc{eca2SQL : FSpec -> ECArule -> exists (a : [SQLType]) 
+            (SQLMethod a SQLBool)}
+            \hsfunc{eca2PrettySQL : FSpec -> ECArule -> Doc}
+            %% \hsfunc{$\ldots$}
+            \end{class}
+            
+            \begin{class}[text width=3cm]{TypedSQL}{-3.4, -2.5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \begin{class}[text width=4.5cm]{PrettyPrinterSQL}{-9, -2.5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \begin{class}[text width=6cm]{TypedSQLCombinators}{5,-2.5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            
+            \begin{class}[text width=3cm]{Equality}{-3.4,-5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \begin{class}[text width=3cm]{Singletons}{3.55,-5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            
+            %% \begin{class}[text width=3cm]{Trace}{-3.4,-13.5}
+            %%     \hsfunc{$\ldots$}
+            %% \end{class}
+            
+            \begin{class}[text width=3cm]{Proof Utils}{3.55,-7.5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \renewcommand{\umlfillcolor}{grey}
+            \begin{class}[text width=9cm]{base}{6,-13.5}
+            \hstype{Nat : Kind} 
+            \hstype{Constraint : Kind} 
+            \hstype{Type : Kind} 
+            \hstype{Symbol : Kind}
+            \hstype{CmpSymbol : Symbol -> Symbol -> Ordering} 
+            \hstype{(\~) : Type -> Type -> Constraint} 
+            \end{class}
+            
+            \renewcommand{\umlfillcolor}{grey}
+            \begin{class}[text width=6cm]{wl-pprint}{-3.4,-6.5}
+            \hstype{Doc : Type} 
+            \hstype{instance Show Doc where $\ldots$} 
+            \hstype{class Pretty a where}
+            \hstype[20pt]{pretty :: a -> Doc}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \renewcommand{\umlfillcolor}{grey}
+            \begin{class}[text width=7cm]{simple-sql-parser}{-11,-6.5}
+            \hstype{QueryExpr : Type where $\ldots$}
+            \hstype{ValueExpr : Type where $\ldots$}
+            \hstype{Name : Type where $\ldots$}
+            \hsfunc{prettyQueryExpr : QueryExpr -> Doc} 
+            \hsfunc{prettyValueExpr : ValueExpr -> Doc} 
+            \end{class}
+            
+            
+            \renewcommand{\umlfillcolor}{applegreen}
+            \begin{class}[text width=4.9cm]{AmpersandCore}{4,-10}
+            \hstype{ECArule : Type where $\ldots$} 
+            %% \hsfunc{$\ldots$}
+            \end{class}
+            
+            \renewcommand{\umlfillcolor}{applegreen}
+            \begin{class}[text width=3cm]{Test}{-2,5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \renewcommand{\umlfillcolor}{applegreen}
+            \begin{class}[text width=3cm]{Prototype}{2,5}
+            \hsfunc{$\ldots$}
+            \end{class}
+            
+            \renewcommand{\umlfillcolor}{applegreen}
+            \begin{class}[text width=4.5cm]{FSpec}{10.4,-10}
+            \hstype{FSpec : Type where $\ldots$} 
+            %% \hsfunc{$\ldots$}
+            \end{class}
+            
+            \unidirectionalAssociation{Prototype}{}{}{ECA2SQL}
+            \unidirectionalAssociation{Test}{}{}{ECA2SQL}
+            
+            \draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south 
+            west)$) -- (TypedSQL.north); 
+            \draw [umlcd style, ->] ($(ECA2SQL.south)!0.5!(ECA2SQL.south 
+            east)$) -- (TypedSQLCombinators.north); 
+            \draw [umlcd style, ->] (ECA2SQL.south) -- (Equality.north east); 
+            \draw [umlcd style, ->] (ECA2SQL.south) -- (Singletons.north west); 
+            %% \draw [umlcd style, ->] (ECA2SQL.south) -- (Trace.north east); 
+            \draw [umlcd style, ->] (ECA2SQL.south) -- (Proof Utils.north 
+            west); 
+            \draw [umlcd style, ->] (ECA2SQL.south west) -- 
+            (PrettyPrinterSQL.north); 
+            
+            
+            \node[above = 1cm of base] (basedummy)       {};
+            \node[above = 1.5cm of base](basedummy2)       {};
+            \draw [umlcd style, ->, thick] (basedummy) -- (base); 
+            \draw [umlcd style dashed line, -, thick] (basedummy2) -- (base); 
+            
+            \draw [umlcd style, ->] (Singletons.south) -- (Proof Utils.north); 
+            %% \draw [umlcd style, ->] (Singletons.west) -- (Trace.east); 
+            \draw [umlcd style, ->] (TypedSQL.south) -- (Equality.north); 
+            %% \draw [umlcd style, ->] (Equality.south) -- (Trace.north); 
+            \draw [umlcd style, ->] (TypedSQLCombinators.west) -- 
+            (TypedSQL.east); 
+            \draw [umlcd style, ->] (Singletons.west) -- (Equality.east); 
+            %% \draw [umlcd style, ->] (Proof Utils.south west) -- (Trace.south 
+            %%east); 
+            \draw [umlcd style, ->] (TypedSQL.south east) -- 
+            (AmpersandCore.north west); 
+            
+            \draw [umlcd style, ->] ([xshift=60pt]TypedSQLCombinators.south) -- 
+            ([xshift=30pt]AmpersandCore.north); 
+            \draw [umlcd style, ->] (TypedSQLCombinators.south) -- 
+            (Singletons.north); 
+            \draw [umlcd style, ->] ([xshift=30pt]TypedSQLCombinators.south) -- 
+            (Proof Utils.north east); 
+            
+            
+            \draw [umlcd style, ->] ([xshift=-30pt]PrettyPrinterSQL.south east) 
+            -- (wl-pprint.north west); 
+            %% \draw [umlcd style, ->] (PrettyPrinterSQL.south east) -- 
+            %%(Trace.west); 
+            \draw [umlcd style, ->] (PrettyPrinterSQL.east) -- (TypedSQL.west); 
+            
+            %% \node[above = 1cm of Trace] (tracedummy)       {};
+            %% \node[above = 1.5cm of Trace](tracedummy2)       {};
+            %% \draw [umlcd style, ->, thick] (tracedummy) -- (Trace); 
+            %% \draw [umlcd style dashed line, -, thick] (tracedummy2) -- 
+            %%(Trace); 
+            
+            \draw [umlcd style, ->] (TypedSQL.south west) -- 
+            (simple-sql-parser.north east); 
+            
+            \draw  [umlcd style, ->, fill opacity=0]  
+            ([xshift=70pt]TypedSQLCombinators.south) --++ (0cm,-8cm) -| 
+            (simple-sql-parser.south);
+            
+            
+            \draw[umlcd style ,->, fill opacity=0] (ECA2SQL.east) -| node[above 
+            , sloped , black]{} (FSpec.north);
+            
+            \draw[umlcd style ,->, fill opacity=0] (ECA2SQL.south) |- 
+            node[above , sloped , black]{} (AmpersandCore.west);
+            
+            \unidirectionalAssociation{PrettyPrinterSQL}{}{}{simple-sql-parser}
+            
+            \end{tikzpicture}
+        }}\caption{Module diagram for EFA as a whole} \label{fig:efaMod}
+    \end{figure}
+    
+
