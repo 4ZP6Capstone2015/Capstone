@@ -21,120 +21,35 @@ to the syntax are made in this document in order to present the module hierarchy
 in a clear manner. These changes are also detailed, in 
 section%~\ref{subsec:HaskellSyntax}. 
 
-\subsection{Partner or Collaborative Applications}\label{subsec:Collaborative}
-
-This section provides a brief description of the modules that EFA uses. More 
-details are provided in the Module Guide for EFA.
-
-\begin{adjustbox}{center}
-\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
-\hline
-\multicolumn{2}{|c|}{\bfseries{\large{Ampersand Core Modules}}} \\ 
-\hline\hline
-\bfseries{Module Name} & \bfseries{Description}\\
-\hline
-AbstractSyntaxTree   & Ampersand's abstract representation of input 
-from 
-ADL.   \\
-\hline
-FSpec &   A module that represents the F-Spec structure.\\
-\hline
-Basics & An Ampersand internal module that provides basic functions for 
-data manipulation.\\
-\hline
-ParseTree    & Ampersand parse tree for ADL script; concrete 
-representation 
-of the input, and retains all information of the input. \\
-\hline
-\end{tabular}
-\end{adjustbox}
-
-
-\begin{adjustbox}{center}
-\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
-\hline
-\multicolumn{2}{|c|}{\bfseries{\large{External Haskell Modules}}} \\
-\hline\hline
-\bfseries{Module Name} & \bfseries{Description}\\
-\hline
-GHC.TypeLits   & Internal GHC module used in the implementation of 
-type-level natural numbers \cite{hackage}    \\ 
-\hline
-Data.List & A module that provides support for operations on list 
-structures.  \\
-\hline
-Data.Char &  A module that provides support for characters and 
-operations 
-on characters.  \\
-\hline
-Data.Coerce  & Provides safe coercions between data types; allows user 
-to 
-safely convert between values of type that have the same representation 
-with no run-time overhead \cite{hackage}.\\
-\hline
-Debug.Trace &  Interface for tracing and monitoring execution, used for 
-investigating bugs and other performance issues \cite{hackage}. \\ 
-\hline 
-GHC.TypeLits & Internal GHC module that declares the constants used in 
-type-level implementation of natural numbers \cite{hackage}.  \\ 
-\hline  
-SimpleSQL.Syntax&   The AST for SQL queries \cite{hackage}\\ 
-\hline
-Text.PrettyPrint .Leijen & A pretty printer module based 
-off of Philip Wadler's 1997 "A prettier printer", used to show SQL 
-queries 
-in a readable manner to humans \cite{hackage}.\\ 
-\hline
-GHC.Exts & This module provides access to types, classes, and functions 
-necessary to use GHC extensions. \\ 
-\hline
-Unsafe.Coerce &  A helper module that converts a value from any type to 
-any 
-other type.This is used in the translation of ECA rules to SQL using 
-user-defined data types. \\ 
-\hline
-System.IO.Unsafe & IO computation must be free of side effects and 
-independent of its environment to be considered safe. Any I/O 
-computation 
-that is wrapped in unsafePerformIO performs side effects. \\
-\hline
-\end{tabular}
-\end{adjustbox}
-
-\begin{adjustbox}{center}
-\begin{tabular}{ |p{3.2cm}|p{11cm}|  }
-\hline
-\multicolumn{2}{|c|}{\bfseries{\large{EFA Modules}}} \\
-\hline\hline
-\bfseries{Module Name} & \bfseries{Description}\\
-\hline
-ECA2SQL & The top-level module that takes ECA rules from FSpec and 
-converts it into SQL queries.    \\ 
-\hline
-Equality & Various utilities related to type level equality   \\ 
-\hline
-PrettyPrinterSQL & Prints SQl queries in human-readable format    \\ 
-\hline
-Singletons & Module for Singleton datatypes, the module defines 
-singleton for a kind in terms of an isomorphism between a type and a 
-type representation   \\ 
-\hline
-Trace & Provides trace messages and various utilities used by 
-ECA2SQL    \\ 
-\hline
-TSQLCombinators & Uses an overloaded operator for indexing and 
-implements SQL as a primitive data type.   \\ 
-\hline
-TypedSQL & Contains basic SQL types represented in Haskell.    \\ 
-\hline
-Utils & Provides utility functions for ECA2SQL and contains type 
-families    \\ 
-\hline
-\end{tabular}
-\end{adjustbox}
+\subsection{External Libraries}
+The EFA project depends on the following Libraries 
+\begin{description}
+    \item \textbf{Ampersand Core Libraries} \newline
+    The EFA project depends on the Ampersand software for the definition of 
+    core Data Structures, (i.e. FSpec, which contains the definition of 
+    the underlying ECA rules). EFA also maintains the relational schema of 
+    the input, and hence, imports Ampersand's existing functions to fetch 
+    the table declarations while generating SQL Statements for the ECA 
+    rules. AMMBR \cite{AMMBR}, which is the key algorithm responsible for 
+    translating business requirements into ECA rules is an integral part of 
+    Ampersand.
+    \item \textbf{simple-sql-parser} \newline
+    EFA's pretty printer depends directly on this library for formatting 
+    and printing SQL statements. The SQL statement syntax 
+    defined here is built on top of the existing expression syntax defined 
+    in this package. This package is the one used by the core Ampersand system,
+    so our use of it facilitates interaction and integration with Ampersand. 
+    \cite{simple-sql}
+    \item \textbf{wl-pprint} \newline 
+    The wl-pprint library\cite{wl-pprint} is a pretty printer based on the
+    pretty printing combinators. EFA uses this library in combination with
+    the simple-sql-pretty to output the SQL statements in a human readable
+    format.
+    \item 
+\end{description}
 
 \noindent
-\subsection{A Description of Haskell-Similar Syntax}\label{subsec:HaskellSyntax}
+\subsection{A Description of Haskell-Like Syntax}\label{subsec:HaskellSyntax}
 
 This section details the syntax used to describe the module system of
 Ampersand. This syntax largely borrows from actual Haskell syntax, and from the
@@ -156,7 +71,7 @@ module description becomes vastly simplified. This section is meant to be used
 as a reference - in many cases, the meaning of a type is self-evident. 
 
 \noindent
-\subsection{Description of Types and Kinds}
+\subsubsection*{Description of Types and Kinds}
 
 In the way that a type classifies a set of values, a kind classifies a set of
 types. Haskell permits one to define algebraic data types, which are then 
@@ -179,7 +94,7 @@ to denote a datatype
 which is used exclusively as a kind. 
 
 \noindent
-\subsection{Description of Dependant types}
+\subsubsection*{Description of Dependant types}
 
 The syntax used to denote a ``fake'' dependent type in our model is the same 
 as used to denote a real dependent type in Agda. \lstinline!(x : A) -> B! is 
@@ -211,7 +126,7 @@ may be dropped when the kind $A$ is clear from the context:
 and
 \lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
 
-\subsection{Constraints}
+\subsubsection*{Constraints}
 
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
@@ -222,14 +137,28 @@ fashion
 (i.e. as an actual constraint), in which case the constraint is written with 
 the typical \lstinline{=>} syntax. 
 
-\subsubsection{Existential quantification}
+\subsubsection*{Existential quantification}
 
 The type \lstinline!exists (x : A) (P x)! indicates that there exists some $x$
 of kind $A$ which satisfies the predicate $P$. Unfortunately, Haskell does not
 have first class existential quantification. It must be encoded in one of
 two ways:
 
-\subsubsection{Types, kinds, and type synonyms}
+
+\begin{itemize}
+    \item With a function (by DeMorgan's law): \\ \texttt{(forall (x :: A) . P 
+    x -> r) -> r}
+    \item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> 
+    Exists p}
+\end{itemize} 
+
+Which form is used is decided based on the circumstances in which the function
+will most likely be used, since whether one form is more convenient than the
+other depends largely on the intended use. However, these two forms are
+completely interchangeable (albiet with some syntactic noise) so the syntax
+presented here does not distinguish between the two. 
+
+\subsubsection*{Types, kinds, and type synonyms}
 
 Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is 
 the name
@@ -238,7 +167,7 @@ differentiate
 from type families, which are written as 
 \lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
 
-\subsubsection{Overloading}
+\subsubsection*{Overloading}
 
 Haskell supports overloaded function names through type classes. When we use a 
 type 
@@ -249,7 +178,7 @@ inference.
 
 
 
-\subsubsection{Omitted implementations}
+\subsubsection*{Omitted implementations}
 
 When the implementation of a type synonym, or any other entity, is omitted, it
 is replaced by ``$\ldots$''. This is to differentiate from a declaration of the 
