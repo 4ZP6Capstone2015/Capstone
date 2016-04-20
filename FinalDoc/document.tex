@@ -178,7 +178,44 @@ translate these ECA rules, execute SQL queries to correct violations and
 safeguards the database from illegal transactions.
 
 \subsection{Ampersand}
-\subsection{Objectives}
+
+A large part of designing software systems is requirements engineering. One
+of the greatest challenges of requirements engineering is translating from
+business requirements to a functional specification. Business requirements are
+informal, with the intention of being easily understood by humans; however,
+functional specifications are written in a formal language that is unambiguous 
+and precise. It is meant to capture attributes of the information system that 
+is desired by multiple parties. Typically, this translation
+of business requirements to a formal specification is done by a requirements
+engineer, which can be prone to human error.
+
+Ampersand offers an alternative solution which translates the natural language 
+used in business process into requirement specifications \edcomm{JG:}{cite 
+ampersand book}. Ampersand is a 
+software system which offers many tools that aid their clients in the 
+translation process from business requirement to formal requirement 
+specifications. EFA is implemented as an internal component of Ampersand that 
+is meant to automate the correction of system invariants. EFA aids by reducing 
+the manual labour required to fix invariants and assures that the database is 
+free of errors.  
+
+
+Ampersand is a software tool that translates natural language into 
+\subsubsection*{Ampersand in practice}
+\indent The correct installation and usage of the Ampersand tools and the 
+additional tools requires
+some IT awareness, especially in case some unexpected errors occur when the 
+Ampersand tool
+uses the additional tools.
+To get used to the specific syntax of how business rules are defined in the ADL 
+language
+requires some training. Besides the base syntax, a specific patterns hub is 
+available, to support
+new and seasoned ADL users, which can be used for training, inspiration and 
+re-usage.
+
+\subsection{Project Objectives}
+\edcomm{JG}{Need an overview on what EFA is, what it does}
 \subsection{Document Guide}
 \subsection{Naming Conventions and Terminology}\label{sec:Naming} 
 \begin{description}
@@ -230,15 +267,6 @@ safeguards the database from illegal transactions.
     front-end interface that connects to a back-end database.
     
 \end{description}
-
-\subsection*{Ampersand in practice}
-\indent The correct installation and usage of the Ampersand tools and the 
-additional tools requires
-some IT awareness, especially in case some unexpected errors occur when the Ampersand tool
-uses the additional tools.
-To get used to the specific syntax of how business rules are defined in the ADL language
-requires some training. Besides the base syntax, a specific patterns hub is available, to support
-new and seasoned ADL users, which can be used for training, inspiration and re-usage.
 
 %%%%%%%%%%%%%%%%%
 % Inlcudes sections about 		%
