@@ -21,6 +21,7 @@
 \usepackage{graphicx}
 \usepackage[section]{placeins} % Prevents floats from floating across sections
 \usepackage{tabularx}
+\usepackage{ltablex} %% Multi page tables 
 \usepackage{amsfonts}
 \usepackage{glossaries}
 \usepackage{multirow} %% Used for Traceability matrix
@@ -32,6 +33,8 @@
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
+
+\newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
 
 
 % \input{filename.tex}      %will format input document according to base doc, 
@@ -214,10 +217,8 @@ available, to support
 new and seasoned ADL users, which can be used for training, inspiration and 
 re-usage.
 
-\edcomm{YS}{Merging in my section here}
-\subsection{Purpose of the project}
+
 \edcomm{JG}{Need an overview on what EFA is, what it does}
-\edinsert{YS}{Based on today's meeting. Merging in the 	purpose of the project here}
 \subsection{Document Guide}
 This document acts as a comprehensive guide to EFA, the first section covers 
 the basics of Ampersand and the purpose of the project. The second section 
@@ -283,7 +284,9 @@ this section. Lastly, section four mostly focuses on testing.
     
 \end{description}
 
-\subsection{Implementation Issues}
+\input {requirements-section}
+
+\section{Implementation Issues}
 
 This section contains a detailed list of concerns that came to light during the 
 course of software implementation, though some issues were addressed, others 

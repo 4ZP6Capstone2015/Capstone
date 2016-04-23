@@ -2,7 +2,7 @@
 %\begin{document}
 
 %%{\section{The Purpose of the Project}\label{sec:Purpose}}
-
+\subsection{Purpose of the project}
 \edcomm{YS}{Added the ``AMMBR section'' based on comments from Dr. Kahl. He has verified the section, I'll follow up with a proof read and other section of this document}
 
 Ampersand follows a \emph{rule based} design principle. Rules are integral to an organization
@@ -19,7 +19,7 @@ Furthermore, EFA allows us to
 automatically restore system invariants and create a program that allows 
 Ampersand to make the most efficient choice regarding how it 
 wishes\edinsert{JG:to} proceed 
-based on each individual case. The ECA rules, which act as an input to the EFA project are translated to human-readable SQL. This can later be viewed in the command line using the \verb|``~-~-print~-eca~-info''| flag written out in one of the artifacts. The generated SQL, not only allows for checking the correctness of AMMBR but also helps in identifying 
+based on each individual case. The ECA rules, which act as an input to the EFA project are translated to human-readable SQL. This can later be viewed in the command line using the \verb|``--print-eca-info''| flag written out in one of the artifacts. The generated SQL, not only allows for checking the correctness of AMMBR but also helps in identifying 
 patterns and unreachable states of the method. EFA project will also be utilized to complete the AMMBR algorithm and also to test out future modification to the AMMBR algorithm.  Since AMMBR is an essential element of the Ampersand software, EFA will complement modifications to this method.
 
 
@@ -30,7 +30,7 @@ patterns and unreachable states of the method. EFA project will also be utilized
 \end{center}
 \end{figure}
 
- \section{The Stakeholders and the intended audience}\label{sec:Stakeholders}
+ \subsection{The Stakeholders and the intended audience}\label{sec:Stakeholders}
 The stake holders of Ampersand are:
 
 \begin{itemize}
@@ -42,4 +42,3 @@ Ampersand users spend manually inserting PHP code to restore system invariants.
 This document is designed to help introduce new Ampersand users to EFA 
 (ECA rules for Ampersand). It provides a basic structure that allows 
 individuals to quickly access the information they seek. 
- 

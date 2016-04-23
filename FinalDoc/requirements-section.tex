@@ -1,0 +1,89 @@
+\section{Functional Requirements}\label{sec:Functional}
+\subsection{System Requirements}
+%%-----------------------------SIDE EFFECTS---------------------------------%%
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        Requirement & S1 \\ 
+        \midrule
+        \endhead
+        Description  & Create pure functions with no unintended side effects
+        \\	Rationale & The use of a functional programing languages requires 
+        that this program be a pure function and does not have side effects, 
+        however certain portions of the code requires the execution of side 
+        effects to match the behaviour presented by external programs. In these 
+        specific instances, the side effects are an intended behaviour.
+        \\	Originator & Stakeholder/Developer
+        
+        \\ Test Case & Desired results can be confirmed as they will be 
+        reflected in changes that take place in the Ampersand database.
+        \\	Customer Satisfaction & 5 - Highest 
+        \\	Priority & 5 - Highest 
+        \vspace{12pt}
+    \end{tabularx}
+}
+
+%%------------------ MODULES MUST FIT AMPERSAND FRAMEWORK-----------------%%
+
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        Requirement & S2 \\ 
+        \midrule
+        \endhead
+        Description  & Added modules must fit within Ampersand's current 
+        framework
+        \\	Rationale & As Ampersand is a huge system that has weekly additions 
+        to prevent conflict and breaking of existing packages/modules, an 
+        effort should be made to minimize external dependencies. As EFA will be 
+        an internal component of Ampersand, if a package that EFA depends on to 
+        function properly is no longer maintained and breaks, it will in turn 
+        break Ampersand.
+        \\	Originator & Ampersand Creators (i.e. our client)        
+
+        \\ Test case & Added modules are tested with cabal build inside of the
+        Ampersand system as an internal component (i.e. System testing)
+        \\	Customer Satisfaction & 4 - High 
+        \\	Priority & 4 - High
+        \vspace{12pt}
+    \end{tabularx}
+}
+
+\subsection{Project Requirements}
+%%-------------------------TYPE CORRECTNESS ----------------------------------%%
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P1 \\ 
+        \midrule
+        \endhead
+        Description  & Provable Correctness: Haskell like other functional 
+        programming languages have 
+        a strong type system which can be used for machine-checked proofs.
+        \\	Rationale & Curry-Howard correspondence which states that the 
+        return type of the function is analogous to a logical theorem, that is 
+        subject to the hypothesis corresponding to the types of the argument 
+        values that are passed to the function and thus the program uysed to 
+        compute that function is analogous to a proof of that theorem.
+        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
+        queries through a series of datatype tests, each of which will result 
+        in a traceable result or error message
+        \\	Priority & 4 - High
+        \vspace{12pt}
+    \end{tabularx}
+}
+%%--------------------------CORRECTNESS OF ECA TO SQL RULES ------------------%%
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P2 \\ 
+        \midrule
+        \endhead
+        Description  & Generated SQL queries must preserve the semantics of ECA 
+        rules.  
+        \\	Rationale & The translation would otherwise not be correct, as the 
+        rules would be meaningless if their semantics are lost.
+        \\	Originator & Ampersand Developers
+        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
+        queries through a series of datatype tests, each of which will result 
+        in a traceable result or error message
+        \\	Priority & 4 - High
+        \vspace{12pt}
+    \end{tabularx}
+}
