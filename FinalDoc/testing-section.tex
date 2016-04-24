@@ -104,9 +104,9 @@ The queries produced by EFA were manually tested on a MySQL server; Ampersand
 relies on a MySQL database which can be installed as a part of xampp along with 
 apache or simply on its own from the 
 \href{https://dev.mysql.com/downloads/mysql/}{MySQL website}. A simple guide is 
-available in the appendix \ref{appen:SQL}, on how to install a MySQL Database 
-through xampp and MySQL; instructions are provided on how to use xampp's MySQL 
-server with MySQL WorkBench. Furthermore, 
+available on MySQL's website on how to install use WorkBench with xampp, if an 
+MySQL server outside of xampp, it is highly advisable for these two components 
+to be installed together. Furthermore, 
 \href{https://dev.mysql.com/downloads/workbench/}{WorkBench} can be found on 
 MySQL's official website.
 
@@ -138,4 +138,14 @@ similar to screen shot provided.
 Queries are executed by going to [File] $\rightarrow$ [New Query Tab], a new 
 tab will open and one can manually type queries. The execution of these queries 
 can be specified to the highlighted portion or everything. The pretty-printer 
-can be used to print the translated ECA rules and the associated queries.
+outputs onto the command console what is given as output to the Ampersand its 
+database. 
+
+\begin{figure}[!h]
+    \includegraphics[width=\textwidth]{images/sqlquery}
+    \caption{\footnotesize{This figure shows what the system sees in terms of 
+    specification, how ECA are structured, and how they are to be executed in 
+    SQL. }}
+\end{figure}
+
+
