@@ -142,45 +142,24 @@
 \begin{abstract}
 %light description
 Ampersand Tarski is a tool used to produce functional software documents based 
-on business process requirements. \edchange{WK}{At times, logical 
-discrepancies arise when system changes occur which violate the 
-restrictions set forth by the user.%
-}{At times, atomic state changes cannot be accepted as transactions
+on business process requirements.
+At times, atomic state changes cannot be accepted as transactions
 since they violate system invariants specified in the requirements.
-}%edchange
-When a \edchange{WK}{system}{invariant} violation occurs, one of two 
+When a system invariant violation occurs, one of two 
 things can happen: the change that is meant to take place is adjusted (where it 
 no longer violates the rules of the system) or the change is
-discarded. The
-\edinsert{WK}{ultimate}
-purpose of Event-Condition-Action rules for Ampersand (EFA) is to
-replace
-\eddelete{WK}{the}
-Ampersand's \edchange{WK}{exec-engine}{``Exec-engine''}
-which is \edinsert{WK}{currently} used to fix system violations.
-\edchange{WK}{
-Although the exec-engine appears to fix violations in the prototype, manual labour is 
-required to fix system invariants inside of Ampersand.
-}{However, the Exec-engine relies on manual formulation of repair
-  actions in an error-prone setup that creates PHP-embedded SQL
-  commands from string fragments, as opposed to using the
-  automatically-generated Event-Condition-Action (ECA) rules
-  that Ampersand already produces.}
-The EFA project \edchange{WK}{was 
-\edcomm{JG}{ proposed might not be the right word}
-proposed to replace the exec-engine
-}{aims to utlimately make the Exec-engine superfluous
-}%edchange
-by correctly translating \edinsert{WK}{the} ECA rules and 
-implementing them as SQL 
+discarded. The ultimate purpose of Event-Condition-Action rules for Ampersand 
+(EFA) is to replace Ampersand's ``Exec-engine''
+which is currently used to fix system violations. However, the Exec-engine 
+relies on manual formulation of repair actions in an error-prone setup that 
+creates PHP-embedded SQL commands from string fragments, as opposed to using 
+the automatically-generated Event-Condition-Action (ECA) rules that Ampersand 
+already produces. The EFA project aims to ultimately make the Exec-engine 
+superfluous by correctly translating the ECA rules and implementing them as SQL 
 queries so that system violations may be automatically corrected. EFA is 
-automated and requires no additional work from the user. In addition, EFA is 
-provably correct \edcomm{WK}{This statement would require an axiomatic
-  semantics for SQL and Hoare-logic proofs to be produced alongside
-  your SQL generation --- something you never attempted.
-A claim you can reasonably make is safety: Your generated SQL is by
-construction syntax- and type-correct.}
-  and has a high degree of modularity as it only relies on 
+automated and requires no additional work from the user. In addition, the 
+generated SQL produced by EFA is by construction syntax- and type-correct. 
+Furthermore, EFA has a high degree of modularity as it only relies on 
 Ampersand's essential components.
 \end{abstract}
 \newpage
