@@ -23,8 +23,7 @@ section ~\ref{subsec:HaskellSyntax}.
 
 \subsection{External Libraries}
 \noindent No addition dependencies are required outside of those that Ampersand 
-already 
-uses. The EFA project depends on the following Libraries:
+already uses. EFA directly uses the following dependencies of Ampersand:
 \begin{description}
     \item \textbf{Ampersand Core Libraries} \newline
     The EFA project depends on the Ampersand software for the definition of 
@@ -47,7 +46,10 @@ uses. The EFA project depends on the following Libraries:
     pretty printing combinators. EFA uses this library in combination with
     the simple-sql-pretty to output the SQL statements in a human readable
     format.
-    \item 
+    \item[deepseq]
+    The deepseq library provides a type class which implements a function
+    for reducing values to normal formal, similarly to the built in
+    \lstinline{seq} function.
 \end{description}
 
 \noindent
