@@ -1,8 +1,8 @@
 %\documentclass[document.tex]{subfiles}
 \noindent
-\section{System Architecture and Module Hierarchy}
+\chapter{System Architecture and Module Hierarchy}
 
-\subsection{System Architecture}\label{SystemArch}
+\section{System Architecture}\label{SystemArch}
 
 This section provides an overview of system architecture and module hierarchy. 
 The 
@@ -21,7 +21,7 @@ to the syntax are made in this document in order to present the module hierarchy
 in a clear manner. These changes are also detailed, in 
 section%~\ref{subsec:HaskellSyntax}. 
 
-\subsection{External Libraries}
+\section{External Libraries}
 \noindent No addition dependencies are required outside of those that Ampersand 
 already 
 uses. The EFA project depends on the following Libraries:
@@ -51,7 +51,7 @@ uses. The EFA project depends on the following Libraries:
 \end{description}
 
 \noindent
-\subsection{A Description of Haskell-Like Syntax}\label{subsec:HaskellSyntax}
+\section{A Description of Haskell-Like Syntax}\label{subsec:HaskellSyntax}
 
 This section details the syntax used to describe the module system of
 Ampersand. This syntax largely borrows from actual Haskell syntax, and from the
@@ -73,7 +73,7 @@ module description becomes vastly simplified. This section is meant to be used
 as a reference - in many cases, the meaning of a type is self-evident. 
 
 \noindent
-\subsubsection*{Description of Types and Kinds}
+\subsection*{Description of Types and Kinds}
 
 In the way that a type classifies a set of values, a kind classifies a set of
 types. Haskell permits one to define algebraic data types, which are then 
@@ -96,7 +96,7 @@ to denote a datatype
 which is used exclusively as a kind. 
 
 \noindent
-\subsubsection*{Description of Dependant types}
+\subsection*{Description of Dependant types}
 
 The syntax used to denote a ``fake'' dependent type in our model is the same 
 as used to denote a real dependent type in Agda. \lstinline!(x : A) -> B! is 
@@ -128,7 +128,7 @@ may be dropped when the kind $A$ is clear from the context:
 and
 \lstinline!forall x -> P x! denote the type \texttt{forall (x :: A) . P x}.
 
-\subsubsection*{Constraints}
+\subsection*{Constraints}
 
 The Haskell syntax \texttt{A -> B} denotes a function from $A$ to $B$. However,
 we use the arrow to additionally denote constraints. For example, the function
@@ -140,7 +140,7 @@ fashion
 (i.e. as an actual constraint), in which case the constraint is written with 
 the typical \lstinline{=>} syntax. 
 
-\subsubsection*{Existential quantification}
+\subsection*{Existential quantification}
 
 The type \lstinline!exists (x : A) (P x)! indicates that there exists some $x$
 of kind $A$ which satisfies the predicate $P$. Unfortunately, Haskell does not
@@ -161,7 +161,7 @@ other depends largely on the intended use. However, these two forms are
 completely interchangeable (albeit with some syntactic noise) so the syntax
 presented here does not distinguish between the two. 
 
-\subsubsection*{Types, kinds, and type synonyms}
+\subsection*{Types, kinds, and type synonyms}
 
 Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is 
 the name
@@ -170,7 +170,7 @@ differentiate
 from type families, which are written as 
 \lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
 
-\subsubsection*{Overloading}
+\subsection*{Overloading}
 
 Haskell supports overloaded function names through type classes. When we use a 
 type 
@@ -181,7 +181,7 @@ inference.
 
 
 
-\subsubsection*{Omitted implementations}
+\subsection*{Omitted implementations}
 
 When the implementation of a type synonym, or any other entity, is omitted, it
 is replaced by ``$\ldots$''. This is to differentiate from a declaration of the 
@@ -267,7 +267,7 @@ Module$_2$.west);
 
 
 
-\subsection{A Description of Module Diagram Syntax}\label{subsec:ModuleSyntax}
+\section{A Description of Module Diagram Syntax}\label{subsec:ModuleSyntax}
 
 The module hierarchy is broken down into multiple levels to better describe the
 system.  A coarse module hierarchy is given, and each module is further broken
@@ -285,7 +285,7 @@ these modules is not described here; they are included simply to indicate which
 symbols are imported from these modules. An example of the syntax is found in
 figure%~\ref{fig:ModExample}.
 
-\subsection{Module Hierarchy}\label{subsec:modhierarchy}
+\section{Module Hierarchy}\label{subsec:modhierarchy}
 
 This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. The module hierarchy of EFA as a whole 
@@ -661,7 +661,7 @@ TypedSQLLanguage.east);
 \end{figure}
 
 
-\subsubsection{TypedSQL}
+\subsection{TypedSQL}
 
 The module hierarchy for the TypedSQL module is shown in
 figure \ref{fig:typedSQL}. The submodules of TypedSQL are quite large, 
@@ -730,7 +730,7 @@ if
 statement, will be rejected), these programs can be written in an equivalent
 way in our language without any loss of generality.    
 
-\subsubsection{TypedSQLCombinators}
+\subsection{TypedSQLCombinators}
 
 The module TypedSQLCombinators, whose members are given in 
 figure~\ref{fig:typedSQLComb},
@@ -863,7 +863,7 @@ a SQL value, again of the corresponding type.
     \label{fig:equality}
 \end{figure}
 
-\subsubsection{Equality}
+\subsection{Equality}
 
 The Equality module (\ref{fig:equality}) defines several 
 utilities for working
@@ -930,7 +930,7 @@ to be sound, is the only way to construct and eliminate values of type
 \lstinline{Not p}.
 
 
-\subsubsection{PrettySQL}
+\subsection{PrettySQL}
 
 The module PrettySQL defines pretty printers for each of the types
 corresponding to SQL entities, including SQL types, SQL values, SQL references
@@ -968,7 +968,7 @@ and motive of generated code.
         \label{fig:prettySQL}
     \end{figure}
 
-\subsubsection{Proof Utils}
+\subsection{Proof Utils}
 
 The ProofUtils modules, shown in 
 figure~\ref{fig:utilsMod} provides various
@@ -1192,7 +1192,7 @@ as follows.
 \end{description}
     
     
-\subsubsection{Singletons}\label{subsec:Singletons}
+\subsection{Singletons}\label{subsec:Singletons}
 
 The Singletons module (figure ~\ref{fig:singletons}) is 
 not fully detailed here; rather, a vastly simplified version is presented. The
@@ -1243,7 +1243,7 @@ decidable equality, which is realized by the function
         }}\caption{Module diagram for Singletons} \label{fig:singletons}
 \end{figure}
 
-\subsection{Key Algorithm}
+\section{Key Algorithm}
 The key algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method 
 that allow organizations to build information systems that comply to their 
 business requirements in a provable manner. This algorithm is implemented in 
@@ -1251,7 +1251,7 @@ Ampersand and is responsible for translating the business requirements into ECA
 rules. These ECA rules contain information on how to fix any data violation and 
 are translated into SQL queries in our EFA project.
 
-\subsection{Communication Protocol}
+\section{Communication Protocol}
 The EFA implementation needs to communicate with the front end to be able to 
 run the generated SQL queries when a violation occurs. 
 \begin{itemize}

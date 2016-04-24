@@ -1,4 +1,4 @@
-\section{Testing}
+\chapter{Testing}
 
 This section covers property testing using QuickCheck, system testing using a 
 built-in test suite and MySQL WorkBench for SQL query testing. EFA's 
@@ -9,7 +9,7 @@ the Ampersand system is already correct, and the second being that if the
 properties of a function are correctly implemented, when used in combination 
 with assumption one that the outcome is correct.
 
-\subsection{Property Testing Using QuickCheck}
+\section{Property Testing Using QuickCheck}
 Not all functions can be tested using QuickCheck due to their complexity (e.g. 
 eca2SQL). All of EFA's modules rely on a few base modules, and testing the 
 properties of the functions implemented in the base modules, by extension, 
@@ -90,7 +90,7 @@ implementation section \ref{subsec:modhierarchy}
 \end{adjustwidth}
 \end{center}
 
-\subsection{System Testing Using Test suite}
+\section{System Testing Using Test suite}
 The test suite runs by using the cabal system and running 
 \verb|``cabal configure --enable-tests''|; this test suite was built 
 specifically for EFA and 
@@ -98,7 +98,7 @@ more details are provided in the
 \href{https://github.com/4ZP6Capstone2015/ampersand/blob/master/src/Database/Design/Ampersand/ECA2SQL/FreshName.lhs}{literate
  source code} located in EFA's github repository.
 
-\subsection{Manual Execution of EFA's SQL Queries}
+\section{Manual Execution of EFA's SQL Queries}
 
 The queries produced by EFA were manually tested on a MySQL server; Ampersand 
 relies on a MySQL database which can be installed as a part of xampp along with 
