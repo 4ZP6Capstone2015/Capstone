@@ -11,7 +11,17 @@ Ampersand uses an ECA ( Event - Condition - Action) approach to make sure all ru
  
  A large portion of the Ampersand system is already in place; the primary focus of this project was to
 augment Ampersand with increased capabilities for automation. The module ``Automatically Fix Violations'' in Figure ~\ref{fig:EFAproject} represents the EFA project and where it fits in the current version of Ampersand.
-This problem is addressed in Ampersand using AMMBR \citep{Ampersand}. The role of the AMMBR method in Ampersand automatically generate correction methods that help maintain these business rules. In AMMBR, human involvement is only limited to representing rules (in the ADL files). While the Ampersand software still remains in development phase, there is no way of checking the correctness of the AMMBR method at a low level. Previously, the Exec Engine was used to maintain these business rules, that required direct injection of SQL hand-written as PHP strings. 
+\edcomm{JG}{Could you mention what "this problem" is? When you read it, 'this' 
+seems to refer back to something specific and I'm not sure what, it seems 
+confusing } This problem is addressed in Ampersand using AMMBR 
+\citep{Ampersand}. The role 
+of the AMMBR method in Ampersand automatically generate correction methods that 
+help maintain these business rules. In AMMBR, human involvement is only limited 
+to representing rules (in the ADL files). While the Ampersand software still 
+remains in development phase, there is no way of checking the correctness of 
+the AMMBR method at a low level. Previously, the Exec Engine was used to 
+maintain these business rules, that required direct injection of SQL 
+hand-written as PHP strings. 
  
 The EFA project, an extension to the Ampersand system, allows us to evaluate 
 the correctness of the Action according to the ECA rules. This will 

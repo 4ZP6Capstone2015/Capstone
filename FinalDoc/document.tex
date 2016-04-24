@@ -30,10 +30,12 @@
 \usepackage[simplified]{pgf-umlcd}
 \usepackage[section]{placeins}
 \usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{longtable}
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{calc}
 \usetikzlibrary{positioning}
-
+\usepackage{indentfirst}
 \newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
 
 
@@ -63,7 +65,7 @@
 \newcommand{\mref}[1]{M\ref{#1}}
 \makeglossary
 
-
+\setlength\parindent{24pt}
 % math things
 \newcommand{\ra}{$\rightarrow$}
 
@@ -143,12 +145,19 @@ Ampersand Tarski is a tool used to produce functional software documents based
 on business process requirements. At times, logical 
 discrepancies arise when system changes occur which violate the 
 restrictions set forth by the user. When a system violation occurs, one of two 
-things can happen: the change that is meant to take place is adjusted so it no 
-longer violates the restrictions or the changes are discarded. The purpose of 
-Event condition action rules for Ampersand (EFA) was to replace the exec-engine 
-that is currently used to deal with violations; unlike the exec-engine, EFA is 
-automated and provides proof of correctness embedded in the code, it able to 
-type SQL statements and assure no "dead-ends" occur when queries are executed.
+things can happen: the change that is meant to take place is adjusted (where it 
+no longer violates the rules of the system) or the change is discarded. The 
+purpose of Event-Condition-Action rules for Ampersand (EFA) is to replace the 
+Ampersand's exec-engine which is used to fix system violations. Although the 
+exec-engine appears to fix violations in the prototype, manual labour is 
+required to fix system invariants inside of Ampersand. The EFA project was 
+\edcomm{JG}{ proposed might not be the right word}
+proposed to replace the exec-engine by correctly translating ECA rules and 
+implementing them as SQL 
+queries so that system violations may be automatically corrected. EFA is 
+automated and requires no additional work from the user. In addition, EFA is 
+provably correct and has a high degree of modularity as it only relies on 
+Ampersand's essential components.
 \end{abstract}
 \newpage
 \tableofcontents
@@ -156,82 +165,138 @@ type SQL statements and assure no "dead-ends" occur when queries are executed.
 \newpage
 \section{Introduction}\label{Intro}
 
-This document is a meant as a guide for EFA that includes the motivations taken 
-from a business perspective, the mathematical and software foundations that 
-resulted in the logical flow of EFA's design, and the testing that took place 
-to assure EFA's functionality and correctness.
+This document is a guide for the EFA project and includes an brief 
+introduction 
+to Ampersand, the software requirements used to implement EFA, a section on 
+software development, which describes what each module of EFA contains, and 
+lastly, a section on software testing.
 
-Currently, Ampersand is readily accessible to the public through Github and it 
-is equipped with the ability to assess logical 
-discrepancies on sets of data based on user-specified restrictions. Logical 
-discrepancies arise when system changes occur which violate the 
-restrictions set forth by the user. When a system violation occurs, one of two 
-things can happen: the change that is meant to take place is adjusted so it no 
-longer violates the restrictions or the changes are discarded. Ampersand is 
-used to manipulate data and generate prototypes, although there is a debugger, 
-certain errors still slip through. When the system rules are changed by the 
-user, all data which are inconsistent with the new system must be eliminated or 
-rehabilitated so it can be returned back into the system. Data inconsistencies 
-are persistent bugs that can distort the product that Ampersand seeks to 
-provide. 
+\subsection{Document Guide}
 
-These data inconsistencies are corrected through ECA rules which use process 
-algebra (PA) to correct or discard data using violations. EFA is used to 
-translate these ECA rules, execute SQL queries to correct violations and 
-safeguards the database from illegal transactions.
+This document acts as a comprehensive guide to EFA, the first chapter covers 
+the basics of Ampersand, the purpose of the project, the intended audience 
+(i.e. our stakeholders), tools used to run Ampersand and terminology which will 
+be used throughout this guide. 
+
+The second chapter provides an overview of EFA's requirements specifications; 
+it is divided into Ampersand system requirements and the EFA project 
+requirements.The third section focuses on design implementation and provides 
+key information 
+on EFA modules. In addition, it provides an outline of the AMMBR algorithm, 
+which is used to generate ECA rules and communication protocols which explains 
+how EFA communicates with Ampersand's front end. A lot of the proof written to 
+verify EFA's correctness is embedded within each module which is covered in 
+this section. 
+
+The fourth section covers testing, specifically, it covers property testing 
+using QuickCheck and testing MySQL queries using WorkBench. Lastly, the 
+Appendix 
+covers a variety of information such as tips for setting up 
+Ampersand and notes on issues that came up during the course of EFA's 
+implementation. 
 
 \subsection{Ampersand}
 
-A large part of designing software systems is requirements engineering. One
-of the greatest challenges of requirements engineering is translating from
-business requirements to a functional specification. Business requirements are
-informal, with the intention of being easily understood by humans; however,
-functional specifications are written in a formal language that is unambiguous 
-and precise. It is meant to capture attributes of the information system that 
-is desired by multiple parties. Typically, this translation
-of business requirements to a formal specification is done by a requirements
+\indent
+The motivation behind Ampersand comes from requirements engineering, which is a 
+large part of designing software systems. One of the greatest challenges of 
+requirements engineering is translating informal business requirements into 
+formal functional specification. Business requirements contain ambiguity 
+because they are written in a natural language with the intention of being 
+easily understood by humans; however,
+functional specifications must be written in a formal language that is 
+unambiguous and precise. Typically, this translation of business requirements 
+to a formal specification is done by a requirements
 engineer, which can be prone to human error.
 
 Ampersand offers an alternative solution which translates the natural language 
-used in business process into requirement specifications \edcomm{JG:}{cite 
-ampersand book}. Ampersand is a 
+used in business process into requirement specifications \cite{ruledesign}. 
+Ampersand is a 
 software system which offers many tools that aid their clients in the 
 translation process from business requirement to formal requirement 
 specifications. EFA is implemented as an internal component of Ampersand that 
-is meant to automate the correction of system invariants. EFA aids by reducing 
-the manual labour required to fix invariants and assures that the database is 
-free of errors.  
+is meant to automate the correction of system invariants. EFA helps reduce the 
+amount of manual labour required by the user by executing SQL queries to fix 
+data violations. %---- edit here 
+
+Given a set of data and a set of rules used to operate on the data, Ampersand 
+is able to determine if there are discrepancies between the two sets. 
+Discrepancies often occur when changes are made to the set of data Ampersand is 
+given or to the set of rules that as associated with them. Data discrepancies 
+are violations or illegal transactions that occur in the Ampersand system when 
+a set of data fails to follow the rules given by the user. When a system 
+violation occurs, one of two things can happen: the change that is meant to 
+take place is adjusted (where it no longer violates the rules the user 
+provides) or the change is discarded. EFA enhances the Ampersand system by 
+translating ECA rules and executing them as SQL queries to correct system 
+violations and safeguard the database from wrongful transactions.
+
+\subsubsection{Ampersand In Practice}
+
+The Ampersand system is implemented in Haskell and relies on external software 
+tools to help generate a prototype and its supporting documents. On windows, 
+there is an executable available, but on Linux and Mac operating systems it 
+requires installing stack (The Haskell Tool Stack) to build Ampersand from 
+source. 
+Instructions on how to install the tools and components listed in this section 
+can be found in the appendix.
+
+\subsubsection*{The Haskell Platform}
+\noindent
+Ampersand's most current version requires 
+\href{https://www.haskell.org/platform/}{the Haskell Platform 7.10 }. It is 
+used to compile Ampersand source code.
 
 
-Ampersand is a software tool that translates natural language into 
-\subsubsection*{Ampersand in practice}
-\indent The correct installation and usage of the Ampersand tools and the 
-additional tools requires
-some IT awareness, especially in case some unexpected errors occur when the 
-Ampersand tool
-uses the additional tools.
-To get used to the specific syntax of how business rules are defined in the ADL 
-language
-requires some training. Besides the base syntax, a specific patterns hub is 
-available, to support
-new and seasoned ADL users, which can be used for training, inspiration and 
-re-usage.
+\subsubsection*{Ampersand's GitHub}\label{Github}
+\noindent
+Github hosts the most current version of the Ampersand system. Github is used 
+to maintain consistency between the main Ampersand branch and this project. The 
+most recent version of Ampersand can be found at 
+\href{https://github.com/AmpersandTarski}{Ampersand Tarski's Github }
 
 
-\edcomm{JG}{Need an overview on what EFA is, what it does}
-\subsection{Document Guide}
-This document acts as a comprehensive guide to EFA, the first section covers 
-the basics of Ampersand and the purpose of the project. The second section 
-provides an overview of EFA's requirements specifications and various naming 
-conventions and terminology used throughout the course of this guide. The third 
-section focuses on design implementation and provides information on modules 
-from a top down basis. It also explains the key algorithm used to translate 
-businesses process into eca rules which EFA then uses to produce SQL queries. 
-Much of the proof of correctness is embedded in the code that is explained in 
-this section. Lastly, section four mostly focuses on testing. 
+\subsubsection*{Graphviz}
+\noindent
+\href{http://www.softpedia.com/get/Others/Miscellaneous/Graphviz.shtml}{Graphviz}
+ is an open source graph visualization software that Ampersand uses to generate 
+ artifacts, specifically it is used to create graphics for the prototype's 
+ requirement documentation. Graphviz is able to take descriptions of graphs in 
+ simple text and create diagrams from them. 
 
-\input{bus-section}
+\subsubsection*{The Cabal System}
+\noindent
+\href{https://www.haskell.org/cabal/}{The Cabal System} is used for building 
+and packaging Haskell libraries and programs. 
+Cabal describes what a Haskell package is, how these packages interact with the 
+language, and what must be implemented to support the packages that are used. 
+It is part of a larger infrastructure used to distribute, organize, and catalog 
+Haskell programs and their associated libraries. \cite{hackage}
 
+\subsubsection*{The Haskell Tool Stack}
+\noindent
+\href{https://www.haskell.org/cabal/}{The Haskell Tool Stack} is used to 
+install the most recent version of Ampersand from source code, and various 
+Haskell packages (e.g., QuickCheck).
+
+\subsubsection*{QuickCheck}
+\noindent
+\href{https://hackage.haskell.org/package/QuickCheck}{QuickCheck} is used to 
+test properties of functions used in EFA's modules. QuickCheck is a library for 
+random testing of program properties; a programmer simply provides a 
+specification of properties which functions should satisfy and QuickCheck 
+generates a large number of random cases to test these properties. QuickCheck 
+comes with a
+\href{http://www.cse.chalmers.se/~rjmh/QuickCheck/manual.html}{manual} on how 
+properties can be defined and used. 
+
+\subsubsection*{MySQL WorkBench}
+\noindent
+\href{https://dev.mysql.com/doc/workbench/en/}{MySQL WorkBench} is used to test 
+the SQL queries generated by EFA. MySQL WorkBench is a graphical tool for MySQL 
+databases and comes with a build-in editor, in this project it is used to 
+manually test queries. Through various stages in development it is used for 
+data modeling.
 
 \subsection{Naming Conventions and Terminology}\label{sec:Naming} 
 \begin{description}
@@ -283,78 +348,8 @@ this section. Lastly, section four mostly focuses on testing.
     front-end interface that connects to a back-end database.
     
 \end{description}
-
+\input{bus-section}
 \input {requirements-section}
-
-\section{Implementation Issues}
-
-This section contains a detailed list of concerns that came to light during the 
-course of software implementation, though some issues were addressed, others 
-are left unresolved as there is no known solution for them. The list is 
-provided as a comprehensive overview of the thought process that went into the 
-implementation of EFA, and the reasoning behind the design decisions which were 
-made.
-
-\begin{itemize}
-    \item \textbf{No kind equality.} Singletons cannot be implemented as widely 
-    as we would like them to be; essentially such a type is impossible:
-    \begin{lstlisting}
-    data X (a::k) where
-    XF :: X a $\rightarrow$ X f $\rightarrow$ X (f a)
-    \end{lstlisting}
-    \item \textbf{Non-injective type families.} Specifically, lack of 
-    injectivity in type functions means that GHC cannot infer an instantiation 
-    of a type variable that appears only under type families. Recently, 
-    Microsoft researchers have implemented a GHC modification that allows type 
-    functions to be annotated as injective and plan to make it available with 
-    the next stable release of the compiler \cite{microsoft}.
-    \item \textbf{Functional dependencies are \textit{NOT} equivalent to type 
-        families.} For example, given:
-    \begin{lstlisting}
-    class ... $\Rightarrow$ C a b c| a $\rightarrow$ b
-    
-    you cannot write
-    
-    injec :: (C a b, C a b') $\Rightarrow$ b :~: b' 
-    \end{lstlisting}
-    This is because it is simply not true, no solution for this is 
-    currently known \cite{sof}. 
-    \item \textbf{Types as propositions.} This is assuming that one exists; 
-    simply put, it describes a correspondence between a given logic and a given 
-    programming language, where we have "simplification of proofs as evaluation 
-    of programs" \cite{props}.
-    \item \textbf{Certain invariants are difficult to state and prove.} The 
-    solution implemented for this problem was to vastly simply term language 
-    and to use informal correctness reasoning. %TTODO: not sure this is 
-    %correct, theres a paper on informal corrnectess reasoning that applies to 
-    %concurrency in kernels
-    \item \textbf{Singletons have a lot of boilerplate code.} Each model 
-    requires a constant amount of boilerplate code for each constructor. 
-    %TODO: write the boilerplate -- does this mean write the boilerplate code 
-    %yourself and adapt it to your specific needs?
-    \item \textbf{Defining a typed term from untyped ones.} This had to be done 
-    in a semi-safe way; the solution taken was to use abstraction barriers 
-    cautiously to construct unsafe data types. %TODO: unsafe datatypes? it just 
-    %says unsafe =(
-    \item \textbf{The complex relationship between SQL schemata and 
-        declarations.} This is specific to the long tables used in Ampersand's 
-    database. Database schemata must be converted into a type level 
-    representations along with all necessary proofs. The solution implemented 
-    for this was to under specify the result type of the existentially 
-    quantified function. Rather than fabricating a proof using a function $P$ 
-    and a valid input $x$, a decision procedure for $P$ is written and the 
-    functions which require such a proof will check that it is true, or throw 
-    an error. These functions are only used internally -- they are not part of 
-    the interface; such functions would only be called when the input is known 
-    to satisfy $P$. This is something that the programmer is able to reason 
-    about but not the compiler. %--to the programmer but not the compiler, find 
-    %out what this means
-\end{itemize} 
-
-
-
-
-
 
 
 %%%%%%%%%%%%%%%%%
@@ -373,6 +368,8 @@ made.
 
 \bibliographystyle{alpha}
 \bibliography{references}
+\newpage
+\input{appendix}
 \end{document}
 
 

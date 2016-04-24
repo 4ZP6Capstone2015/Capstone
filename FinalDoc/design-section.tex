@@ -22,9 +22,9 @@ in a clear manner. These changes are also detailed, in
 section%~\ref{subsec:HaskellSyntax}. 
 
 \subsection{External Libraries}
-No addition dependencies are required outside of those that Ampersand already 
-uses.\\
-The EFA project depends on the following Libraries:
+\noindent No addition dependencies are required outside of those that Ampersand 
+already 
+uses. The EFA project depends on the following Libraries:
 \begin{description}
     \item \textbf{Ampersand Core Libraries} \newline
     The EFA project depends on the Ampersand software for the definition of 
@@ -285,7 +285,7 @@ these modules is not described here; they are included simply to indicate which
 symbols are imported from these modules. An example of the syntax is found in
 figure%~\ref{fig:ModExample}.
 
-\subsection{Module Hierarchy}
+\subsection{Module Hierarchy}\label{subsec:modhierarchy}
 
 This section contains a hierarchal breakdown of each module, as well as a brief
 explanation of each modules' elements. The module hierarchy of EFA as a whole 
@@ -1195,9 +1195,7 @@ as follows.
 \subsubsection{Singletons}\label{subsec:Singletons}
 
 The Singletons module (figure ~\ref{fig:singletons}) is 
-not fully detailed here;
-instead, a vastly simplified version of the Singletons 
-module is presented. The
+not fully detailed here; rather, a vastly simplified version is presented. The
 \lstinline{SingT} type denotes a generic singleton for 
 any kind which implements
 \lstinline{SingKind} -- then, the main operation of 
