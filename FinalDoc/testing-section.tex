@@ -1,4 +1,4 @@
-\section{Testing}
+\chapter{Testing}
 
 This section covers property testing using QuickCheck, system testing using a 
 built-in test suite and MySQL WorkBench for SQL query testing. EFA's 
@@ -9,7 +9,7 @@ the Ampersand system is already correct, and the second being that if the
 properties of a function are correctly implemented, when used in combination 
 with assumption one that the outcome is correct.
 
-\subsection{Property Testing Using QuickCheck}
+\section{Property Testing Using QuickCheck}
 Not all functions can be tested using QuickCheck due to their complexity (e.g. 
 eca2SQL). All of EFA's modules rely on a few base modules, and testing the 
 properties of the functions implemented in the base modules, by extension, 
@@ -27,7 +27,7 @@ implementation uses \lstinline{unsafeCoerce} and will only work if everything
 is correctly defined.
          
 
-\subsubsection*{Singletons.sing2val  and  Singletons.val2sing}
+\subsubsection*{Singletons.sing2val and Singletons.val2sing}
 sing2val takes a singleton for some type and converts it to the value
 from which it was promoted (e.g. \lstinline{'True} becomes \lstinline{True}).
 val2sing does the opposite, except that it must return its output 
@@ -36,22 +36,19 @@ between singletons and their unlifted types, i.e it should be the case
 that \lstinline{sing2val . val2sing = id} and \lstinline{val2sing . sing2val = id}. 
 
 
-\subsubsection*{Singletons.$(\%==)$} 
+\subsubsection*{Singletons.$\boldsymbol{(\%==)}$} 
 This function implements equality between types by induction on their singletons.
 This function (when viewed as a binary relation) should be an equivalence, 
 so therefore symmetry, transitive, and reflexive. 
 
-Transitive relation: \\
-        $\forall\ a,\ b,\ c \in  X$ : ($aRb \wedge bRc$)$ \Rightarrow\ aRc$
-        
-Reflexive relation: \\
-        $\forall a \in\ X $($aRa$)   \\
-         
-Symmetry relation: \\
-        $\forall a, b, \in X$ ($aRb \Rightarrow bRa$) \\
+\begin{description}
+\item[Transitivity] $\forall\ a,\ b,\ c \in  X$ : ($aRb \wedge bRc$)$ \Rightarrow\ aRc$
+\item[Reflexivity] $\forall a \in\ X $($aRa$)  
+\item[Symmetry] $\forall a, b, \in X$ ($aRb \Rightarrow bRa$) 
+\end{description}
 
 \subsubsection*{Utils.foldrProd}
-This function, and similarly \lstinline{Utils.foldlProd} implement
+This function, and similarly \lstinline{Utils}.\lstinline{foldlProd} implement
 the natural fold over the \lstinline{Prod} type, in the same way that 
 the function \lstinline{foldr} acts upon lists. This function
 must satisfy the property that it behaves the same as \lstinline{foldr}
@@ -75,7 +72,7 @@ project root directory.
 %% \href{https://github.com/4ZP6Capstone2015/ampersand/blob/master/src/Database/Design/Ampersand/ECA2SQL/FreshName.lhs}{literate
  %% source code} located in EFA's github repository.
 
-\subsection{Manual Execution of EFA's SQL Queries}
+\section{Manual Execution of EFA's SQL Queries}
 
 The queries produced by EFA were manually tested on a MySQL server; Ampersand 
 relies on a MySQL database which can be installed as a part of xampp along with 
