@@ -18,85 +18,62 @@ using stack and running \verb|``quickCheck <function>''|. The data types are
 presumed correct as they produce the correct results and are accepted by the 
 Ampersand system. Furthermore, proof of EFA's TypedSQL was provided in software 
 implementation section \ref{subsec:modhierarchy}
-\begin{center}
-     \begin{adjustwidth}{-2cm}{}
-    \begin{longtable}{ |m{1.8cm}|m{3.2cm}|m{9cm}| } 
-        \hline
-         Module & Function & Test Description \\ 
-        \hline \hline
-         Singletons & singKindWitness1 & For every pair of types 
-        and their type representation, an isomorphism exists, where an 
-        isomorphism is a morphism $f:\ a \rightarrow b$ and there exists a 
-        morphism $g: b \rightarrow a$ with $fg$ = $1_b$ and $gf$ = $1_a$.
-        \\  & & 
-        \\  & & The 
-        default implementation uses UnsafeCoerce and will only work if 
-        everything is correctly defined.    
+
+\subsubsection*{Singletons.singKindWitness1}
+For every pair of types and their type representation, an isomorphism exists,
+where an isomorphism is a morphism $f:\ a \rightarrow b$ and there exists a
+morphism $g: b \rightarrow a$ with $fg$ = $1_b$ and $gf$ = $1_a$. The default
+implementation uses \lstinline{unsafeCoerce} and will only work if everything
+is correctly defined.
          
-        \\\hline 
-        Singletons & sing2val & sing2val takes a singleton and returns a value, 
-        \\ &val2sing & while val2sing does the opposite, composing these two 
-         functions together should return the same output as the given input. 
-         \\  & &
-         \\  & & $val2sing\ x (sing2val\ x) \equiv \ x$ 
-         \\  & & $sing2val\ x (val2sing\ x) \equiv \ x$
-         
-         \\\hline
-        Singletons& $\%==$ & Tests for equality by checking for transitivity, 
-        symmetry and reflexivity.
-        
-        \\ & & Transitive relation: 
-        \\ & &  
+
+\subsubsection*{Singletons.sing2val  and  Singletons.val2sing}
+sing2val takes a singleton for some type and converts it to the value
+from which it was promoted (e.g. \lstinline{'True} becomes \lstinline{True}).
+val2sing does the opposite, except that it must return its output 
+existentially quantified. These functions should be witnesses to the isomorphism
+between singletons and their unlifted types, i.e it should be the case
+that \lstinline{sing2val . val2sing = id} and \lstinline{val2sing . sing2val = id}. 
+
+
+\subsubsection*{Singletons.$(\%==)$} 
+This function implements equality between types by induction on their singletons.
+This function (when viewed as a binary relation) should be an equivalence, 
+so therefore symmetry, transitive, and reflexive. 
+
+Transitive relation: \\
         $\forall\ a,\ b,\ c \in  X$ : ($aRb \wedge bRc$)$ \Rightarrow\ aRc$
         
-        \\ & & Reflexive relation:
-        \\ & & 
-        $\forall a \in\ X $($aRa$)   
+Reflexive relation: \\
+        $\forall a \in\ X $($aRa$)   \\
          
-        \\ & & Symmetry relation:
-        \\ & &
-        $\forall a, b, \in X$ ($aRb \Rightarrow bRa$)
-        \\ \hline
-        Utils & prod2sing & prod2sing is the opposite of sing2prod using this \\
-              & sing2prod  & logic composing the two functions should return 
-              the same output irregardless of order. 
-          \\  & &
-          \\  & & $prod2sing\ x (sing2prod\ x) \equiv \ x$ 
-          \\  & & $sing2prod\ x (prod2sing\ x) \equiv \ x$
-          \\\hline
-          & & \\
-        Utils & prod2sing & prod2sing is the opposite of sing2prod using this \\
-        & sing2prod  & logic composing the two functions should return 
-        the same output irregardless of order. 
-        \\  & &
-        \\  & & $prod2sing\ x (sing2prod\ x) \equiv \ x$ 
-        \\  & & $sing2prod\ x (prod2sing\ x) \equiv \ x$
-        \\\hline
-         & & \\
-        Utils & prod2sing & prod2sing is the opposite of sing2prod using this \\
-        & sing2prod  & logic composing the two functions should return 
-        the same output irregardless of order. 
-        \\  & &
-        \\  & & $prod2sing\ x (sing2prod\ x) \equiv \ x$ 
-        \\  & & $sing2prod\ x (prod2sing\ x) \equiv \ x$
-        \\\hline
-        & & \\
-        Utils & foldrProd  &  These functions can be tested using conventional\\
-              & foldlProd  & methods as they are analogous to the built-in\\
-              & zipProd &  haskell functions.\\
-              & mapProd & \\
-        \\ \hline        
-\end{longtable}
-\end{adjustwidth}
-\end{center}
+Symmetry relation: \\
+        $\forall a, b, \in X$ ($aRb \Rightarrow bRa$) \\
+
+\subsubsection*{Utils.foldrProd}
+This function, and similarly \lstinline{Utils.foldlProd} implement
+the natural fold over the \lstinline{Prod} type, in the same way that 
+the function \lstinline{foldr} acts upon lists. This function
+must satisfy the property that it behaves the same as \lstinline{foldr}
+does on lists. The function \lstinline{zipProd}, \lstinline{mapProd}, and \lstinline{foldlProd}
+have similar properties. 
+
 
 \subsection{System Testing Using Test suite}
-The test suite runs by using the cabal system and running 
-\verb|``cabal configure --enable-tests''|; this test suite was built 
-specifically for EFA and 
-more details are provided in the 
-\href{https://github.com/4ZP6Capstone2015/ampersand/blob/master/src/Database/Design/Ampersand/ECA2SQL/FreshName.lhs}{literate
- source code} located in EFA's github repository.
+The test suite is built using the Cabal build system and can be 
+enabled by running \texttt{cabal configure --enable-tests} and
+run by running the created test executable in the subfolder
+\texttt{dist/build/ampersand-test/ampersand-test} of the 
+project root directory. 
+
+%% The test suite runs by using the cabal system and running 
+\edcomm{YT}{Dont use `verb' unless you actually need verbatim text, use `texttt'}
+%% \verb|``cabal configure --enable-tests''|; this test suite was built 
+%% specifically for EFA and 
+%% more details are provided in the 
+\edcomm{YT}{Random link to random code? why}
+%% \href{https://github.com/4ZP6Capstone2015/ampersand/blob/master/src/Database/Design/Ampersand/ECA2SQL/FreshName.lhs}{literate
+ %% source code} located in EFA's github repository.
 
 \subsection{Manual Execution of EFA's SQL Queries}
 
