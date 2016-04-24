@@ -316,7 +316,8 @@ and packaging Haskell libraries and programs.
 Cabal describes what a Haskell package is, how these packages interact with the 
 language, and what must be implemented to support the packages that are used. 
 It is part of a larger infrastructure used to distribute, organize, and catalog 
-Haskell programs and their associated libraries. \cite{hackage}
+Haskell programs and their associated libraries. The Cabal build system
+also uses the Hackage \cite{hackage} Haskell source repository.
 
 \subsubsection*{The Haskell Tool Stack}
 
@@ -353,17 +354,16 @@ data modeling.
     a system constraint becoming untrue. 
     
     \item [ADL] Stands for ``Abstract Data Language''
-      (\cite[13]{derFun})\edcomm{WK}{Look at what \LaTeX{} produces here!}.
+      \cite[13]{derFun}\edcomm{WK}{Look at what \LaTeX{} produces here!}.
     From a given set of formally defined business requirements, Ampersand generates a
     functional specification consisting of a data model, a service catalog, a
     formal specification of the services, and a function point analysis. An ADL
     script acts as an input for Ampersand. An ADL file consists of a plain ASCII
     text file.
     
-    \item [Ampersand] Ampersand is the name of this project\edcomm{WK}{`this project''???}.
-    It is used to refer to
-    both the method of generating functional specification from formalized
-    business requirements, and the software tool which implements this method.
+    \item [Ampersand] Ampersand refers to the software tool described in this 
+    document, as well as the method of generating functional specification from formalized
+    business requirements. 
     
     \item [Business requirements] Requirements which exist due to some real 
     world 
@@ -372,8 +372,7 @@ data modeling.
     \item [Business rules] See \emph{Business Requirements}.
     
     \item [EFA] Stands for ``ECA (see above) for Ampersand''. This term is used 
-    to 
-    refer to the contribution of this project. 
+    to refer to the contribution of ECA to Ampersand. 
     
     \item [Functional specification] A \emph{formal} document which details the 
     operation,
