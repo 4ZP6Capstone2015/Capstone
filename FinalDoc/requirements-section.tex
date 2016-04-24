@@ -31,7 +31,7 @@
         \endhead
         Description  & Added modules must fit within Ampersand's current 
         framework
-        \\	Rationale & As Ampersand is a huge system that has weekly additions 
+        \\	Rationale & Ampersand is a huge system that has weekly additions 
         to prevent conflict and breaking of existing packages/modules, an 
         effort should be made to minimize external dependencies. As EFA will be 
         an internal component of Ampersand, if a package that EFA depends on to 
@@ -41,6 +41,24 @@
 
         \\ Test case & Added modules are tested with cabal build inside of the
         Ampersand system as an internal component (i.e. System testing)
+        \\	Customer Satisfaction & 4 - High 
+        \\	Priority & 4 - High
+        \vspace{12pt}
+    \end{tabularx}
+}
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}m{3cm}X}
+        Requirement & S3 \\ 
+        \midrule
+        \endhead
+        Description  & All code must be maintainable. 
+        \\	Rationale & For a system such as Ampersand to be maintainable, all 
+        code for each of its components must be well documented so it may be 
+        easily understood by those that were not a part of its original 
+        development.
+        \\	Originator & Ampersand Creators (i.e. our client)        
+        
+        \\ Test case & A literate program that produces a latex document.
         \\	Customer Satisfaction & 4 - High 
         \\	Priority & 4 - High
         \vspace{12pt}
@@ -60,11 +78,10 @@
         \\	Rationale & Curry-Howard correspondence which states that the 
         return type of the function is analogous to a logical theorem, that is 
         subject to the hypothesis corresponding to the types of the argument 
-        values that are passed to the function and thus the program uysed to 
+        values that are passed to the function and thus the program used to 
         compute that function is analogous to a proof of that theorem.
-        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
-        queries through a series of datatype tests, each of which will result 
-        in a traceable result or error message
+        \\	Originator & Ampersand Creators
+        \\ Test Cases & Using QuickCheck to test function properties.
         \\	Priority & 4 - High
         \vspace{12pt}
     \end{tabularx}
@@ -79,10 +96,25 @@
         rules.  
         \\	Rationale & The translation would otherwise not be correct, as the 
         rules would be meaningless if their semantics are lost.
-        \\	Originator & Ampersand Developers
+        \\	Originator & Ampersand Creators
         \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
         queries through a series of datatype tests, each of which will result 
         in a traceable result or error message
+        \\	Priority & 4 - High
+        \vspace{12pt}
+    \end{tabularx}
+}
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P3 \\ 
+        \midrule
+        \endhead
+        Description  & Generated SQL queries must be correctly implemented.
+        \\	Rationale & Ampersand uses a MySQL database, for queries to be 
+        recognized and executed they must be error free. 
+        \\	Originator & Ampersand Creators
+        \\ Test Cases & Using MySQL WorkBench queries are manually executed and 
+        checked for errors.
         \\	Priority & 4 - High
         \vspace{12pt}
     \end{tabularx}

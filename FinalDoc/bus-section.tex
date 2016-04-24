@@ -13,14 +13,21 @@ Ampersand uses an ECA ( Event - Condition - Action) approach to make sure all ru
 augment Ampersand with increased capabilities for automation. The module ``Automatically Fix Violations'' in Figure ~\ref{fig:EFAproject} represents the EFA project and where it fits in the current version of Ampersand.
 This problem is addressed in Ampersand using AMMBR \citep{Ampersand}. The role of the AMMBR method in Ampersand automatically generate correction methods that help maintain these business rules. In AMMBR, human involvement is only limited to representing rules (in the ADL files). While the Ampersand software still remains in development phase, there is no way of checking the correctness of the AMMBR method at a low level. Previously, the Exec Engine was used to maintain these business rules, that required direct injection of SQL hand-written as PHP strings. 
  
-With the extension of Ampersand by the EFA project, we allow means of checking the correctness of the Action associated with an ECA rule. This will allow us to automatically rehabilitate existing system data while 
+The EFA project, an extension to the Ampersand system, allows us to evaluate 
+the correctness of the Action according to the ECA rules. This will 
+allow us to automatically rehabilitate existing system data while 
 maintaining the information system according to user specifications. 
-Furthermore, EFA allows us to
-automatically restore system invariants and create a program that allows 
-Ampersand to make the most efficient choice regarding how it 
-wishes\edinsert{JG:to} proceed 
-based on each individual case. The ECA rules, which act as an input to the EFA project are translated to human-readable SQL. This can later be viewed in the command line using the \verb|``--print-eca-info''| flag written out in one of the artifacts. The generated SQL, not only allows for checking the correctness of AMMBR but also helps in identifying 
-patterns and unreachable states of the method. EFA project will also be utilized to complete the AMMBR algorithm and also to test out future modification to the AMMBR algorithm.  Since AMMBR is an essential element of the Ampersand software, EFA will complement modifications to this method.
+Furthermore, EFA permits us to automate the restoration of system invariants, 
+and create a program which helps Ampersand to make the most efficient choice 
+regarding how to proceed on a case-by-case basis. The ECA rules, which act as 
+an 
+input to the EFA project, are translated into human-readable SQL. This can 
+later 
+be viewed in the command line using the \verb|``--print-eca-info''| flag, which 
+is written out in one of the artifacts. The generated SQL queries, not only 
+allow  the correctness of AMMBR to be checked, but also help in the 
+identification of patterns and unreachable states. Therefore, EFA will be an 
+essential tool for testing the AMMBR algorithm.
 
 
 \begin{figure}[!htb]
