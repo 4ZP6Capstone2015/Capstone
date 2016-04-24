@@ -85,9 +85,7 @@ implementation section \ref{subsec:modhierarchy}
               & foldlProd  & methods as they are analogous to the built-in\\
               & zipProd &  haskell functions.\\
               & mapProd & \\
-        \\ \hline
-        
-        
+        \\ \hline        
 \end{longtable}
 \end{adjustwidth}
 \end{center}
@@ -97,7 +95,48 @@ The test suite runs by using the cabal system and running
 \verb|``cabal configure --enable-tests''|; this test suite was built 
 specifically for EFA and 
 more details are provided in the 
-\href{https://github.com/4ZP6Capstone2015/ampersand/blob/master/src/Database/Design/Ampersand/ECA2SQL/FreshName.lhs}{literal
- haskell script} located in EFA's github repository.
+\href{https://github.com/4ZP6Capstone2015/ampersand/blob/master/src/Database/Design/Ampersand/ECA2SQL/FreshName.lhs}{literate
+ source code} located in EFA's github repository.
 
-\subsection{MySQL WorkBench for Query Testing}
+\subsection{Manual Execution of EFA's SQL Queries}
+
+The queries produced by EFA were manually tested on a MySQL server; Ampersand 
+relies on a MySQL database which can be installed as a part of xampp along with 
+apache or simply on its own from the 
+\href{https://dev.mysql.com/downloads/mysql/}{MySQL website}. A simple guide is 
+available in the appendix \ref{appen:SQL}, on how to install a MySQL Database 
+through xampp and MySQL; instructions are provided on how to use xampp's MySQL 
+server with MySQL WorkBench. Furthermore, 
+\href{https://dev.mysql.com/downloads/workbench/}{WorkBench} can be found on 
+MySQL's official website.
+
+Xampp must be running Apache and MySQL for WorkBench to be able to connect to 
+the database server. 
+\begin{figure}[!h]
+    \includegraphics[width=\textwidth]{images/xampp}
+    \caption{\footnotesize{1. Shows that both and Apache and MySQL must be 
+    running at the same time. 2. The Admin button for mySQL opens phpAdmin 
+    which is an graphical interface for accessing the databases in an MySQL 
+    server. 3. Configuration button $\rightarrow$ services and ports 
+    $\rightarrow$ [MySQL] tab, check that the port is identical to the 
+    connected established for WorkBench. The standard is port 3306 }}
+\end{figure}
+
+Queries can be executed manually using WorkBench, to follow instructions on how 
+to set up a connection for WorkBench, please refer to appendix 
+\ref{appen:WorkBench}. Once Work Bench is running properly, it will very 
+similar to screen shot provided.
+\begin{figure}[!h]
+    \includegraphics[width=\textwidth]{images/WorkBench}
+    \caption{\footnotesize{The right-hand side shows the status of the server, 
+    and on the lower left-hand side under 'SCHEMAS', all the databases in 
+    current server is listed. Ampersand requires a local database and a 
+    password, both of which are 'ampersand'. The blue box in the top middle 
+    area provides information concerning the host. }}
+\end{figure}
+
+Queries are executed by going to [File] $\rightarrow$ [New Query Tab], a new 
+tab will open and one can manually type queries. The execution of these queries 
+can be specified to the highlighted portion or everything. The pretty-printer 
+can be used to print the translated ECA rules and the associated queries.
+\
