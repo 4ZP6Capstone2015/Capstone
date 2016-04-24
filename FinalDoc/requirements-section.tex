@@ -1,6 +1,7 @@
 \chapter{Functional Requirements}\label{sec:Functional}
 
-\edcomm{WK}{Intro missing.}
+\edcomm{WK}{Intro missing.} \edcomm{YS}{Fixed}
+This chapter describes the functional requirements related to the EFA project. The EFA team aims to fulfill all these requirements.
 
 \section{System Requirements}
 %%-----------------------------SIDE EFFECTS---------------------------------%%
@@ -72,16 +73,35 @@
 }
 
 \section{Project Requirements}
-%%-------------------------TYPE CORRECTNESS ----------------------------------%%
+%%--------------------------CORRECTNESS OF ECA TO SQL RULES ------------------%%
 {\setlength{\tabcolsep}{6pt} %% Default is 6
     \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
         Requirement & P1 \\ 
         \midrule
         \endhead
+        Description  & Generated SQL queries must preserve the semantics of ECA 
+        rules.  
+        \\	Rationale & The translation would otherwise not be correct, as the 
+        rules would be meaningless if their semantics are lost.
+        \\	Originator & Ampersand Creators
+        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
+        queries through a series of datatype tests, each of which will result 
+        in a traceable result or error message
+        \\	Priority & 4 - High
+        \vspace{12pt}
+    \end{tabularx}
+}
+
+%%-------------------------TYPE CORRECTNESS ----------------------------------%%
+{\setlength{\tabcolsep}{6pt} %% Default is 6
+    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+        Requirement & P2 \\ 
+        \midrule
+        \endhead
         Description  & Provable Correctness: \edcomm{WK}{The use of
           dependent types in TypedSQL establishes some (safety)
           properties, but not the correctness proofs for the
-          ECA-to-SQL conversion (see P2) that the Ampersand developers would be
+          ECA-to-SQL conversion (see P1) that the Ampersand developers would be
           interested in. In its current form, this ``requirement''
           therefore looks quite confusing/confused.} Haskell like other functional 
         programming languages have 
@@ -97,43 +117,27 @@
         \vspace{12pt}
     \end{tabularx}
 }
-%%--------------------------CORRECTNESS OF ECA TO SQL RULES ------------------%%
-{\setlength{\tabcolsep}{6pt} %% Default is 6
-    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-        Requirement & P2 \edcomm{WK}{This is the main requirement. Why so late?}\\ 
-        \midrule
-        \endhead
-        Description  & Generated SQL queries must preserve the semantics of ECA 
-        rules.  
-        \\	Rationale & The translation would otherwise not be correct, as the 
-        rules would be meaningless if their semantics are lost.
-        \\	Originator & Ampersand Creators
-        \\ Test Cases & Internal structure of ECA rules can be compared to SQL 
-        queries through a series of datatype tests, each of which will result 
-        in a traceable result or error message
-        \\	Priority & 4 - High
-        \vspace{12pt}
-    \end{tabularx}
-}
-{\setlength{\tabcolsep}{6pt} %% Default is 6
-    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-        Requirement & P3 \\ 
-        \midrule
-        \endhead
-        Description  & Generated SQL queries must be correctly implemented.
-        \edcomm{WK}{What do you mean by this? Would perhaps the
-          syntax- and type-correctness of the SQL statements coming
-          out of TypedSQL, and therewith the rationale of P1, be
-          appropriate here?}
-        \\	Rationale & Ampersand uses a MySQL database, for queries to be 
-        recognized and executed they must be error free. 
-        \\	Originator & Ampersand Creators
-        \\ Test Cases & Using MySQL WorkBench queries are manually executed and 
-        checked for errors.
-        \\	Priority & 4 - High
-        \vspace{12pt}
-    \end{tabularx}
-}
+
+%\edcomm{YS}{Delete : Based on comment from WK, the requirement have been deleted}
+%{\setlength{\tabcolsep}{6pt} %% Default is 6
+%    \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
+%        Requirement & P3 \\ 
+%        \midrule
+%        \endhead
+%        Description  & Generated SQL queries must be correctly implemented.
+%        \edcomm{WK}{What do you mean by this? Would perhaps the
+%          syntax- and type-correctness of the SQL statements coming
+%          out of TypedSQL, and therewith the rationale of P1, be
+%          appropriate here?}
+%        \\	Rationale & Ampersand uses a MySQL database, for queries to be 
+%        recognized and executed they must be error free. 
+%        \\	Originator & Ampersand Creators
+%        \\ Test Cases & Using MySQL WorkBench queries are manually executed and 
+%        checked for errors.
+%        \\	Priority & 4 - High
+%        \vspace{12pt}
+%    \end{tabularx}
+%}
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -141,11 +145,14 @@
 %%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Non-functional Requirements}\label{ch:NonFunc}
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
-	\caption{Tree of non-functional requirements as it relates to EFA}~\label{fig:figure2}
-\end{figure}
+
+%\begin{figure}[!htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{../figures/NONFUNCTIONAL}
+%	\caption{Tree of non-functional requirements as it relates to EFA}~\label{fig:figure2}
+%\end{figure}
+
+This chapter briefly describes the various non-functional requirements associated with the EFA project. 
 
 \section{Look and Feel Requirements}\label{sec:LookAndFeel}
 \begin{itemize}
