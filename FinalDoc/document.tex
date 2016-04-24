@@ -136,6 +136,14 @@
 \begin{document}
 %\maketitle %% Title page included from Title.tex
 \input{title}
+\edcomm{WK}{Consider using documentclass \texttt{report} instead of
+  \texttt{article}.
+  (This would mean that you have to change
+  \texttt{\backslash{}section} to \texttt{\backslash{}chapter}
+  and
+  \texttt{\backslash{}subsection} to \texttt{\backslash{}section}
+  etc.)
+}%edcomm
 \newpage
 
 
@@ -176,35 +184,42 @@ lastly, a section on software testing.
 
 \subsection{Document Guide}
 
-This document acts as a comprehensive guide to EFA, the first chapter covers 
+\edchange{WK}{This document acts as a comprehensive guide to EFA, the}{The} first chapter covers 
 the basics of Ampersand, the purpose of the project, the intended audience 
 (i.e. our stakeholders), tools used to run Ampersand and terminology which will 
 be used throughout this guide. 
 
 The second chapter provides an overview of EFA's requirements specifications; 
 it is divided into Ampersand system requirements and the EFA project 
-requirements.The third section focuses on design implementation and provides 
+requirements.
+The third \edchange{WK}{section}{chapter} focuses on design implementation and provides 
 key information 
 on EFA modules. In addition, it provides an outline of the AMMBR algorithm, 
-which is used to generate ECA rules and communication protocols which explains 
-how EFA communicates with Ampersand's front end. A lot of the proof written to 
+which is used to generate ECA rules\edchange{WK: ???}{\ and}{, and of}
+communication protocols which \edcomm{WK}{???} explains 
+how EFA communicates with Ampersand's front end.
+A lot of the proof \edcomm{WK}{???} written to 
 verify EFA's correctness is embedded within each module which is covered in 
 this section. 
 
 The fourth section covers testing, specifically, it covers property testing 
-using QuickCheck and testing MySQL queries using WorkBench. Lastly, the 
-Appendix 
+using QuickCheck and testing MySQL queries using WorkBench.
+Lastly, the Appendix 
 covers a variety of information such as tips for setting up 
 Ampersand and notes on issues that came up during the course of EFA's 
-implementation. 
+implementation. \edcomm{WK}{I hope there will also be literate source
+  code in the appendix.}
 
 \subsection{Ampersand}
+
+\edcomm{WK}{\TeX{} source becomes more maintainable if you break lines
+  at the ends of grammatical units, in particular of sentences.}
 
 \indent
 The motivation behind Ampersand comes from requirements engineering, which is a 
 large part of designing software systems. One of the greatest challenges of 
 requirements engineering is translating informal business requirements into 
-formal functional specification. Business requirements contain ambiguity 
+formal functional specifications. Business requirements contain ambiguity 
 because they are written in a natural language with the intention of being 
 easily understood by humans; however,
 functional specifications must be written in a formal language that is 
@@ -213,7 +228,9 @@ to a formal specification is done by a requirements
 engineer, which can be prone to human error.
 
 Ampersand offers an alternative solution which translates the natural language 
-used in business process into requirement specifications \cite{ruledesign}. 
+used in business process into requirement specifications
+\cite{ruledesign}\edcomm{WK}{This is not recognisable as a
+  reference. Choose a different bibliographystle?}. 
 Ampersand is a 
 software system which offers many tools that aid their clients in the 
 translation process from business requirement to formal requirement 
@@ -223,32 +240,37 @@ amount of manual labour required by the user by executing SQL queries to fix
 data violations. %---- edit here 
 
 Given a set of data and a set of rules used to operate on the data, Ampersand 
-is able to determine if there are discrepancies between the two sets. 
+is able to determine \edchange{WK}{if}{whether} there are discrepancies between the two sets. 
 Discrepancies often occur when changes are made to the set of data Ampersand is 
-given or to the set of rules that as associated with them. Data discrepancies 
-are violations or illegal transactions that occur in the Ampersand system when 
-a set of data fails to follow the rules given by the user. When a system 
-violation occurs, one of two things can happen: the change that is meant to 
+given or to the set of rules that as associated with them
+\edcomm{WK}{Changes to the set of rules? ``Regenerage database''!}.
+Data discrepancies are violations or illegal transactions
+that occur in the Ampersand system
+when a set of data fails to follow the rules given by the user.
+When a system violation occurs,
+one of two things can happen: the change that is meant to 
 take place is adjusted (where it no longer violates the rules the user 
 provides) or the change is discarded. EFA enhances the Ampersand system by 
 translating ECA rules and executing them as SQL queries to correct system 
-violations and safeguard the database from wrongful transactions.
+violations and safeguard the database from \edchange{WK}{wrongful
+  transactions}{transactions that would violate the business rules}.
 
 \subsubsection{Ampersand In Practice}
 
 The Ampersand system is implemented in Haskell and relies on external software 
-tools to help generate a prototype and its supporting documents. On windows, 
+tools to help generate a prototype and its supporting documents.
+On \edchange{WK}{windows}{MS Windows}, 
 there is an executable available, but on Linux and Mac operating systems it 
-requires installing stack (The Haskell Tool Stack) to build Ampersand from 
-source. 
+requires installing \edchange{WK: ?}{stack}{``stackage''} (The Haskell Tool Stack)
+to build Ampersand from source. 
 Instructions on how to install the tools and components listed in this section 
 can be found in the appendix.
 
 \subsubsection*{The Haskell Platform}
 \noindent
 Ampersand's most current version requires 
-\href{https://www.haskell.org/platform/}{the Haskell Platform 7.10 }. It is 
-used to compile Ampersand source code.
+\href{https://www.haskell.org/platform/}{the Haskell Platform 7.10 }.
+It is used to compile Ampersand source code.
 
 
 \subsubsection*{Ampersand's GitHub}\label{Github}
@@ -256,18 +278,22 @@ used to compile Ampersand source code.
 Github hosts the most current version of the Ampersand system. Github is used 
 to maintain consistency between the main Ampersand branch and this project. The 
 most recent version of Ampersand can be found at 
-\href{https://github.com/AmpersandTarski}{Ampersand Tarski's Github }
+\href{https://github.com/AmpersandTarski}{Ampersand Tarski's Github }\edinsert{WK}{.}
+\edcomm{WK}{Not optically recognisable as link in the PDF --- this is a global problem.}
 
 
 \subsubsection*{Graphviz}
 \noindent
 \href{http://www.softpedia.com/get/Others/Miscellaneous/Graphviz.shtml}{Graphviz}
  is an open source graph visualization software that Ampersand uses to generate 
- artifacts, specifically it is used to create graphics for the prototype's 
+ artifacts\edchange{WK}{,}{;} specifically it is used to create graphics for the prototype's 
  requirement documentation. Graphviz is able to take descriptions of graphs in 
  simple text and create diagrams from them. 
 
 \subsubsection*{The Cabal System}
+
+\edcomm{WK}{This is part of the Haskell Platform.}
+ 
 \noindent
 \href{https://www.haskell.org/cabal/}{The Cabal System} is used for building 
 and packaging Haskell libraries and programs. 
@@ -287,9 +313,9 @@ Haskell packages (e.g., QuickCheck).
 \href{https://hackage.haskell.org/package/QuickCheck}{QuickCheck} is used to 
 test properties of functions used in EFA's modules. QuickCheck is a library for 
 random testing of program properties; a programmer simply provides a 
-specification of properties which functions should satisfy and QuickCheck 
-generates a large number of random cases to test these properties. QuickCheck 
-comes with a
+specification of properties which functions should satisfy\edinsert{WK}{,}
+and QuickCheck generates a large number of random cases to test these properties.
+QuickCheck comes with a
 \href{http://www.cse.chalmers.se/~rjmh/QuickCheck/manual.html}{manual} on how 
 properties can be defined and used. 
 
@@ -297,7 +323,7 @@ properties can be defined and used.
 \noindent
 \href{https://dev.mysql.com/doc/workbench/en/}{MySQL WorkBench} is used to test 
 the SQL queries generated by EFA. MySQL WorkBench is a graphical tool for MySQL 
-databases and comes with a build-in editor, in this project it is used to 
+databases and comes with a built-in editor\edchange{WK}{,}{;} in this project it is used to 
 manually test queries. Through various stages in development it is used for 
 data modeling.
 
@@ -305,21 +331,21 @@ data modeling.
 \begin{description}
     \item[ECA] Stands for Event-Condition Action. The rule structure used for 
     data
-    bases and commonly used in market ready business rule engines. ECA rules are
+    bases and commonly used in \edchange{WK}{market ready}{market-ready} business rule engines. ECA rules are
     used in Ampersand to describe how a database should be modified in response 
     to
     a system constraint becoming untrue. 
     
-    \item [ADL] Stands for ``Abstract Data Language'' (\cite[13]{derFun}). From 
-    a
-    given set of formally defined business requirements, Ampersand generates a
+    \item [ADL] Stands for ``Abstract Data Language''
+      (\cite[13]{derFun})\edcomm{WK}{Look at what \LaTeX{} produces here!}.
+    From a given set of formally defined business requirements, Ampersand generates a
     functional specification consisting of a data model, a service catalog, a
     formal specification of the services, and a function point analysis. An ADL
     script acts as an input for Ampersand. An ADL file consists of a plain ASCII
     text file.
     
-    \item [Ampersand] Ampersand is the name of this project. It is used to 
-    refer to
+    \item [Ampersand] Ampersand is the name of this project\edcomm{WK}{`this project''???}.
+    It is used to refer to
     both the method of generating functional specification from formalized
     business requirements, and the software tool which implements this method.
     
