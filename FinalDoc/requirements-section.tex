@@ -1,4 +1,7 @@
 \section{Functional Requirements}\label{sec:Functional}
+
+\edcomm{WK}{Intro missing.}
+
 \subsection{System Requirements}
 %%-----------------------------SIDE EFFECTS---------------------------------%%
 {\setlength{\tabcolsep}{6pt} %% Default is 6
@@ -58,7 +61,10 @@
         development.
         \\	Originator & Ampersand Creators (i.e. our client)        
         
-        \\ Test case & A literate program that produces a latex document.
+        \\ Test case & A literate program that produces a
+        \edchange{WK}{latex}{\LaTeX{}} document. \edcomm{WK}{I do hope
+          you still strive to pass this by adding the literate
+          documents to the appendix!}
         \\	Customer Satisfaction & 4 - High 
         \\	Priority & 4 - High
         \vspace{12pt}
@@ -72,7 +78,12 @@
         Requirement & P1 \\ 
         \midrule
         \endhead
-        Description  & Provable Correctness: Haskell like other functional 
+        Description  & Provable Correctness: \edcomm{WK}{The use of
+          dependent types in TypedSQL establishes some (safety)
+          properties, but not the correctness proofs for the
+          ECA-to-SQL conversion (see P2) that the Ampersand developers would be
+          interested in. In its current form, this ``requirement''
+          therefore looks quite confusing/confused.} Haskell like other functional 
         programming languages have 
         a strong type system which can be used for machine-checked proofs.
         \\	Rationale & Curry-Howard correspondence which states that the 
@@ -89,7 +100,7 @@
 %%--------------------------CORRECTNESS OF ECA TO SQL RULES ------------------%%
 {\setlength{\tabcolsep}{6pt} %% Default is 6
     \begin{tabularx}{\textwidth}{>{\bfseries}C{3cm}X}
-        Requirement & P2 \\ 
+        Requirement & P2 \edcomm{WK}{This is the main requirement. Why so late?}\\ 
         \midrule
         \endhead
         Description  & Generated SQL queries must preserve the semantics of ECA 
@@ -110,6 +121,10 @@
         \midrule
         \endhead
         Description  & Generated SQL queries must be correctly implemented.
+        \edcomm{WK}{What do you mean by this? Would perhaps the
+          syntax- and type-correctness of the SQL statements coming
+          out of TypedSQL, and therewith the rationale of P1, be
+          appropriate here?}
         \\	Rationale & Ampersand uses a MySQL database, for queries to be 
         recognized and executed they must be error free. 
         \\	Originator & Ampersand Creators
