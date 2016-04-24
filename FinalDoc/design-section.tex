@@ -2,6 +2,8 @@
 \noindent
 \chapter{System Architecture and Module Hierarchy}
 
+\edcomm{WK}{Intro missing --- should be here, not inside 3.1.}
+
 \section{System Architecture}\label{SystemArch}
 
 This section provides an overview of system architecture and module hierarchy. 
@@ -14,12 +16,14 @@ functional programs. Many of the components of the traditional UML class
 diagram are inapplicable to functional programs; therefore, we detail our
 modifications to the UML class diagram syntax in 
 section%~\ref{subsec:ModuleSyntax}. 
+\edcomm{WK}{Missing cross-reference and ``.''}
 
 Furthermore, the syntax used to describe types and data declarations is not
 actual Haskell syntax. The syntax shares many similarities, but several changes
 to the syntax are made in this document in order to present the module hierarchy
 in a clear manner. These changes are also detailed, in 
 section%~\ref{subsec:HaskellSyntax}. 
+\edcomm{WK}{Missing cross-reference and ``.''}
 
 \section{External Libraries}
 \noindent No addition dependencies are required outside of those that Ampersand 
@@ -28,7 +32,7 @@ uses. The EFA project depends on the following Libraries:
 \begin{description}
     \item \textbf{Ampersand Core Libraries} \newline
     The EFA project depends on the Ampersand software for the definition of 
-    core Data Structures, (i.e. FSpec, which contains the definition of 
+    core Data Structures, (\edchange{WK}{i.e.}{i.e.,}\edcomm{WK}{always!} FSpec, which contains the definition of 
     the underlying ECA rules). EFA also maintains the relational schema of 
     the input, and hence, imports Ampersand's existing functions to fetch 
     the table declarations while generating SQL Statements for the ECA 
