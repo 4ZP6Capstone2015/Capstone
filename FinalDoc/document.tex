@@ -129,6 +129,11 @@
 %\newcommand{\@supervisor}{}
 \newcommand{\supervisor}[1]{\renewcommand{\@supervisor}{#1}}
 
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Turn off Edcomms before Final Submission %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%\edcommsfalse
 
 %%\end{filecontents*}
 \makeindex
@@ -192,14 +197,22 @@ be used throughout this guide.
 The second chapter provides an overview of EFA's requirements specifications; 
 it is divided into Ampersand system requirements and the EFA project 
 requirements.
-The third chapter focuses on design implementation and provides 
-key information on EFA modules. In addition, it provides an outline of the 
-AMMBR algorithm, which is used to generate ECA rules, and of
-communication protocols which \edcomm{WK}{???} explains 
-how EFA communicates with Ampersand's front end.
-A lot of the proof \edcomm{WK}{???} written to 
-verify EFA's correctness is embedded within each module which is covered in 
-this section. 
+%\edreplace{YS}{Replace : The third chapter focuses on design implementation and provides 
+%key information on EFA modules. In addition, it provides an outline of the 
+%AMMBR algorithm, which is used to generate ECA rules, and of
+%communication protocols which \edcomm{WK}{???} explains 
+%how EFA communicates with Ampersand's front end.
+%A lot of the proof \edcomm{WK}{???} written to 
+%verify EFA's correctness is embedded within each module which is covered in 
+%this section.}
+%% \newline
+
+The third chapter details the module system of EFA, as well as the design principles
+which guided said module system. EFA, as well as the core Ampersand system, is
+currently in active development where changes occur frequently. Commonly
+accepted practice for this situation is to decompose modules based on the
+principle of abstraction, where unnecessary information in hidden for the
+benefit of designers and maintainers\citep{modStruct,Parnas1972}.
 
 The fourth section covers testing, specifically, it covers property testing 
 using QuickCheck and testing MySQL queries using WorkBench.
@@ -394,7 +407,7 @@ data modeling.
 \input{testing-section}
 \newpage
 
-\bibliographystyle{alpha}
+\bibliographystyle{abbrv}
 \bibliography{references}
 \newpage
 \input{appendix}
