@@ -15,22 +15,19 @@ used to describe the module systems of object-oriented programs, as opposed to
 functional programs. Many of the components of the traditional UML class
 diagram are inapplicable to functional programs; therefore, we detail our
 modifications to the UML class diagram syntax in 
-section%~\ref{subsec:ModuleSyntax}. 
-\edcomm{WK}{Missing cross-reference and ``.''}
+section ~\ref{subsec:ModuleSyntax}.
 
 Furthermore, the syntax used to describe types and data declarations is not
 actual Haskell syntax. The syntax shares many similarities, but several changes
 to the syntax are made in this document in order to present the module hierarchy
 in a clear manner. These changes are also detailed, in 
-section%~\ref{subsec:HaskellSyntax}. 
-\edcomm{WK}{Missing cross-reference and ``.''}
+section ~\ref{subsec:HaskellSyntax}.
 
 \section{External Libraries}
 \noindent No addition dependencies are required outside of those that Ampersand 
-already 
-uses. The EFA project depends on the following Libraries:
+already uses. EFA directly uses the following dependencies of Ampersand:
 \begin{description}
-    \item \textbf{Ampersand Core Libraries} \newline
+    \item[Ampersand Core Libraries]
     The EFA project depends on the Ampersand software for the definition of 
     core Data Structures, (\edchange{WK}{i.e.}{i.e.,}\edcomm{WK}{always!} FSpec, which contains the definition of 
     the underlying ECA rules). EFA also maintains the relational schema of 
@@ -39,19 +36,22 @@ uses. The EFA project depends on the following Libraries:
     rules. AMMBR \cite{AMMBR}, which is the key algorithm responsible for 
     translating business requirements into ECA rules is an integral part of 
     Ampersand.
-    \item \textbf{simple-sql-parser} \newline
+    \item[simple-sql-parser]
     EFA's pretty printer depends directly on this library for formatting 
     and printing SQL statements. The SQL statement syntax 
     defined here is built on top of the existing expression syntax defined 
     in this package. This package is the one used by the core Ampersand system,
     so our use of it facilitates interaction and integration with Ampersand. 
     \cite{simple-sql}
-    \item \textbf{wl-pprint} \newline 
+    \item[wl-pprint] 
     The wl-pprint library\cite{wl-pprint} is a pretty printer based on the
     pretty printing combinators. EFA uses this library in combination with
     the simple-sql-pretty to output the SQL statements in a human readable
     format.
-    \item 
+    \item[deepseq]
+    The deepseq library provides a type class which implements a function
+    for reducing values to normal formal, similarly to the built in
+    \lstinline{seq} function.
 \end{description}
 
 \noindent
@@ -88,7 +88,7 @@ as a kind constructor, and for the value constructors to be used as type
 constructors. In every case in our system, when we define a datatype and use 
 the promoted version, we never use the \emph{unpromoted} version. That is, we 
 define types which are never used as types, only as kinds, and constructors 
-which are never used as value constructors,only type constructors. We write 
+which are never used as value constructors, only type constructors. We write 
 \,\,\,
 \lstinline!X : A -> B -> $\ldots$ -> Type!
 \,\,\, 
@@ -194,23 +194,9 @@ form
 accessed. Furthermore, types may have pattern-match-only constructors; that is,
 constructors which can only be used in the context of a pattern match, and not
 to construct a value of that type. This is denoted by the syntax
-``\lstinline!pattern Ctr : Ty!''. Furthermore, it is not a simple matter of
+``\lstinline!pattern Ctr : Ty!''. It is not a simple matter of
 convention - the use of this constructor in expressions will be strictly
 forbidden by Haskell.
-
-
-\begin{itemize}
-\item With a function (by DeMorgan's law): \\ \texttt{(forall (x :: A) . P 
-x -> r) -> r}
-\item With a datatype: \\ \texttt{data Exists p where Exists :: p x -> 
-Exists p}
-\end{itemize} 
-
-Choice of form is based on the circumstances in which the function
-will most likely be used, since whether one form is more convenient than the
-other depends largely on the intended use. However, these two forms are
-completely interchangeable (albeit with some syntactic noise) so the syntax
-presented here does not distinguish between the two. 
 
 
 \begin{figure}[!ht]
