@@ -9,7 +9,7 @@ left unresolved as there is no known solution for them. This list is meant to
 provide an overview of the various problems -- and their solutions, if
 applicable -- which were encountered during the development of EFA. 
 
-\begin{description}%[labelindent=1cm]
+\begin{description}[leftmargin=1em]
 \item[No kind equality] 
   One would naturally like to implement a singleton type as
   \begin{lstlisting}
@@ -38,10 +38,10 @@ applicable -- which were encountered during the development of EFA.
 \item[Functional dependencies are \emph{not} equivalent to type families] 
   For example, given:
   \begin{lstlisting}
-  class $\ldots$ => C a b | a -> b
+  class $\ldots$ => $\,\,$ C a b | a -> b
   \end{lstlisting}
   the typechecker knows that if the type $a$ is known and there is a constraint
-  $C a b$ given, then the type $b$ is known as well. In other words, the functional 
+  \lstinline{C a b} given, then the type $b$ is known as well. In other words, the functional 
   dependency $\ldots$\lstinline{| a -> b} asserts that the class \lstinline{C} is
   actually a function. \\ 
   However, you cannot write
@@ -52,13 +52,13 @@ applicable -- which were encountered during the development of EFA.
   because of global incoherence caused by module boundaries. No solution 
   is currently known \cite{sof}.
 
-\eddelete{YT}{This should not be here? Also doesn't make one bit of sense}{
-\item \textbf{Types as propositions.} 
-This is assuming that one exists; 
-simply put, it describes a correspondence between a given logic and a given 
-programming language, where we have "simplification of proofs as evaluation 
-of programs" \cite{props}.
-}
+%% \eddelete{YT}{This should not be here? Also doesn't make one bit of sense}{
+%% \item \textbf{Types as propositions.} 
+%% This is assuming that one exists; 
+%% simply put, it describes a correspondence between a given logic and a given 
+%% programming language, where we have "simplification of proofs as evaluation 
+%% of programs" \cite{props}.
+%% }
 
 \item[Exceeding complex type level invariants] Certain invariants are difficult to state and prove,
   for example, the type of the \texttt{SELECT} SQL operator for the \texttt{TypedSQL}
