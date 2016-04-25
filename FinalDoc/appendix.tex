@@ -4,66 +4,128 @@ This section contains literate Haskell code and notes on implementation issues.
 %\include{Freshname}
 \section*{Notes on Implementation Issues}
 
-This section contains a detailed list of concerns that came to light during the 
-course of software implementation, though some issues were addressed, others 
-are left unresolved as there is no known solution for them. The list is 
-provided as a comprehensive overview of the thought process that went into the 
-implementation of EFA, and the reasoning behind the design decisions which were 
-made.
+This section contains a detailed list of concerns that came to light during the
+course of software implementation. Though some issues were addressed, others are
+left unresolved as there is no known solution for them. This list is meant to
+provide an overview of the various problems -- and their solutions, if
+applicable -- which were encountered during the development of EFA. 
 
-\begin{itemize}
-    \item \textbf{No kind equality.} Singletons cannot be implemented as widely 
-    as we would like them to be; essentially such a type is impossible:
-    \begin{lstlisting}
-    data X (a::k) where
-    XF :: X a $\rightarrow$ X f $\rightarrow$ X (f a)
-    \end{lstlisting}
-    \item \textbf{Non-injective type families.} Specifically, lack of 
-    injectivity in type functions means that GHC cannot infer an instantiation 
-    of a type variable that appears only under type families. Recently, 
-    Microsoft researchers have implemented a GHC modification that allows type 
-    functions to be annotated as injective and plan to make it available with 
-    the next stable release of the compiler \cite{microsoft}.
-    \item \textbf{Functional dependencies are \textit{NOT} equivalent to type 
-        families.} For example, given:
-    \begin{lstlisting}
-    class ... $\Rightarrow$ C a b c| a $\rightarrow$ b
-    
-    you cannot write
-    
-    injec :: (C a b, C a b') $\Rightarrow$ b :~: b' 
-    \end{lstlisting}
-    This is because it is simply not true, no solution for this is 
-    currently known \cite{sof}. 
-    \item \textbf{Types as propositions.} This is assuming that one exists; 
-    simply put, it describes a correspondence between a given logic and a given 
-    programming language, where we have "simplification of proofs as evaluation 
-    of programs" \cite{props}.
-    \item \textbf{Certain invariants are difficult to state and prove.} The 
-    solution implemented for this problem was to vastly simply term language 
-    and to use informal correctness reasoning. %TTODO: not sure this is 
-    %correct, theres a paper on informal corrnectess reasoning that applies to 
-    %concurrency in kernels
-    \item \textbf{Singletons have a lot of boilerplate code.} Each model 
-    requires a constant amount of boilerplate code for each constructor. 
-    %TODO: write the boilerplate -- does this mean write the boilerplate code 
-    %yourself and adapt it to your specific needs?
-    \item \textbf{Defining a typed term from untyped ones.} This had to be done 
-    in a semi-safe way; the solution taken was to use abstraction barriers 
-    cautiously to construct unsafe data types. %TODO: unsafe datatypes? it just 
-    %says unsafe =(
-    \item \textbf{The complex relationship between SQL schemata and 
-        declarations.} This is specific to the long tables used in Ampersand's 
-    database. Database schemata must be converted into a type level 
-    representations along with all necessary proofs. The solution implemented 
-    for this was to under specify the result type of the existentially 
-    quantified function. Rather than fabricating a proof using a function $P$ 
-    and a valid input $x$, a decision procedure for $P$ is written and the 
-    functions which require such a proof will check that it is true, or throw 
-    an error. These functions are only used internally -- they are not part of 
-    the interface; such functions would only be called when the input is known 
-    to satisfy $P$. This is something that the programmer is able to reason 
-    about but not the compiler. %--to the programmer but not the compiler, find 
-    %out what this means
-\end{itemize} 
+\begin{description}[labelindent=1cm]
+\item[No kind equality] 
+  One would naturally like to implement a singleton type as
+  \begin{lstlisting}
+  data SingT (a::k) where
+    SingApp :: SingT f -> SingT a -> SingT (f a) 
+  \end{lstlisting}
+  in order to represent the singleton of the application of a type
+  constructor.  However, such a type, while possible to define, is essentially
+  impossible to use, because the typechecker (as of GHC 7.10) does not know
+  about the equality of kinds. Namely, when the typechecker sees an equality
+  between \emph{types}, it knows that the left-hand-side and right-hand-side
+  are interchangeable in all contexts, but it does not derive the same
+  information from an equality on \emph{kinds}.
+  
+  This feature is currently planned to be made available in GHC in version 8.0
+  (the next stable release) in the form of the the \texttt{TypeInType}
+  extensions~\cite{typeintype}.
+
+\item[Non-injective type families] 
+  Specifically, lack of injectivity in type functions means that GHC cannot infer
+  an instantiation of a type variable that appears only under type
+  families. Recently, Microsoft researchers have implemented a GHC modification
+  that allows type functions to be annotated as injective and plan to make it
+  available with the next stable release of the compiler \cite{microsoft}.
+
+\item[Functional dependencies are \emph{not} equivalent to type families] 
+  For example, given:
+  \begin{lstlisting}
+  class $\ldots$ => C a b | a -> b
+  \end{lstlisting}
+  the typechecker knows that if the type $a$ is known and there is a constraint
+  $C a b$ given, then the type $b$ is known as well. In other words, the functional 
+  dependency $\ldots$\lstinline{| a -> b} asserts that the class \lstinline{C} is
+  actually a function. \\ 
+  However, you cannot write
+  \begin{lstlisting}
+  injec :: (C a b, C a b') => b :~: b' 
+  \end{lstlisting}
+  as one would expect -- this property is clearly true of a true math function --
+  because of global incoherence caused by module boundaries. No solution 
+  is currently known \cite{sof}.
+
+\eddelete{YT}{This should not be here? Also doesn't make one bit of sense}{
+\item \textbf{Types as propositions.} 
+This is assuming that one exists; 
+simply put, it describes a correspondence between a given logic and a given 
+programming language, where we have "simplification of proofs as evaluation 
+of programs" \cite{props}.
+}
+
+\item[Exceeding complex type level invariants] Certain invariants are difficult to state and prove,
+  for example, the type of the \texttt{SELECT} SQL operator for the \texttt{TypedSQL}
+  query language. The type for this function in particular was too difficult to even 
+  write down, let alone write an implementation which satisfied the invariants 
+  in the type. The solution to this problem is to use a vastly simplified term language,
+  without losing the generality of expressing certain interesting expressions. 
+
+\item[Singletons have a lot of boilerplate code] The \texttt{singletons}
+  package solves this problem by using Template Haskell to generate the
+  boilerplate. However, TH is little more than string-based metaprogramming,
+  so it is very clumsy to use, but more importantly nearly unmaintainable,
+  as the internals of the Template Haskell library change with nearly every
+  compiler version, and when code generated by TH breaks, it is very difficult
+  to debug. 
+
+  Our reimplemenation of the singleton pattern simply accepts the fate of 
+  having to write some boilerplate. However, the design of our implemenation 
+  ensure that for every type constructor, one only needs to write a constant 
+  amount of boilerplate, and then one can implement functions generically (for 
+  all singleton kinds) in terms of those functions. This is in constrast 
+  to the \texttt{singletons} library, which would require more boilerplate 
+  for every additional feature to be implemented on singleton types. 
+
+\item[Defining a typed term language from an untyped one]
+  The TypedSQL query language encodes at the type level the type of the 
+  value which is represented by any given expression. However, this
+  type is internally implemented as a wrapper around an abstract syntax
+  tree which does \emph{not} encode the type of the expression as a Haskell
+  type. Users of the TypedSQL code must not be allowed to create typed
+  expresions from untyped ones erroneously, that is, by assigning an incorrect
+  type to the untyped expression. 
+  
+  The solution is abstraction barriers restriction access to the implementation of
+  the TypedSQL query language. The approved way of constructing such expressions
+  is through the use of the \emph{typed} query functions provided by
+  \texttt{TSQLCombinators}. However, in order to inject untyped expressions
+  into typed ones when one is truly certain that the assigned type is correct,
+  functions marked ``unsafe'' are still exported for the construction of 
+  typed expressions from untyped one. 
+
+\item[The complex relationship between SQL schemata and relation algebra expressions]
+  Ampersand represents the underlying information system in terms of relation algebra
+  expressions representing entities in the information system and relations between them.
+  Ampersand maps relation algebra entities to SQL schemas in a such a way that 
+  there is minimal duplication of data. Therefore, the source and target of some 
+  relation may actually be columns of some larger table 
+
+  For example the relations 
+  \begin{verbatim} 
+    r0 : A -> B [ FUN, INJ ] 
+    r1 : A -> C [ FUN, INJ ]  
+  \end{verbatim}
+  can be modelled as a single table with three columns -- $A, B$ and $C$ --
+  where the first column contains an element $a$ iff that element is a memeber
+  of \texttt{I[A]}, the second and third columns contain a non-null value $b$ or
+  $c$ iff $a r0 b$ or $a r0 c$ respectively. 
+
+ Since the schemas of tables are encoded at the type level, these complex relations
+  must also be computed at the type level.
+
+  The previously mentioned technique of dealing with exceeding complex type level invariants
+  is also applied to this issue. Furthermore, in this case, we may also underspecify the 
+  result of the output type, when it cannot be fully determined (mainly due to limitations 
+  in the type) by leaving the output type existentially quantified, but allowing it to 
+  be accompanied by the proof of some interesting property. 
+
+\end{description} 
 
