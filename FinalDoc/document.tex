@@ -159,7 +159,7 @@
   ,
   escapeinside={\%*}{*)},
   deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool
-    ,True,False,Maybe,id,Show,Ordering,Void,Just,Nothing,Int,foldr,foldl},
+    ,True,False,Maybe,id,Show,Ordering,Void,Just,Nothing,Int,foldr,foldl,class,instance},
   morekeywords={forall, ::, :},
   postbreak={},
   breaklines=true,                
@@ -186,7 +186,7 @@
 %% Turn off Edcomms before Final Submission %%
 %%%%%%%%%%%%%%%%%%%%%%%
 
-\edcommsfalse
+%\edcommsfalse
 
 %%% Comments are also included through setupComments.sty
 %%% in all our other files.
@@ -241,7 +241,7 @@ The EFA project aims to ultimately make the Exec-engine
 superfluous by correctly translating the \gls{ECA} rules and implementing them as SQL 
 queries so that system violations may be automatically corrected. EFA is 
 automated and requires no additional work from the user. In addition, the 
-generated SQL produced by EFA is by construction syntax- and type-correct. 
+generated SQL produced by EFA is, by construction, syntax-correct and type-correct. 
 Furthermore, EFA has a high degree of modularity as it only relies on 
 Ampersand's essential components.
 \end{abstract}
