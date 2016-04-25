@@ -73,7 +73,8 @@
 \definecolor{grey}{RGB}{192,192,192}
 \definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
 \lstset{ %
-  language=Haskell, morekeywords = {family, kind, pattern, expression},
+  basicstyle=\lst@ifdisplaystyle\scriptsize\fi,
+  language=Haskell, morekeywords = {family, kind, pattern},
   literate=
   {+}{{$+$}}1
   {/}{{$/$}}1 
@@ -109,7 +110,7 @@
   postbreak={},
   breaklines=true,                
   breakatwhitespace=true,
-  %postbreak={  \mbox{\textcolor{grey}{$\rightarrow$}} },
+  postbreak={  \mbox{\textcolor{grey}{$\rightarrow$}} },
   breakindent = 0pt,
   breakautoindent = true,
   %moredelim=[is][\itshape]{"}{"},
