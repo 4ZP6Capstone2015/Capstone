@@ -37,6 +37,11 @@
 \usetikzlibrary{positioning}
 \usepackage{indentfirst}
 \newcolumntype{C}[1]{>{\centering}p{#1}} %% For use with tabularx
+\usepackage{glossaries}
+\setacronymstyle{long-short}
+
+\makenoidxglossaries
+
 
 
 % \input{filename.tex}      %will format input document according to base doc, 
@@ -63,7 +68,55 @@
 \newcounter{mnum}
 \newcommand{\mthemnum}{M\themnum}
 \newcommand{\mref}[1]{M\ref{#1}}
-\makeglossary
+
+
+%%%% Define Acronyms %%%%
+%%%%%%%%%%%%%%%%%
+\newacronym[description={The rule structure used for 
+    data
+    bases and commonly used in \edchange{WK}{market ready}{market-ready} business rule engines. ECA rules are
+    used in Ampersand to describe how a database should be modified in response 
+    to
+    a system constraint becoming untrue.}]{ECA}{ECA}{Event-Condition-Action}
+
+\newacronym[description={From a given set of formally defined business requirements, Ampersand generates a
+    functional specification consisting of a data model, a service catalog, a
+    formal specification of the services, and a function point analysis. An ADL
+    script acts as an input for Ampersand. An ADL file consists of a plain ASCII
+    text file.}]{ADL}{ADL}{Abstract Data Language}
+
+\newglossaryentry{Ampersand}{name={Ampersand},description={Ampersand refers to the software tool described in this 
+    document, as well as the method of generating functional specification from formalized
+    business requirements. }}
+
+\newglossaryentry{business requirements}{name={business requirements},description={ Requirements which exist due to some real 
+    world 
+    constraints (i.e. financial, logistic, physical or safety constraints).}}
+    
+\newacronym[description={\gls{ECA} for Ampersand.}]{EFA}{EFA}{Abstract Data Language}
+
+\newglossaryentry{functional specification}{name={functional specification},description={ A formal document which details the 
+    operation,
+    capabilities, and appearance of a software system.}, plural={functional specifications}}
+
+\newglossaryentry{natural language}{name={natural language},description={ Language written in a manner similar to that of 
+    human 
+    communication; language intended to be interpreted and understood by 
+    humans, as 
+    opposed to machines.}}
+    
+\newglossaryentry{requirements engineering}{name={Requirements Engineering},description={The process of translating business
+    requirements into a functional specification.}}
+    
+\newglossaryentry{prototype}{name={prototype},description={Ampersand generates a prototype for the user that 
+    provides a 
+    front-end interface that connects to a back-end database.}}
+
+
+%%%%%%%%%%%%%%%%%%
+%%%%%% END ACRONYM %%%%%
+%%%%%%%%%%%%%%%%%%
+
 
 \setlength\parindent{24pt}
 % math things
@@ -138,7 +191,7 @@
 %% Turn off Edcomms before Final Submission %%
 %%%%%%%%%%%%%%%%%%%%%%%
 
-\edcommsfalse
+%\edcommsfalse
 
 %%% Comments are also included through setupComments.sty
 %%% in all our other files.
@@ -181,14 +234,16 @@ since they violate system invariants specified in the requirements.
 When a system invariant violation occurs, one of two 
 things can happen: the change that is meant to take place is adjusted (where it 
 no longer violates the rules of the system) or the change is
-discarded. The ultimate purpose of Event-Condition-Action rules for Ampersand 
-(EFA) is to replace Ampersand's ``ExecEngine''
-which is currently used to fix system violations. However, the ExecEngine 
+discarded. The ultimate purpose of Event-Condition-Action rules for \gls{Ampersand} 
+(EFA) is to replace Ampersand's ``Exec-engine''
+which is currently used to fix system violations. 
+\eddelete{YS}{However, the Exec-engine 
 relies on manual formulation of repair actions in an error-prone setup that 
 creates PHP-embedded SQL commands from string fragments, as opposed to using 
-the automatically-generated Event-Condition-Action (ECA) rules that Ampersand 
-already produces. The EFA project aims to ultimately make the ExecEngine 
-superfluous by correctly translating the ECA rules and implementing them as SQL 
+the automatically-generated\gls{ECA} rules that Ampersand 
+already produces. } \edcomm{YS}{There was a lot of overlapping between this section and the ``Prupose of the Project''. I've shortened this section}
+The EFA project aims to ultimately make the Exec-engine 
+superfluous by correctly translating the \gls{ECA} rules and implementing them as SQL 
 queries so that system violations may be automatically corrected. EFA is 
 automated and requires no additional work from the user. In addition, the 
 generated SQL produced by EFA is, by construction, syntax-correct and type-correct. 
@@ -200,6 +255,7 @@ Ampersand's essential components.
 \newpage
 \newpage
 
+
 \chapter{Introduction}\label{Intro}
 %\section{Introduction}\label{Intro}
 
@@ -207,7 +263,7 @@ This document is a guide for the EFA project and includes
 
 \begin{itemize}
 \item an brief introduction 
-to Ampersand
+to \gls{Ampersand}
 \item the software requirements used to implement EFA
 \item development and design of EFA, describing each module of EFA
 \item a description of software testing done on the system.
@@ -216,12 +272,12 @@ to Ampersand
 \section{Document Guide}
 
 The first chapter covers 
-the basics of Ampersand, the purpose of the project, the intended audience 
-(i.e. our stakeholders), tools used to run Ampersand and terminology which will 
+the basics of \gls{Ampersand}, the purpose of the project, the intended audience 
+(i.e. our stakeholders), tools used to run \gls{Ampersand} and terminology which will 
 be used throughout this guide. 
 
 The second chapter provides an overview of EFA's requirements specifications; 
-it is divided into Ampersand system requirements and the EFA project 
+it is divided into \gls{Ampersand} system requirements and the EFA project 
 requirements.
 %\edreplace{YS}{Replace : The third chapter focuses on design implementation and provides 
 %key information on EFA modules. In addition, it provides an outline of the 
@@ -244,7 +300,7 @@ The fourth section covers testing, specifically, it covers property testing
 using QuickCheck and testing MySQL queries using WorkBench.
 Lastly, the Appendix 
 covers a variety of information such as tips for setting up 
-Ampersand, literate source code, and notes on issues that came up during the 
+\gls{Ampersand}, literate source code, and notes on issues that came up during the 
 course of EFA's 
 implementation. \edcomm{WK}{I hope there will also be literate source
   code in the appendix.}
@@ -255,22 +311,22 @@ implementation. \edcomm{WK}{I hope there will also be literate source
   at the ends of grammatical units, in particular of sentences.}
 
 \indent
-The motivation behind Ampersand comes from requirements engineering, which is a 
+The motivation behind \gls{Ampersand} comes from \gls{requirements engineering}, which is a 
 large part of designing software systems. One of the greatest challenges of 
-requirements engineering is translating informal business requirements into 
-formal functional specifications. Business requirements contain ambiguity 
-because they are written in a natural language with the intention of being 
+\gls{requirements engineering} is translating informal \gls{business requirements} into 
+formal \glspl{functional specification}. \gls{business requirements} contain ambiguity 
+because they are written in a \gls{natural language} with the intention of being 
 easily understood by humans; however,
-functional specifications must be written in a formal language that is 
-unambiguous and precise. Typically, this translation of business requirements 
+\glspl{functional specification} must be written in a formal language that is 
+unambiguous and precise. Typically, this translation of \gls{business requirements} 
 to a formal specification is done by a requirements
 engineer, which can be prone to human error.
 
-Ampersand offers an alternative solution which translates the natural language 
+\gls{Ampersand} offers an alternative solution which translates the gls{natural language} 
 used in business process into requirement specifications
 \cite{ruledesign}\edcomm{WK}{This is not recognisable as a
   reference. Choose a different bibliographystle?}. 
-Ampersand is a 
+\gls{Ampersand} is a 
 software system which offers many tools that aid their clients in the 
 translation process from business requirement to formal requirement 
 specifications. EFA is implemented as an internal component of Ampersand that 
@@ -278,20 +334,20 @@ is meant to automate the correction of system invariants. EFA helps reduce the
 amount of manual labour required by the user by executing SQL queries to fix 
 data violations. %---- edit here 
 
-Given a set of data and a set of rules used to operate on the data, Ampersand 
+Given a set of data and a set of rules used to operate on the data, \gls{Ampersand} 
 is able to determine \edchange{WK}{if}{whether} there are discrepancies between the two sets.
 \eddelete{YS}{Delete : Discrepancies often occur when changes
- are made to the set of data Ampersand is 
+ are made to the set of data \gls{Ampersand} is 
 given or to the set of rules that as associated with them} 
 %\edcomm{WK}{Changes to the set of rules? ``Regenerage database''!}
 Data discrepancies are violations or illegal transactions
-that occur in the Ampersand system
+that occur in the \gls{Ampersand} system
 when a set of data fails to follow the rules given by the user.
 When a system violation occurs,
 one of two things can happen: the change that is meant to 
 take place is adjusted (where it no longer violates the rules the user 
-provides) or the change is discarded. EFA enhances the Ampersand system by 
-translating ECA rules and executing them as SQL queries to correct system 
+provides) or the change is discarded. EFA enhances the \gls{Ampersand} system by 
+translating \gls{ECA} rules and executing them as SQL queries to correct system 
 violations and safeguard the database from \edchange{WK}{wrongful
   transactions}{transactions that would violate the business rules}.
 
@@ -302,25 +358,25 @@ violations and safeguard the database from \edchange{WK}{wrongful
 
 \subsection{Ampersand In Practice}
 
-The Ampersand system is implemented in Haskell and relies on external software 
-tools to help generate a prototype and its supporting documents.
+The \gls{Ampersand} system is implemented in Haskell and relies on external software 
+tools to help generate a \gls{prototype} and its supporting documents.
 On \edchange{WK}{windows}{MS Windows}, 
 there is an executable available, but on Linux and Mac operating systems it 
 requires installing \edchange{WK: ?}{stack}{``stackage''} (The Haskell Tool Stack)
-to build Ampersand from source. 
+to build \gls{Ampersand} from source. 
 Instructions on how to install the tools and components listed in this section 
 can be found in the appendix.
 
 \subsection*{Glasgow Haskell Compiler}
 
-Ampersand requires the Glasgow Haskell Compiler (GHC) \cite{ghcUserGuide}, at least version 
-7.10.3 to compiler Ampersand source code. 
+Ampersand requires the Glasgow Haskell Compiler (GHC) \cite{ghc}, at least version 
+7.10.3 to compiler \gls{Ampersand} source code. 
 
 \subsection*{Ampersand's GitHub}\label{Github}
 
-Github hosts the most current version of the Ampersand system. Github is used 
-to maintain consistency between the main Ampersand branch and this project. The 
-most recent version of Ampersand can be found at 
+Github hosts the most current version of the \gls{Ampersand} system. Github is used 
+to maintain consistency between the main \gls{Ampersand} branch and this project. The 
+most recent version of \gls{Ampersand} can be found at 
 \cite{ampersandGit}\edinsert{WK}{.}
 \edcomm{WK}{Not optically recognisable as link in the PDF --- this is a global problem.}
 \edcomm{YT}{It works for me! (and for Yash as well)}
@@ -328,7 +384,7 @@ most recent version of Ampersand can be found at
 \subsection*{Graphviz}
 
 Graphviz \cite{graphviz}
- is an open source graph visualization software that Ampersand uses to generate 
+ is an open source graph visualization software that \gls{Ampersand} uses to generate 
  artifacts\edchange{WK}{,}{;} specifically it is used to create graphics for the prototype's 
  requirement documentation. Graphviz is able to take descriptions of graphs in 
  simple text and create diagrams from them. 
@@ -350,7 +406,7 @@ also uses the Hackage \cite{hackage} Haskell source repository.
 \subsection*{The Haskell Tool Stack}
 
 The Haskell Tool Stack \cite{cabalsys} is used to 
-install the most recent version of Ampersand from source code, and various 
+install the most recent version of \gls{Ampersand} from source code, and various 
 Haskell packages (e.g., QuickCheck).
 
 \subsection*{QuickCheck}
@@ -371,54 +427,59 @@ databases and comes with a built-in editor\edchange{WK}{,}{;} in this project it
 manually test queries. Through various stages in development it is used for 
 data modeling.
 
-\section{Naming Conventions and Terminology}\label{sec:Naming} 
-\begin{description}
-    \item[ECA] Stands for Event-Condition Action. The rule structure used for 
-    data
-    bases and commonly used in \edchange{WK}{market ready}{market-ready} business rule engines. ECA rules are
-    used in Ampersand to describe how a database should be modified in response 
-    to
-    a system constraint becoming untrue. 
+\section{Naming Conventions and Terminology}\label{sec:Naming}
+%\\
+ 
+\printnoidxglossaries
+
     
-    \item [ADL] Stands for ``Abstract Data Language''
-      \cite[13]{derFun}\edcomm{WK}{Look at what \LaTeX{} produces here!}.
-    From a given set of formally defined business requirements, Ampersand generates a
-    functional specification consisting of a data model, a service catalog, a
-    formal specification of the services, and a function point analysis. An ADL
-    script acts as an input for Ampersand. An ADL file consists of a plain ASCII
-    text file.
-    
-    \item [Ampersand] Ampersand refers to the software tool described in this 
-    document, as well as the method of generating functional specification from formalized
-    business requirements. 
-    
-    \item [Business requirements] Requirements which exist due to some real 
-    world 
-    constraints (i.e. financial, logistic, physical or safety constraints). 
-    
-    \item [Business rules] See \emph{Business Requirements}.
-    
-    \item [EFA] Stands for ``ECA (see above) for Ampersand''. This term is used 
-    to refer to the contribution of ECA to Ampersand. 
-    
-    \item [Functional specification] A \emph{formal} document which details the 
-    operation,
-    capabilities, and appearance of a software system. 
-    
-    \item [Natural language] Language written in a manner similar to that of 
-    human 
-    communication; language intended to be interpreted and understood by 
-    humans, as 
-    opposed to machines. 
-    
-    \item [Requirements engineering] The process of translating business
-    requirements into a functional specification. 
-    
-    \item [Prototype] Ampersand generates a prototype for the user that 
-    provides a 
-    front-end interface that connects to a back-end database.
-    
-\end{description}
+%\begin{description}
+%    \item[ECA] Stands for Event-Condition-Action. The rule structure used for 
+%    data
+%    bases and commonly used in \edchange{WK}{market ready}{market-ready} business rule engines. ECA rules are
+%    used in Ampersand to describe how a database should be modified in response 
+%    to
+%    a system constraint becoming untrue. 
+%    
+%    \item [ADL] Stands for ``Abstract Data Language''
+%      \cite[13]{derFun}\edcomm{WK}{Look at what \LaTeX{} produces here!}.
+%    From a given set of formally defined business requirements, Ampersand generates a
+%    functional specification consisting of a data model, a service catalog, a
+%    formal specification of the services, and a function point analysis. An ADL
+%    script acts as an input for Ampersand. An ADL file consists of a plain ASCII
+%    text file.
+%    
+%    \item [Ampersand] Ampersand refers to the software tool described in this 
+%    document, as well as the method of generating functional specification from formalized
+%    business requirements. 
+%    
+%    \item [Business requirements] Requirements which exist due to some real 
+%    world 
+%    constraints (i.e. financial, logistic, physical or safety constraints). 
+%    
+%    \item [Business rules] See \emph{Business Requirements}.
+%    
+%    \item [EFA] Stands for ``ECA (see above) for Ampersand''. This term is used 
+%    to refer to the contribution of ECA to Ampersand. 
+%    
+%    \item [Functional specification] A \emph{formal} document which details the 
+%    operation,
+%    capabilities, and appearance of a software system. 
+%    
+%    \item [Natural language] Language written in a manner similar to that of 
+%    human 
+%    communication; language intended to be interpreted and understood by 
+%    humans, as 
+%    opposed to machines. 
+%    
+%    \item [Requirements engineering] The process of translating business
+%    requirements into a functional specification. 
+%    
+%    \item [Prototype] Ampersand generates a prototype for the user that 
+%    provides a 
+%    front-end interface that connects to a back-end database.
+%    
+%\end{description}
 
 \input{requirements-section}
 \input{design-section}

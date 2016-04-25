@@ -74,7 +74,7 @@ applicable -- which were encountered during the development of EFA.
 
   Our reimplemenation of the singleton pattern simply accepts the fate of 
   having to write some boilerplate. However, the design of our implemenation 
-  ensure that for every type constructor, one only needs to write a constant 
+  ensures that for every type constructor, one only needs to write a constant 
   amount of boilerplate, and then one can implement functions generically (for 
   all singleton kinds) in terms of those functions. This is in constrast 
   to the \texttt{singletons} library, which would require more boilerplate 
@@ -89,15 +89,16 @@ applicable -- which were encountered during the development of EFA.
   expresions from untyped ones erroneously, that is, by assigning an incorrect
   type to the untyped expression. 
   
-  The solution is abstraction barriers restriction access to the implementation of
+  The solution is abstraction barriers restricting access to the implementation of
   the TypedSQL query language. The approved way of constructing such expressions
   is through the use of the \emph{typed} query functions provided by
   \texttt{TSQLCombinators}. However, in order to inject untyped expressions
   into typed ones when one is truly certain that the assigned type is correct,
   functions marked ``unsafe'' are still exported for the construction of 
-  typed expressions from untyped one. 
+  typed expressions from untyped ones. 
 
 \item[Relationship between SQL schemata and relation algebra]
+  \edcomm{WK}{This is part of what I would have expected in ``Key Algorithm''.}
   Ampersand represents the underlying information system in terms of relation algebra
   expressions representing entities in the information system and relations between them.
   Ampersand maps relation algebra entities to SQL schemas in a such a way that 

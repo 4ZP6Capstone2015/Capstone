@@ -20,7 +20,7 @@ in a clear manner. These changes are also detailed, in
 section ~\ref{subsec:HaskellSyntax}.
 
 \section{External Libraries}
-\noindent No addition dependencies are required outside of those that Ampersand 
+\noindent No additional dependencies are required outside of those that Ampersand 
 already uses. EFA directly uses the following dependencies of Ampersand:
 \begin{description}
     \item[Ampersand Core Libraries]
@@ -70,7 +70,7 @@ same, and will not be detailed here.
 While the changes made to the Haskell syntax are reasonably complex, the 
 ensuing 
 module description becomes vastly simplified. This section is meant to be used
-as a reference - in many cases, the meaning of a type is self-evident. 
+as a reference \edchange{WK}{-}{---} in many cases, the meaning of a type is self-evident. 
 
 \noindent
 \subsection*{Description of Types and Kinds}
@@ -96,14 +96,14 @@ to denote a datatype
 which is used exclusively as a kind. 
 
 \noindent
-\subsection*{Description of Dependant types}
+\subsection*{Description of \edchange{WK}{Dependant}{Dependent} types}
 
 The syntax used to denote a ``fake'' dependent type in our model is the same 
 as used to denote a real dependent type in Agda. \lstinline!(x : A) -> B! is 
 the function
 from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly 
 looks like a 
-real Haskell type - in Haskell, the syntax would be \texttt{forall (x :: A) . 
+real Haskell type \edchange{WK}{-}{---}\edcomm{WK}{always!} in Haskell, the syntax would be \texttt{forall (x :: A) . 
 B}. However, 
 the semantics of these two types are vastly different - the former can pattern 
 match
@@ -113,6 +113,9 @@ In certain cases, it may be elucidating to see the \emph{real} Haskell type of
 an entity (function, datatype, etc.). To differentiate the two, they are typeset
 differently, as in this example.
 
+\edcomm{WK}{Having an English-sentence-end-``.'' between two Haskell
+fragments at the end of the next sentence makes them look like a
+single, \textbf{unreadable} Haskell fragment! \textbf{NEVER} do ``math-punctuation-math''!}
 The real type of a function whose type is given as \lstinline!(x : A) -> B! in
 our model is \texttt{forall (x :: A) . SingT x -> B}. \texttt{SingT :: A -> 
 Type}
@@ -163,7 +166,8 @@ presented here does not distinguish between the two.
 
 \subsection*{Types, kinds, and type synonyms}
 
-Type synonyms are written in the model as \lstinline!Ty : K = X!, where $Ty$ is 
+Type synonyms are written in the model as \lstinline!Ty : K = X!,
+where $Ty$ \edcomm{WK}{Inconsistent font for \lstinline|Ty|!} is 
 the name
 of the type synonym, $K$ is its kind, and $X$ its implementation. This is to 
 differentiate
@@ -269,11 +273,11 @@ few or no changes have been made from the original module before the existence
 of EFA), are indicated in {\color{applegreen}green}. The module hierarchy of
 these modules is not described here; they are included simply to indicate which
 symbols are imported from these modules. An example of the syntax is found in
-figure%~\ref{fig:ModExample}.
+figure~\ref{fig:ModExample}.
 
 \section{Module Hierarchy}\label{subsec:modhierarchy}
 
-This section contains a hierarchal breakdown of each module, as well as a brief
+This section contains a hierarchical breakdown of each module, as well as a brief
 explanation of each modules' elements. The module hierarchy of EFA as a whole 
 is 
 given in figure~\ref{fig:efaMod}.  Note
@@ -289,7 +293,8 @@ equality constraints, for example, things like \lstinline{Show x} and
 \lstinline[mathescape]|Int $\sim$ Bool|.  
 Note that \texttt{Show} itself does \emph{not} have kind Constraint --
 its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
-primitive entities can be found in the GHC user guide~\cite{ghcUserGuide}. While
+primitive entities can be found in the GHC user
+guide~\cite{ghcUserGuide}\edcomm{WK}{Use ``key = \{GHC\}'' in BibTeX}. While
 many modern features of GHC are used in the actual implementation, they are not
 mentioned in, nor required to understand, the module description.
 
@@ -300,7 +305,7 @@ The primary interface to EFA is the function \lstinline{eca2PrettySQL}, which
 takes an FSpec (the abstract syntax of Ampersand) and an ECA rule, and returns 
 the pretty
 printed SQL code for that rule. Also note that while the dependencies within EFA
-modules is relatively complex, they depend on the rest of the Ampersand system
+modules \edchange{WK}{is}{are} relatively complex, they depend on the rest of the Ampersand system
 in a simple manner. The modules \lstinline{Test} and \lstinline{Prototype} 
 implement the testing
 framework and the prototype generation, respectively; these modules depend
@@ -654,7 +659,7 @@ figure \ref{fig:typedSQL}. The submodules of TypedSQL are quite large,
 however, the majority of the definitions within are type and kind definitions, 
 which correspond precisely to entities defined by MySQL. The only exception is 
 SQLRel, which distinguishes relations from scalar types - MySQL does not make 
-this distinguishment. 
+this \edchange{WK}{distinguishment}{distinction}. 
 Only a few
 helper functions are defined in these modules -- namely, only things which 
 form
@@ -906,7 +911,9 @@ $\bot$
 can be represented by any uninhabited type, typically called\lstinline{Void}. 
 However, the normal form of a function can contain any number of $\bot$ hidden 
 deep inside the function, because evaluating a function to normal form only 
-evaluates up to the outermost binder.  To prevent any
+evaluates up to the outermost binder.
+\edcomm{WK}{(You are aware of \texttt{deepseq}?)}
+To prevent any
 unsoundness which this might cause, values of type \lstinline{Not p} are reduced
 to normal form as they are built, starting with a canonical value which is known
 to be in normal form - the value \lstinline{triviallyTrue}.  This is the role of
@@ -957,7 +964,7 @@ and motive of generated code.
 \subsection{Proof Utils}
 
 The ProofUtils modules, shown in 
-figure~\ref{fig:utilsMod} provides various
+figure~\ref{fig:utilsMod}, provides various
 utilities for proving compile time invariants, 
 including the definitions of
 various predicates used in other modules, as well as 
@@ -1173,7 +1180,7 @@ as follows.
     $\lnot x \in xs$.
     \lstinline{NotElem} is the witnss for 
     \lstinline{IsNotElem}. 
-    \item[\texttt{\&\&,And}] Binary and $n$-ary boolen 
+    \item[\texttt{\&\&,And}] Binary and $n$-ary boolean 
     conjunction, with the usual semantics. 
 \end{description}
     
@@ -1238,15 +1245,35 @@ of the EFA source code which implements the key algorithm of EFA.
 %% and that there is a link from ECA2SQL.lhs -> ECA2SQL.tex 
 \input{../../ampersand/src/Database/Design/Ampersand/ECA2SQL}
 
+\edcomm{WK}{I guess this is an ancient fragment about AMMBR ---
+prehaps better refer to section 1.3 for description of AMMBR.
+
+Here, you probably want to talk about the algorithm
+you use for translating ECA rules into SQL,
+given the different ways Ampersand stores relations,
+and the fact that ECA rules refer to relations, not tables.
+}%edcomm
+
 \section{Communication Protocol}
+
 The EFA implementation needs to communicate with the front end to be able to 
-run the generated SQL queries when a violation occurs. 
+run the generated SQL queries when a violation occurs.
+\edcomm{WK}{It would probably be more precise to say that the SQL
+fragments generated by EFA need to be invoked by the front end.}
+
 \begin{itemize}
     \item \textbf{Old communication protocol -  PHP engine} \\
     In the existing version, Ampersand depends on PHP code to run the 
     generated SQL on the database. However, this comes at the cost of 
     human intervention, which results in manual maintenance when 
-    changes occur during development. 
+    changes occur during development.
+    \edcomm{WK}{As such, putting SQL commands into generated PHP
+    does not require human intervention --- they do it for testing,
+    don't they?}
+    \item \edinsert{WK}{\textbf{Current Ampersand development version:}
+      All generated material is stored in JSON files --- these could
+      also be used to store EFA-generated SQL. It is then up to the
+      front-end implementation to connect them to violations.}
     \item \textbf{New Communication protocol - Stored Procedures} \\
     The developments teams of EFA has come to a conclusion that the 
     best way of communicating with the front-end will be to use Stored 
