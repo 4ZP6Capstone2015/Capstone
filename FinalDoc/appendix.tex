@@ -1,8 +1,7 @@
-\chapter*{Appendix}
-This section contains literate Haskell code and notes on implementation issues.
-\section*{Literate Haskel Code}
-%\include{Freshname}
-\section*{Notes on Implementation Issues}
+%% \chapter*{Appendix: Literate Haskell Code}
+
+
+\chapter*{Appendix: Notes on Implementation Issues}
 
 This section contains a detailed list of concerns that came to light during the
 course of software implementation. Though some issues were addressed, others are
@@ -10,7 +9,7 @@ left unresolved as there is no known solution for them. This list is meant to
 provide an overview of the various problems -- and their solutions, if
 applicable -- which were encountered during the development of EFA. 
 
-\begin{description}[labelindent=1cm]
+\begin{description}%[labelindent=1cm]
 \item[No kind equality] 
   One would naturally like to implement a singleton type as
   \begin{lstlisting}
