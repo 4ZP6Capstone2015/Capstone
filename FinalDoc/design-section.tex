@@ -96,14 +96,14 @@ to denote a datatype
 which is used exclusively as a kind. 
 
 \noindent
-\subsection*{Description of \edchange{WK}{Dependant}{Dependent} types}
+\subsection*{Description of Dependent types}
 
 The syntax used to denote a ``fake'' dependent type in our model is the same 
 as used to denote a real dependent type in Agda. \lstinline!(x : A) -> B! is 
 the function
 from $x$ to some value of type $B$, where $B$ can mention $x$. This nearly 
 looks like a 
-real Haskell type \edchange{WK}{-}{---}\edcomm{WK}{always!} in Haskell, the syntax would be \texttt{forall (x :: A) . 
+real Haskell type --- in Haskell, the syntax would be \texttt{forall (x :: A) . 
 B}. However, 
 the semantics of these two types are vastly different - the former can pattern 
 match
@@ -113,12 +113,9 @@ In certain cases, it may be elucidating to see the \emph{real} Haskell type of
 an entity (function, datatype, etc.). To differentiate the two, they are typeset
 differently, as in this example.
 
-\edcomm{WK}{Having an English-sentence-end-``.'' between two Haskell
-fragments at the end of the next sentence makes them look like a
-single, \textbf{unreadable} Haskell fragment! \textbf{NEVER} do ``math-punctuation-math''!}
 The real type of a function whose type is given as \lstinline!(x : A) -> B! in
-our model is \texttt{forall (x :: A) . SingT x -> B}. \texttt{SingT :: A -> 
-Type}
+our model is \texttt{forall (x :: A) . SingT x -> B}. The type constructor 
+\texttt{SingT :: A -> Type}
 denotes the singleton type for the kind $A$, which is inhabited by precisely
 one value for each type which inhabits $A$. The role and use of singleton types
 is detailed further on, in section~\ref{subsec:Singletons}. 
@@ -167,12 +164,12 @@ presented here does not distinguish between the two.
 \subsection*{Types, kinds, and type synonyms}
 
 Type synonyms are written in the model as \lstinline!Ty : K = X!,
-where $Ty$ \edcomm{WK}{Inconsistent font for \lstinline|Ty|!} is 
+where \lstinline!Ty! is 
 the name
-of the type synonym, $K$ is its kind, and $X$ its implementation. This is to 
+of the type synonym, \lstinline!K! is its kind, and \lstinline!X! its implementation. This is to 
 differentiate
 from type families, which are written as 
-\lstinline!Ty : K where Ty $\ldots$ = $\ldots$!.
+\lstinline[mathescape=true]!Ty : K where Ty $\ldots$ = $\ldots$!.
 
 \subsection*{Overloading}
 
@@ -294,7 +291,7 @@ equality constraints, for example, things like \lstinline{Show x} and
 Note that \texttt{Show} itself does \emph{not} have kind Constraint --
 its kind is \lstinline{Type -> Constraint}. The detailed semantics of these
 primitive entities can be found in the GHC user
-guide~\cite{ghcUserGuide}\edcomm{WK}{Use ``key = \{GHC\}'' in BibTeX}. While
+guide~\cite{ghcUserGuide}. While
 many modern features of GHC are used in the actual implementation, they are not
 mentioned in, nor required to understand, the module description.
 
@@ -900,19 +897,20 @@ datatypes contains
 precisely one ``type'' of bottom -- namely the value 
 $\bot$, as opposed to
 $\bot$ wrapped in a constructor, for example 
-\lstinline{Just $\bot$}. This
+\lstinline[mathescape=true]{Just $\bot$}. This
 bottom can then be removed with the Haskell primitive 
 \lstinline{seq},
 producing a value which can soundly be used as a proof.
 
 A problem arises when we consider the negation of a proposition. $\lnot p$ 
-is typically encoded in Haskell as \lstinline{p -> $\bot$}, where the type 
+is typically encoded in Haskell as \lstinline[mathescape=true]{p -> $\bot$}, where the type 
 $\bot$
 can be represented by any uninhabited type, typically called\lstinline{Void}. 
 However, the normal form of a function can contain any number of $\bot$ hidden 
 deep inside the function, because evaluating a function to normal form only 
 evaluates up to the outermost binder.
 \edcomm{WK}{(You are aware of \texttt{deepseq}?)}
+\edcomm{YT}{We are aware and do use it. Perhaps it should be added to the module diagram}
 To prevent any
 unsoundness which this might cause, values of type \lstinline{Not p} are reduced
 to normal form as they are built, starting with a canonical value which is known
