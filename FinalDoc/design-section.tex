@@ -1234,12 +1234,13 @@ decidable equality, which is realized by the function
 \end{figure}
 
 \section{Key Algorithm}
-The key algorithm for the EFA project is AMMBR \cite{AMMBR}. AMMBR is a method 
-that allow organizations to build information systems that comply to their 
-business requirements in a provable manner. This algorithm is implemented in 
-Ampersand and is responsible for translating the business requirements into ECA 
-rules. These ECA rules contain information on how to fix any data violation and 
-are translated into SQL queries in our EFA project.
+
+This section contains the literate Haskell documentation of the portion 
+of the EFA source code which implements the key algorithm of EFA. 
+
+%% Assuming that `Capstone' and `ampersand' are in the same directory
+%% and that there is a link from ECA2SQL.lhs -> ECA2SQL.tex 
+\input{../../ampersand/src/Database/Design/Ampersand/ECA2SQL}
 
 \section{Communication Protocol}
 The EFA implementation needs to communicate with the front end to be able to 

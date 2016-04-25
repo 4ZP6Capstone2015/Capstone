@@ -69,8 +69,6 @@
 % math things
 \newcommand{\ra}{$\rightarrow$}
 
-
-
 % 
 \definecolor{grey}{RGB}{192,192,192}
 \definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
@@ -102,7 +100,7 @@
   {:\~:}{{$\equiv$}}2
   {\~}{{$\equiv$}}2
   {`In`}{{$\in$}}1
-  {.}{{$\circ$\,\,}}1
+  %% {.}{{$\circ$\,\,}}1
   ,
   escapeinside={\%*}{*)},
   deletekeywords={>>,>>=,mapM,mapM_,putStrLn,putStr,toInt,show,and,sequence,String,Bool
@@ -115,9 +113,12 @@
   breakindent = 0pt,
   breakautoindent = true,
   %moredelim=[is][\itshape]{"}{"},
-  morestring=[b]",
-  mathescape
+  morestring=[b]"
 }
+
+\lstnewenvironment{code}[0]{\renewcommand\lstlistingname{Code}%
+}%
+{}
 
 \newcommand{\hstype}[2][0pt]{\attribute{\hspace*{#1}\lstinline[mathescape]|#2|}}
 
@@ -308,7 +309,7 @@ can be found in the appendix.
 
 \subsection*{Glasgow Haskell Compiler}
 
-Ampersand requires the Glasgow Haskell Compiler (GHC) \cite{ghc}, at least version 
+Ampersand requires the Glasgow Haskell Compiler (GHC) \cite{ghcUserGuide}, at least version 
 7.10.3 to compiler Ampersand source code. 
 
 \subsection*{Ampersand's GitHub}\label{Github}
@@ -415,10 +416,7 @@ data modeling.
     
 \end{description}
 
-\input {requirements-section}
-
-
-
+\input{requirements-section}
 \input{design-section}
 \input{testing-section}
 \input{appendix}
