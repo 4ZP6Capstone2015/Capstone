@@ -191,7 +191,7 @@
 %% Turn off Edcomms before Final Submission %%
 %%%%%%%%%%%%%%%%%%%%%%%
 
-%\edcommsfalse
+\edcommsfalse
 
 %%% Comments are also included through setupComments.sty
 %%% in all our other files.
@@ -429,9 +429,11 @@ data modeling.
 
 \section{Naming Conventions and Terminology}\label{sec:Naming}
 %\\
- 
-\printnoidxglossaries
 
+{
+\renewcommand{\glossarysection}[2][]{}
+\printnoidxglossaries
+}
     
 %\begin{description}
 %    \item[ECA] Stands for Event-Condition-Action. The rule structure used for 
