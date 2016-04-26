@@ -1,6 +1,10 @@
 \chapter{Testing}
 
-This section covers property testing using QuickCheck, system testing using a 
+\edcomm{WK}{Here and also in other places it does get in the way
+  of readability that Haskell is typographically not distinguished
+  from text. (That's why I use \texttt{\backslash{}sf} in WKlhs.sty.)
+}%edcomm
+This chapter covers property testing using QuickCheck, system testing using a 
 built-in test suite and MySQL WorkBench for SQL query testing. EFA's 
 implementation uses dependent types which express application-specific program 
 invariants that are beyond the scope of existing type systems. The tests that 
@@ -17,10 +21,15 @@ tests all functions that rely on these core modules. These tests can be checked
 using stack and running \verb|``quickCheck <function>''|. The data types are 
 presumed correct as they produce the correct results and are accepted by the 
 Ampersand system. Furthermore, proof of EFA's TypedSQL was provided in software 
-implementation section \ref{subsec:modhierarchy}
+implementation section \ref{subsec:modhierarchy}.
 
 \subsubsection*{Singletons.singKindWitness1}
 For every pair of types and their type representation, an isomorphism exists,
+\edcomm{WK}{This sounds very strange. In particular, the isomorphism
+  is not specified to be related in any way to the quantified-over
+  pair of types\ldots
+  Any additional assumptions missing?
+}%edcomm
 where an isomorphism is a morphism $f:\ a \rightarrow b$ and there exists a
 morphism $g: b \rightarrow a$ with $fg$ = $1_b$ and $gf$ = $1_a$. The default
 implementation uses \lstinline{unsafeCoerce} and will only work if everything
@@ -77,8 +86,8 @@ project root directory.
 The queries produced by EFA were manually tested on a MySQL server; Ampersand 
 relies on a MySQL database which can be installed as a part of xampp along with 
 apache or simply on its own from the MySQL website~\cite{MySQL-web}. A simple guide is 
-available on MySQL's website on how to install use WorkBench with xampp, if an 
-MySQL server outside of xampp, it is highly advisable for these two components 
+available on MySQL's website on how to install use WorkBench with xampp; if an 
+MySQL server outside of xampp \edcomm{WK}{verb missing}, it is highly advisable for these two components 
 to be installed together. Furthermore, WorkBench~\cite{workbench} can be found on 
 MySQL's official website.
 
@@ -98,14 +107,14 @@ Queries can be executed manually using WorkBench.
 %% , to follow instructions on how 
 %% to set up a connection for WorkBench, please refer to appendix 
 %% \ref{appen:WorkBench}. 
-Once Work Bench is running properly, it will very 
+Once WorkBench is running properly, it will \edcomm{WK}{verb missing} very 
 similar to screen shot provided.
 \begin{figure}[!h]
     \includegraphics[width=\textwidth]{images/WorkBench}
     \caption{\footnotesize{The right-hand side shows the status of the server, 
-    and on the lower left-hand side under 'SCHEMAS', all the databases in 
+    and on the lower left-hand side under `SCHEMAS', all the databases in 
     current server is listed. Ampersand requires a local database and a 
-    password, both of which are 'ampersand'. The blue box in the top middle 
+    password, both of which are `ampersand'. The blue box in the top middle 
     area provides information concerning the host. }}
 \end{figure}
 
